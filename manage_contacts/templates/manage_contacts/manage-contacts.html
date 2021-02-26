@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Manage Contacts{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+<script src="{% static "manage_contacts/js/script.js" %}"></script>
+
+{% endblock head %}
+
+{% block banner %}
+<div class="tab">
+<button class="tablinks" onclick="change_page(event, 'Contacts')">Contact List</button>
+<button class="tablinks" onclick="change_page(event, 'Information')">My Information</button>
+</div>
+{% endblock banner %}
+
+{% block leftcontainer %}{% endblock leftcontainer %}
+
+{% block main %}
+<h2 class="titleContainer"> Manage Contacts </h2>
+<div id="Contacts" class="tabcontent">
+
+<div id="blockContainer">
+<p>
+    This screen displays the contacts for a specific location, 
+    or for the entire Organization. If you want to update your personal Information, 
+    click on 'My Information' menu item above.
+</p>
+<a href="{% url 'add_contact' %}">New Contact</a>
+</div>
+
+<div class="blockContainer">
+<h3>Filter Contacts Using the Fields Below</h3>
+<div class="blockWidget"> (Add filter here) </div>
+</div>
+
+<div class="blockContainer">
+<h2>Contacts</h2>
+<table>
+  <tr> 
+    <th>First Name</th>
+    <th>Last Name</th> 
+    <th>Web Login</th>
+    <th>Contact Type</th>
+    <th>Status</th> 
+    <th>Location</th>
+    <th>Country</th>
+    <th>ORG ID</th> 
+    <th>Email</th>
+  </tr>
+
+{% for contact in contact_list %}
+<tr>
+<td >{{ contact.first_name }}</td>
+<td>{{ contact.last_name }}</td>
+<td>{{ contact.id }}</td>
+<td>{{ contact.role }}</td>
+<td>{{ contact.status }}</td>
+<td>{{ contact.id }}</td>
+<td>{{ contact.id }}</td>
+<td>{{ contact.org_id }}</td>
+<td>{{ contact.email }}</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+</div>
+
+<div id="Information" class="tabcontent">
+
+  <div class="blockWidget">
+    <h2 class="textWidget">{{ user.username }}</h2>
+  </div>
+  
+  <div class="blockWidget">
+    <p class="textWidget">UserID: {{ user.id }}</p>
+    <p class="textWidget">UserEmail: {{ user_email }}</p>
+    <p class="textWidget">Role: {{ user_role }}</p>
+    <p class="textWidget">Org: {{ user_org }}</p>
+    <p class="textWidget">OrgID: {{ org_id }}</p>
+  </div>
+</div>
+
+<div class="logoutBox">
+<p><a href="{% url 'homepage' %}">Home</a></p>
+<p><a href="{% url 'logout' %}">Logout</a></p>
+</div>
+
+{% endblock main %}

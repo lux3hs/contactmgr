@@ -1,0 +1,138 @@
+
+#Products{
+  display: none;
+
+}
+
+#UserTitleContainer{
+  border:2px solid black;
+  padding: 10px 20px;
+  display:inline-block;
+  text-align: left;
+}
+
+#GenLicenseContainer {
+  border: 2px solid black;
+  padding: 10px 20px;
+  /* margin: 5px; */
+
+}
+
+#LicenseContainer{
+  border:2px solid black;
+}
+
+
+#form1{
+  display:inline-block;
+
+}
+
+#widget1{
+  display:inline-block;
+
+}
+
+
+/* .choiceBox{
+  border: 2px dotted black;
+
+  background-color:white;
+
+  color: black;
+
+  border: 2px solid black;
+  border-radius: 24px;
+
+  margin: 5px;
+
+  text-align: center;
+  padding: 10px 20px;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+} */
+
+/* .logoutBox{
+  border:2px solid black;
+  padding: 10px 20px;
+
+} */
+
+/* .titleBox{
+  border: 2px solid black;
+  padding: 5px;
+} */
+
+
+/* input {
+  background-color:white;
+
+  color: black;
+
+  border: 2px solid black;
+  border-radius: 24px;
+
+
+  text-align: center;
+  padding: 10px 20px;
+  margin: 5px;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+  cursor: pointer;
+
+} */
+
+/* input:hover, input:active {
+  background-color: whitesmoke;
+} */
+
+
+/* Style the tab */
+/* .tab {
+    border: 2px solid black;
+    overflow: hidden;
+    margin-left: 50px;
+    margin-right: 50px;
+
+  } */
+
+/* Style the buttons that are used to open the tab content */
+/* .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+  } */
+
+/* Create an active/current tablink class */
+/* .tab button.active {
+  border-bottom: 1px solid black;
+
+  } */
+
+
+/* Style the tab content */
+/* .tabcontent {
+    display: none;
+    margin: 50px;
+    padding: 6px 12px;
+    border: 2px solid black;
+  } */
+
+/* #defaultTab{
+  border-bottom:1px solid black;
+
+} */
+  
+/* #Licenses{
+  border: 5px dotted green;
+} */
+

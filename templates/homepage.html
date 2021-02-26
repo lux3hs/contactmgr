@@ -1,0 +1,24 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block main %}
+
+<div id="homeRow">
+{% if user.is_authenticated %}
+  <h2>Home</h2>
+  <h3>Welcome {{ user.username }}!</h3>
+  <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
+  <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
+
+
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+
+</div>
+
+{% endblock main %}

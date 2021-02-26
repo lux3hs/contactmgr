@@ -1,0 +1,48 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/licensepgm/style.css' %}">
+    
+    {% comment %} Delete this! {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/licensepgm/rainbowbox.css" %}">
+
+
+    <title>{% block title %}Name of Page{% endblock title %}</title>
+    
+    {% block head %}
+    {% endblock head %}
+  </head>
+
+  <body>
+
+    {% block page %}
+    <div class="page">
+    
+    {% block banner %}
+    <header id="homeBanner"> 
+    <h1>LICENSEPGM</h1>
+    </header>
+    {% endblock banner %} 
+
+    {% block leftcontainer %}
+    <div id="leftContainer">
+    <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="orgLogo" alt="Generic logo"/>
+    </div>
+    {% endblock leftcontainer %}
+
+    <main>
+    {% block main %}
+
+    {% endblock main %}
+    </main>
+
+    </div>
+
+  {% endblock page %}
+  </body>
+
+</html>

@@ -1,0 +1,342 @@
+/* Style for base page class */
+.page {
+    border: 2px black;
+    height: 100vh;
+    max-width: 100vw;
+    margin-left: 50px;
+    margin-right: 50px;
+
+    overflow: auto;
+
+    font-size: 14px;
+
+  }
+
+/* Style the links */
+a{
+    background-color:white;
+
+    color: black;
+
+    border: 2px solid black;
+    /* border-radius: 25px; */
+
+    text-align: center;
+    padding: 8px 12px;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+}
+
+a:hover, a:active {
+    background-color: whitesmoke;
+}
+
+/* Style the buttons */
+button {
+    background-color:white;
+
+    color: black;
+
+    border: 2px solid black;
+    /* border-radius: 24px; */
+
+
+    text-align: center;
+    padding: 10px 20px;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+}
+
+button:hover, button:active {
+    background-color: whitesmoke;
+  }
+
+/* Style input buttons */
+input.button {
+    background-color:white;
+  
+    color: black;
+  
+    border: 2px solid black;
+    /* border-radius: 24px; */
+  
+    text-align: center;
+    padding: 10px 20px;
+    margin: 5px;
+  
+    text-decoration: none;
+  
+    display: inline-block;
+  
+    cursor: pointer;
+  
+  }
+
+input.button:hover, input.button:active {
+    background-color: whitesmoke;
+  }
+
+input.textField {
+    background-color:white;
+  
+    color: black;
+  
+    border: 2px solid black;
+    /* border-radius: 24px; */
+  
+  
+    text-align: center;
+    padding: 10px 20px;
+    margin: 5px;
+  
+    text-decoration: none;
+  
+    display: inline-block;
+  
+    cursor: pointer;
+  
+  }
+
+input.textField:hover, input.textField:active {
+    background-color: whitesmoke;
+  }
+
+
+/* Style selection box */
+.selectField{
+    background-color:white;
+  
+    color: black;
+  
+    border: 2px solid black;
+    /* border-radius: 24px; */
+  
+  
+    text-align: center;
+    padding: 10px 20px;
+    margin: 5px;
+  
+    text-decoration: none;
+  
+    display: inline-block;
+}
+
+.selectField:hover, .selectField:active {
+    background-color: whitesmoke;
+  }
+
+  /* Style selection box */
+.contactForm{
+  background-color:white;
+
+  color: black;
+
+  border: 2px solid black;
+  /* border-radius: 50px; */
+
+
+  text-align: center;
+  padding: 10px 15px;
+ 
+  margin: 5px;
+
+  /* text-decoration: none; */
+
+  display: block;
+
+} 
+
+.contactForm:hover, .contactForm:active {
+  background-color: whitesmoke;
+}
+
+#contactWidget{
+  padding:5px 10px;
+}
+
+
+/* Style the tab container */
+.tab {
+    border: 2px solid black;
+    overflow: hidden;
+
+  }
+
+/* Style the tab buttons */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+  }
+
+/* Create an active/current tablink class */
+.tab button.active {
+  border-bottom: 1px solid black;
+
+  }
+
+  /* Style the active tab content */
+.tabcontent {
+    /* display: none; */
+    /* margin: 50px; */
+    /* padding: 6px 12px; */
+    border: 2px solid black;
+  }
+
+
+
+
+/* Style the container for the organization logo */
+#leftContainer {
+    /* border: 5px dotted grey; */
+    border-right: 1px solid black;
+    float: left;
+    height: 50%;
+    width: 30%;
+    padding: 15px;
+
+    display: flex;
+    align-items: left;
+
+}
+
+/* Style the organization logo */
+#orgLogo {
+    /* border:1px dotted grey; */
+    margin: 5px;
+    padding: 5px;
+    max-width: 75%;
+    max-height: 50%;
+    float: center;
+    vertical-align: top;
+    } 
+
+/* Style the login window */
+#loginWindow{
+    margin: 25px;
+    padding: 15px;
+    /* height: 100%; */
+    /* max-width: 350px; */
+    /* height: 150; */
+
+    border: 1px solid black;
+    /* border-radius: 25px; */
+
+    float: left;
+
+    margin-top: 50px;   
+}
+
+/* Style the container for the logout box */
+.logoutBox{
+    border:2px solid black;
+    padding: 10px 20px;
+  
+  }
+
+/* Style the homerow container */
+#homeRow{
+    /* border: 1px dotted blue; */
+    /* border:2px solid black; */
+    /* border-left: 1px solid black; */
+    /* border-radius: 25px; */
+    margin: 15px;
+    margin-top: 50px;
+    padding: 15px;
+    float: left;
+}
+
+/* Style the homepage display name */
+#homeBanner{
+    /* border:1px dotted orange; */
+    width: 250px;
+    margin: 0px;
+    padding: 25px;
+    float: center;
+    text-align: center;
+}
+
+
+/* Style the page title */
+.titleContainer{
+  border: 2px solid black;
+  padding: 5px;
+}
+
+.blockContainer{
+  border:2px solid black;
+  padding:5px;
+}
+
+.blockWidget{
+  border:2px solid Black;
+  padding:5px;
+  display:block;
+  width:fit-content
+
+}
+
+.textWidget{
+  border:2px solid Black;
+  padding:15px;
+  margin:15px
+  display:block;
+  width:fit-content;
+  text-align: center;
+
+}
+
+.widgetBox{
+  border:2px solid Black;
+  padding:5px;
+  display:block;
+  width:fit-content
+
+}
+
+
+table {
+  border-spacing: 0em 1em;
+  width: 100%;
+  text-align:left;
+  
+}
+
+tr{
+  border:1px solid black;
+}
+
+
+ tr:nth-child(1)
+  {
+    background-color: darkgray;
+    color: inherit;
+
+  }
+
+  th{
+    padding:1em;
+
+  }
+
+td{
+  background:lightgrey;
+  color: black;
+  padding:1em;
+  
+}
+
+
+
+
+
+

@@ -1,0 +1,139 @@
+
+
+#Information {
+  display: none;
+}
+
+#NewContactContainer{
+  border: 2px solid Black;
+  display: block;
+  text-align: left;
+  padding: 5px;
+
+}
+
+#FilterContactsContainer{
+  border: 2px solid black;
+  padding: 10px 20px;
+
+}
+
+#ContactFilterWidget{
+  border: 2px solid black;
+  /* padding: 10px 20px; */
+  /* float: left; */
+  display: inline-block;
+
+}
+
+#UserTitleContainer{
+  border: 2px solid black;
+  padding: 5px;
+  display: block;
+  width: 20%;
+  text-align: center;
+}
+
+#UserInfoContainer{
+  border: 2px solid black;
+  padding: 5px;
+  text-align: left;
+  display: block;
+  width: 20%;
+}
+
+/* .UserInfoBox{
+  border: 2px solid black;
+  display: block;
+  margin: 15px;
+  padding: 15px;
+} */
+
+/* #ContactFormContainer{
+  border:2px solid black;
+  padding: 25px;
+
+} */
+
+
+/* .titleBox{
+  border: 2px solid black;
+  padding: 5px;
+} */
+
+
+/* input {
+  background-color:white;
+
+  color: black;
+
+  border: 2px solid black;
+  border-radius: 24px;
+
+
+  text-align: center;
+  padding: 5px;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+  cursor: pointer;
+} */
+
+/* input:hover, input:active {
+  background-color: whitesmoke;
+} */
+
+
+
+
+
+/* #addContact {
+  border: 2px solid green;
+  margin:5px;
+  padding: 10px 20px;
+  
+  display: inline;
+  text-align: center;
+
+} */
+
+
+/* .logoutBox{
+  border:2px solid black;
+  padding: 20px 20px;
+
+} */
+
+/* Style the tab */
+/* .tab {
+  border: 2px solid black;
+  overflow: hidden;
+  margin-left: 50px;
+  margin-right: 50px;
+} */
+
+/* .tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+
+} */
+
+/* .tab button.active {
+  border-bottom: 1px solid black;
+
+} */
+
+/* Style the tab content */
+/* .tabcontent {
+    display: none;
+    margin: 50px;
+    padding: 6px 12px;
+    border: 2px solid black;
+    border-top: none;
+  } */

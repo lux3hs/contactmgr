@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Add Contact{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+{% endblock head %}
+
+{% block banner %}{% endblock banner %}
+
+{% block leftcontainer %}{% endblock leftcontainer %}
+
+{% block main %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2 class="titleContainer">Add Contact</h2>
+<div class="blockContainer" class="greenBox">
+
+  {% if user_role == "admin" %}
+  <div class="blockWidget" class="yellowBox">
+    
+    <form method = "GET">
+    
+    <div class="blockWidget" id="contactWidget">
+    {{ contact_form }}    
+    </div>
+
+    <div class="blockContainer">
+    <input class="button" type = "submit" value = "Create user" name="newForm"/>
+    </div>
+    
+    </form>
+    
+  </div>
+  {% else %}
+
+  <p>Not authorized.</p>
+  {% endif %}
+
+</div>
+
+<div class="logoutBox">
+<p><a href="{% url 'manage_contacts' %}">Return</a></p>
+<p><a href="{% url 'homepage' %}">Home</a></p>
+<p><a href="{% url 'logout' %}">Logout</a></p>
+</div>
+
+{% endblock main %}
