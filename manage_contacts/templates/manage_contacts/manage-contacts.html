@@ -25,7 +25,7 @@
 document.getElementById("defaultOpen").click();
 </script>
 
-<div id="blockContainer">
+<div class="blockContainer">
 <p>
     This screen displays the contacts for a specific location, 
     or for the entire Organization. If you want to update your personal Information, 
@@ -56,7 +56,7 @@ document.getElementById("defaultOpen").click();
 
 {% for contact in contact_list %}
 <tr>
-<td >{{ contact.first_name }}</td>
+<td class="leftBorder">{{ contact.first_name }}</td>
 <td>{{ contact.last_name }}</td>
 <td>{{ contact.id }}</td>
 <td>{{ contact.role }}</td>

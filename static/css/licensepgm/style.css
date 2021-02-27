@@ -1,3 +1,5 @@
+
+
 /* Style for base page class */
 .page {
     border: 2px black;
@@ -307,7 +309,6 @@ input.textField:hover, input.textField:active {
 
 }
 
-
 table {
   border-spacing: 0em 1em;
   width: 100%;
@@ -338,9 +339,4 @@ td{
   padding:1em;
   
 }
-
-
-
-
-
 
