@@ -184,16 +184,20 @@ input.textField:hover, input.textField:active {
 
   }
 
+
   /* Style the active tab content */
 .tabcontent {
-    /* display: none; */
+    display: none;
     /* margin: 50px; */
     /* padding: 6px 12px; */
-    border: 2px solid black;
+    /* border: 2px solid black; */
   }
 
 
-
+/* #defaultTab{
+    border-bottom:1px solid black;
+  
+  } */
 
 /* Style the container for the organization logo */
 #leftContainer {
@@ -288,7 +292,7 @@ input.textField:hover, input.textField:active {
 .textWidget{
   border:2px solid Black;
   padding:15px;
-  margin:15px
+  margin:15px;
   display:block;
   width:fit-content;
   text-align: center;

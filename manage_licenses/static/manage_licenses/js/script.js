@@ -17,12 +17,4 @@ function change_page(evt, pageName) {
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(pageName).style.display = "block";
   evt.currentTarget.className += " active";
-
 }
-
-  // Get the element with id="defaultOpen" and click on it
-// function selectTab() {
-//   document.getElementById("defaultOpen").click();
-//  }
-
-//  window.onload(selectTab)

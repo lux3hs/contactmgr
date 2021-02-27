@@ -6,12 +6,11 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_licenses/css/style.css' %}">
 <script src="{% static "manage_licenses/js/script.js" %}"></script>
-
 {% endblock head %}
 
 {% block banner %}
 <div class="tab">
-<button class="tablinks" onclick="change_page(event, 'Licenses')">Manage my licenses</button>
+<button class="tablinks" id="defaultOpen" onclick="change_page(event, 'Licenses')">Manage my licenses</button>
 <button class="tablinks" onclick="change_page(event, 'Products')">View my products</button>
 </div>
 {% endblock banner %}
@@ -19,7 +18,6 @@
 {% block leftcontainer %}{% endblock leftcontainer %}
 
 {% block main %}
-
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -29,7 +27,11 @@
 {% endif %}
 
 <h2 class="titleContainer"> Manage Licenses </h2>
+
 <div id="Licenses" class="tabcontent">
+<script>
+document.getElementById("defaultOpen").click();
+</script>
 
 <div class="blockContainer"/>
 

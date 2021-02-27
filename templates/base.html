@@ -4,17 +4,15 @@
 <html>
 
   <head>
+    {% block head %}{% endblock head %}
+    <title>{% block title %}Name of Page{% endblock title %}</title>
+
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static '/css/licensepgm/style.css' %}">
     
-    {% comment %} Delete this! {% endcomment %}
+    {% comment %} Delete this to get rid of rainbowBox! {% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static "css/licensepgm/rainbowbox.css" %}">
-
-
-    <title>{% block title %}Name of Page{% endblock title %}</title>
     
-    {% block head %}
-    {% endblock head %}
   </head>
 
   <body>
@@ -35,9 +33,7 @@
     {% endblock leftcontainer %}
 
     <main>
-    {% block main %}
-
-    {% endblock main %}
+    {% block main %}{% endblock main %}
     </main>
 
     </div>

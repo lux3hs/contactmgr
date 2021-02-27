@@ -6,12 +6,11 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
-
 {% endblock head %}
 
 {% block banner %}
 <div class="tab">
-<button class="tablinks" onclick="change_page(event, 'Contacts')">Contact List</button>
+<button class="tablinks" id="defaultOpen" onclick="change_page(event, 'Contacts')">Contact List</button>
 <button class="tablinks" onclick="change_page(event, 'Information')">My Information</button>
 </div>
 {% endblock banner %}
@@ -20,7 +19,11 @@
 
 {% block main %}
 <h2 class="titleContainer"> Manage Contacts </h2>
+
 <div id="Contacts" class="tabcontent">
+<script>
+document.getElementById("defaultOpen").click();
+</script>
 
 <div id="blockContainer">
 <p>
