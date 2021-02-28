@@ -36,8 +36,6 @@ class ContactCreationForm(UserCreationForm):
             raise forms.ValidationError("Your passwords do not match")
         return password2
 
-
-
  
 class SearchChoiceForm(forms.Form):
     #Set widget fields

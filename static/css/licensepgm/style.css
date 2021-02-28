@@ -1,4 +1,7 @@
 
+/*             */
+/* Page Style */
+/*             */
 
 /* Style for base page class */
 .page {
@@ -7,11 +10,8 @@
     max-width: 100vw;
     margin-left: 50px;
     margin-right: 50px;
-
     overflow: auto;
-
     font-size: 14px;
-
   }
 
 /* Style the links */
@@ -29,8 +29,6 @@ a{
 a:hover, a:active {
     background-color: whitesmoke;
 }
-
-
 
 /* Style the buttons and selection widgets */
 button {
@@ -66,7 +64,6 @@ input.button:hover, input.button:active {
     background-color: whitesmoke;
   }
 
-
 /* Style choice field box */
 .ChoiceField{
     background-color:white;
@@ -83,7 +80,6 @@ input.button:hover, input.button:active {
 .ChoiceField:hover, .ChoiceField:active {
     background-color: whitesmoke;
   }
-
 
 /* Style char field box */
 .CharField{
@@ -103,9 +99,10 @@ input.button:hover, input.button:active {
 }
 
 
-/*                */
-/* Page Tab Style */
-/*                */
+
+/*           */
+/* Tab Style */
+/*           */
 
 /* Style the tab container */
 .tab {
@@ -140,9 +137,9 @@ input.button:hover, input.button:active {
   }
 
 
-/*                 */
-/* Homepage styles */
-/*                 */
+/*                */
+/* Homepage style */
+/*                */
 
 /* Style the container for the organization logo */
 #leftContainer {
@@ -167,7 +164,7 @@ input.button:hover, input.button:active {
     max-height: 50%;
     float: center;
     vertical-align: top;
-    } 
+} 
 
 /* Style the login window */
 #loginWindow{
@@ -176,12 +173,9 @@ input.button:hover, input.button:active {
     /* height: 100%; */
     /* max-width: 350px; */
     /* height: 150; */
-
     border: 1px solid black;
     /* border-radius: 25px; */
-
     float: left;
-
     margin-top: 50px;   
 }
 
@@ -249,15 +243,16 @@ input.button:hover, input.button:active {
 
 }
 
-/*                  */
-/* Style the tables */
-/*                  */
+
+
+/*              */
+/* Table styles */
+/*              */
 
 table {
   border-spacing: 0em 1em;
   width: 100%;
   text-align:left;
-  
 }
 
 tr{
@@ -265,12 +260,10 @@ tr{
 }
 
 
- tr:nth-child(1)
-  {
+tr:nth-child(1){
     background-color: darkgray;
     color: inherit;
-
-  }
+}
 
   th{
     padding:1em;

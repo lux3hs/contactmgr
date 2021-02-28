@@ -1,24 +1,20 @@
 import datetime
 
-from django.shortcuts import render
-
-from django.contrib import messages
-# from django.contrib.messages import get_messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-# from django.contrib.auth.forms import UserCreationForm
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from .models import Contact
-
 from .forms import ContactCreationForm, SearchChoiceForm
 
 # Create your views here.
 
 @login_required
 def manage_contacts(request):
-
+    """ Render manage-contacts html page """
     #Get current user info
     current_user = request.user
     user_id = current_user.id
@@ -35,14 +31,12 @@ def manage_contacts(request):
     #Create a form for filtering contacts
     filter_form = SearchChoiceForm()
     
-    #Create a list of contact information to display
+    #Create a list of contact information to display in table
     contact_list = []
     for contact in contact_objects:
         user_dict = {}
         user_id = contact.user.id
-        # user_object = users.filter(id=contact_id)
         user = user_objects.filter(id=user_id).get()
-        # user_dict["first_name"] = user.filter(id=contact_id)[0].get('first_name')
         user_dict["first_name"] = user.first_name
         user_dict["last_name"] = user.last_name
         user_dict["email"] = user.email
@@ -60,11 +54,12 @@ def manage_contacts(request):
                'contact_list':contact_list,
                'filter_form':filter_form
             }
+
     return render(request, "manage_contacts/manage-contacts.html", context)
 
 @login_required
 def add_contact(request):
-
+    """ Render add-contact html page """
     #Get current contact role to check for admin access
     current_user = request.user
     user_id = current_user.id
@@ -87,7 +82,7 @@ def add_contact(request):
             contact_status = user_query.get('contact_status')
             # contact_phone = user_query.get('contact_phone')
 
-            #Get current contact's organization
+            #Get current contact organization
             contact_data = Contact.objects.filter(user_id=user_id).get()
             contact_organization = contact_data.organization
 

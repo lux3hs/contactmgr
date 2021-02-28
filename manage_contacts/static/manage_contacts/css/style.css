@@ -1,4 +1,22 @@
 
+/*                          */
+/* Override base css styles */
+/*                          */
+
+/* Style the New Contact button */
+#NewContactButton{
+  border:2px solid black;
+  display:inline-block;
+  /* margin-left:90%; */
+  /* margin:10px; */
+ }
+
+#pageInfo{
+  display:inline-block;
+  width: 75%;
+  text-align: left;
+}
+
 /* Style the contact creation widget box */
 #ContactCreationWidget{
   width: 75%;

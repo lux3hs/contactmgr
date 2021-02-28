@@ -1,9 +1,10 @@
-{% extends "base.html" %}
-{% load static %}
+<!-- templates/manage_contacts/manage-contacts.html -->
 
+{% extends "base.html" %}
 {% block title %}Manage Contacts{% endblock %}
 
 {% block head %}
+{% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
 {% endblock head %}
@@ -24,12 +25,16 @@
 <script>document.getElementById("defaultOpen").click();</script>
 
 <div class="blockContainer">
-<p>
+<p id="pageInfo" class="textWidget">
     This screen displays the contacts for a specific location, 
     or for the entire Organization. If you want to update your personal Information, 
     click on 'My Information' menu item above.
 </p>
+
+<div id="NewContactButton" class="blockWidget">
 <a href="{% url 'add_contact' %}">New Contact</a>
+</div>
+
 </div>
 
 <div class="blockContainer">
