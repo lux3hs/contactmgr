@@ -17,42 +17,31 @@
 /* Style the links */
 a{
     background-color:white;
-
     color: black;
-
     border: 2px solid black;
     /* border-radius: 25px; */
-
     text-align: center;
     padding: 8px 12px;
-
     text-decoration: none;
-
     display: inline-block;
-
 }
 
 a:hover, a:active {
     background-color: whitesmoke;
 }
 
-/* Style the buttons */
+
+
+/* Style the buttons and selection widgets */
 button {
     background-color:white;
-
     color: black;
-
     border: 2px solid black;
     /* border-radius: 24px; */
-
-
     text-align: center;
     padding: 10px 20px;
-
     text-decoration: none;
-
     display: inline-block;
-
 }
 
 button:hover, button:active {
@@ -62,106 +51,61 @@ button:hover, button:active {
 /* Style input buttons */
 input.button {
     background-color:white;
-  
     color: black;
-  
     border: 2px solid black;
     /* border-radius: 24px; */
-  
     text-align: center;
     padding: 10px 20px;
     margin: 5px;
-  
     text-decoration: none;
-  
     display: inline-block;
-  
-    cursor: pointer;
-  
+    /* cursor: pointer; */
   }
 
 input.button:hover, input.button:active {
     background-color: whitesmoke;
   }
 
-input.textField {
+
+/* Style choice field box */
+.ChoiceField{
     background-color:white;
-  
     color: black;
-  
     border: 2px solid black;
     /* border-radius: 24px; */
-  
-  
     text-align: center;
     padding: 10px 20px;
     margin: 5px;
-  
     text-decoration: none;
-  
-    display: inline-block;
-  
-    cursor: pointer;
-  
-  }
-
-input.textField:hover, input.textField:active {
-    background-color: whitesmoke;
-  }
-
-
-/* Style selection box */
-.selectField{
-    background-color:white;
-  
-    color: black;
-  
-    border: 2px solid black;
-    /* border-radius: 24px; */
-  
-  
-    text-align: center;
-    padding: 10px 20px;
-    margin: 5px;
-  
-    text-decoration: none;
-  
     display: inline-block;
 }
 
-.selectField:hover, .selectField:active {
+.ChoiceField:hover, .ChoiceField:active {
     background-color: whitesmoke;
   }
 
-  /* Style selection box */
-.contactForm{
+
+/* Style char field box */
+.CharField{
   background-color:white;
-
   color: black;
-
   border: 2px solid black;
-  /* border-radius: 50px; */
-
-
-  text-align: center;
-  padding: 10px 15px;
- 
+  /* border-radius: 24px; */
+  /* text-align: center; */
+  padding: 10px 20px;
   margin: 5px;
+  text-decoration: none;
+  display: inline-block;
+}
 
-  /* text-decoration: none; */
-
-  display: block;
-
-} 
-
-.contactForm:hover, .contactForm:active {
+.CharField:hover, .CharField:active {
   background-color: whitesmoke;
 }
 
-#contactWidget{
-  padding:5px 10px;
-}
 
+/*                */
+/* Page Tab Style */
+/*                */
 
 /* Style the tab container */
 .tab {
@@ -196,10 +140,9 @@ input.textField:hover, input.textField:active {
   }
 
 
-/* #defaultTab{
-    border-bottom:1px solid black;
-  
-  } */
+/*                 */
+/* Homepage styles */
+/*                 */
 
 /* Style the container for the organization logo */
 #leftContainer {
@@ -271,12 +214,17 @@ input.textField:hover, input.textField:active {
     text-align: center;
 }
 
-
 /* Style the page title */
 .titleContainer{
   border: 2px solid black;
   padding: 5px;
 }
+
+
+
+/*                       */
+/* Generic block classes */
+/*                       */
 
 .blockContainer{
   border:2px solid black;
@@ -301,13 +249,9 @@ input.textField:hover, input.textField:active {
 
 }
 
-.widgetBox{
-  border:2px solid Black;
-  padding:5px;
-  display:block;
-  width:fit-content
-
-}
+/*                  */
+/* Style the tables */
+/*                  */
 
 table {
   border-spacing: 0em 1em;

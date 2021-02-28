@@ -5,6 +5,7 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_licenses/css/style.css' %}">
+
 <script src="{% static "manage_licenses/js/script.js" %}"></script>
 {% endblock head %}
 
@@ -29,59 +30,56 @@
 <h2 class="titleContainer"> Manage Licenses </h2>
 
 <div id="Licenses" class="tabcontent">
-<script>
-document.getElementById("defaultOpen").click();
-</script>
+<script>document.getElementById("defaultOpen").click();</script>  
 
-<div class="blockContainer"/>
+  <div class="blockContainer"/>
 
   <div id="widget1" class="blockWidget">
-  <form id="form1" method = "GET">
-    {{ search_form }}
-    <input class="button" type="submit" value="Search Products"/>
-  </form>
+    <form id="form1" method = "GET">
+      {{ search_form }}
+      <input class="button" type="submit" value="Search Products"/>
+    </form>
 
-  <form id="form1" method="post">
+    <form id="form1" method="post">
     {% csrf_token %}
     <input class="button" type="submit" name="clear_search" value="Clear Search"/>
-  </form>
+    </form>
   </div>
 
   <form id="form1" class="blockWidget" method = "GET">
-      {{ product_form }}
-      <input class="button" type="submit" value="Generate License"/>
+    {{ product_form }}
+    <input class="button" type="submit" value="Generate License"/>
   </form>
-</div>
+  
+  </div>
 
-<div class="blockContainer">
-<h2> Licenses </h2>
+  <div class="blockContainer">
+  <h2> Licenses </h2>
 
-<table> 
+  <table> 
   <tr>
     <th>Product Name</th>
     <th>License access code</th> 
     <th>Allocated</th>
   </tr>
 
-{% for entitlement in entitlement_list %}
+  {% for entitlement in entitlement_list %}
   <tr>
     <td>{{ entitlement.product_name }}</td>
     <td>{{ entitlement.access_code }}</td>
     <td>{{ entitlement.num_allocated }} </td>
   </tr>
+  {% endfor %} 
 
-{% endfor %} 
-
-</table>
-</div>
-
+  </table>
+  </div>
 </div>
 
 <div id="Products" class="tabcontent">
 
-<div class=blockContainer>
-  <h2 class="textWidget"> my products </h2>
-</div>
+  <div class=blockContainer>
+    <h2 class="textWidget"> my products </h2>
+  </div>
 
   <div class="blockWidget">
   {% for product in user_products %}

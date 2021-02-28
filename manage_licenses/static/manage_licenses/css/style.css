@@ -1,23 +1,4 @@
 
-#UserTitleContainer{
-  border:2px solid black;
-  padding: 10px 20px;
-  display:inline-block;
-  text-align: left;
-}
-
-#GenLicenseContainer {
-  border: 2px solid black;
-  padding: 10px 20px;
-  /* margin: 5px; */
-
-}
-
-#LicenseContainer{
-  border:2px solid black;
-}
-
-
 #form1{
   display:inline-block;
 

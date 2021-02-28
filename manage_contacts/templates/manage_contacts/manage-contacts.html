@@ -21,9 +21,7 @@
 <h2 class="titleContainer"> Manage Contacts </h2>
 
 <div id="Contacts" class="tabcontent">
-<script>
-document.getElementById("defaultOpen").click();
-</script>
+<script>document.getElementById("defaultOpen").click();</script>
 
 <div class="blockContainer">
 <p>
@@ -35,13 +33,19 @@ document.getElementById("defaultOpen").click();
 </div>
 
 <div class="blockContainer">
-<h3>Filter Contacts Using the Fields Below</h3>
-<div class="blockWidget"> (Add filter here) </div>
+  <h3>Filter Contacts Using the Fields Below</h3>
+
+  <div class="blockWidget"> 
+  <form class="blockWidget" method = "GET">
+    {{ filter_form }}
+    <input class="button" type="submit" value="Filter Users"/>
+  </form>
+  </div>
 </div>
 
-<div class="blockContainer">
-<h2>Contacts</h2>
-<table>
+  <div class="blockContainer">
+  <h2>Contacts</h2>
+  <table>
   <tr> 
     <th>First Name</th>
     <th>Last Name</th> 
@@ -54,23 +58,21 @@ document.getElementById("defaultOpen").click();
     <th>Email</th>
   </tr>
 
-{% for contact in contact_list %}
-<tr>
-<td class="leftBorder">{{ contact.first_name }}</td>
-<td>{{ contact.last_name }}</td>
-<td>{{ contact.id }}</td>
-<td>{{ contact.role }}</td>
-<td>{{ contact.status }}</td>
-<td>{{ contact.id }}</td>
-<td>{{ contact.id }}</td>
-<td>{{ contact.org_id }}</td>
-<td>{{ contact.email }}</td>
-</tr>
-{% endfor %}
-
-</table>
-</div>
-
+  {% for contact in contact_list %}
+  <tr>
+    <td class="leftBorder">{{ contact.first_name }}</td>
+    <td>{{ contact.last_name }}</td>
+    <td>{{ contact.id }}</td>
+    <td>{{ contact.role }}</td>
+    <td>{{ contact.status }}</td>
+    <td>{{ contact.id }}</td>
+    <td>{{ contact.id }}</td>
+    <td>{{ contact.org_id }}</td>
+    <td>{{ contact.email }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+  </div>
 </div>
 
 <div id="Information" class="tabcontent">

@@ -13,7 +13,7 @@ from .models import License
 #Import contact, entitlement, and organization models from manage_contacts app
 from manage_contacts.models import Contact, Entitlement, Organization
 
-from .forms import ProductForm, SearchForm
+from .forms import ChoiceForm, SearchForm
 
 # Create your views here.
 
@@ -77,11 +77,11 @@ def manage_licenses(request):
 
     search_form = SearchForm()
 
-    if request.GET.get("product_search"):
+    if request.GET.get("search_query"):
         print("searching")
         filter_list = []
         user_query = request.GET
-        product_search = user_query.get("product_search")
+        product_search = user_query.get("search_query")
         for product in product_entitlements:
             if product_search.lower() in product.product_name.lower():
                 filter_list.append((product.product_name, product.product_name))
@@ -91,11 +91,11 @@ def manage_licenses(request):
     if "clear_search" in request.POST:
         choice_list = product_list
 
-    product_form = ProductForm(products=choice_list)
+    product_form = ChoiceForm(field_choices=choice_list)
     
-    if request.GET.get('product_choice'):
+    if request.GET.get('field_choice'):
         user_query = request.GET
-        product_choice = user_query.get("product_choice")
+        product_choice = user_query.get("field_choice")
         entitlement_data = Entitlement.objects.filter(product_name=product_choice).get()
         max_licenses = entitlement_data.max_licenses
 

@@ -22,29 +22,27 @@
 {% endif %}
 
 <h2 class="titleContainer">Add Contact</h2>
-<div class="blockContainer" class="greenBox">
-
+<div class="blockContainer">
+  
   {% if user_role == "admin" %}
-  <div class="blockWidget" class="yellowBox">
-    
-    <form method = "GET">
-    
-    <div class="blockWidget" id="contactWidget">
-    {{ contact_form }}    
-    </div>
-
-    <div class="blockContainer">
-    <input class="button" type = "submit" value = "Create user" name="newForm"/>
-    </div>
+  
+  <div class="blockContainer">
+    <form id=form1 method="post">
+    {% csrf_token %}
+      <div class="blockWidget" id="ContactCreationWidget">
+      {{ contact_form.as_p }}    
+      </div>
+      
+      <div class="blockContainer">
+      <input class="button" type = "submit" value = "Create user" name="newForm"/>
+      </div>
     
     </form>
-    
   </div>
+  
   {% else %}
-
   <p>Not authorized.</p>
   {% endif %}
-
 </div>
 
 <div class="logoutBox">
