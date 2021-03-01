@@ -256,7 +256,6 @@ input.button:hover, input.button:active {
   display:block;
   width:fit-content;
   text-align: center;
-
 }
 
 
@@ -269,6 +268,7 @@ table {
   border-spacing: 0em 1em;
   width: 100%;
   text-align:left;
+  overflow-y:auto;
 }
 
 tr{
