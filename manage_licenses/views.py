@@ -59,14 +59,26 @@ def manage_licenses(request):
     if request.GET.get("search_query"):
         print("searching")
         filter_list = []
+        entitlement_filter = []
         user_query = request.GET
         product_search = user_query.get("search_query")
         for entitlement in product_entitlements:
             if product_search.lower() in entitlement.product_name.lower():
                 print("hello!")
                 filter_list.append((entitlement.product_name, entitlement.product_name))
+                
+                product_name = entitlement.product_name
+                max_licenses = entitlement.max_licenses
+                total_licenses = entitlement.total_licenses
+                num_allocated = str(total_licenses) + " of " + str(max_licenses)
+                entitlement_dict = {}
+                entitlement_dict["product_name"] = product_name
+                entitlement_dict["access_code"] = access_code
+                entitlement_dict["num_allocated"] = num_allocated
+                entitlement_filter.append(entitlement_dict)
 
         choice_list = filter_list
+        entitlement_list = entitlement_filter
 
     #Clear search filter on response from clear search button
     elif request.GET.get("clear_search"):

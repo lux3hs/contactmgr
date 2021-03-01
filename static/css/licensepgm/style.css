@@ -5,13 +5,14 @@
 
 /* Style for base page class */
 body {
-    border: 2px black;
+    /* border: 2px black; */
     height: 100vh;
-    max-width: 100vw;
-    margin-left: 50px;
-    margin-right: 50px;
+    /* max-width: 100vw; */
+    margin-left:50px;
+    margin-right:50px;
     overflow: auto;
     font-size: 14px;
+    background: white;
   }
 
 /* Style the links */
@@ -112,13 +113,13 @@ input.button:hover, input.button:active {
 /* Style the tab container */
 .tab {
     border: 2px solid black;
+    width:fit-content;
     overflow: hidden;
-
   }
 
 /* Style the tab buttons */
 .tab button {
-    background-color: inherit;
+    /* background-color: inherit; */
     float: left;
     border: none;
     outline: none;
@@ -129,8 +130,13 @@ input.button:hover, input.button:active {
 /* Create an active/current tablink class */
 .tab button.active {
   border-bottom: 1px solid black;
-
+  background-color: whitesmoke;
   }
+
+.tab button.hover {
+  /* border-bottom: 1px solid black; */
+  background-color: whitesmoke;
+}
 
 
   /* Style the active tab content */
@@ -149,7 +155,7 @@ input.button:hover, input.button:active {
 /* Style the container for the organization logo */
 #left-container {
     /* border: 5px dotted grey; */
-    border-right: 1px solid black;
+    /* border-right: 1px solid black; */
     float: left;
     height: 50%;
     width: 30%;
@@ -173,15 +179,17 @@ input.button:hover, input.button:active {
 
 /* Style the login window */
 #login-widget{
-    margin: 25px;
+    margin: 15px;
     padding: 15px;
     /* height: 100%; */
     /* max-width: 350px; */
     /* height: 150; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
     /* border-radius: 25px; */
+    border-left: 1px solid black;
     float: left;
     margin-top: 50px;   
+    /* background: blue; */
 }
 
 /* Style the homerow container */
@@ -194,22 +202,33 @@ input.button:hover, input.button:active {
     margin-top: 50px;
     padding: 15px;
     float: left;
+    border-left: 1px solid black;
 }
 
 /* Style the homepage display name */
 #home-banner{
-    /* border:1px dotted orange; */
     width: 250px;
     margin: 0px;
     padding: 25px;
     float: center;
     text-align: center;
+    color: blue;
+}
+
+#app-banner{
+  padding:5px;
+  background:blue;
 }
 
 /* Style the page title */
 .title-container{
   border: 2px solid black;
   padding: 5px;
+  /* color:blue; */
+}
+
+#logout-container{
+  background:blue;
 }
 
 

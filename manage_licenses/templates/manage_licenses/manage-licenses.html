@@ -10,16 +10,20 @@
 {% endblock head %}
 
 {% block banner %}
-<div class="tab">
-<button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">Manage my licenses</button>
-<button class="js-tablinks" onclick="changePage(event, 'products-tab')">View my products</button>
+<div id="app-banner" class="block-container">
+  <div class="tab">
+  <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
+  <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
+  </div>
 </div>
 {% endblock banner %}
 
 {% block leftcontainer %}{% endblock leftcontainer %}
 
 {% block main %}
-<h2 class="title-container"> Manage Licenses </h2>
+<div class="title-container">
+<h2 class="text-container"> Manage Licenses </h2>
+</div>
 
 {% if messages %}
 <ul class="messages">
@@ -97,7 +101,7 @@
   </div>
 </div>
 
-<div class="block-container">
+<div id="logout-container" class="block-container">
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <a href="{% url 'logout' %}">Logout</a>
 </div>
