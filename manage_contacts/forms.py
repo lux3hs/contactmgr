@@ -40,11 +40,11 @@ class ContactCreationForm(UserCreationForm):
 class SearchChoiceForm(forms.Form):
     #Set widget fields
     choices = [("first_name", "First Name"), ("last_name", "Last Name"), ("email", "Email")]
-    contact_search = forms.CharField(max_length=50, label='')
+    search_field = forms.CharField(max_length=50, label='')
     filter_choice = forms.ChoiceField(choices=choices, label='')
     
     #Extend init function to set widget class
     def __init__(self, *args, **kwargs):
         super(SearchChoiceForm, self).__init__(*args, **kwargs)
         self.fields["filter_choice"].widget.attrs['class'] = "ChoiceField"
-        self.fields["contact_search"].widget.attrs['class'] = "CharField"
+        self.fields["search_field"].widget.attrs['class'] = "CharField"

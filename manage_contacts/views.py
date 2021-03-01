@@ -27,9 +27,6 @@ def manage_contacts(request):
     #Get list of users by current contact's organization
     user_objects = User.objects
     contact_objects = Contact.objects.filter(organization=org_id)
-
-    #Create a form for filtering contacts
-    filter_form = SearchChoiceForm()
     
     #Create a list of contact information to display in table
     contact_list = []
@@ -45,6 +42,24 @@ def manage_contacts(request):
         user_dict["org_id"] = contact.organization.id
         user_dict["user_org"] = contact.organization.org_name
         contact_list.append(user_dict)
+
+    #Create a form for filtering contacts
+    filter_form = SearchChoiceForm()
+
+    if request.GET.get("filter_choice"):
+        user_query = request.GET
+        filter_choice = user_query.get("filter_choice")
+        search_field = user_query.get("search_field")
+        temp_list = []
+        for contact in contact_list:
+            if search_field.lower() in contact[filter_choice].lower():
+                temp_list.append(contact)
+
+        contact_list = temp_list
+
+    #Clear search filter on response from clear search button
+    elif request.GET.get("clear_search"):
+        return HttpResponseRedirect(request.path_info)
 
     #Render variables in html
     context = {'user_email':user_email,
@@ -111,3 +126,9 @@ def add_contact(request):
     #Render variables in html
     context = {'user_role':user_role, 'contact_form':contact_form}
     return render(request, "manage_contacts/add-contact.html", context)
+
+@login_required
+def edit_contact(request):
+    context = {}
+    return render(request, "manage_contacts/edit-contact.html", context)
+

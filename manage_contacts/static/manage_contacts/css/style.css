@@ -4,28 +4,28 @@
 /*                          */
 
 /* Style the New Contact button */
-#NewContactButton{
+#new-contact-button{
   border:2px solid black;
   display:inline-block;
   /* margin-left:90%; */
   /* margin:10px; */
  }
 
-#pageInfo{
+#contact-page-info{
   display:inline-block;
   width: 75%;
   text-align: left;
 }
 
 /* Style the contact creation widget box */
-#ContactCreationWidget{
+#contact-creation-widget{
   width: 75%;
   padding:5px;
   text-align: left;
 }
 
 /* Style the contact creation widget items */
-#ContactCreationWidget p{
+#contact-creation-widget p{
   border:2px solid black;
   padding:5px;
   display: inline-block;

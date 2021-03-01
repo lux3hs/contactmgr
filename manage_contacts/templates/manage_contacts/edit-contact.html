@@ -1,0 +1,27 @@
+<!-- templates/manage_contacts/edit-contacts.html -->
+{% extends "base.html" %}
+{% block title %}Edit Contact{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+{% endblock head %}
+
+{% block banner %}{% endblock banner %}
+
+{% block leftcontainer %}{% endblock leftcontainer %}
+
+{% block main %}
+<h2 class="title-container">Edit Contact</h2>
+
+<div class="block-container">
+<p class="text-container">Edit your contact here. (In progress...)</p>
+</div>
+
+<div class="block-container">
+<p><a href="{% url 'manage_contacts' %}">Return</a></p>
+<p><a href="{% url 'homepage' %}">Home</a></p>
+<p><a href="{% url 'logout' %}">Logout</a></p>
+</div>
+{% endblock main %}
+

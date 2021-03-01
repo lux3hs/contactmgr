@@ -11,14 +11,16 @@
 
 {% block banner %}
 <div class="tab">
-<button class="tablinks" id="defaultOpen" onclick="change_page(event, 'Licenses')">Manage my licenses</button>
-<button class="tablinks" onclick="change_page(event, 'Products')">View my products</button>
+<button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">Manage my licenses</button>
+<button class="js-tablinks" onclick="changePage(event, 'products-tab')">View my products</button>
 </div>
 {% endblock banner %}
 
 {% block leftcontainer %}{% endblock leftcontainer %}
 
 {% block main %}
+<h2 class="title-container"> Manage Licenses </h2>
+
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -27,69 +29,75 @@
 </ul>
 {% endif %}
 
-<h2 class="titleContainer"> Manage Licenses </h2>
+<div id="licenses-tab" class="js-tabcontent">
+  <script>document.getElementById("js-default-open").click();</script>  
 
-<div id="Licenses" class="tabcontent">
-<script>document.getElementById("defaultOpen").click();</script>  
-
-  <div class="blockContainer"/>
-
-  <div id="widget1" class="blockWidget">
-    <form id="form1" method = "GET">
-      {{ search_form }}
-      <input class="button" type="submit" value="Search Products"/>
-    </form>
-
-    <form id="form1" method="get">
-    {% csrf_token %}
-    <input class="button" type="submit" name="clear_search" value="Clear Search"/>
-    </form>
+  <div class="block-container">
+    <p id="contact-page-info" class="text-container">
+    This screen displays the licenses for the entire Organization. If you want to view associated products, 
+    click on 'View my products' menu item above.
+    </p>
   </div>
 
-  <form id="form1" class="blockWidget" method = "GET">
-    {{ product_form }}
-    <input class="button" type="submit" value="Generate License"/>
-  </form>
-  
+  <div class="block-container">
+    <h3 class="text-container">Filter licenses Using the Fields Below</h3>
+
+    <div class="block-widget">
+      <form class="block-widget" method = "GET">
+        {{ product_form }}
+        <input class="button" type="submit" value="Generate License"/>
+      </form>
+
+      <div class="block-widget">
+        <form method = "GET">
+          {{ search_form }}
+          <input class="button" type="submit" value="Search Products"/>
+        </form>
+
+        <form method="get">
+        {% csrf_token %}
+        <input class="button" type="submit" name="clear_search" value="Clear Search"/>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div class="blockContainer">
-  <h2> Licenses </h2>
+  <div class="block-container">
+    <h2> Licenses </h2>
 
-  <table> 
-  <tr>
-    <th>Product Name</th>
-    <th>License access code</th> 
-    <th>Allocated</th>
-  </tr>
+    <table> 
+      <tr>
+        <th>Product Name</th>
+        <th>License access code</th> 
+        <th>Allocated</th>
+      </tr>
 
-  {% for entitlement in entitlement_list %}
-  <tr>
-    <td>{{ entitlement.product_name }}</td>
-    <td>{{ entitlement.access_code }}</td>
-    <td>{{ entitlement.num_allocated }} </td>
-  </tr>
-  {% endfor %} 
-
-  </table>
+      {% for entitlement in entitlement_list %}
+        <tr>
+          <td>{{ entitlement.product_name }}</td>
+          <td>{{ entitlement.access_code }}</td>
+          <td>{{ entitlement.num_allocated }} </td>
+        </tr>
+      {% endfor %} 
+    </table>
   </div>
 </div>
 
-<div id="Products" class="tabcontent">
+<div id="products-tab" class="js-tabcontent">
+  <div class="block-container">
+    <div class=block-widget>
+      <h2 class="text-container"> my products </h2>
+    </div>
 
-  <div class=blockContainer>
-    <h2 class="textWidget"> my products </h2>
+    <div class="block-widget">
+    {% for entitlement in entitlement_list %}
+      <p class="text-container">{{ entitlement.product_name }}</p>
+    {% endfor %}
+    </div>
   </div>
-
-  <div class="blockWidget">
-  {% for entitlement in entitlement_list %}
-    <p class="textWidget">{{ entitlement.product_name }}</p>
-  {% endfor %}
-  </div>
-
 </div>
 
-<div class=logoutBox>
+<div class="block-container">
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <a href="{% url 'logout' %}">Logout</a>
 </div>

@@ -22,19 +22,19 @@
 </ul>
 {% endif %}
 
-<h2 class="titleContainer">Add Contact</h2>
-<div class="blockContainer">
+<h2 class="title-container">Add Contact</h2>
+<div class="block-container">
   
   {% if user_role == "admin" %}
   
-  <div class="blockContainer">
+  <div class="block-container">
     <form id=form1 method="post">
     {% csrf_token %}
-      <div class="blockWidget" id="ContactCreationWidget">
+      <div class="block-widget" id="contact-creation-widget">
       {{ contact_form.as_p }}    
       </div>
       
-      <div class="blockContainer">
+      <div class="block-container">
       <input class="button" type = "submit" value = "Create user" name="newForm"/>
       </div>
     
@@ -46,7 +46,7 @@
   {% endif %}
 </div>
 
-<div class="logoutBox">
+<div class="block-container">
 <p><a href="{% url 'manage_contacts' %}">Return</a></p>
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Logout</a></p>
