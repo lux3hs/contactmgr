@@ -10,7 +10,7 @@
 {% endblock head %}
 
 {% block banner %}
-<div class="flex-container app-banner widget-border">
+<div class="flex-container app-banner">
   <div class="tab">
   <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
   <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
@@ -36,15 +36,17 @@
 <div id="contacts-tab" class="js-tabcontent">
   <script>document.getElementById("js-default-open").click();</script>
 
-  <div class="flex-container flex-row widget-border">
-    <p class="text-container left-text">
-    This screen displays the contacts for a specific location, 
-    or for the entire Organization. If you want to update your personal Information, 
-    click on 'My Information' menu item above.
-    </p>
+  <div class="flex-container">
+    <div class="flex-container flex-row container-border">
+      <p class="text-container left-text">
+      This screen displays the contacts for a specific location, 
+      or for the entire Organization. If you want to update your personal Information, 
+      click on 'My Information' menu item above.
+      </p>
 
-    <div class="flex-widget">
-      <a href="{% url 'add_contact' %}">New Contact</a>
+      <div class="flex-widget">
+        <a href="{% url 'add_contact' %}">New Contact</a>
+      </div>
     </div>
   </div>
 
@@ -100,17 +102,17 @@
 </div>
 
 <div id="information-tab" class="js-tabcontent">
-  <div class="flex-container border-full"> 
-    <div class="flex-widget border-full">
+  <div class="flex-container"> 
+    <div class="flex-widget container-border">
       <h2 class="text-container">{{ user.username }}</h2>
 
-      <div class="flex-widget border-full">
-        <p class="text-container">UserID: {{ user.id }}</p>
-        <p class="text-container">UserEmail: {{ user_email }}</p>
-        <p class="text-container">Role: {{ user_role }}</p>
-        <p class="text-container">Org: {{ user_org }}</p>
-        <p class="text-container">OrgID: {{ org_id }}</p>
-      </div>
+        <div class="flex-widget">
+          <p class="text-container">UserID: {{ user.id }}</p>
+          <p class="text-container">UserEmail: {{ user_email }}</p>
+          <p class="text-container">Role: {{ user_role }}</p>
+          <p class="text-container">Org: {{ user_org }}</p>
+          <p class="text-container">OrgID: {{ org_id }}</p>
+        </div>
 
       <div class="flex-widget">
         <p><a href="{% url 'edit_contact' %}">Edit Contact</a></p>
@@ -119,7 +121,7 @@
   </div>
 </div>
 
-<div class="flex-container flex-row border-top navigation-buttons widget-border">
+<div class="flex-container flex-row border-top navigation-buttons">
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Logout</a></p>
 </div>

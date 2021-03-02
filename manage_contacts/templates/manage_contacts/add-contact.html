@@ -22,15 +22,15 @@
 </ul>
 {% endif %}
 
-<h2 class="text-container widget-border">Add Contact</h2>
+<h2 class="text-container">Add Contact</h2>
 <div class="flex-container">
   
   {% if user_role == "admin" %}
   
-  <div class="flex-widget widget-border">
+  <div class="flex-widget container-border">
     <form method="post">
     {% csrf_token %}
-      <div class="flex-widget contact-form border-full">
+      <div class="flex-widget contact-form widget-border">
       {{ contact_form.as_p }}
       </div>
       
@@ -46,7 +46,7 @@
   {% endif %}
 </div>
 
-<div class="flex-container flex-row border-top navigation-buttons widget-border">
+<div class="flex-container flex-row border-top navigation-buttons">
 <p><a href="{% url 'manage_contacts' %}">Return</a></p>
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Logout</a></p>

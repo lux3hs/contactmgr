@@ -93,7 +93,7 @@ input.button:hover, input.button:active {
 
 /* Create an active/current tablink class */
 .tab button.active {
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
   background-color: whitesmoke;
   }
 
@@ -131,7 +131,6 @@ input.button:hover, input.button:active {
 /* Style naviation links */
 .navigation-buttons a:hover{
   background-color: whitesmoke;
-  border-bottom:1px solid black;
 }
 
 
@@ -166,8 +165,13 @@ input.button:hover, input.button:active {
   /* border: 1px solid black; */
   /* border-radius: 25px; */
   border-left: 1px solid black;
-  float: left;
   /* background: blue; */
+}
+
+#login-widget button{
+  border:none;
+  /* border-radius: 15px; */
+  outline:none;
 }
 
 
@@ -178,14 +182,14 @@ input.button:hover, input.button:active {
 /* Style choice field box */
 .ChoiceField{
   background-color:white;
-  color: black;
-  border: 2px solid black;
-  /* border-radius: 24px; */
+  border:none;
+  /* border-radius: 15px; */
   text-align: center;
   padding: 10px 20px;
   margin: 5px;
-  text-decoration: none;
-  display: inline-block;
+
+  /* text-decoration: none; */
+  /* display: inline-block; */
 }
 
 .ChoiceField:hover, .ChoiceField:active {
@@ -196,13 +200,11 @@ input.button:hover, input.button:active {
 .CharField{
 background-color:white;
 color: black;
-border: 2px solid black;
-/* border-radius: 24px; */
-/* text-align: center; */
+border: none;
+/* border-radius: px; */
+text-align: left;
 padding: 10px 20px;
 margin: 5px;
-text-decoration: none;
-display: inline-block;
 }
 
 .CharField:hover, .CharField:active {
@@ -242,12 +244,6 @@ background-color: whitesmoke;
   text-align: center;
 }
 
-.widget-border{
-  border:1px solid darkgray;
-  /* background-color: whitesmoke; */
-  background-image: linear-gradient(to bottom right, darkgray,whitesmoke);
-}
-
 .border-full{
   border: 1px solid black;
 }
@@ -280,7 +276,65 @@ flex-direction: row;
   text-align:center;
 }
 
+/*               */
+/* Widget styles */
+/*               */
 
+/* Style the widget border */
+.widget-border{
+  /* border:1px solid darkgray; */
+  border:none;
+  border-radius: 15px;
+
+  background-color: darkgray;
+  /* background-image: linear-gradient(to bottom right, darkgray,whitesmoke); */
+}
+
+/* Style the widget buttons */
+.widget-border .CharField{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+}
+
+.widget-border .ChoiceField{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+}
+
+.widget-border input{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+}
+
+.widget-border a{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+}
+
+.container-border{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+  background-color: lightgray;
+}
+
+.container-border a{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+
+}
+
+.container-border input{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+
+}
 
 
 /*              */
@@ -295,13 +349,9 @@ table {
   padding:5px;
 }
 
-tr{
-  border:1px solid black;
-}
-
 
 tr:nth-child(1){
-    background-color: darkgray;
+    background-color: lightgray;
     color: inherit;
 }
 
@@ -311,9 +361,11 @@ tr:nth-child(1){
   }
 
 td{
-  background:lightgrey;
+  background: darkgray;
   color: black;
   padding:1em;
   
 }
+
+/* Table border radius added to app-specific css files due to different column numbers  */
 

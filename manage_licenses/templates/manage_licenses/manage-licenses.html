@@ -10,7 +10,7 @@
 {% endblock head %}
 
 {% block banner %}
-<div class="flex-container app-banner widget-border">
+<div class="flex-container app-banner">
   <div class="tab">
   <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
   <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
@@ -35,12 +35,13 @@
 
 <div id="licenses-tab" class="js-tabcontent">
   <script>document.getElementById("js-default-open").click();</script>  
-
-  <div class="flex-container widget-border">
-    <p class="text-container">
-    This screen displays the licenses for the entire Organization. If you want to view associated products, 
-    click on 'View my products' menu item above.
-    </p>
+  <div class="flex-container">
+    <div class="flex-container container-border">
+      <p class="text-container">
+      This screen displays the licenses for the entire Organization. If you want to view associated products, 
+      click on 'View my products' menu item above.
+      </p>
+    </div>
   </div>
 
   <div class="flex-container">
@@ -88,11 +89,11 @@
 
 <div id="products-tab" class="js-tabcontent">
 
-  <div class="flex-container border-full">
-    <div class="flex-widget border-full">
+  <div class="flex-container">
+    <div class="flex-widget container-border">
       <h2 class="text-container"> my products </h2>
 
-      <div class="flex-widget border-full">
+      <div class="flex-widget widget-border">
       {% for entitlement in entitlement_list %}
         <p class="text-container">{{ entitlement.product_name }}</p>
       {% endfor %}
@@ -101,7 +102,7 @@
   </div>
 </div>
 
-<div class="flex-container flex-row border-top navigation-buttons widget-border">
+<div class="flex-container flex-row border-top navigation-buttons">
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Logout</a></p>
 </div>
