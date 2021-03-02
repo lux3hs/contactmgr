@@ -3,13 +3,6 @@
 /* Override base css styles */
 /*                          */
 
-#form1{
-  display:inline-block;
-}
-
-#widget1{
-  display:inline-block;
-}
 
 /* Override nth-child with number 
    of columns in table for curved 

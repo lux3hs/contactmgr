@@ -5,37 +5,29 @@
     {% block head %}{% endblock head %}
     <title>{% block title %}Name of Page{% endblock title %}</title>
     {% load static %}
-
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">    
     <link rel="stylesheet" type="text/css" href="{% static '/css/licensepgm/style.css' %}">
-    
-    {% comment %} Delete this to get rid of rainbowBox! {% endcomment %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/licensepgm/rainbowbox.css" %}">
   </head>
 
   <body>
-    {% block page %}
-    <div class="page">
     
     {% block banner %}
-    <header id="home-banner"> 
-    <h1>LICENSEPGM</h1>
-    </header>
+    <div class="flex-container">
+    <h1 class="text-container">LICENSEPGM</h1>
+    </div>
     {% endblock banner %} 
 
-    {% block leftcontainer %}
-    <div id="left-container">
+    {% block logocontainer %}
+    <div class="flex-container flex-row">
+    <div id="logo-container" class="flex-widget">
     <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="org-logo" alt="Generic logo"/>
     </div>
-    {% endblock leftcontainer %}
-
+    {% endblock logocontainer %}
+      
     <main>
-    {% block main %}{% endblock main %}
+      {% block main %}{% endblock main %}
     </main>
 
-    </div>
-
-  {% endblock page %}
   </body>
 
 </html>

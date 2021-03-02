@@ -10,7 +10,7 @@
 {% endblock head %}
 
 {% block banner %}
-<div id="app-banner" class="block-container">
+<div class="flex-container app-banner widget-border">
   <div class="tab">
   <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
   <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
@@ -18,11 +18,11 @@
 </div>
 {% endblock banner %}
 
-{% block leftcontainer %}{% endblock leftcontainer %}
+{% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
-<div class="title-container">
-<h2 class="text-container"> Manage Licenses </h2>
+<div class="flex-container">
+<h2 class="text-container border-underline"> Manage Licenses </h2>
 </div>
 
 {% if messages %}
@@ -36,38 +36,37 @@
 <div id="licenses-tab" class="js-tabcontent">
   <script>document.getElementById("js-default-open").click();</script>  
 
-  <div class="block-container">
-    <p id="contact-page-info" class="text-container">
+  <div class="flex-container widget-border">
+    <p class="text-container">
     This screen displays the licenses for the entire Organization. If you want to view associated products, 
     click on 'View my products' menu item above.
     </p>
   </div>
 
-  <div class="block-container">
-    <h3 class="text-container">Filter licenses Using the Fields Below</h3>
-
-    <div class="block-widget">
-      <form class="block-widget" method = "GET">
-        {{ product_form }}
+  <div class="flex-container">
+    <form class="flex-widget widget-border flex-row" method = "GET">
         <input class="button" type="submit" value="Generate License"/>
-      </form>
+        {{ product_form }}
+    </form>
+  </div>
 
-      <div class="block-widget">
+  <div class="flex-container">
+    <div class="flex-widget widget-border">
+      <p class="text-container">Filter licenses Using the Fields Below</p>
         <form method = "GET">
+          <input class="button" type="submit" value="Search"/>
           {{ search_form }}
-          <input class="button" type="submit" value="Search Products"/>
         </form>
 
         <form method="get">
-        {% csrf_token %}
-        <input class="button" type="submit" name="clear_search" value="Clear Search"/>
+          {% csrf_token %}
+          <input class="button" type="submit" name="clear_search" value="Clear Search"/>
         </form>
       </div>
-    </div>
   </div>
 
-  <div class="block-container">
-    <h2> Licenses </h2>
+  <div class="flex-container flex-center border-top">
+    <h2 class="text-container border-bottom"> Licenses </h2>
 
     <table> 
       <tr>
@@ -88,22 +87,23 @@
 </div>
 
 <div id="products-tab" class="js-tabcontent">
-  <div class="block-container">
-    <div class=block-widget>
-      <h2 class="text-container"> my products </h2>
-    </div>
 
-    <div class="block-widget">
-    {% for entitlement in entitlement_list %}
-      <p class="text-container">{{ entitlement.product_name }}</p>
-    {% endfor %}
+  <div class="flex-container border-full">
+    <div class="flex-widget border-full">
+      <h2 class="text-container"> my products </h2>
+
+      <div class="flex-widget border-full">
+      {% for entitlement in entitlement_list %}
+        <p class="text-container">{{ entitlement.product_name }}</p>
+      {% endfor %}
+      </div>
     </div>
   </div>
 </div>
 
-<div id="logout-container" class="block-container">
+<div class="flex-container flex-row border-top navigation-buttons widget-border">
 <p><a href="{% url 'homepage' %}">Home</a></p>
-<a href="{% url 'logout' %}">Logout</a>
+<p><a href="{% url 'logout' %}">Logout</a></p>
 </div>
 
 {% endblock main%}

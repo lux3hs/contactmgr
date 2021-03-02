@@ -3,17 +3,22 @@
 {% block title %}Home{% endblock title %}
 
 {% block main %}
-<div id="home-row">
-{% if user.is_authenticated %}
-  <h2>Home</h2>
-  <h3>Welcome {{ user.username }}!</h3>
-  <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
-  <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a>
-{% endif %}
+  {% if user.is_authenticated %}
+    
+    <div class="flex-widget">
 
-</div>
+    <h2 class="text-container">Home</h2>
+    <div class="flex-widget border-left navigation-buttons">
+      <h3 class="text-container">Welcome {{ user.username }}!</h3>
+        <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
+        <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
+        <p><a href="{% url 'logout' %}">Log Out</a></p>
+      </div> 
+    </div>
+  {% else %}
+    <div class="flex-container navigation-buttons">
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a>
+    </div>
+  {% endif %}
 {% endblock main %}

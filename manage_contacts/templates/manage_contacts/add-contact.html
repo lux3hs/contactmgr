@@ -10,7 +10,7 @@
 
 {% block banner %}{% endblock banner %}
 
-{% block leftcontainer %}{% endblock leftcontainer %}
+{% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
 
@@ -22,19 +22,19 @@
 </ul>
 {% endif %}
 
-<h2 class="title-container">Add Contact</h2>
-<div class="block-container">
+<h2 class="text-container widget-border">Add Contact</h2>
+<div class="flex-container">
   
   {% if user_role == "admin" %}
   
-  <div class="block-container">
-    <form id=form1 method="post">
+  <div class="flex-widget widget-border">
+    <form method="post">
     {% csrf_token %}
-      <div class="block-widget" id="contact-creation-widget">
-      {{ contact_form.as_p }}    
+      <div class="flex-widget contact-form border-full">
+      {{ contact_form.as_p }}
       </div>
       
-      <div class="block-container">
+      <div class="flex-widget">
       <input class="button" type = "submit" value = "Create user" name="newForm"/>
       </div>
     
@@ -46,7 +46,7 @@
   {% endif %}
 </div>
 
-<div class="block-container">
+<div class="flex-container flex-row border-top navigation-buttons widget-border">
 <p><a href="{% url 'manage_contacts' %}">Return</a></p>
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Logout</a></p>
