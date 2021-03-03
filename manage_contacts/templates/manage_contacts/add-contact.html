@@ -27,14 +27,14 @@
   
   {% if user_role == "admin" %}
   
-  <div class="flex-widget container-border">
+  <div class="widget-box">
     <form method="post">
     {% csrf_token %}
-      <div class="flex-widget contact-form widget-border">
+      <div class="flex-box">
       {{ contact_form.as_p }}
       </div>
       
-      <div class="flex-widget">
+      <div class="flex-box">
       <input class="button" type = "submit" value = "Create user" name="newForm"/>
       </div>
     

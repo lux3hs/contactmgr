@@ -4,12 +4,14 @@
 {% block title %}Login{% endblock %}
 
 {% block main %}
-<div id="login-widget">
-<h3>Log In</h3>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
+<div class="flex-container flex-center login-container">
+  <div class="widget-box">
+    <h3>Log In</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <p><button type="submit">Log In</button></p>
+    </form>
+  </div>
 </div>
 {% endblock main %}

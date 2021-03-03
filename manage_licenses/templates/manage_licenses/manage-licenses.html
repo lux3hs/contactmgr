@@ -10,10 +10,14 @@
 {% endblock head %}
 
 {% block banner %}
-<div class="flex-container app-banner">
+<div class="flex-container flex-row border-top app-banner">
   <div class="tab">
   <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
   <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
+  </div>
+  <div class="nav-row navigation-buttons">
+    <p><a href="{% url 'homepage' %}">Home</a></p>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
 </div>
 {% endblock banner %}
@@ -45,14 +49,16 @@
   </div>
 
   <div class="flex-container">
-    <form class="flex-widget widget-border flex-row" method = "GET">
-        <input class="button" type="submit" value="Generate License"/>
-        {{ product_form }}
-    </form>
+    <div class="widget-box">
+      <form method = "GET">
+          <input class="button" type="submit" value="Generate License"/>
+          {{ product_form }}
+      </form>
+    </div>
   </div>
 
   <div class="flex-container">
-    <div class="flex-widget widget-border">
+    <div class="widget-box">
       <p class="text-container">Filter licenses Using the Fields Below</p>
         <form method = "GET">
           <input class="button" type="submit" value="Search"/>
@@ -90,21 +96,18 @@
 <div id="products-tab" class="js-tabcontent">
 
   <div class="flex-container">
-    <div class="flex-widget container-border">
-      <h2 class="text-container"> my products </h2>
+    <div class="widget-box">
+      <h3 class="text-container"> my products </h3>
 
-      <div class="flex-widget widget-border">
-      {% for entitlement in entitlement_list %}
+      <div class="flex-box">
+        {% for entitlement in entitlement_list %}
         <p class="text-container">{{ entitlement.product_name }}</p>
-      {% endfor %}
+       {% endfor %}
       </div>
     </div>
   </div>
 </div>
 
-<div class="flex-container flex-row border-top navigation-buttons">
-<p><a href="{% url 'homepage' %}">Home</a></p>
-<p><a href="{% url 'logout' %}">Logout</a></p>
-</div>
+<div class="flex-container border-top">
 
 {% endblock main%}

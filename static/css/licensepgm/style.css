@@ -1,9 +1,8 @@
 
-/*             */
+/*            */
 /* Page Style */
-/*             */
+/*            */
 
-/* Style for base page class */
 body {
     /* border: 2px black; */
     /* height: 100vh; */
@@ -17,48 +16,57 @@ body {
 
   }
 
-/* Style the links */
 a{
     background-color:white;
     color: black;
-    border: 2px solid black;
+    border: 1px solid black;
     /* border-radius: 25px; */
     text-align: center;
     padding: 10px 20px;
     text-decoration: none;
-    display: inline-block;
-    margin:5px;
-}
+  }
 
 a:hover, a:active {
     background-color: whitesmoke;
 }
 
-/* Style the buttons and selection widgets */
+input{
+  background-color:white;
+  color: black;
+  border: 1px solid black;
+  text-align: left;
+  padding:10px 20px;
+  text-decoration: none;
+
+}
+
+input:hover, input:active{
+  background-color: whitesmoke;
+}
+
 button {
     background-color:white;
     color: black;
-    border: 2px solid black;
+    border: 1px solid black;
     /* border-radius: 24px; */
     text-align: center;
     padding: 10px 20px;
     text-decoration: none;
-    display: inline-block;
+    /* display: inline-block; */
 }
 
 button:hover, button:active {
     background-color: whitesmoke;
   }
 
-/* Style input buttons */
 input.button {
     background-color:white;
     color: black;
-    border: 2px solid black;
+    border: 1px solid black;
     /* border-radius: 24px; */
     text-align: center;
     padding: 10px 20px;
-    margin: 5px;
+    /* margin: 5px; */
     text-decoration: none;
     display: inline-block;
     /* cursor: pointer; */
@@ -78,6 +86,7 @@ input.button:hover, input.button:active {
 .tab {
     /* border: 2px solid black; */
     width:fit-content;
+    height: fit-content;
     overflow: hidden;
   }
 
@@ -88,7 +97,7 @@ input.button:hover, input.button:active {
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 14px 16px;
+    padding: 10px 20px;
   }
 
 /* Create an active/current tablink class */
@@ -103,14 +112,21 @@ input.button:hover, input.button:active {
 }
 
 
-  /* Style the active tab content */
+  /* Control active tab content for pages */
 .js-tabcontent {
     display: none;
-    /* margin: 50px; */
-    /* padding: 6px 12px; */
-    /* border: 2px solid black; */
   }
 
+
+
+
+/*                */
+/*  Login styles  */
+/*                */
+
+.login-container{
+  margin-top:10%;
+}
 
 
 /*            */
@@ -133,56 +149,44 @@ input.button:hover, input.button:active {
   background-color: whitesmoke;
 }
 
+/* Style the navigation row */
+.nav-row{
+  display: flex;
+  flex-direction: row;
+  margin-left:auto;
+  width:fit-content;
+  height: fit-content;
+  overflow: hidden;
+}
+
+
 
 
 /*                 */
 /* Homepage styles */
 /*                 */
 
-/* Style the container for the organization logo */
-#logo-container {
-  /* border: 3px dotted blue; */
-  height: 50%;
-  width: 25%;
+/* Style the homepage header */
+.site-header{
+  align-items: center;
+  height: 50px;
 }
 
-/* Style the organization logo */
 #org-logo {
-  /* border:1px dotted grey; */
-  margin: 5px;
-  padding: 5px;
-  max-width: 75%;
-  /* max-height: 50%; */
-  /* float: center; */
-  /* vertical-align: top; */
+  height: 55%;
+  width: 55%;
 } 
 
-/* Style the login window */
-#login-widget{
-  margin: 15px;
-  margin-top: 50px;   
-  padding: 15px;
-  /* border: 1px solid black; */
-  /* border-radius: 25px; */
-  border-left: 1px solid black;
-  /* background: blue; */
-}
-
-#login-widget button{
-  border:none;
-  /* border-radius: 15px; */
-  outline:none;
-}
 
 
-/*             */
-/* Form fields */
-/*             */
+/*                   */
+/* Form field styles */
+/*                   */
 
 /* Style choice field box */
 .ChoiceField{
   background-color:white;
-  border:none;
+  /* border:none; */
   /* border-radius: 15px; */
   text-align: center;
   padding: 10px 20px;
@@ -200,7 +204,7 @@ input.button:hover, input.button:active {
 .CharField{
 background-color:white;
 color: black;
-border: none;
+/* border: none; */
 /* border-radius: px; */
 text-align: left;
 padding: 10px 20px;
@@ -213,9 +217,122 @@ background-color: whitesmoke;
 
 
 
-/*                 */
-/* flexbox classes */
-/*                 */
+/*               */
+/* Widget styles */
+/*               */
+
+/* Style the widget border */
+.widget-box{
+  width:fit-content;
+  block-size: fit-content;
+  /* border:none; */
+  border:2px solid darkgray;
+  border-radius: 15px;
+  padding: 15px;
+  background-color: lightgray;
+  /* background-image: linear-gradient(to bottom right, darkgray,whitesmoke); */
+}
+
+/* Style the widget buttons */
+.widget-box .CharField{
+  border:none;
+  /* border:1px solid black; */
+  border-radius: 15px;
+  outline:none;
+}
+
+.widget-box .ChoiceField{
+  border:none;
+  /* border: 1px solid black; */
+  border-radius: 15px;
+  outline:none;
+}
+
+.widget-box input{
+  border:none;
+  /* border:1px solid black; */
+  border-radius: 15px;
+  outline:none;
+}
+
+.widget-box a{
+  border:none;
+  /* border:1px solid black; */
+  border-radius: 15px;
+  outline:none;
+}
+
+.widget-box button{
+  border:none;
+  /* border:1px solid black; */
+  border-radius: 15px;
+  outline:none;
+}
+
+
+
+/* Block container styles */
+
+.container-border{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+  background-color: lightgray;
+}
+
+.container-border a{
+  border:none;
+  border-radius: 15px;
+  outline:none;
+
+}
+
+.container-border input{
+  /* border:none; */
+  border-radius: 15px;
+  /* outline:none; */
+
+}
+
+
+/*              */
+/* Table styles */
+/*              */
+
+/* Table border radius added to app-specific css files due to different column numbers  */
+
+
+table {
+  border-spacing: 0em 1em;
+  width: 100%;
+  text-align:left;
+  overflow-y:auto;
+  padding:5px;
+}
+
+
+tr:nth-child(1){
+    background-color: darkgray;
+    color: inherit;
+}
+
+  th{
+    padding:1em;
+
+  }
+
+td{
+  background: lightgray;
+  color: black;
+  padding:1em;
+  
+}
+
+
+
+/*                         */
+/* Generic flexbox classes */
+/*                         */
 
 .flex-container{
   display:flex;
@@ -224,25 +341,24 @@ background-color: whitesmoke;
   padding:5px;
 }
 
-.flex-widget{
+.flex-box{
   display:flex;
   flex-direction: column;
-  /* border:2px solid red; */
   width:fit-content;
   block-size: fit-content;
   padding:5px;
-  margin: 5px;
 }
 
 .text-container{
   /* border:2px solid Black; */
   padding:5px;
-  margin:5px;
   display:block;
   width:fit-content;
   height: fit-content;
   text-align: center;
 }
+
+/* Generic styling classes */
 
 .border-full{
   border: 1px solid black;
@@ -266,6 +382,7 @@ flex-direction: row;
 
 .flex-center{
   align-items: center;
+  justify-content: center;
 }
 
 .left-text{
@@ -275,97 +392,4 @@ flex-direction: row;
 .center-text{
   text-align:center;
 }
-
-/*               */
-/* Widget styles */
-/*               */
-
-/* Style the widget border */
-.widget-border{
-  /* border:1px solid darkgray; */
-  border:none;
-  border-radius: 15px;
-
-  background-color: darkgray;
-  /* background-image: linear-gradient(to bottom right, darkgray,whitesmoke); */
-}
-
-/* Style the widget buttons */
-.widget-border .CharField{
-  border:none;
-  border-radius: 15px;
-  outline:none;
-}
-
-.widget-border .ChoiceField{
-  border:none;
-  border-radius: 15px;
-  outline:none;
-}
-
-.widget-border input{
-  border:none;
-  border-radius: 15px;
-  outline:none;
-}
-
-.widget-border a{
-  border:none;
-  border-radius: 15px;
-  outline:none;
-}
-
-.container-border{
-  border:none;
-  border-radius: 15px;
-  outline:none;
-  background-color: lightgray;
-}
-
-.container-border a{
-  border:none;
-  border-radius: 15px;
-  outline:none;
-
-}
-
-.container-border input{
-  border:none;
-  border-radius: 15px;
-  outline:none;
-
-}
-
-
-/*              */
-/* Table styles */
-/*              */
-
-table {
-  border-spacing: 0em 1em;
-  width: 100%;
-  text-align:left;
-  overflow-y:auto;
-  padding:5px;
-}
-
-
-tr:nth-child(1){
-    background-color: lightgray;
-    color: inherit;
-}
-
-  th{
-    padding:1em;
-
-  }
-
-td{
-  background: darkgray;
-  color: black;
-  padding:1em;
-  
-}
-
-/* Table border radius added to app-specific css files due to different column numbers  */
 

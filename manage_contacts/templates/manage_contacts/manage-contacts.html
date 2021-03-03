@@ -10,12 +10,18 @@
 {% endblock head %}
 
 {% block banner %}
-<div class="flex-container app-banner">
+<div class="flex-container flex-row border-top app-banner">
   <div class="tab">
   <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
   <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
   </div>
+  <div class="nav-row navigation-buttons">
+    <p><a href="{% url 'homepage' %}">Home</a></p>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+  </div>
 </div>
+
+
 {% endblock banner %}
 
 {% block logocontainer %}{% endblock logocontainer %}
@@ -44,15 +50,14 @@
       click on 'My Information' menu item above.
       </p>
 
-      <div class="flex-widget">
+      <div class="flex-box">
         <a href="{% url 'add_contact' %}">New Contact</a>
       </div>
     </div>
   </div>
 
   <div class="flex-container">
-
-    <div class="flex-widget widget-border"> 
+    <div class="widget-box"> 
       <p class="text-container">Filter Contacts Using the Fields Below</p>
       
       <form method = "GET">
@@ -103,10 +108,10 @@
 
 <div id="information-tab" class="js-tabcontent">
   <div class="flex-container"> 
-    <div class="flex-widget container-border">
-      <h2 class="text-container">{{ user.username }}</h2>
+    <div class="widget-box">
+      <h3 class="text-container">{{ user.username }}</h3>
 
-        <div class="flex-widget">
+        <div class="flex-box">
           <p class="text-container">UserID: {{ user.id }}</p>
           <p class="text-container">UserEmail: {{ user_email }}</p>
           <p class="text-container">Role: {{ user_role }}</p>
@@ -121,9 +126,7 @@
   </div>
 </div>
 
-<div class="flex-container flex-row border-top navigation-buttons">
-<p><a href="{% url 'homepage' %}">Home</a></p>
-<p><a href="{% url 'logout' %}">Logout</a></p>
+<div class="flex-container border-top">
 </div>
 
 {% endblock main %}

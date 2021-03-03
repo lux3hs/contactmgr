@@ -3,21 +3,6 @@
 /* Override base css styles  */
 /*                          */
 
-.contact-form p{
-  /* border:1px solid black; */
-  text-align:left;
-  margin:5px;
-}
-
-.contact-form{
-  /* border:2px solid blue; */
-  padding:5px;
-  margin:5px;
-  flex-wrap: wrap;
-  align-items: left;
-}
-
-
 
 /* Override nth-child with number 
    of columns in table for curved 

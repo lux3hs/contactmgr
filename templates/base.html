@@ -9,21 +9,8 @@
     <link rel="stylesheet" type="text/css" href="{% static '/css/licensepgm/style.css' %}">
   </head>
 
-  <body>
-    
-    {% block banner %}
-    <div class="flex-container">
-    <h1 class="text-container">LICENSEPGM</h1>
-    </div>
-    {% endblock banner %} 
-
-    {% block logocontainer %}
-    <div class="flex-container flex-row">
-    <div id="logo-container" class="flex-widget">
-    <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="org-logo" alt="Generic logo"/>
-    </div>
-    {% endblock logocontainer %}
-      
+  <body>  
+    {% block banner %}{% endblock banner %}
     <main>
       {% block main %}{% endblock main %}
     </main>
