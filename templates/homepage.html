@@ -21,9 +21,22 @@
 
 
     <div class="flex-container flex-center flex-row navigation-buttons">
-        <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
+        {% comment %} <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p> {% endcomment %}
         <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
+        <p><a href="{% url 'generate_licenses' %}">Generate Licenses</a></p>
+
     </div>
+
+
+    <div class="flex-container navigation-buttons border-full">
+      <p class="text-container border-full">Testing:</p>
+        <p><a href="{% url 'generate_single_license' %}">Generate Single License</a></p>
+        <p><a href="{% url 'download_single_license_file' %}">Download Single License File</a></p>
+        <p><a href="{% url 'newScenarioStationLicenseName' %}">New Scenario License Name</a></p>
+
+    </div>
+
+    
   {% else %}
   <div class="flex-container flex-center login-container">
     <div class="flex-container widget-box">

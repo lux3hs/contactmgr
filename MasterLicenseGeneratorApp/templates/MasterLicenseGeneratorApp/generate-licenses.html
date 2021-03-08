@@ -1,0 +1,117 @@
+<!-- templates/manage_licenses/manage-licenses.html -->
+
+{% extends "base.html" %}
+{% block title %}Manage Licenses{% endblock title %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'MasterLicenseGeneratorApp/css/style.css' %}">
+<script src="{% static "MasterLicenseGeneratorApp/js/script.js" %}"></script>
+{% endblock head %}
+
+{% block banner %}
+<div class="flex-container flex-row border-top app-banner">
+  <div class="tab">
+  <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
+  <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
+  </div>
+  <div class="nav-row navigation-buttons">
+    <p><a href="{% url 'homepage' %}">Home</a></p>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+  </div>
+</div>
+{% endblock banner %}
+
+{% block logocontainer %}{% endblock logocontainer %}
+
+{% block main %}
+<div class="flex-container">
+<h2 class="text-container border-underline"> Manage Licenses </h2>
+</div>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div id="licenses-tab" class="js-tabcontent">
+  <script>document.getElementById("js-default-open").click();</script>  
+  <div class="flex-container">
+    <div class="flex-container container-border">
+      <p class="text-container">
+      This screen displays the licenses for the entire Organization. If you want to view associated products, 
+      click on 'View my products' menu item above.
+      </p>
+    </div>
+  </div>
+
+  <div class="flex-container">
+    <div class="widget-box">
+      <form method = "post">
+          {% csrf_token %}
+          {{ save_license_form }}
+          <p><input class="button" type="submit" value="Save License"/></p>
+      </form>
+      <div class="flex-container navigation-buttons">
+        <p><a href="{% url 'download_master_license_file' %}">Download Master License</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-container flex-center border-top">
+    <h2 class="text-container border-bottom"> Licenses </h2>
+
+    <table> 
+      <tr>
+        <th>Organization Name</th>
+        <th>Email</th> 
+        <th>Phone Number</th>
+        <th>IP Host</th>
+        <th>Reseller</th>
+      </tr>
+
+      {% for master_license in master_licenses %}
+        <tr>
+          <td>{{ master_license.m_organizationName }}</td>
+          <td>{{ master_license.m_emailAddress }}</td>
+          <td>{{ master_license.m_phoneNumber }} </td>
+          <td>{{ master_license.m_IP_Host }} </td>
+          <td>{{ master_license.m_reseller }} </td>
+        </tr>
+      {% endfor %} 
+    </table>
+  </div>
+</div>
+
+<div id="products-tab" class="js-tabcontent">
+
+  <div class="flex-container border-full">
+      <h3 class="text-container"> my products </h3>
+      <table> 
+      <tr>
+        <th>Product Name</th>
+        <th>Max Licenses</th> 
+        <th>Total Licenses</th>
+      </tr>
+
+      <div class="flex-box">
+        {% for entitlement in product_entitlements %}
+        <tr>
+          <td>{{ entitlement.product_name }}</td>
+          <td>{{ entitlement.max_licenses }}</td>
+          <td>{{ entitlement.total_licenses }} </td>
+        </tr>
+        
+
+       {% endfor %}
+       </table>
+      </div>
+  </div>
+</div>
+
+<div class="flex-container border-top">
+
+{% endblock main%}
