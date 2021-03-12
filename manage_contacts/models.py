@@ -14,13 +14,14 @@ class Organization(models.Model):
         return self.org_name
 
 class Entitlement(models.Model):
-    product_name = models.CharField(max_length=50)
+    PRODUCT_CHOICES = [("AppLoader", "AppLoader"), ("ScenarioBuilder", "ScenarioBuilder")]
+    product_name = models.CharField(max_length=50, choices=PRODUCT_CHOICES, null=True)
     max_licenses = models.IntegerField(default=100)
     total_licenses = models.IntegerField(default=0)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.product_name
+        return self.organization.org_name + "-" + self.product_name
 
 class Contact(models.Model):
     phone = models.IntegerField(null=True)

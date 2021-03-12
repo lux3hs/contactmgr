@@ -26,7 +26,10 @@
 
 {% block main %}
 <div class="flex-container">
-<h2 class="text-container border-underline"> Manage Licenses </h2>
+  <h2 class="text-container"> Manage Licenses </h2>
+  <div class="flex-box">
+  <p class="text-container"> {{ user_email }} - {{ user_role }} - {{ user_org }} </h3>
+  </div>
 </div>
 
 {% if messages %}
@@ -48,16 +51,64 @@
     </div>
   </div>
 
-  <div class="flex-container">
+       <div class="flex-container">
     <div class="widget-box">
-      <form method = "GET">
-          <input class="button" type="submit" value="Generate License"/>
-          {{ product_form }}
+      <form method = "post">
+          {% csrf_token %}
+          {{ new_license_form }}
+          <p><input class="button" type="submit" value="Save License"/></p>
       </form>
     </div>
   </div>
 
-  <div class="flex-container">
+  <div class="flex-container border-top">
+    <div class="flex-container flex-center">
+    <h2 class="text-container border-bottom"> Licenses </h2>
+    </div>
+
+    <form method="get">
+    <table> 
+      <tr>
+        <th></th>
+        <th>Product Name</th>
+        <th>Version</th> 
+        <th>Permanent</th>
+        <th>Grade</th>
+        <th>Stations</th> 
+        <th>Allowed IPs</th>
+        <th>Start Date</th>
+        <th>Exp Date</th> 
+        {% comment %} <th></th> {% endcomment %}
+      </tr>
+
+      {% for license in product_licenses %}
+        <tr>
+          <td><input type="checkbox" name="license_selection" value="{{ license.id }}"></td>
+          <td>{{ license.product_name }}</td>
+          <td>{{ license.version_number }}</td>
+          <td>{{ license.is_permanent }}</td>
+          <td>{{ license.product_grade }}</td>
+          <td>{{ license.product_stations }}</td>
+          <td>{{ license.allowed_ips }}</td>
+          <td>{{ license.creation_date }}</td>
+          <td>{{ license.expiration_date }}</td>
+          {% comment %} <td><p class="text-container"><input type="submit" name="delete_license" value="{{ license.id }}"></p></td> {% endcomment %}
+        </tr>
+      {% endfor %} 
+    </table>
+    <div class="flex-container flex-row border-top">
+      {% comment %} <p><a href="{% url 'download_license' %}">Download</a></p> {% endcomment %}
+      <p class="text-container"><input type="submit" name="download_license" value="Download License"></p>
+      <p class="text-container"><input type="submit" name="delete_license" value="Delete License"></p>
+    </div>
+
+    </form>
+  </div>
+</div>
+
+<div id="products-tab" class="js-tabcontent">
+
+ <div class="flex-container">
     <div class="widget-box">
       <p class="text-container">Filter licenses Using the Fields Below</p>
         <form method = "GET">
@@ -73,38 +124,23 @@
   </div>
 
   <div class="flex-container flex-center border-top">
-    <h2 class="text-container border-bottom"> Licenses </h2>
+      <h2 class="text-container border-bottom"> Product Entitlements </h2>
 
-    <table> 
-      <tr>
-        <th>Product Name</th>
-        <th>License access code</th> 
-        <th>Allocated</th>
-      </tr>
-
-      {% for entitlement in entitlement_list %}
+      <table> 
         <tr>
-          <td>{{ entitlement.product_name }}</td>
-          <td>{{ entitlement.access_code }}</td>
-          <td>{{ entitlement.num_allocated }} </td>
+          <th>Product Name</th>
+          <th>License access code</th> 
+          <th>Allocated</th>
         </tr>
-      {% endfor %} 
-    </table>
-  </div>
-</div>
 
-<div id="products-tab" class="js-tabcontent">
-
-  <div class="flex-container">
-    <div class="widget-box">
-      <h3 class="text-container"> my products </h3>
-
-      <div class="flex-box">
         {% for entitlement in entitlement_list %}
-        <p class="text-container">{{ entitlement.product_name }}</p>
-       {% endfor %}
-      </div>
-    </div>
+          <tr>
+            <td>{{ entitlement.product_name }}</td>
+            <td>{{ entitlement.access_code }}</td>
+            <td>{{ entitlement.num_allocated }} </td>
+          </tr>
+        {% endfor %} 
+      </table>
   </div>
 </div>
 
