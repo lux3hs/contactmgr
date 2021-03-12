@@ -77,14 +77,19 @@ def manage_licenses(request):
         # choice_list = filter_list
         entitlement_list = entitlement_filter
 
-    #Clear search filter on response from clear search button
+    #Clear search filter on response from clear search button (this can be done with just a button!)
     elif request.GET.get("clear_search"):
         return HttpResponseRedirect(request.path_info)
 
     #Create a product form with product list
     # product_form = ChoiceForm(field_choices=choice_list)
 
-    new_license_form = NewLicenseForm()
+    # product_choices = [("AppLoader", "AppLoader"), ("ScenarioBuilder", "ScenarioBuilder")]
+    product_choices = []
+    for entitlement in product_entitlements:
+        product_choices.append((entitlement.product_name, entitlement.product_name))
+        
+    new_license_form = NewLicenseForm(product_choices=product_choices)
 
     #Generate licenses on response from new license form
     # if request.GET.get('field_choice'):
@@ -185,7 +190,8 @@ def manage_licenses(request):
         try:
             license_selection = product_licenses.filter(id=license_id).get()
 
-
+            license_dict["userID"] = user_id
+            license_dict["Email"] = user_email
             license_dict["Organization"] = license_selection.org_name
             license_dict["Host/IP"] = license_selection.IP_Host
             license_dict["Version"] = license_selection.version_number
@@ -200,7 +206,7 @@ def manage_licenses(request):
         license_data = ""
         for field in license_dict:
             print(field)
-            license_data = license_data + str(field) + ": " + str(license_dict[field]) + "\n\r"
+            license_data = license_data + str(field) + ": " + str(license_dict[field]) + "\n"
 
         #Add a key of encrypted license data
         license_key = "userKey"
@@ -231,17 +237,17 @@ def manage_licenses(request):
 
 def download_license(request):
     # BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-    # license_file = str(base_dir) + "/bin/licenseserver.lic"
-    # f = open(license_file, "r")
-    # license_data = f.read()
-    # license_name = "product-license"
+    license_file = str(base_dir) + "/bin/licenseserver.lic"
+    f = open(license_file, "r")
+    license_data = f.read()
+    license_name = "product-license"
 
-    # license_path = str(base_dir) + "/bin/" + license_name + ".lic"
-    # license_data = open(license_path, "w")
-    # license_data.write("licenseInfo")
-    # license_data.close()
+    license_path = str(base_dir) + "/bin/" + license_name + ".lic"
+    license_data = open(license_path, "w")
+    license_data.write("licenseInfo")
+    license_data.close()
 
-    # license_data = license_data.replace("\n", "\r\n")
+    license_data = license_data.replace("\n", "\r\n")
     user_selection = request.POST
     print(user_selection)
 

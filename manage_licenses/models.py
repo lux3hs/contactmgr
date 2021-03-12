@@ -5,7 +5,7 @@ class License(models.Model):
     """ License database model """
     org_name = models.CharField(max_length=50, null=True)
     org_id = models.IntegerField(default=0, null=True)
-    IP_Host = models.IntegerField(default=0, null=True)
+    IP_Host = models.CharField(max_length=50, null=True)
     creator_email = models.CharField("Created by ", max_length=50, null=True)
     creator_phone = models.IntegerField(default=0, null=True)
     
