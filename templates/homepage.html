@@ -22,7 +22,11 @@
         <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
         <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
     </div>
-    
+
+    <div class="flex-container">
+    <p>Testing</p>
+    <a href="{% url 'download_master_license_file' %}">Download</a>
+    </div>
   {% else %}
   <div class="flex-container flex-center login-container">
     <div class="flex-container widget-box">

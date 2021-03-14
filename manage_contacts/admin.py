@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Organization, Entitlement
+from .models import Organization, Contact, Product, Entitlement
 
 #Show org ID as readonly field
 class OrganizationAdmin(admin.ModelAdmin):
@@ -7,5 +7,6 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Organization, OrganizationAdmin)
-admin.site.register(Entitlement)
 admin.site.register(Contact)
+admin.site.register(Product)
+admin.site.register(Entitlement)

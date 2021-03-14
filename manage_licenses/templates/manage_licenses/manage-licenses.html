@@ -78,7 +78,8 @@
         <th>Allowed IPs</th>
         <th>Start Date</th>
         <th>Exp Date</th> 
-        {% comment %} <th></th> {% endcomment %}
+        {% comment %} <th>Download</th>
+        <th>Delete</th> {% endcomment %}
       </tr>
 
       {% for license in product_licenses %}
@@ -92,14 +93,22 @@
           <td>{{ license.allowed_ips }}</td>
           <td>{{ license.creation_date }}</td>
           <td>{{ license.expiration_date }}</td>
-          {% comment %} <td><p class="text-container"><input type="submit" name="delete_license" value="{{ license.id }}"></p></td> {% endcomment %}
+          <td>
+          <p class="text-container"><button type="submit" name="generate_single_license" value="{{ license.id }}">o</button></p>
+          </td>
+          <td>
+          <p class="text-container"><button type="submit" name="delete_single_license" value="{{ license.id }}">x</button></p>
+          </td>
         </tr>
       {% endfor %} 
     </table>
     <div class="flex-container flex-row border-top">
-      {% comment %} <p><a href="{% url 'download_license' %}">Download</a></p> {% endcomment %}
-      <p class="text-container"><input type="submit" name="download_license" value="Download License"></p>
-      <p class="text-container"><input type="submit" name="delete_license" value="Delete License"></p>
+      <p class="text-container"><input type="submit" name="generate_license_selection" value="Generate Selection"></p>
+      <p class="text-container"><input type="submit" name="delete_license_selection" value="Delete Selection"></p>
+    </div>
+
+    <div class="flex-box">
+      <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
     </div>
 
     </form>

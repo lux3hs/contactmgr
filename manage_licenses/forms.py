@@ -31,3 +31,5 @@ class NewLicenseForm(forms.Form):
         self.fields['ip_host'] = forms.CharField(max_length=50)
         self.fields['creator_email'] = forms.EmailField(max_length=50)
         self.fields['creator_phone'] = forms.IntegerField(max_value=99999999999)
+        self.fields['creation_date'] = forms.DateTimeField()
+        self.fields['expiration_date'] = forms.DateTimeField()
