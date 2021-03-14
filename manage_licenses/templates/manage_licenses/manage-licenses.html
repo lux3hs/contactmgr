@@ -93,12 +93,12 @@
           <td>{{ license.allowed_ips }}</td>
           <td>{{ license.creation_date }}</td>
           <td>{{ license.expiration_date }}</td>
-          <td>
+          {% comment %} <td>
           <p class="text-container"><button type="submit" name="generate_single_license" value="{{ license.id }}">o</button></p>
           </td>
           <td>
           <p class="text-container"><button type="submit" name="delete_single_license" value="{{ license.id }}">x</button></p>
-          </td>
+          </td> {% endcomment %}
         </tr>
       {% endfor %} 
     </table>
@@ -138,8 +138,8 @@
       <table> 
         <tr>
           <th>Product Name</th>
-          <th>License access code</th> 
-          <th>Allocated</th>
+          <th>Product Version</th> 
+          <th>Allocated Licenses</th>
         </tr>
 
         {% for entitlement in entitlement_list %}

@@ -21,5 +21,23 @@ class License(models.Model):
     creation_date = models.DateTimeField("Date created ", null=True)
     expiration_date = models.DateTimeField("Expiration date ", null=True)
 
+    def get_license_dictionary(self):
+        license_dict = {}
+        license_dict["Org"] = self.org_name
+        license_dict["OrgID"] = self.org_id
+        license_dict["EntID"] = self.entitlement_id 
+        license_dict["IP Host"] = self.IP_Host
+        license_dict["Email"] = self.creator_email     
+        license_dict["Product"] = self.product_name 
+        license_dict["Version"] = self.version_number
+        license_dict["Permanent"] = self.is_permanent
+        license_dict["Grade"] = self.product_grade
+        license_dict["Stations"] = self.product_stations
+        license_dict["IPs"] = self.allowed_ips
+        license_dict["Created"] = self.creation_date
+        license_dict["Expires"] = self.expiration_date
+
+        return license_dict
+
     def __str__(self):
         return self.product_name

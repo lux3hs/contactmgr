@@ -24,7 +24,10 @@ class Contact(models.Model):
     STATUS_CHOICES = [('active', 'active'), ('removed', 'removed')]
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, null=True)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, null=True)
+
+    def get_contact_org(self):
+        return self.organization
 
     def __str__(self):
         return self.user.username
@@ -49,6 +52,28 @@ class Entitlement(models.Model):
     total_licenses = models.IntegerField(default=0)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+
+    def get_product_name(self):
+        return self.product.product_name
+
+    def get_version_number(self):
+        return self.product.product_version
+
+    def get_entitlement_dictionary(self):
+        entitlement_dict = {}
+        num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
+        entitlement_dict["product_name"] = self.product.product_name
+        entitlement_dict["access_code"] = self.product.product_version
+        entitlement_dict["num_allocated"] = num_allocated
+        return entitlement_dict
+
+    def check_allocated_licenses(self):
+        remaining_licenses = self.max_licenses - self.total_licenses
+        if remaining_licenses < self.max_licenses:
+            return True
+
+        else:
+            return False
 
     def __str__(self):
         return self.organization.org_name + "/" + self.product.product_name

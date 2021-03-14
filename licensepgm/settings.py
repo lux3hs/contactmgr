@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'MasterLicenseGeneratorApp.apps.MasterlicensegeneratorappConfig',
     'manage_contacts.apps.ManageContactsConfig',
     'manage_licenses.apps.ManageLicensesConfig',
     'django.contrib.admin',

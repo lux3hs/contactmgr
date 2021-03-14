@@ -23,7 +23,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('contacts/', include('manage_contacts.urls')),
     path('licenses/', include('manage_licenses.urls')),
-    path('master-license-generator/', include('MasterLicenseGeneratorApp.urls')),
-
 
 ]

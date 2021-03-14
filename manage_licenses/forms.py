@@ -15,14 +15,7 @@ class SearchForm(forms.Form):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.fields["search_query"].widget.attrs['class'] = "CharField"
 
-
 class NewLicenseForm(forms.Form):
-    # orgname = forms.CharField(max_length=50)
-    # PRODUCT_CHOICES = [("AppLoader", "AppLoader"), ("ScenarioBuilder", "ScenarioBuilder")]
-    # product = forms.ChoiceField(choices=PRODUCT_CHOICES)
-    # iphost = forms.CharField(max_length=50)
-    # email = forms.EmailField(max_length=50)
-    # phone = forms.IntegerField(max_value=99999999999)
     def __init__(self, *args, **kwargs):
         self.product_choices = kwargs.pop('product_choices')
         super(NewLicenseForm, self).__init__(*args, **kwargs)
