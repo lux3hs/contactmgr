@@ -12,6 +12,7 @@ base_dir = str(settings.BASE_DIR)
 def create_license(current_user, user_query):
     # current_user = request.user
     user_id = current_user.id
+    creator_email = current_user.email
     contact_data = Contact.objects.filter(user=user_id).get()
     org_object = contact_data.get_contact_org()
     user_org = org_object.org_name
@@ -19,8 +20,6 @@ def create_license(current_user, user_query):
 
     product_choice = user_query.get('product_choice')
     ip_host = user_query.get('ip_host')
-    creator_email = user_query.get('creator_email')
-    creator_phone = user_query.get('creator_phone')
 
     #Get entitlement data for current contact organization
     entitlement_product = Product.objects.filter(product_name=product_choice).get()
@@ -29,10 +28,14 @@ def create_license(current_user, user_query):
     product_entitlement = Entitlement.objects.filter(organization=org_id, product=product_id).get()
     entitlement_id = product_entitlement.id
 
-    #These variables should be passed in instead of hardcoded
+    is_permanent = user_query.get("is_permanent")
+    if is_permanent:
+        pass
+    
+    else:
+        is_permanent = False
 
-    is_permanent = True
-
+    #These values should be passed in
     weeks_allocated = 2
     expire_time = datetime.timedelta(weeks = weeks_allocated)
 
@@ -45,7 +48,6 @@ def create_license(current_user, user_query):
                             entitlement_id=entitlement_id,
                             IP_Host=ip_host,
                             creator_email=creator_email,
-                            creator_phone=creator_phone,
                             product_name=product_choice,
                             version_number=product_version,
                             is_permanent=is_permanent,

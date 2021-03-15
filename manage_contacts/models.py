@@ -8,7 +8,7 @@ class Organization(models.Model):
     # org_id = models.IntegerField(null=True)
     # org_id = models.CharField(max_length=7, default='0000000', editable=False)
     org_id = id
-    ORG_TYPE_CHOICES = [('CUSTOMER', 'customer'), ('PARTNER', 'partner')]
+    ORG_TYPE_CHOICES = [('customer', 'customer'), ('customer', 'partner')]
     org_type = models.CharField(max_length=50, choices=ORG_TYPE_CHOICES, null=True)
     org_name = models.CharField(max_length=50, unique=True)
     domain = models.CharField(max_length=50)
@@ -59,6 +59,9 @@ class Entitlement(models.Model):
     def get_version_number(self):
         return self.product.product_version
 
+    def get_organization_name(self):
+        return self.organization.org_name
+
     def get_entitlement_dictionary(self):
         entitlement_dict = {}
         num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
@@ -74,6 +77,9 @@ class Entitlement(models.Model):
 
         else:
             return False
+
+    def get_entitlement_name(self):
+        return self.organization.org_name + "/" + self.product.product_name
 
     def __str__(self):
         return self.organization.org_name + "/" + self.product.product_name

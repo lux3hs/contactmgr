@@ -1,0 +1,46 @@
+<!-- templates/manage_contacts/add-product.html -->
+{% extends "base.html" %}
+{% block title %}Add Organization{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+{% endblock head %}
+
+{% block banner %}{% endblock banner %}
+
+{% block logocontainer %}{% endblock logocontainer %}
+
+{% block main %}
+<h2 class="flex-container">Add product</h2>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="flex-container">
+<p class="text-container">Add Products here (In progress...)</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="flex-box">
+      {{ product_form.as_p }}
+    </div>
+      
+      <div class="flex-box">
+      <input class="button" type = "submit" value = "Create" name="newForm"/>
+      </div>
+</form>
+
+
+<div class="flex-container flex-row border-top navigation-buttons">
+<p><a href="{% url 'admin_dash' %}">Return</a></p>
+<p><a href="{% url 'homepage' %}">Home</a></p>
+<p><a href="{% url 'logout' %}">Logout</a></p>
+</div>
+{% endblock main %}

@@ -19,7 +19,6 @@ base_dir = str(settings.BASE_DIR)
 @login_required
 def manage_licenses(request):
     """ Render manage-licenses html page """
-    
     #Get current user info
     current_user = request.user
     user_id = current_user.id
@@ -35,7 +34,6 @@ def manage_licenses(request):
 
     #Get product data for current contact organization
     product_licenses = License.objects.filter(org_id=org_id)
-
 
     #Create list of entitlement data to display in table
     entitlement_list = []
@@ -55,13 +53,12 @@ def manage_licenses(request):
             entilement_product = entitlement.product
 
             if product_search.lower() in entilement_product.product_name.lower():
-
                 entitlement_dict = entitlement.get_entitlement_dictionary()
                 entitlement_filter.append(entitlement_dict)
 
         entitlement_list = entitlement_filter
 
-    #Clear search filter on response from clear search button (This can be done with just a button!)
+    #Clear search filter on response from clear search button
     elif request.GET.get("clear_search"):
         return HttpResponseRedirect(request.path_info)
 
@@ -85,9 +82,7 @@ def manage_licenses(request):
 
         #Create license if entitlements exist
         if entitlement_data.check_allocated_licenses():
-
             new_license = create_license(current_user, user_query)
-
             new_license.save()
                                 
             #Reduce license allocations after successful generation
@@ -101,15 +96,14 @@ def manage_licenses(request):
             messages.add_message(request, messages.INFO, 'Not enough product entitlements')
             return HttpResponseRedirect(request.path_info)
 
-    #Check for input for delete license
+    #Check for input from delete license
     if request.GET.get('delete_license_selection'):
         user_selection = request.GET.getlist("license_selection")
         delete_license(current_user, user_selection)   
         messages.add_message(request, messages.INFO, 'Selection Deleted')
         return HttpResponseRedirect(request.path_info)
 
-
-    #Check for input for generate license
+    #Check for input from generate license
     if request.GET.get("generate_license_selection"):
         user_selection = request.GET.getlist("license_selection")
         license_array = generate_license_array(current_user, user_selection)
@@ -133,7 +127,7 @@ def manage_licenses(request):
 
 
 def download_license(request):
-    # BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    """ Download a generated license """
     license_file = base_dir + "/bin/Product-License.lic"
     if os.path.isfile(license_file):
         f = open(license_file, "r")

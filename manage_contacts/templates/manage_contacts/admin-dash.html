@@ -1,0 +1,44 @@
+<!-- templates/manage_contacts/admin-dash.html -->
+{% extends "base.html" %}
+{% block title %}Add Organization{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+{% endblock head %}
+
+{% block banner %}{% endblock banner %}
+
+{% block logocontainer %}{% endblock logocontainer %}
+
+{% block main %}
+<h2 class="flex-container">Admin console</h2>
+
+{% if user_org == "automai" and user_role == "admin" %}
+
+
+<div class="flex-container">
+<p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
+</div>
+
+<div class="flex-container navigation-buttons">
+<p><a href="{% url 'add_organization' %}">Add Organization</a></p>
+<p><a href="{% url 'add_product' %}">Add Product</a></p>
+<p><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
+
+</div>
+
+{% else %}
+  <p>Not authorized.</p>
+{% endif %}
+
+
+<div class="flex-container flex-row border-top navigation-buttons">
+<p><a href="{% url 'manage_contacts' %}">Contacts</a></p>
+<p><a href="{% url 'manage_licenses' %}">Licenses</a></p>
+
+<p><a href="{% url 'homepage' %}">Home</a></p>
+<p><a href="{% url 'logout' %}">Logout</a></p>
+</div>
+{% endblock main %}
+

@@ -36,6 +36,26 @@ class ContactCreationForm(UserCreationForm):
             raise forms.ValidationError("Your passwords do not match")
         return password2
 
+class OrgCreationForm(forms.Form):
+    ORG_TYPE_CHOICES = [('customer', 'customer'), ('partner', 'partner')]
+    org_type = forms.ChoiceField(choices=ORG_TYPE_CHOICES)
+    org_name = forms.CharField(max_length=50)
+    org_domain = forms.CharField(max_length=50)
+
+class ProductCreationForm(forms.Form):
+    product_name = forms.CharField(max_length=50)
+    product_version = forms.CharField(max_length=50)
+
+
+class EntitlementCreationForm(forms.Form):
+    max_licenses = forms.IntegerField(max_value=1000)
+    def __init__(self, *args, **kwargs):
+        self.product_list = kwargs.pop('product_list')
+        self.org_list = kwargs.pop('org_list')
+        super(EntitlementCreationForm, self).__init__(*args, **kwargs)
+        self.fields['product_choice'] = forms.ChoiceField(choices=self.product_list)
+        self.fields['org_choice'] = forms.ChoiceField(choices=self.org_list)
+
  
 class SearchChoiceForm(forms.Form):
     #Set widget fields

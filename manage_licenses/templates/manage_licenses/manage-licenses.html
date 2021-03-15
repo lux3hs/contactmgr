@@ -41,7 +41,8 @@
 {% endif %}
 
 <div id="licenses-tab" class="js-tabcontent">
-  <script>document.getElementById("js-default-open").click();</script>  
+  <script>document.getElementById("js-default-open").click();</script>
+
   <div class="flex-container">
     <div class="flex-container container-border">
       <p class="text-container">
@@ -51,7 +52,7 @@
     </div>
   </div>
 
-       <div class="flex-container">
+  <div class="flex-container">
     <div class="widget-box">
       <form method = "post">
           {% csrf_token %}
@@ -61,55 +62,52 @@
     </div>
   </div>
 
-  <div class="flex-container border-top">
+  <div class="flex-container flex-center border-top">
     <div class="flex-container flex-center">
-    <h2 class="text-container border-bottom"> Licenses </h2>
+      <h2 class="text-container border-bottom"> Licenses </h2>
     </div>
 
     <form method="get">
-    <table> 
-      <tr>
-        <th></th>
-        <th>Product Name</th>
-        <th>Version</th> 
-        <th>Permanent</th>
-        <th>Grade</th>
-        <th>Stations</th> 
-        <th>Allowed IPs</th>
-        <th>Start Date</th>
-        <th>Exp Date</th> 
-        {% comment %} <th>Download</th>
-        <th>Delete</th> {% endcomment %}
-      </tr>
+      <div class="table-scroll">
+        <table> 
+        <tr>
+          <th></th>
+          <th>Product Name</th>
+          <th>Creator</th>
+          <th>Version</th> 
+          <th>IP</th>
+          <th>Permanent</th>
+          <th>Grade</th>
+          <th>Stations</th>
+          <th>Start Date</th>
+          <th>Exp Date</th> 
+        </tr>
 
-      {% for license in product_licenses %}
+        {% for license in product_licenses %}
         <tr>
           <td><input type="checkbox" name="license_selection" value="{{ license.id }}"></td>
           <td>{{ license.product_name }}</td>
+          <td>{{ license.creator_email }}</td>
           <td>{{ license.version_number }}</td>
+          <td>{{ license.IP_Host }}</td>
           <td>{{ license.is_permanent }}</td>
           <td>{{ license.product_grade }}</td>
           <td>{{ license.product_stations }}</td>
-          <td>{{ license.allowed_ips }}</td>
           <td>{{ license.creation_date }}</td>
           <td>{{ license.expiration_date }}</td>
-          {% comment %} <td>
-          <p class="text-container"><button type="submit" name="generate_single_license" value="{{ license.id }}">o</button></p>
-          </td>
-          <td>
-          <p class="text-container"><button type="submit" name="delete_single_license" value="{{ license.id }}">x</button></p>
-          </td> {% endcomment %}
         </tr>
-      {% endfor %} 
-    </table>
-    <div class="flex-container flex-row border-top">
-      <p class="text-container"><input type="submit" name="generate_license_selection" value="Generate Selection"></p>
-      <p class="text-container"><input type="submit" name="delete_license_selection" value="Delete Selection"></p>
-    </div>
+        {% endfor %} 
+        </table>
+      </div>
 
-    <div class="flex-box">
-      <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
-    </div>
+      <div class="flex-container flex-row border-top">
+        <p class="text-container"><input type="submit" name="generate_license_selection" value="Generate Selection"></p>
+        <p class="text-container"><input type="submit" name="delete_license_selection" value="Delete Selection"></p>
+      </div>
+
+      <div class="flex-box">
+        <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
+      </div>
 
     </form>
   </div>

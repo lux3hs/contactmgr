@@ -8,11 +8,10 @@ class License(models.Model):
     entitlement_id = models.IntegerField(default=0, null=True)
     IP_Host = models.CharField(max_length=50, null=True)
     creator_email = models.CharField("Created by ", max_length=50, null=True)
-    creator_phone = models.IntegerField(default=0, null=True)
     
     product_name = models.CharField(max_length=50, null=True)
     version_number = models.CharField("Version number ", max_length=50, null=True)
-    is_permanent = models.BooleanField(default=False)
+    is_permanent = models.BooleanField(default=True)
     product_grade = models.CharField(max_length=50, default="standard")
     product_stations = models.IntegerField(default=10000)
 

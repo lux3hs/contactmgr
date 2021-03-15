@@ -8,11 +8,11 @@
    of columns in table for curved 
    borders */
 
-td:nth-child(1), th:nth-child(1){
+/* td:nth-child(1), th:nth-child(1){
   border-radius: 15px 0px 0px 15px;
 }
 
 td:nth-child(9), th:nth-child(9){
   border-radius: 0px 15px 15px 0px;
 
-}
+} */

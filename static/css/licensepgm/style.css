@@ -227,8 +227,8 @@ background-color: whitesmoke;
   block-size: fit-content;
   /* border:none; */
   border:2px solid darkgray;
-  border-radius: 15px;
-  padding: 15px;
+  /* border-radius: 15px; */
+  padding: 5px;
   background-color: lightgray;
   /* background-image: linear-gradient(to bottom right, darkgray,whitesmoke); */
 }
@@ -237,35 +237,35 @@ background-color: whitesmoke;
 .widget-box .CharField{
   border:none;
   /* border:1px solid black; */
-  border-radius: 15px;
+  /* border-radius: 15px; */
   outline:none;
 }
 
 .widget-box .ChoiceField{
   border:none;
   /* border: 1px solid black; */
-  border-radius: 15px;
+  /* border-radius: 15px; */
   outline:none;
 }
 
 .widget-box input{
   border:none;
   /* border:1px solid black; */
-  border-radius: 15px;
+  /* border-radius: 15px; */
   outline:none;
 }
 
 .widget-box a{
   border:none;
   /* border:1px solid black; */
-  border-radius: 15px;
+  /* border-radius: 15px; */
   outline:none;
 }
 
 .widget-box button{
   border:none;
   /* border:1px solid black; */
-  border-radius: 15px;
+  /* border-radius: 15px; */
   outline:none;
 }
 
@@ -275,21 +275,21 @@ background-color: whitesmoke;
 
 .container-border{
   border:none;
-  border-radius: 15px;
+  /* border-radius: 15px; */
   outline:none;
   background-color: lightgray;
 }
 
 .container-border a{
   border:none;
-  border-radius: 15px;
+  /* border-radius: 15px; */
   outline:none;
 
 }
 
 .container-border input{
   /* border:none; */
-  border-radius: 15px;
+  /* border-radius: 15px; */
   /* outline:none; */
 
 }
@@ -328,6 +328,11 @@ td{
   
 }
 
+.table-scroll{
+  max-height: 75vh;
+  max-width: 75vw;
+  overflow: auto;
+}
 
 
 /*                         */
