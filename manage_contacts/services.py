@@ -124,7 +124,6 @@ def filter_contacts(contact_list, filter_choice, search_field):
     return filter_list
 
 
-
 def delete_object_selection(data_objects, user_selection):
     for object_id in user_selection:
         object_selection = data_objects.objects.filter(id=object_id)

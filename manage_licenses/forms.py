@@ -22,7 +22,6 @@ class NewLicenseForm(forms.Form):
         self.fields['product_choice'] = forms.ChoiceField(choices=self.product_choices)
         self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
         self.fields['ip_host'] = forms.CharField(max_length=50)
-        self.fields['is_permanent'] = forms.BooleanField(required=False)
-
         self.fields['creation_date'] = forms.DateTimeField()
         self.fields['expiration_date'] = forms.DateTimeField()
+        self.fields['is_permanent'] = forms.BooleanField(required=False)

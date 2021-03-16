@@ -78,6 +78,7 @@
           <tr> 
             {% if user_role == "admin" %}
             <th></th>
+            {% comment %} <th><input type="checkbox" name="contact_selection" value="select_all"></th> {% endcomment %}
             {% endif %}
             <th>First Name</th>
             <th>Last Name</th> 
@@ -86,7 +87,7 @@
             <th>OrgID</th> 
             <th>Role</th> 
             <th>Status</th>
-            </th></th>
+            <th></th>
           </tr>
 
           {% for contact in contact_list %}
