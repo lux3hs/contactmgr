@@ -29,6 +29,18 @@ class Contact(models.Model):
     def get_contact_org(self):
         return self.organization
 
+    def get_contact_dict(self):
+        contact_dict = {}
+        contact_dict["first_name"] = self.user.first_name
+        contact_dict["last_name"] = self.user.last_name
+        contact_dict["email"] = self.user.email
+        contact_dict["contact_id"] = self.id
+        contact_dict["role"] = self.role
+        contact_dict["status"] = self.status
+        contact_dict["org_id"] = self.organization.id
+        contact_dict["org_name"] = self.organization.org_name
+        return contact_dict
+
     def __str__(self):
         return self.user.username
 
