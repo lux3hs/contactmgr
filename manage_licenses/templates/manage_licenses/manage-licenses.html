@@ -82,6 +82,7 @@
           <th>Stations</th>
           <th>Start Date</th>
           <th>Exp Date</th> 
+          <th></th>
         </tr>
 
         {% for license in product_licenses %}
@@ -96,6 +97,7 @@
           <td>{{ license.product_stations }}</td>
           <td>{{ license.creation_date }}</td>
           <td>{{ license.expiration_date }}</td>
+          <td></td>
         </tr>
         {% endfor %} 
         </table>

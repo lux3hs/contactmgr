@@ -27,30 +27,29 @@
 
 {% block main %}
 <div class="flex-container">
-<h2 class="text-container"> Manage Contacts </h2>
+  <h2 class="text-container"> Manage Contacts </h2>
 </div>
-
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
 
 <div id="contacts-tab" class="js-tabcontent">
   <script>document.getElementById("js-default-open").click();</script>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-    <div class="flex-container widget-container">
-      <p class="text-container">
-      This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
-      click on 'My Information' menu item above.
-      </p>
+  <div class="flex-container widget-container">
+    <p class="text-container">
+    This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
+    click on 'My Information' menu item above.
+    </p>
 
     <div class="flex-box">
       <a href="{% url 'add_contact' %}">New Contact</a>
     </div>
-      </div>
+  </div>
 
   <div class="flex-container">
     <div class="flex-box widget-box"> 
@@ -87,6 +86,7 @@
             <th>OrgID</th> 
             <th>Role</th> 
             <th>Status</th>
+            </th></th>
           </tr>
 
           {% for contact in contact_list %}
@@ -102,6 +102,7 @@
             <td>{{ contact.org_id }}</td>
             <td>{{ contact.role }}</td>
             <td>{{ contact.status }}</td>
+            <td></td>
           </tr>
           {% endfor %}
         </table>

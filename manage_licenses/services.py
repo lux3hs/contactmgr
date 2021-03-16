@@ -30,7 +30,7 @@ def create_license(current_user, user_query):
 
     is_permanent = user_query.get("is_permanent")
     if is_permanent:
-        pass
+        is_permanent = True
     
     else:
         is_permanent = False
@@ -41,7 +41,7 @@ def create_license(current_user, user_query):
 
     product_grade = "standard"
     product_stations = 10000
-    allowed_ips = 10        
+    allowed_ips = 10
     
     new_license = License(org_name=user_org,
                             org_id=org_id,
