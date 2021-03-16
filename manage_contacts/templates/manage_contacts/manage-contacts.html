@@ -1,7 +1,7 @@
 <!-- templates/manage_contacts/manage-contacts.html -->
 
 {% extends "base.html" %}
-{% block title %}Manage Contacts{% endblock %}
+{% block title %}Manage Contacts{% endblock title %}
 
 {% block head %}
 {% load static %}
@@ -21,8 +21,6 @@
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
 </div>
-
-
 {% endblock banner %}
 
 {% block logocontainer %}{% endblock logocontainer %}

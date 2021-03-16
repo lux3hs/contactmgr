@@ -41,6 +41,9 @@ class OrgCreationForm(forms.Form):
     org_type = forms.ChoiceField(choices=ORG_TYPE_CHOICES)
     org_name = forms.CharField(max_length=50)
     org_domain = forms.CharField(max_length=50)
+    def __init__(self, *args, **kwargs):
+        super(OrgCreationForm, self).__init__(*args, **kwargs)
+        self.fields["org_type"].widget.attrs['class'] = "ChoiceField"
 
 class ProductCreationForm(forms.Form):
     product_name = forms.CharField(max_length=50)
@@ -54,17 +57,24 @@ class EntitlementCreationForm(forms.Form):
         self.org_list = kwargs.pop('org_list')
         super(EntitlementCreationForm, self).__init__(*args, **kwargs)
         self.fields['product_choice'] = forms.ChoiceField(choices=self.product_list)
+        self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
         self.fields['org_choice'] = forms.ChoiceField(choices=self.org_list)
+        self.fields['org_choice'].widget.attrs['class'] = "ChoiceField"
 
- 
+class SearchForm(forms.Form):
+    """ Form for searching """
+    search_query = forms.CharField(max_length=50, label='')
+    def __init__(self, *args, **kwargs):
+        super(SearchForm, self).__init__(*args, **kwargs)
+        self.fields["search_query"].widget.attrs['class'] = "CharField"
+
 class SearchChoiceForm(forms.Form):
     #Set widget fields
-    choices = [("first_name", "First Name"), ("last_name", "Last Name"), ("email", "Email")]
-    search_field = forms.CharField(max_length=50, label='')
-    filter_choice = forms.ChoiceField(choices=choices, label='')
-    
-    #Extend init function to set widget class
     def __init__(self, *args, **kwargs):
+        self.choice_list = kwargs.pop('choice_list')
         super(SearchChoiceForm, self).__init__(*args, **kwargs)
-        self.fields["filter_choice"].widget.attrs['class'] = "ChoiceField"
-        self.fields["search_field"].widget.attrs['class'] = "CharField"
+        self.fields['search_field'] = forms.CharField(max_length=50, label='')
+        self.fields['search_field'].widget.attrs['class'] = "CharField"
+        self.fields['filter_choice'] = forms.ChoiceField(choices=self.choice_list, label='')
+        self.fields['filter_choice'].widget.attrs['class'] = "ChoiceField"
+ 

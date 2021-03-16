@@ -71,7 +71,6 @@ def add_new_organization(user_query):
 
     return success_message
 
-
 def add_new_product(user_query):
     product_name = user_query.get('product_name')
     product_version = user_query.get('product_version')
@@ -124,4 +123,18 @@ def add_new_entitlement(user_query):
     return success_message
 
 
-    
+def delete_object_selection(data_objects, user_selection):
+    for object_id in user_selection:
+        object_selection = data_objects.objects.filter(id=object_id)
+        object_selection.delete()
+
+
+def get_model_fields(model):
+    return model._meta.fields
+
+def get_model_choices(model_fields):
+    choice_list = []
+    for field in model_fields:
+        choice_list.append((field.name, field.name))
+
+    return choice_list

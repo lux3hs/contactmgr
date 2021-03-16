@@ -36,8 +36,12 @@ def manage_contacts(request):
         user_dict = contact.get_contact_dict()
         contact_list.append(user_dict)
 
+    # contact_fields = get_model_fields(Contact)
+    # choice_list = get_model_choices(contact_fields)
+    choice_list = [("first_name", "First Name"), ("last_name", "Last Name"), ("email", "Email")]
+
     #Create a form for filtering contacts
-    filter_form = SearchChoiceForm()
+    filter_form = SearchChoiceForm(choice_list=choice_list)
 
     if request.GET.get("filter_choice"):
         user_query = request.GET
@@ -113,7 +117,37 @@ def admin_dash(request):
     user_data = Contact.objects.filter(user_id=user_id).get()
     user_role = user_data.role
     user_org = user_data.organization.org_name
-    context = {'user_role':user_role, 'user_org':user_org}
+    org_objects = Organization.objects.all()
+    product_objects = Product.objects.all()
+    entitlement_objects = Entitlement.objects.all()
+
+    #Check for input to delete orgs
+    if request.GET.get('delete_organization_selection'):
+        user_selection = request.GET.getlist("org_selection")
+        delete_object_selection(data_objects=Organization, user_selection=user_selection)
+        messages.add_message(request, messages.INFO, 'Selection Deleted')
+        return HttpResponseRedirect(request.path_info)
+
+     #Check for input to delete products
+    if request.GET.get('delete_product_selection'):
+        user_selection = request.GET.getlist("product_selection")
+        delete_object_selection(data_objects=Product, user_selection=user_selection)
+        messages.add_message(request, messages.INFO, 'Selection Deleted')
+        return HttpResponseRedirect(request.path_info)
+
+     #Check for input from delete entitlements
+    if request.GET.get('delete_entitlement_selection'):
+        user_selection = request.GET.getlist("entitlement_selection")
+        delete_object_selection(data_objects=Entitlement, user_selection=user_selection)
+        messages.add_message(request, messages.INFO, 'Selection Deleted')
+        return HttpResponseRedirect(request.path_info)
+
+    context = {'user_role':user_role,
+               'user_org':user_org,
+               'org_objects':org_objects,
+               'product_objects':product_objects,
+               'entitlement_objects':entitlement_objects}
+
     return render(request, "manage_contacts/admin-dash.html", context)
 
 @login_required

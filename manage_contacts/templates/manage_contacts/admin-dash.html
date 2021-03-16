@@ -13,11 +13,11 @@
 
 <div class="flex-container flex-row border-top app-banner">
   <div class="tab">
-  <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'organizations-tab')">Organizations</button>
-  <button class="js-tablinks" onclick="changePage(event, 'products-tab')">Products</button>
-  <button class="js-tablinks" onclick="changePage(event, 'entitlements-tab')">Entitlements</button>
-
+    <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'organizations-tab')">Organizations</button>
+    <button class="js-tablinks" onclick="changePage(event, 'products-tab')">Products</button>
+    <button class="js-tablinks" onclick="changePage(event, 'entitlements-tab')">Entitlements</button>
   </div>
+  
   <div class="nav-row navigation-buttons">
     <p><a href="{% url 'manage_contacts' %}">Contacts</a></p>
     <p><a href="{% url 'manage_licenses' %}">Licenses</a></p>
@@ -33,21 +33,107 @@
 {% block main %}
 <h2 class="flex-container">Admin console</h2>
 <div class="flex-container">
-<p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
+  <p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
 </div>
 {% if user_org == "automai" and user_role == "admin" %}
 
 <div id="organizations-tab" class="js-tabcontent">
   <script>document.getElementById("js-default-open").click();</script>
-<p><a href="{% url 'add_organization' %}">Add Organization</a></p>
+  <div class="flex-box">
+  <p class="text-container"><a href="{% url 'add_organization' %}">Add Organization</a></p>
+  </div>
+  <form method="get">
+    <div class="flex-box table-scroll">
+      <table>
+        <tr>
+          <th></th>
+          <th>Organization</th>
+          <th>Org Type</th>
+          <th>Domain</th>
+          <th></th>
+        </tr>
+
+        {% for org in org_objects %}
+        <tr>
+          <td><input type="checkbox" name="org_selection" value="{{ org.id }}"></td>
+          <td>{{ org }}</td>
+          <td>{{ org.org_type }}</td>
+          <td>{{ org.domain }}</td>
+          <td></td>
+
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="flex-container flex-row border-top">
+      <p class="text-container"><input type="submit" name="delete_organization_selection" value="Delete Selection"></p>
+    </div>
+  </form>
 </div>
 
 <div id="products-tab" class="js-tabcontent">
-<p><a href="{% url 'add_product' %}">Add Product</a></p>
+  <div class="flex-box">
+  <p class="text-container"><a href="{% url 'add_product' %}">Add Product</a></p>
+  </div>
+  <form method="get">
+    <div class="flex-box table-scroll">
+      <table>
+        <tr> 
+          <th></th>
+          <th>Product</th>
+          <th>Version</th>
+          <th></th>
+        </tr>
+
+        {% for product in product_objects %}
+        <tr>
+          <td><input type="checkbox" name="product_selection" value="{{ product.id }}"></td>
+          <td>{{ product }}</td>
+          <td>{{ product.product_version }}
+          <td></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="flex-container flex-row border-top">
+        <p class="text-container"><input type="submit" name="delete_product_selection" value="Delete Selection"></p>
+    </div>
+  </form>
 </div>
 
 <div id="entitlements-tab" class="js-tabcontent">
-<p><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
+  <div class="flex-box">
+  <p class="text-container"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
+  </div>
+  <form method="get">
+    <div class="flex-box table-scroll">
+      <table>
+        <tr>
+          <th></th>
+          <th>Entitlement</th>
+          <th>Total</th>
+          <th>Max</th>
+          <th></th>
+        </tr>
+        
+        {% for entitlement in entitlement_objects %}
+        <tr>
+          <td><input type="checkbox" name="entitlement_selection" value="{{ entitlement.id }}"></td>
+          <td>{{ entitlement }}</td>
+          <td>{{ entitlement.total_licenses }}</td>
+          <td>{{ entitlement.max_licenses }}</td>
+          <td></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="flex-container flex-row border-top">
+        <p class="text-container"><input type="submit" name="delete_entitlement_selection" value="Delete Selection"></p>
+    </div>
+  </form>
 </div>
 
 {% else %}
