@@ -16,6 +16,7 @@
   <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
   </div>
   <div class="nav-row navigation-buttons">
+    <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
     <p><a href="{% url 'homepage' %}">Home</a></p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
@@ -42,21 +43,19 @@
 <div id="contacts-tab" class="js-tabcontent">
   <script>document.getElementById("js-default-open").click();</script>
 
-  <div class="flex-container">
-    <div class="flex-container flex-row container-border">
-      <p class="text-container left-text">
+    <div class="flex-container widget-container">
+      <p class="text-container">
       This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
       click on 'My Information' menu item above.
       </p>
 
-      <div class="flex-box">
-        <a href="{% url 'add_contact' %}">New Contact</a>
-      </div>
+    <div class="flex-box">
+      <a href="{% url 'add_contact' %}">New Contact</a>
     </div>
-  </div>
+      </div>
 
   <div class="flex-container">
-    <div class="widget-box"> 
+    <div class="flex-box widget-box"> 
       <p class="text-container">Filter Contacts Using the Fields Below</p>
       
       <form method = "GET">
@@ -122,7 +121,7 @@
 
 <div id="information-tab" class="js-tabcontent">
   <div class="flex-container"> 
-    <div class="widget-box">
+    <div class="flex-box widget-box">
       <h3 class="text-container">{{ user.username }}</h3>
       <div class="flex-box">
         <p>UserID: {{ user.id }}</p>

@@ -16,6 +16,7 @@
   <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
   </div>
   <div class="nav-row navigation-buttons">
+    <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
     <p><a href="{% url 'homepage' %}">Home</a></p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
@@ -44,7 +45,7 @@
   <script>document.getElementById("js-default-open").click();</script>
 
   <div class="flex-container">
-    <div class="flex-container container-border">
+    <div class="flex-container widget-container">
       <p class="text-container">
       This screen displays the licenses for the entire Organization. If you want to view associated products, 
       click on 'View my products' menu item above.
@@ -53,7 +54,7 @@
   </div>
 
   <div class="flex-container">
-    <div class="widget-box">
+    <div class="flex-box widget-box">
       <form method = "post">
           {% csrf_token %}
           {{ new_license_form }}
@@ -116,7 +117,7 @@
 <div id="products-tab" class="js-tabcontent">
 
  <div class="flex-container">
-    <div class="widget-box">
+    <div class="flex-box widget-box">
       <p class="text-container">Filter licenses Using the Fields Below</p>
         <form method = "GET">
           <input class="button" type="submit" value="Search"/>
@@ -131,8 +132,11 @@
   </div>
 
   <div class="flex-container flex-center border-top">
+      <div class="flex-container flex-center">
       <h2 class="text-container border-bottom"> Product Entitlements </h2>
+      </div>
 
+    <div class="table-scroll">
       <table> 
         <tr>
           <th>Product Name</th>
@@ -148,6 +152,7 @@
           </tr>
         {% endfor %} 
       </table>
+    </div>
   </div>
 </div>
 

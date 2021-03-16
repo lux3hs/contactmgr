@@ -223,12 +223,14 @@ background-color: whitesmoke;
 
 /* Style the widget border */
 .widget-box{
-  width:fit-content;
-  block-size: fit-content;
+  border:none;
+  outline:none;
+  /* width:fit-content; */
+  /* block-size: fit-content; */
   /* border:none; */
-  border:2px solid darkgray;
+  /* border:2px solid darkgray; */
   /* border-radius: 15px; */
-  padding: 5px;
+  /* padding: 5px; */
   background-color: lightgray;
   /* background-image: linear-gradient(to bottom right, darkgray,whitesmoke); */
 }
@@ -273,21 +275,21 @@ background-color: whitesmoke;
 
 /* Block container styles */
 
-.container-border{
+.widget-container{
   border:none;
   /* border-radius: 15px; */
   outline:none;
   background-color: lightgray;
 }
 
-.container-border a{
+.widget-container a{
   border:none;
   /* border-radius: 15px; */
   outline:none;
 
 }
 
-.container-border input{
+.widget-container input{
   /* border:none; */
   /* border-radius: 15px; */
   /* outline:none; */
@@ -388,6 +390,10 @@ flex-direction: row;
 .flex-center{
   align-items: center;
   justify-content: center;
+}
+
+.flex-left{
+  justify-content: left;
 }
 
 .left-text{

@@ -104,11 +104,10 @@ def add_contact(request):
     return render(request, "manage_contacts/add-contact.html", context)
 
 
-
-
 ##Automai admin views
 @login_required
 def admin_dash(request):
+    """ Render admin dash """
     current_user = request.user
     user_id = current_user.id
     user_data = Contact.objects.filter(user_id=user_id).get()
@@ -119,6 +118,7 @@ def admin_dash(request):
 
 @login_required
 def add_organization(request):
+    """ Render add organization page"""
     org_form = OrgCreationForm()
     current_user = request.user
     user_id = current_user.id
@@ -143,6 +143,7 @@ def add_organization(request):
     
 @login_required
 def add_product(request):
+    """ Render add product page """
     product_form = ProductCreationForm()
     current_user = request.user
     user_id = current_user.id
@@ -169,6 +170,7 @@ def add_product(request):
     
 @login_required
 def add_entitlement(request):
+    """ Render add entitlement page """
     current_user = request.user
     user_id = current_user.id
     user_data = Contact.objects.filter(user_id=user_id).get()
