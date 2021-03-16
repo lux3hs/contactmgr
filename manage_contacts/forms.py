@@ -68,6 +68,14 @@ class SearchForm(forms.Form):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.fields["search_query"].widget.attrs['class'] = "CharField"
 
+class ChoiceForm(forms.Form):
+    #Set widget fields
+    def __init__(self, *args, **kwargs):
+        self.choice_list = kwargs.pop('choice_list')
+        super(ChoiceForm, self).__init__(*args, **kwargs)
+        self.fields['choice_field'] = forms.ChoiceField(choices=self.choice_list)
+        self.fields['choice_field'].widget.attrs['class'] = "ChoiceField"
+
 class SearchChoiceForm(forms.Form):
     #Set widget fields
     def __init__(self, *args, **kwargs):
@@ -77,4 +85,4 @@ class SearchChoiceForm(forms.Form):
         self.fields['search_field'].widget.attrs['class'] = "CharField"
         self.fields['filter_choice'] = forms.ChoiceField(choices=self.choice_list, label='')
         self.fields['filter_choice'].widget.attrs['class'] = "ChoiceField"
- 
+

@@ -30,14 +30,6 @@ def add_new_contact(user_query, contact_organization):
 
     return new_contact
 
-def filter_contacts(contact_list, filter_choice, search_field):
-    filter_list = []
-    for contact in contact_list:
-        if search_field.lower() in contact[filter_choice].lower():
-            filter_list.append(contact)
-
-    return filter_list
-
 def delete_contacts(current_user, user_selection):
     for contact_id in user_selection:
         user_id = current_user.id
@@ -47,8 +39,6 @@ def delete_contacts(current_user, user_selection):
         org_contacts = Contact.objects.filter(organization=org_id)
         contact_selection = org_contacts.filter(id=contact_id)
         contact_selection.delete()
-
-
 
 
 def add_new_organization(user_query):
@@ -121,6 +111,18 @@ def add_new_entitlement(user_query):
         success_message = "Entitlement exists"
 
     return success_message
+
+
+
+
+def filter_contacts(contact_list, filter_choice, search_field):
+    filter_list = []
+    for contact in contact_list:
+        if search_field.lower() in contact[filter_choice].lower():
+            filter_list.append(contact)
+
+    return filter_list
+
 
 
 def delete_object_selection(data_objects, user_selection):

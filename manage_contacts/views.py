@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Contact, Organization, Product, Entitlement
-from .forms import ContactCreationForm, SearchChoiceForm, OrgCreationForm, ProductCreationForm, EntitlementCreationForm
+from .forms import ContactCreationForm, SearchChoiceForm, OrgCreationForm, ProductCreationForm, EntitlementCreationForm, ChoiceForm
 
 from .services import *
 
@@ -85,7 +85,12 @@ def add_contact(request):
 
     #Get current contact organization
     contact_data = Contact.objects.filter(user_id=user_id).get()
-    contact_organization = contact_data.organization
+    new_contact_org = contact_data.organization
+
+    org_objects = Organization.objects.all()
+    choice_list = []
+    for org_object in org_objects:
+        choice_list.append(org_object.org_name)
 
     #Check for user submission
     if request.method == 'POST':
@@ -93,7 +98,12 @@ def add_contact(request):
 
         if contact_form.is_valid():
             user_query = request.POST
-            add_new_contact(user_query=user_query, contact_organization=contact_organization)
+            if request.POST.get('select_org'):
+                org_selection = request.POST.get('select_org')
+                print(org_selection)
+                new_contact_org = Organization.objects.filter(org_name=org_selection).get()
+
+            add_new_contact(user_query=user_query, contact_organization=new_contact_org)
             messages.add_message(request, messages.INFO, 'New contact created')
             return HttpResponseRedirect(request.path_info)
 
@@ -104,7 +114,7 @@ def add_contact(request):
 
 
     #Render variables in html
-    context = {'user_role':user_role, 'contact_form':contact_form}
+    context = {'user_role':user_role, 'contact_org':new_contact_org, 'contact_form':contact_form, 'choice_list':choice_list}
     return render(request, "manage_contacts/add-contact.html", context)
 
 

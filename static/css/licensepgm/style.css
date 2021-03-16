@@ -76,6 +76,18 @@ input.button:hover, input.button:active {
     background-color: whitesmoke;
   }
 
+select{
+  background-color:white;
+  color: black;
+  border: 1px solid black;
+  text-align: left;
+  padding:10px 20px;
+  text-decoration: none;
+}
+
+select:hover, select:active {
+  background-color: whitesmoke;
+}
 
 
 /*            */
