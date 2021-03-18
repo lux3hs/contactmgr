@@ -138,26 +138,36 @@
       <h2 class="text-container border-bottom"> Product Entitlements </h2>
       </div>
 
-    <div class="table-scroll">
-      <table> 
-        <tr>
-          <th>Product Name</th>
-          <th>Product Version</th> 
-          <th>Allocated Licenses</th>
-        </tr>
+      <script>
+      window.onload = function() {
+        buildTable("get-entitlement-data", "table1");
+      }
+      </script>
 
-        {% for entitlement in entitlement_list %}
-          <tr>
-            <td>{{ entitlement.product_name }}</td>
-            <td>{{ entitlement.access_code }}</td>
-            <td>{{ entitlement.num_allocated }} </td>
+
+  
+    <div class="table-scroll">
+      <table id="table1">
+        
+        <thead>
+          <tr> 
+            <th></th>
           </tr>
-        {% endfor %} 
+        </thead>
+
       </table>
     </div>
+
+      <form id="search-form">
+        <input onclick="buildTable('get-entitlement-data', 'table1')" Value="Search" type="button"/>
+        {{ search_form }}
+      </form>
+    </div>
   </div>
+
 </div>
 
 <div class="flex-container border-top">
+</div>
 
 {% endblock main%}

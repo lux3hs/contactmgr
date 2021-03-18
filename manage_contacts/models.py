@@ -74,13 +74,20 @@ class Entitlement(models.Model):
     def get_organization_name(self):
         return self.organization.org_name
 
-    def get_entitlement_dictionary(self):
-        entitlement_dict = {}
+    def get_table_dictionary(self):
+        table_dict = {}
         num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
-        entitlement_dict["product_name"] = self.product.product_name
-        entitlement_dict["access_code"] = self.product.product_version
-        entitlement_dict["num_allocated"] = num_allocated
-        return entitlement_dict
+        table_dict["product_name"] = self.product.product_name
+        table_dict["access_code"] = self.product.product_version
+        table_dict["num_allocated"] = num_allocated
+        return table_dict
+
+    def get_table_headers(self):
+        header_list = []
+        header_list.append("Product Name")
+        header_list.append("Access Code")
+        header_list.append("Remaining Licenses")
+        return header_list
 
     def check_allocated_licenses(self):
         remaining_licenses = self.max_licenses - self.total_licenses

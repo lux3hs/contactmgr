@@ -24,10 +24,10 @@ class License(models.Model):
         license_dict = {}
         license_dict["Org"] = self.org_name
         license_dict["OrgID"] = self.org_id
-        license_dict["EntID"] = self.entitlement_id 
+        license_dict["EntID"] = self.entitlement_id
         license_dict["IP Host"] = self.IP_Host
-        license_dict["Email"] = self.creator_email     
-        license_dict["Product"] = self.product_name 
+        license_dict["Email"] = self.creator_email
+        license_dict["Product"] = self.product_name
         license_dict["Version"] = self.version_number
         license_dict["Permanent"] = self.is_permanent
         license_dict["Grade"] = self.product_grade
@@ -38,5 +38,11 @@ class License(models.Model):
 
         return license_dict
 
+    # def get_user_licenses(self, current_user):
+    #     org_id = current_user.organization.id
+    #     user_licenses = self.filter(org_id=org_id)
+    #     return user_licenses
+
+        
     def __str__(self):
         return self.product_name
