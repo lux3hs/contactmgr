@@ -61,8 +61,7 @@
       </form>
 
       <form method="get">
-        {% csrf_token %}
-        <input class="button" type="submit" name="clear_search" value="Clear Search"/>
+        <input class="button" type="submit" name="clear_search" value="Clear"/>
       </form>
     </div>
   </div>
@@ -71,51 +70,22 @@
     <div class="flex-container flex-center">
       <h2 class="text-container border-bottom">Contacts</h2>
     </div>
+  </div>
 
+  <div class="flex-container flex-center">
     <form method="get">
-      <div class="table-scroll">
-        <table>
-          <tr> 
-            {% if user_role == "admin" %}
-            <th></th>
-            {% comment %} <th><input type="checkbox" name="contact_selection" value="select_all"></th> {% endcomment %}
-            {% endif %}
-            <th>First Name</th>
-            <th>Last Name</th> 
-            <th>Web Login</th>
-            <th>Organization</th>
-            <th>OrgID</th> 
-            <th>Role</th> 
-            <th>Status</th>
-            <th></th>
-          </tr>
-
-          {% for contact in contact_list %}
-          <tr>
-            {% if user_role == "admin" %}
-            <td><input type="checkbox" name="contact_selection" value="{{ contact.contact_id }}"></td>
-            {% endif %}
-
-            <td>{{ contact.first_name }}</td>
-            <td>{{ contact.last_name }}</td>
-            <td>{{ contact.email }}</td>
-            <td>{{ contact.org_name }}</td>
-            <td>{{ contact.org_id }}</td>
-            <td>{{ contact.role }}</td>
-            <td>{{ contact.status }}</td>
-            <td></td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div>
-      
-      {% if user_role == "admin" %}
-      <div class="flex-container flex-row border-top">
-        <p class="text-container"><input type="submit" name="delete_contact_selection" value="Delete Selection"></p>
-      </div>
-      {% endif %}
-
-    </form>
+        <div class="flex-container table-scroll">
+          <table id="contact-table">
+            <thead>
+              <tr> 
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        
+        <p><input type="submit" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
+      </form>
   </div>
 </div>
 
@@ -123,7 +93,7 @@
   <div class="flex-container"> 
     <div class="flex-box widget-box">
       <h3 class="text-container">{{ user.username }}</h3>
-      <div class="flex-box">
+      <div class="flex-box border-bottom border-top">
         <p>UserID: {{ user.id }}</p>
         <p>UserEmail: {{ user_email }}</p>
         <p>Role: {{ user_role }}</p>

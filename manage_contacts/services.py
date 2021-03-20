@@ -30,15 +30,10 @@ def add_new_contact(user_query, contact_organization):
 
     return new_contact
 
-def delete_contacts(current_user, user_selection):
-    for contact_id in user_selection:
-        user_id = current_user.id
-        contact_data = Contact.objects.filter(user=user_id).get()
-        contact_org = contact_data.get_contact_org()
-        org_id = contact_org.id
-        org_contacts = Contact.objects.filter(organization=org_id)
-        contact_selection = org_contacts.filter(id=contact_id)
-        contact_selection.delete()
+def delete_contacts(user_selection):
+    for user_id in user_selection:
+        contact_data = Contact.objects.filter(id=user_id)
+        contact_data.delete()
 
 
 def add_new_organization(user_query):
@@ -139,3 +134,34 @@ def get_model_choices(model_fields):
         choice_list.append((field.name, field.name))
 
     return choice_list
+
+
+#Requires data table to have gat table dictionary function
+def get_table_data(table_header, object_data):
+    data = {}
+    header_list = []
+    for key in table_header.keys():
+        header_list.append(table_header[key])
+    data['table_header'] = header_list
+    if len(object_data) > 0:
+        try:
+            data_list = []
+            for obj in object_data:
+
+                object_dictionary = obj.get_table_dictionary()
+                temp_dict = {}
+                temp_dict["data_id"] = object_dictionary.get("data_id")
+
+                for key in table_header.keys():
+                    if key in object_dictionary.keys():
+                        temp_dict[key] = object_dictionary.get(key)
+
+                data_list.append(temp_dict)
+
+            data['table_data'] = data_list
+            data['success'] = True
+
+        except:
+            data['success'] = False
+
+    return data

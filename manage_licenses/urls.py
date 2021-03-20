@@ -8,5 +8,4 @@ urlpatterns = [
     path('get-entitlement-data', views.get_entitlement_data, name='get_entitlement_data'),
     path('get-license-data', views.get_license_data, name='get_license_data'),
 
-
 ]

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from django.shortcuts import render
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from .models import Contact, Organization, Product, Entitlement
@@ -25,6 +25,7 @@ def manage_contacts(request):
     user_role = user_data.role
     user_org = user_data.organization.org_name
     org_id = user_data.organization.id
+
     
     #Get list of users by current contact's organization
     # user_objects = User.objects
@@ -33,7 +34,7 @@ def manage_contacts(request):
     #Create a list of contact information to display in table
     contact_list = []
     for contact in contact_objects:
-        user_dict = contact.get_contact_dict()
+        user_dict = contact.get_table_dictionary()
         contact_list.append(user_dict)
 
     # contact_fields = get_model_fields(Contact)
@@ -53,13 +54,13 @@ def manage_contacts(request):
     elif request.GET.get("clear_search"):
         contact_list = []
         for contact in contact_objects:
-            user_dict = contact.get_contact_dict()
+            user_dict = contact.get_table_dictionary()
             contact_list.append(user_dict)
 
     #Check for input from delete contacts
-    if request.GET.get('delete_contact_selection'):
-        user_selection = request.GET.getlist("contact_selection")
-        delete_contacts(current_user, user_selection)
+    if request.GET.get('delete_contact_button'):
+        user_selection = request.GET.getlist("check-box")
+        delete_contacts(user_selection)
         messages.add_message(request, messages.INFO, 'Selection Deleted')
         return HttpResponseRedirect(request.path_info)
 
@@ -116,6 +117,18 @@ def add_contact(request):
     #Render variables in html
     context = {'user_role':user_role, 'contact_org':new_contact_org, 'contact_form':contact_form, 'choice_list':choice_list}
     return render(request, "manage_contacts/add-contact.html", context)
+
+
+def get_contact_data(request):
+    current_user = request.user
+    user_id = current_user.id
+    user_data = Contact.objects.filter(user_id=user_id).get()
+    org_id = user_data.organization.id
+    contact_data = Contact.objects.filter(organization=org_id)
+    table_header = {'first_name':'First Name', 'last_name':'Last Name', 'email': 'Email'}
+    table_data = get_table_data(table_header, contact_data)
+    return JsonResponse(table_data)
+
 
 
 ##Automai admin views

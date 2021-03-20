@@ -20,21 +20,22 @@ class License(models.Model):
     creation_date = models.DateTimeField("Date created ", null=True)
     expiration_date = models.DateTimeField("Expiration date ", null=True)
 
-    def get_license_dictionary(self):
+    def get_table_dictionary(self):
         license_dict = {}
-        license_dict["Org"] = self.org_name
-        license_dict["OrgID"] = self.org_id
-        license_dict["EntID"] = self.entitlement_id
-        license_dict["IP Host"] = self.IP_Host
-        license_dict["Email"] = self.creator_email
-        license_dict["Product"] = self.product_name
-        license_dict["Version"] = self.version_number
-        license_dict["Permanent"] = self.is_permanent
-        license_dict["Grade"] = self.product_grade
-        license_dict["Stations"] = self.product_stations
-        license_dict["IPs"] = self.allowed_ips
-        license_dict["Created"] = self.creation_date
-        license_dict["Expires"] = self.expiration_date
+        license_dict["data_id"] = self.id
+        license_dict["org_name"] = self.org_name
+        license_dict["org_id"] = self.org_id
+        license_dict["entitlement_id"] = self.entitlement_id
+        license_dict["IP_Host"] = self.IP_Host
+        license_dict["creator_email"] = self.creator_email
+        license_dict["product_name"] = self.product_name
+        license_dict["version_number"] = self.version_number
+        license_dict["is_permanent"] = self.is_permanent
+        license_dict["product_grade"] = self.product_grade
+        license_dict["product_stations"] = self.product_stations
+        license_dict["allowed_ips"] = self.allowed_ips
+        license_dict["creation_date"] = self.creation_date
+        license_dict["expiration_date"] = self.expiration_date
 
         return license_dict
 

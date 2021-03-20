@@ -15,6 +15,7 @@
   <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
   <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
   </div>
+
   <div class="nav-row navigation-buttons">
     <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
     <p><a href="{% url 'homepage' %}">Home</a></p>
@@ -42,8 +43,6 @@
 {% endif %}
 
 <div id="licenses-tab" class="js-tabcontent">
-  <script>document.getElementById("js-default-open").click();</script>
-
   <div class="flex-container">
     <div class="flex-container widget-container">
       <p class="text-container">
@@ -63,111 +62,101 @@
     </div>
   </div>
 
-  <div class="flex-container flex-center border-top">
-    <div class="flex-container flex-center">
-      <h2 class="text-container border-bottom"> Licenses </h2>
+  
+
+  <div class="flex-container border-top">
+
+    <div class="flex-box">
+      <form>
+        <div class="flex-box flex-row">
+          <p><input type="button" id="license-search-button" value="Search"/></p>
+          <p><input type="text" id="license-search-form"></p>
+        </div>
+        <div class="flex-box"
+          <p><input type="button" id="clear-license-search" value="Clear"/></p>
+        </div>
+      </form>
     </div>
+    
+      <div class="flex-container flex-center">
 
-    <form method="get">
-      <div class="table-scroll">
-        <table> 
-        <tr>
-          <th></th>
-          <th>Product Name</th>
-          <th>Creator</th>
-          <th>Version</th> 
-          <th>IP</th>
-          <th>Permanent</th>
-          <th>Grade</th>
-          <th>Stations</th>
-          <th>Start Date</th>
-          <th>Exp Date</th> 
-          <th></th>
-        </tr>
-
-        {% for license in product_licenses %}
-        <tr>
-          <td><input type="checkbox" name="license_selection" value="{{ license.id }}"></td>
-          <td>{{ license.product_name }}</td>
-          <td>{{ license.creator_email }}</td>
-          <td>{{ license.version_number }}</td>
-          <td>{{ license.IP_Host }}</td>
-          <td>{{ license.is_permanent }}</td>
-          <td>{{ license.product_grade }}</td>
-          <td>{{ license.product_stations }}</td>
-          <td>{{ license.creation_date }}</td>
-          <td>{{ license.expiration_date }}</td>
-          <td></td>
-        </tr>
-        {% endfor %} 
-        </table>
+      <div class="flex-container flex-center">
+        <div class="flex-container flex-center">
+          <h2 class="text-container border-bottom"> Licenses </h2>
+        </div>
       </div>
 
-      <div class="flex-container flex-row border-top">
-        <p class="text-container"><input type="submit" name="generate_license_selection" value="Generate Selection"></p>
-        <p class="text-container"><input type="submit" name="delete_license_selection" value="Delete Selection"></p>
-      </div>
 
-      <div class="flex-box">
-        <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
-      </div>
+        <form method="get">
+          <div class="flex-box border">
+            <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
+          </div>
+         <div class="table-scroll">
+          <table id="license-table">
+              <thead>
+                <tr> 
+                  <th></th>
+                </tr>
+              </thead>
+          </table>
+         </div>
+        
+        <div class="flex-container flex-row">
 
-    </form>
+          <p><input type="submit" name="delete_license_button" id="delete-license-button" value="Delete"></p>
+
+          <p><input type="submit" name="generate_license_selection" value="Generate Selection"></p>
+          
+           
+        </div>
+        
+        </form>
+
+      </div>
+  
   </div>
+
 </div>
+
+
 
 <div id="products-tab" class="js-tabcontent">
 
- {% comment %} <div class="flex-container">
-    <div class="flex-box widget-box">
-      <p class="text-container">Filter licenses by product name</p>
-        <form method = "GET">
-          <input class="button" type="submit" value="Search"/>
-          {{ search_form }}
-        </form>
-
-        <form method="get">
-          {% csrf_token %}
-          <input class="button" type="submit" name="clear_search" value="Clear Search"/>
-        </form>
-      </div>
-  </div> {% endcomment %}
-
-  <div class="flex-container flex-center border-top">
-      <div class="flex-container flex-center">
-      <h2 class="text-container border-bottom"> Product Entitlements </h2>
-      </div>
-
-      <script>
-      window.onload = function() {
-        buildTable("get-entitlement-data", "table1");
-      }
-      </script>
-
-
+  <div class="flex-container">
   
-    <div class="table-scroll">
-      <table id="table1">
-        
-        <thead>
-          <tr> 
-            <th></th>
-          </tr>
-        </thead>
+      <div class="flex-box">
+        <form>
+          <input id="entitlement-search-button" Value="Search" type="button">
+          <input type="text" id="entitlement-search-form">
+        </form>
+        <p><input type="button" id="clear-entitlement-search" value="Clear Search"></p>
+      </div>
+  
+  
 
-      </table>
-    </div>
-
-      <form id="search-form">
-        <input onclick="buildTable('get-entitlement-data', 'table1')" Value="Search" type="button"/>
-        {{ search_form }}
-      </form>
+    <div class="flex-container flex-center">
+       <div class="flex-container flex-center">
+          <h2 class="text-container border-bottom"> Product Entitlements </h2>
+        </div>
+     </div> 
+     <div class="flex-container flex-center">
+      <div class="flex-container flex-center table-scroll">
+        <table id="entitlement-table">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+     </div>
     </div>
   </div>
 
+
 </div>
 
-<div class="flex-container border-top">
+<div class="flex-container border-top widget-box">
 </div>
 
 {% endblock main%}

@@ -14,7 +14,7 @@ def create_license(current_user, user_query):
     user_id = current_user.id
     creator_email = current_user.email
     contact_data = Contact.objects.filter(user=user_id).get()
-    org_object = contact_data.get_contact_org()
+    org_object = contact_data.organization
     user_org = org_object.org_name
     org_id = org_object.id
 
@@ -64,8 +64,8 @@ def delete_license(current_user, user_selection):
     # current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
-    org_object = contact_data.get_contact_org()
-    org_id = org_object.id
+    org_id = contact_data.organization.id
+    
 
     #Get entitlement data for current contact organization
     product_entitlements = Entitlement.objects.filter(organization=org_id)
@@ -86,9 +86,12 @@ def delete_license(current_user, user_selection):
     return True
 
 def generate_license_array(current_user, user_selection):
+    """ Generate license files for download """
+    print(user_selection)
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
-    org_object = contact_data.get_contact_org()
+    org_object = contact_data.organization
+
     org_id = org_object.id
     product_licenses = License.objects.filter(org_id=org_id)
 
@@ -103,7 +106,9 @@ def generate_license_array(current_user, user_selection):
         try:
             for license_id in user_selection:
                 license_selection = product_licenses.filter(id=license_id).get()
-                license_dict = license_selection.get_license_dictionary()
+                print(license_selection.product_name)
+                license_dict = license_selection.get_table_dictionary()
+                print("here")
 
                 temp_data = ""
                 for field in license_dict:
@@ -133,9 +138,41 @@ def generate_license_array(current_user, user_selection):
 
     return license_array
 
-
 def generate_license_key(license_data):
     print("I need a function to encrypt " + license_data)
     return "MyLicenseKey"
+
+
+
+def get_table_data(table_header, object_data):
+    data = {}
+    header_list = []
+    for key in table_header.keys():
+        header_list.append(table_header[key])
+    
+    data['table_header'] = header_list
+    if len(object_data) > 0:
+        try:
+            data_list = []
+            for obj in object_data:
+                object_dictionary = obj.get_table_dictionary()
+                temp_dict = {}
+                temp_dict["data_id"] = object_dictionary.get("data_id")
+                for key in table_header.keys():
+                    if key in object_dictionary.keys():
+                        temp_dict[key] = object_dictionary.get(key)
+
+                data_list.append(temp_dict)
+
+            data['table_data'] = data_list
+            data['success'] = True
+
+        except:
+            data['success'] = False
+
+    return data
+                    
+
+
 
 

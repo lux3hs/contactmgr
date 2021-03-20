@@ -26,11 +26,9 @@ class Contact(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, null=True)
 
-    def get_contact_org(self):
-        return self.organization
-
-    def get_contact_dict(self):
+    def get_table_dictionary(self):
         contact_dict = {}
+        contact_dict["data_id"] = self.id
         contact_dict["first_name"] = self.user.first_name
         contact_dict["last_name"] = self.user.last_name
         contact_dict["email"] = self.user.email
@@ -76,10 +74,14 @@ class Entitlement(models.Model):
 
     def get_table_dictionary(self):
         table_dict = {}
-        num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
+        table_dict["data_id"] = self.id
         table_dict["product_name"] = self.product.product_name
-        table_dict["access_code"] = self.product.product_version
+        table_dict["product_version"] = self.product.product_version
+        table_dict["max_licenses"] = self.max_licenses
+        table_dict["total_licenses"] = self.total_licenses
+        num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
         table_dict["num_allocated"] = num_allocated
+
         return table_dict
 
     def get_table_headers(self):

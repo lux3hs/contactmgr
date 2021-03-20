@@ -137,7 +137,11 @@ select:hover, select:active {
 /*                */
 
 .login-container{
-  margin-top:10%;
+  margin-top: 10%;
+  margin-left:35%;
+  /* border-left: 1px solid blue; */
+  border-left: 1px solid black;
+  width:fit-content;
 }
 
 
@@ -182,11 +186,11 @@ select:hover, select:active {
 .site-header{
   align-items: center;
   height: 50px;
+  /* border:2px solid black; */
 }
 
 #org-logo {
-  height: 55%;
-  width: 55%;
+  width:50%;
 } 
 
 
@@ -235,52 +239,53 @@ background-color: whitesmoke;
 
 /* Style the widget border */
 .widget-box{
-  border:none;
-  outline:none;
+  /* border:none; */
+  /* outline:none; */
+
   /* width:fit-content; */
   /* block-size: fit-content; */
   /* border:none; */
   /* border:2px solid darkgray; */
   /* border-radius: 15px; */
   /* padding: 5px; */
-  background-color: lightgray;
+  /* background-color: lightgray; */
   /* background-image: linear-gradient(to bottom right, darkgray,whitesmoke); */
 }
 
 /* Style the widget buttons */
 .widget-box .CharField{
-  border:none;
+  /* border:none; */
   /* border:1px solid black; */
   /* border-radius: 15px; */
-  outline:none;
+  /* outline:none; */
 }
 
 .widget-box .ChoiceField{
-  border:none;
+  /* border:none; */
   /* border: 1px solid black; */
   /* border-radius: 15px; */
-  outline:none;
+  /* outline:none; */
 }
 
 .widget-box input{
-  border:none;
+  /* border:none; */
   /* border:1px solid black; */
   /* border-radius: 15px; */
-  outline:none;
+  /* outline:none; */
 }
 
 .widget-box a{
-  border:none;
+  /* border:none; */
   /* border:1px solid black; */
   /* border-radius: 15px; */
-  outline:none;
+  /* outline:none; */
 }
 
 .widget-box button{
-  border:none;
+  /* border:none; */
   /* border:1px solid black; */
   /* border-radius: 15px; */
-  outline:none;
+  /* outline:none; */
 }
 
 
@@ -288,16 +293,16 @@ background-color: whitesmoke;
 /* Block container styles */
 
 .widget-container{
-  border:none;
+  /* border:none; */
   /* border-radius: 15px; */
-  outline:none;
-  background-color: lightgray;
+  /* outline:none; */
+  /* background-color: lightgray; */
 }
 
 .widget-container a{
-  border:none;
+  /* border:none; */
   /* border-radius: 15px; */
-  outline:none;
+  /* outline:none; */
 
 }
 
@@ -318,10 +323,10 @@ background-color: whitesmoke;
 
 table {
   border-spacing: 0em 1em;
-  width: 100%;
+  max-width: 75%;
   text-align:left;
   overflow-y:auto;
-  padding:5px;
+  padding:1em;
 }
 
 
