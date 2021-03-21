@@ -11,7 +11,7 @@
 {% endblock head %}
 
 {% block banner %}
-<div class="flex-container flex-row border-top app-banner">
+<div class="flex-container flex-row app-banner">
   <div class="tab">
   <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
   <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
@@ -41,7 +41,7 @@
 
 <div id="contacts-tab" class="js-tabcontent">
   
-  <div class="flex-container widget-container border-bottom">
+  <div class="flex-container widget-container">
     <p class="text-container">
     This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
     click on 'My Information' menu item above.
@@ -55,7 +55,7 @@
 
     <div class="flex-container flex-center">
       <div class="flex-container flex-center">
-        <h3 class="text-container border-bottom">Contacts</h3>
+        <h3 class="text-container">Contacts</h3>
       </div>
     </div>
 
@@ -66,16 +66,17 @@
         <form>
           <input id="contact-search-button" type="button" value="Search"/>
           {{ contact_search_form }}
-        </form>
 
-          <div><input id="clear-contact-search" class="button" type="button" name="clear_contact_search" value="Clear"/></div>
+          <div><input id="clear-contact-search" class="button" type="reset" value="Clear"/></div>
+          </form>
+
       </div>
     </div>
     
 
-        <form>>
-          <div class="flex-container table-scroll">
-            <table id="contact-table">
+        <form>
+          <div class="table-scroll">
+            <table id="contact-table" class="widget-table">
               <thead>
                 <tr> 
                   <th></th>
@@ -86,6 +87,8 @@
           
           <p><input type="submit" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
         </form>
+
+ 
   </div>
 </div>
 
@@ -93,7 +96,7 @@
   <div class="flex-container"> 
     <div class="flex-box widget-box">
       <h3 class="text-container">{{ user.username }}</h3>
-      <div class="flex-box border-bottom border-top">
+      <div class="flex-box">
         <p>UserID: {{ user.id }}</p>
         <p>UserEmail: {{ user_email }}</p>
         <p>Role: {{ user_role }}</p>
@@ -110,7 +113,7 @@
   </div>
 </div>
 
-<div class="flex-container border-top">
+<div class="flex-container">
 </div>
 
 {% endblock main %}

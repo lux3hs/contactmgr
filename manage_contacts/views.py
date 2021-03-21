@@ -33,18 +33,18 @@ def manage_contacts(request):
 
     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
-    if request.GET.get("filter_contactchoice"):
-        user_query = request.GET
-        filter_choice = user_query.get("filter_choice")
-        search_field = user_query.get("search_field")
-        contact_list = filter_contacts(contact_list=contact_list, filter_choice=filter_choice, search_field=search_field)
+    # if request.GET.get("filter_contactchoice"):
+    #     user_query = request.GET
+    #     filter_choice = user_query.get("filter_choice")
+    #     search_field = user_query.get("search_field")
+    #     contact_list = filter_contacts(contact_list=contact_list, filter_choice=filter_choice, search_field=search_field)
 
     #Clear search filter on response from clear search button
-    elif request.GET.get("clear_search"):
-        contact_list = []
-        for contact in contact_objects:
-            user_dict = contact.get_table_dictionary()
-            contact_list.append(user_dict)
+    # elif request.GET.get("clear_search"):
+    #     contact_list = []
+    #     for contact in contact_objects:
+    #         user_dict = contact.get_table_dictionary()
+    #         contact_list.append(user_dict)
 
     #Check for input from delete contacts
     if request.GET.get('delete_contact_button'):

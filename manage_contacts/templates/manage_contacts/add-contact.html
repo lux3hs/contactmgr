@@ -22,39 +22,43 @@
 </ul>
 {% endif %}
 
-<h2 class="text-container">Add Contact</h2>
 <div class="flex-container">
   
   {% if user_role == "admin" %}
+
   
-  <div class="flex-box">
-    <form method="post">
-    {% csrf_token %}
-      {{ contact_form.as_p }}
+        <div class="flex-box widget-box">
+          <h3 class="text-container">Add Contact</h3>
 
-      {% if contact_org.org_name == "automai" %}
-      <p>
-      <label>Organization:</label>
-      <select name="select_org">
-      {% for choice in choice_list %}
-      <option value="{{ choice }}">{{ choice }}</option>
-      </p>
-      {% endfor %}
-      </select>
-      {% endif %}
+          <form id="new-contact-form" method="post">
+          {% csrf_token %}
+            {{ contact_form.as_p }}
 
-      <div class="flex-box">
-      <input class="button" type = "submit" value = "Create user" name="newForm"/>
-      </div>
-    </form>
-  </div>
+            {% if contact_org.org_name == "automai" %}
+            
+            <label>Organization:</label>
+              <select name="select_org">
+              {% for choice in choice_list %}
+                <option value="{{ choice }}">{{ choice }}</option>
+              {% endfor %}
+            </select>
+            {% endif %}
+
+            <div class="flex-box">
+            <input class="button" type = "submit" value = "Submit"/>
+            </div>
+          </form>
+        </div>
+
+
+
   
   {% else %}
   <p>Not authorized.</p>
   {% endif %}
 </div>
 
-<div class="flex-container flex-row border-top navigation-buttons">
+<div class="flex-container flex-row navigation-buttons">
 <p><a href="{% url 'manage_contacts' %}">Return</a></p>
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Logout</a></p>
