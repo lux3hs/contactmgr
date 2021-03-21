@@ -42,9 +42,10 @@ def manage_contacts(request):
     choice_list = [("first_name", "First Name"), ("last_name", "Last Name"), ("email", "Email")]
 
     #Create a form for filtering contacts
-    filter_form = SearchChoiceForm(choice_list=choice_list)
+    # contact_search_form = SearchChoiceForm(choice_list=choice_list, search_id="contact_search_field")
+    contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=choice_list)
 
-    if request.GET.get("filter_choice"):
+    if request.GET.get("filter_contactchoice"):
         user_query = request.GET
         filter_choice = user_query.get("filter_choice")
         search_field = user_query.get("search_field")
@@ -70,7 +71,7 @@ def manage_contacts(request):
                'org_id':org_id,
                'user_org':user_org,
                'contact_list':contact_list,
-               'filter_form':filter_form
+               'contact_search_form':contact_search_form,
             }
 
     return render(request, "manage_contacts/manage-contacts.html", context)

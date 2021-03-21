@@ -43,16 +43,16 @@
 {% endif %}
 
 <div id="licenses-tab" class="js-tabcontent">
-  <div class="flex-container">
-    <div class="flex-container widget-container">
-      <p class="text-container">
-      This screen displays the licenses for the entire Organization. If you want to view associated products, 
-      click on 'View my products' menu item above.
-      </p>
-    </div>
+
+  <div class="flex-container widget-container border-bottom">
+    <p class="text-container">
+    This screen displays the licenses for the entire Organization. If you want to view associated products, 
+    click on 'View my products' menu item above.
+    </p>
   </div>
 
   <div class="flex-container">
+    <div class="flex-container flex-center"><h3>Add License</h3></div>
     <div class="flex-box widget-box">
       <form method = "post">
           {% csrf_token %}
@@ -65,33 +65,37 @@
   
 
   <div class="flex-container border-top">
-
-    <div class="flex-box">
-      <form>
-        <div class="flex-box flex-row">
-          <p><input type="button" id="license-search-button" value="Search"/></p>
-          <p><input type="text" id="license-search-form"></p>
-        </div>
-        <div class="flex-box"
-          <p><input type="button" id="clear-license-search" value="Clear"/></p>
-        </div>
-      </form>
-    </div>
     
-      <div class="flex-container flex-center">
+    <div class="flex-container flex-center">
 
       <div class="flex-container flex-center">
         <div class="flex-container flex-center">
-          <h2 class="text-container border-bottom"> Licenses </h2>
+          <h3 class="text-container border-bottom"> Licenses </h3>
         </div>
       </div>
 
 
-        <form method="get">
-          <div class="flex-box border">
-            <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
-          </div>
-         <div class="table-scroll">
+      <div class="flex-container">
+        <div class="flex-box widget-box"> 
+          <p class="text-container">Filter Licenses Using the Fields Below</p>
+
+          <form>
+            <input id="license-search-button" type="button" value="Search"/>
+            {{ license_search_form }}
+          </form>
+
+          <form>
+            <input id="clear-license-search" class="button" type="button" name="clear_license_search" value="Clear"/>
+          </form>
+        </div>
+      </div>
+
+      <form method="get">
+        <div class="flex-box border">
+          <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
+        </div>
+        
+        <div class="table-scroll">
           <table id="license-table">
               <thead>
                 <tr> 
@@ -99,64 +103,53 @@
                 </tr>
               </thead>
           </table>
-         </div>
-        
+        </div>
+      
         <div class="flex-container flex-row">
-
           <p><input type="submit" name="delete_license_button" id="delete-license-button" value="Delete"></p>
-
-          <p><input type="submit" name="generate_license_selection" value="Generate Selection"></p>
-          
-           
+          <p><input type="submit" name="generate_license_selection" value="Generate Selection"></p>          
         </div>
         
-        </form>
-
-      </div>
-  
+      </form>
+    </div>
   </div>
-
 </div>
 
 
 
 <div id="products-tab" class="js-tabcontent">
 
-  <div class="flex-container">
-  
-      <div class="flex-box">
-        <form>
-          <input id="entitlement-search-button" Value="Search" type="button">
-          <input type="text" id="entitlement-search-form">
-        </form>
-        <p><input type="button" id="clear-entitlement-search" value="Clear Search"></p>
-      </div>
-  
-  
+  <div class="flex-container flex-center">
 
     <div class="flex-container flex-center">
-       <div class="flex-container flex-center">
-          <h2 class="text-container border-bottom"> Product Entitlements </h2>
-        </div>
-     </div> 
-     <div class="flex-container flex-center">
-      <div class="flex-container flex-center table-scroll">
-        <table id="entitlement-table">
-          <thead>
-            <tr> 
-              <th></th>
-            </tr>
-          </thead>
-        </table>
+      <h3 class="text-container border-bottom">Product Entitlements</h3>
+    </div>
+    
+    <div class="flex-container">
+      <div class="flex-box widget-box">
+        <p>Filter Products</p>
+        
+        <form>
+          <input id="entitlement-search-button" Value="Search" type="button">
+          {{ entitlement_search_form }}
+        </form>
+        <div><input type="button" id="clear-entitlement-search" value="Clear"></div>        
       </div>
-     </div>
+    </div>
+
+    <div class="table-scroll">
+      <table id="entitlement-table">
+        <thead>
+          <tr> 
+            <th></th>
+          </tr>
+        </thead>
+      </table>
     </div>
   </div>
-
-
 </div>
 
-<div class="flex-container border-top widget-box">
+<div class="flex-container border-top">
 </div>
 
 {% endblock main%}

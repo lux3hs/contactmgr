@@ -1,6 +1,7 @@
 import datetime
 import os.path
 
+
 from .models import License
 from manage_contacts.models import Contact, Product, Entitlement, Organization
 
@@ -18,9 +19,13 @@ def create_license(current_user, user_query):
     user_org = org_object.org_name
     org_id = org_object.id
 
+    org_id = contact_data.organization.id
+
     product_choice = user_query.get('product_choice')
     ip_host = user_query.get('ip_host')
 
+    
+    
     #Get entitlement data for current contact organization
     entitlement_product = Product.objects.filter(product_name=product_choice).get()
     product_id = entitlement_product.id
@@ -61,6 +66,7 @@ def create_license(current_user, user_query):
     return new_license
 
 def delete_license(current_user, user_selection):
+    """ Delete license object from database based on user selection """
     # current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
@@ -145,6 +151,7 @@ def generate_license_key(license_data):
 
 
 def get_table_data(table_header, object_data):
+    """ Create a data object to pass into tables """
     data = {}
     header_list = []
     for key in table_header.keys():
@@ -174,5 +181,35 @@ def get_table_data(table_header, object_data):
                     
 
 
+def get_license_header():
+    license_header = {'product_name':'Product',
+                    'version_number':'Version',
+                    'org_name':'Org', 
+                    'IP_Host':'IP Host', 
+                    'creator_email': 'Email', 
+                    'is_permanent': 'Permanent',
+                    'product_grade': 'Grade',
+                    'product_stations': 'Stations',
+                    'creation_date': 'Created',
+                    'expiration_date': 'Expires'}
 
+    return license_header
+
+
+def get_entitlement_header():
+    entitlement_header = {'product_name':'Product',
+                          'product_version':'Version',
+                          'num_allocated':'Allocated', 
+                          }
+
+    return entitlement_header
+
+
+def get_choice_list(model_header):
+    choice_list = []
+    for key in model_header:
+        # for key in product_license:
+        choice_list.append((key, model_header[key]))
+
+    return choice_list
 

@@ -7,6 +7,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
+
 {% endblock head %}
 
 {% block banner %}
@@ -30,62 +31,63 @@
   <h2 class="text-container"> Manage Contacts </h2>
 </div>
 
-<div id="contacts-tab" class="js-tabcontent">
-  <script>document.getElementById("js-default-open").click();</script>
-  {% if messages %}
+{% if messages %}
     <ul class="messages">
       {% for message in messages %}
       <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
       {% endfor %}
     </ul>
-  {% endif %}
+{% endif %}
 
-  <div class="flex-container widget-container">
+<div id="contacts-tab" class="js-tabcontent">
+  
+  <div class="flex-container widget-container border-bottom">
     <p class="text-container">
     This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
     click on 'My Information' menu item above.
     </p>
 
-    <div class="flex-box">
-      <a href="{% url 'add_contact' %}">New Contact</a>
-    </div>
+    <div class="flex-box"><a href="{% url 'add_contact' %}">New Contact</a></div>
   </div>
 
-  <div class="flex-container">
-    <div class="flex-box widget-box"> 
-      <p class="text-container">Filter Contacts Using the Fields Below</p>
-      
-      <form method = "GET">
-        <input class="button" type="submit" value="Search"/>
-        {{ filter_form }}
-      </form>
 
-      <form method="get">
-        <input class="button" type="submit" name="clear_search" value="Clear"/>
-      </form>
-    </div>
-  </div>
+  <div class="flex-container flex-center">  
 
-  <div class="flex-container flex-center border-top">
     <div class="flex-container flex-center">
-      <h2 class="text-container border-bottom">Contacts</h2>
+      <div class="flex-container flex-center">
+        <h3 class="text-container border-bottom">Contacts</h3>
+      </div>
     </div>
-  </div>
 
-  <div class="flex-container flex-center">
-    <form method="get">
-        <div class="flex-container table-scroll">
-          <table id="contact-table">
-            <thead>
-              <tr> 
-                <th></th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+    <div class="flex-container">
+      <div class="flex-box widget-box"> 
+        <p class="text-container">Filter Contacts</p>
         
-        <p><input type="submit" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
-      </form>
+        <form>
+          <input id="contact-search-button" type="button" value="Search"/>
+          {{ contact_search_form }}
+        </form>
+
+          <div><input id="clear-contact-search" class="button" type="button" name="clear_contact_search" value="Clear"/></div>
+      </div>
+    </div>
+    
+
+    <div class="flex-container flex-center">
+      <form method="get">
+          <div class="flex-container table-scroll">
+            <table id="contact-table">
+              <thead>
+                <tr> 
+                  <th></th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          
+          <p><input type="submit" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
+        </form>
+    </div>
   </div>
 </div>
 

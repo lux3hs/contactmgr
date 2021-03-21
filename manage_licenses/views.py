@@ -11,7 +11,7 @@ from django.conf import settings
 
 from manage_contacts.models import Contact, Product, Entitlement, Organization
 from .models import License
-from .forms import ChoiceForm, SearchForm, NewLicenseForm
+from .forms import ChoiceForm, SearchForm, NewLicenseForm, SearchChoiceForm
 from .services import *
 
 base_dir = str(settings.BASE_DIR)
@@ -41,6 +41,22 @@ def manage_licenses(request):
 
     #Create a search form
     # search_form = SearchForm()
+    license_header = get_license_header()
+
+    license_choice_list = get_choice_list(license_header)
+
+    # choice_list = []
+    # for key in license_header:
+    #     # for key in product_license:
+    #     choice_list.append((key, license_header[key]))
+
+
+    license_search_form =  SearchChoiceForm(auto_id='license_search_form_%s', choice_list=license_choice_list)
+
+    entitlement_header = get_entitlement_header()
+    entitlement_choice_list = get_choice_list(entitlement_header)
+    entitlement_search_form =  SearchChoiceForm(auto_id='entitlement_search_form_%s', choice_list=entitlement_choice_list)
+
     
     #Clear search filter on response from clear search button
     # if request.GET.get("clear_search"):
@@ -109,8 +125,9 @@ def manage_licenses(request):
                 'user_products': product_entitlements,
                 # 'product_form':product_form,
                 # 'entitlement_list':entitlement_list,
-                # 'search_form':search_form,
+                'license_search_form':license_search_form,
                 'new_license_form':new_license_form,
+                'entitlement_search_form':entitlement_search_form,
                 }
 
     return render(request, "manage_licenses/manage-licenses.html", context)
@@ -139,7 +156,9 @@ def get_entitlement_data(request):
     contact_data = Contact.objects.filter(user=user_id).get()
     org_id = contact_data.organization.id
     entitlement_data = Entitlement.objects.filter(organization=org_id)
-    table_header = {'product_name':'Product Name', 'product_version':'Product Version', 'num_allocated':'Allocated'}
+
+    table_header = get_entitlement_header()
+    # table_header = {'product_name':'Product Name', 'product_version':'Product Version', 'num_allocated':'Allocated'}
     table_data = get_table_data(table_header, entitlement_data)
     return JsonResponse(table_data)
 
@@ -150,6 +169,6 @@ def get_license_data(request):
     contact_data = Contact.objects.filter(user=user_id).get()
     org_id = contact_data.organization.id
     license_data = License.objects.filter(org_id=org_id)
-    table_header = {'product_name':'Product Name', 'org_name':'Org', 'org_id':'OrgID', 'entitlement_id':'EntID'}
+    table_header = get_license_header()
     table_data = get_table_data(table_header, license_data)
     return JsonResponse(table_data)
