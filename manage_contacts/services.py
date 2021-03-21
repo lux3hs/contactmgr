@@ -31,9 +31,15 @@ def add_new_contact(user_query, contact_organization):
     return new_contact
 
 def delete_contacts(user_selection):
-    for user_id in user_selection:
-        contact_data = Contact.objects.filter(id=user_id)
-        contact_data.delete()
+    if len(user_selection) > 0:
+        for user_id in user_selection:
+            contact_data = Contact.objects.filter(id=user_id)
+            contact_data.delete()
+            
+            return "Selection deleted"
+
+    else:
+        return "No contacts selected"
 
 
 def add_new_organization(user_query):
@@ -110,19 +116,19 @@ def add_new_entitlement(user_query):
 
 
 
-def filter_contacts(contact_list, filter_choice, search_field):
-    filter_list = []
-    for contact in contact_list:
-        if search_field.lower() in contact[filter_choice].lower():
-            filter_list.append(contact)
+# def filter_contacts(contact_list, filter_choice, search_field):
+#     filter_list = []
+#     for contact in contact_list:
+#         if search_field.lower() in contact[filter_choice].lower():
+#             filter_list.append(contact)
 
-    return filter_list
+#     return filter_list
 
 
-def delete_object_selection(data_objects, user_selection):
-    for object_id in user_selection:
-        object_selection = data_objects.objects.filter(id=object_id)
-        object_selection.delete()
+# def delete_object_selection(data_objects, user_selection):
+#     for object_id in user_selection:
+#         object_selection = data_objects.objects.filter(id=object_id)
+#         object_selection.delete()
 
 
 def get_model_fields(model):
@@ -165,3 +171,23 @@ def get_table_data(table_header, object_data):
             data['success'] = False
 
     return data
+
+
+def get_contact_header():
+    contact_header = {'username':'User',
+                      'first_name':'First Name',
+                      'last_name':'Last Name',
+                      'email':'Email',
+                      'role':'Role',
+                      'status':'Status',
+                      'org_name':'Organization',
+                    }
+
+    return contact_header
+
+def get_choice_list(model_header):
+    choice_list = []
+    for key in model_header:
+        choice_list.append((key, model_header[key]))
+
+    return choice_list

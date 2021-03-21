@@ -7,5 +7,7 @@ urlpatterns = [
     path('download-license', views.download_license, name='download_license'),
     path('get-entitlement-data', views.get_entitlement_data, name='get_entitlement_data'),
     path('get-license-data', views.get_license_data, name='get_license_data'),
+    # path('generate-license-data', views.generate_license_data, name='generate_license_data'),
+
 
 ]

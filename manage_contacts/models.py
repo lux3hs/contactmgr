@@ -29,6 +29,7 @@ class Contact(models.Model):
     def get_table_dictionary(self):
         contact_dict = {}
         contact_dict["data_id"] = self.id
+        contact_dict["username"] = self.user.username
         contact_dict["first_name"] = self.user.first_name
         contact_dict["last_name"] = self.user.last_name
         contact_dict["email"] = self.user.email
@@ -81,7 +82,6 @@ class Entitlement(models.Model):
         table_dict["total_licenses"] = self.total_licenses
         num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
         table_dict["num_allocated"] = num_allocated
-
         return table_dict
 
     def get_table_headers(self):

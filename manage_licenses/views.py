@@ -24,48 +24,35 @@ def manage_licenses(request):
     #Get current user info
     current_user = request.user
     user_email = current_user.email
-
     user_id = current_user.id
+
     contact_data = Contact.objects.filter(user=user_id).get()
     user_role = contact_data.role
-
     user_org = contact_data.organization
-    org_id = user_org.id
+    org_id = contact_data.organization.id
     org_name = user_org.org_name
 
     #Get entitlement data for current contact organization
     product_entitlements = Entitlement.objects.filter(organization=org_id)
 
     #Get product data for current contact organization
-    product_licenses = License.objects.filter(org_id=org_id)
+    # product_licenses = License.objects.filter(org_id=org_id)
 
-    #Create a search form
-    # search_form = SearchForm()
+    #Retrieve data objects for tables
     license_header = get_license_header()
-
     license_choice_list = get_choice_list(license_header)
-
-    # choice_list = []
-    # for key in license_header:
-    #     # for key in product_license:
-    #     choice_list.append((key, license_header[key]))
-
-
     license_search_form =  SearchChoiceForm(auto_id='license_search_form_%s', choice_list=license_choice_list)
 
     entitlement_header = get_entitlement_header()
     entitlement_choice_list = get_choice_list(entitlement_header)
     entitlement_search_form =  SearchChoiceForm(auto_id='entitlement_search_form_%s', choice_list=entitlement_choice_list)
 
-    
-    #Clear search filter on response from clear search button
-    # if request.GET.get("clear_search"):
-    #     return HttpResponseRedirect(request.path_info)
-
     #Create product choices from entitlements
     product_choices = []
     for entitlement in product_entitlements:
         product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
+
+    # product_choices = get_choice_list()
 
     #Create a form for license generation
     new_license_form = NewLicenseForm(product_choices=product_choices)
@@ -82,13 +69,12 @@ def manage_licenses(request):
 
         #Create license if entitlements exist
         if entitlement_data.check_allocated_licenses():
+            
             new_license = create_license(current_user, user_query)
-            new_license.save()
-                                
-            #Reduce license allocations after successful generation
-            entitlement_data.total_licenses -= 1
-            entitlement_data.save()
 
+            #Reduce license allocations after successful generation
+            # entitlement_data.total_licenses -= 1
+            # entitlement_data.save()
             messages.add_message(request, messages.INFO, 'New license created')
             return HttpResponseRedirect(request.path_info)
 
@@ -96,35 +82,36 @@ def manage_licenses(request):
             messages.add_message(request, messages.INFO, 'Not enough product entitlements')
             return HttpResponseRedirect(request.path_info)
 
-    
     #Check for input from delete license
     if request.GET.get('delete_license_button'):
-
         user_selection = request.GET.getlist("check-box")
-        print(user_selection)
-
-
-        delete_license(current_user, user_selection)
-        messages.add_message(request, messages.INFO, 'Selection Deleted')
+        message = delete_license(org_id, user_selection)
+        messages.add_message(request, messages.INFO, message)
         return HttpResponseRedirect(request.path_info)
 
-    #Check for input to generate license
+    # Check for input to generate license
     if request.GET.get("generate_license_selection"):
         user_selection = request.GET.getlist("check-box")
-        # print(user_selection)
-        license_array = generate_license_array(current_user, user_selection)
-        messages.add_message(request, messages.INFO, license_array["Message"])
-        return HttpResponseRedirect(request.path_info)
+        
+        if len(user_selection) > 0:
+            license_array = generate_license_array(current_user, user_selection)
+
+            if license_array["Success"]:
+                new_license = download_license(request)
+                return new_license
+
+            else:
+                response = HttpResponse(license_array["Message"], content_type="text/plain")
+                return response
+
+        else:
+            response = HttpResponse("No licenses selected", content_type="text/plain")
+            return response
     
     #Render variables in html
     context = {'user_email': user_email,
                 'user_role': user_role,
                 'user_org':org_name,
-                'org_id': org_id,
-                'product_licenses': product_licenses,
-                'user_products': product_entitlements,
-                # 'product_form':product_form,
-                # 'entitlement_list':entitlement_list,
                 'license_search_form':license_search_form,
                 'new_license_form':new_license_form,
                 'entitlement_search_form':entitlement_search_form,
@@ -134,13 +121,14 @@ def manage_licenses(request):
 
 
 def download_license(request):
-    """ Download a generated license """
+#     """ Download a generated license """
     license_file = base_dir + "/bin/Product-License.lic"
     if os.path.isfile(license_file):
+        print("hello")
         f = open(license_file, "r")
         license_data = f.read()
-        os.remove(license_file)
         license_data = license_data.replace("\n", "\r\n")
+        os.remove(license_file)
         response = HttpResponse(license_data, content_type="text/plain")
         response['Content-Disposition'] = 'attachment; filename="product-license.lic"'
         return response
@@ -148,7 +136,6 @@ def download_license(request):
     else:
         response = HttpResponse("No file exists", content_type="text/plain")
         return response
-
 
 def get_entitlement_data(request):
     current_user = request.user
@@ -158,7 +145,6 @@ def get_entitlement_data(request):
     entitlement_data = Entitlement.objects.filter(organization=org_id)
 
     table_header = get_entitlement_header()
-    # table_header = {'product_name':'Product Name', 'product_version':'Product Version', 'num_allocated':'Allocated'}
     table_data = get_table_data(table_header, entitlement_data)
     return JsonResponse(table_data)
 

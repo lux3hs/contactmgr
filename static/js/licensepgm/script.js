@@ -66,7 +66,12 @@ function changePage(evt, pageName) {
       const cell = row.insertCell(-1);
       cell.outerHTML = "<th>" + headerData[value] + "</th>";
     }
-      
+
+    if(!data) {
+      console.log("table object doesn't exist")
+      return
+    }
+
     for(let dataObject of data) {
       const data_id = dataObject.data_id
       delete dataObject.data_id
@@ -80,7 +85,6 @@ function changePage(evt, pageName) {
         drow.insertCell(-1).innerHTML = dataValue;
       }
     }
-  
   }
   
   
@@ -107,6 +111,7 @@ function changePage(evt, pageName) {
         var x = document.createElement("INPUT");
         x.setAttribute("type", "checkbox");
         x.setAttribute("name", "check-box")
+        x.setAttribute("id", "checkBox")
         x.setAttribute("value", rowID);
         cell.appendChild(x);
   

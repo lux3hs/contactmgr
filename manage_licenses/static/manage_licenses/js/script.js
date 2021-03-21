@@ -40,7 +40,6 @@ window.addEventListener('load', (event) => {
     tableHeader = data.table_header
     tableData = data.table_data
     buildDataTable(tableData, tableHeader, 'entitlement-table')
-    addCheckBoxes('entitlement-table')
     })
 
 
@@ -52,7 +51,6 @@ window.addEventListener('load', (event) => {
     tableHeader = data.table_header
     filteredData = filterData(tableData, choiceQuery, searchQuery);
     buildDataTable(filteredData, tableHeader, 'entitlement-table')
-    addCheckBoxes('entitlement-table')
     })
   })
 
@@ -61,8 +59,6 @@ window.addEventListener('load', (event) => {
     tableData = data.table_data
     tableHeader = data.table_header
     buildDataTable(tableData, tableHeader, 'entitlement-table')
-    addCheckBoxes('entitlement-table')
     })
   })
-
 })

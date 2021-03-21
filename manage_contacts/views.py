@@ -26,24 +26,12 @@ def manage_contacts(request):
     user_org = user_data.organization.org_name
     org_id = user_data.organization.id
 
-    
-    #Get list of users by current contact's organization
-    # user_objects = User.objects
     contact_objects = Contact.objects.filter(organization=org_id)
     
-    #Create a list of contact information to display in table
-    contact_list = []
-    for contact in contact_objects:
-        user_dict = contact.get_table_dictionary()
-        contact_list.append(user_dict)
+    contact_header = get_contact_header()
+    contact_choice_list = get_choice_list(contact_header)
 
-    # contact_fields = get_model_fields(Contact)
-    # choice_list = get_model_choices(contact_fields)
-    choice_list = [("first_name", "First Name"), ("last_name", "Last Name"), ("email", "Email")]
-
-    #Create a form for filtering contacts
-    # contact_search_form = SearchChoiceForm(choice_list=choice_list, search_id="contact_search_field")
-    contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=choice_list)
+    contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
     if request.GET.get("filter_contactchoice"):
         user_query = request.GET
@@ -61,8 +49,8 @@ def manage_contacts(request):
     #Check for input from delete contacts
     if request.GET.get('delete_contact_button'):
         user_selection = request.GET.getlist("check-box")
-        delete_contacts(user_selection)
-        messages.add_message(request, messages.INFO, 'Selection Deleted')
+        message = delete_contacts(user_selection)
+        messages.add_message(request, messages.INFO, message)
         return HttpResponseRedirect(request.path_info)
 
     #Render variables in html
@@ -70,7 +58,6 @@ def manage_contacts(request):
                'user_role':user_role,
                'org_id':org_id,
                'user_org':user_org,
-               'contact_list':contact_list,
                'contact_search_form':contact_search_form,
             }
 
@@ -126,7 +113,7 @@ def get_contact_data(request):
     user_data = Contact.objects.filter(user_id=user_id).get()
     org_id = user_data.organization.id
     contact_data = Contact.objects.filter(organization=org_id)
-    table_header = {'first_name':'First Name', 'last_name':'Last Name', 'email': 'Email'}
+    table_header = get_contact_header()
     table_data = get_table_data(table_header, contact_data)
     return JsonResponse(table_data)
 

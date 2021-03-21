@@ -82,19 +82,13 @@
           <form>
             <input id="license-search-button" type="button" value="Search"/>
             {{ license_search_form }}
-          </form>
-
-          <form>
-            <input id="clear-license-search" class="button" type="button" name="clear_license_search" value="Clear"/>
+          
+            <input id="clear-license-search" class="button" type="reset" name="clear_license_search" value="Clear"/>
           </form>
         </div>
       </div>
 
-      <form method="get">
-        <div class="flex-box border">
-          <p class="text-container"><a href="{% url 'download_license' %}">Download</a></p>
-        </div>
-        
+      <form>
         <div class="table-scroll">
           <table id="license-table">
               <thead>
@@ -104,10 +98,10 @@
               </thead>
           </table>
         </div>
-      
+        
         <div class="flex-container flex-row">
           <p><input type="submit" name="delete_license_button" id="delete-license-button" value="Delete"></p>
-          <p><input type="submit" name="generate_license_selection" value="Generate Selection"></p>          
+          <p><input type="submit" name="generate_license_selection" id="generate-license-selection" value="Generate"></p>          
         </div>
         
       </form>
