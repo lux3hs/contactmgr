@@ -1,4 +1,4 @@
-<!-- templates/homepage.html -->
+<!-- templates/info.html -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -6,8 +6,11 @@
 
 {% block main %}
   {% if user.is_authenticated %}
-  {% block header %}
-  <header class="site-header flex-container flex-row border-bottom">  
+  
+  {% block header %}  {% endblock header %}
+
+  <header class="app-header flex-container flex-row">  
+    
     <div class="flex-widget">
     <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="org-logo" alt="Generic logo"/>
     </div>
@@ -17,20 +20,15 @@
       <p><a href="{% url 'logout' %}">Log Out</a></p>
     </div>
   </header>
-  {% endblock header %}
 
-  <div>
   <h3>Welcome to LicensePGM>
-  <p>This is a tool for generating licenses</p>
-  </div>
+  <p>A tool for generating product licenses</p>
 
   {% else %}
-  {% comment %} <div class="flex-container flex-center login-container"> {% endcomment %}
-    <div class="flex-box widget-box">
+  <div class="flex-box widget-box">
     <p>You are not logged in.</p>
     <p><a href="{% url 'login' %}">Log In</a></p>
-    </div>
-  {% comment %} <div> {% endcomment %}
+  </div>
   {% endif %}
 
 {% endblock main %}

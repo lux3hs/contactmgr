@@ -10,15 +10,16 @@
 {% endblock head %}
 
 {% block header %}
-<div class="app-header">
+<div class="flex-container flex-row widget-box">
   <div class="tab">
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
     <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
   </div>
 
-  <div class="nav-row navigation-buttons">
-    <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
+  <div class="nav-row">
+    <p><a href="{% url 'manage_contacts' %}">Contacts</a></p>
     <p><a href="{% url 'homepage' %}">Home</a></p>
+    <p><a href="{% url 'admin_dash' %}">Admin</a></p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
 </div>
@@ -27,65 +28,68 @@
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
+{% comment %} <div class="flex-container widget-box"> {% endcomment %}
+
 <div class="flex-container">
-  <h2> Manage Licenses </h2>
   
-    {% comment %} {% if messages %}
-      <ul class="messages">
-       {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %} {% endcomment %}
+  <div class=" widget-box">
+    <h2> Manage Licenses </h2>
 
+    <p class="text-container"> {{ user.email }} - {{ contact_data.role }} - {{ contact_data.organization }}</p>
 
-
-    <pclass="text-container"> {{ user.email }} - {{ contact_data.role }} - {{ contact_data.organization }}</p>
-
-<div id="licenses-tab" class="js-tabcontent">
-  <div>
     <p>
     This screen displays the licenses for the entire Organization. If you want to view associated products, 
     click on 'View my products' menu item above.
     </p>
   </div>
+
+<div id="licenses-tab" class="js-tabcontent">
   
-  <div class="flex-box widget-box">
-    <h3>Add License</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ new_license_form }}
-        <p><input class="button" name="save-license" type="submit" value="Save License"/></p>
-    </form>
-  </div>
+  {% comment %} <div class="flex-container widget-box"> {% endcomment %}
+    <div class="flex-container widget-box"> 
+      <h3>Add License</h3>
+      <form method="post">
+          {% csrf_token %}
+          {{ new_license_form }}
+          <p><input class="button" name="save-license" type="submit" value="Save License"/></p>
+      </form>
 
-  <div class="flex-box widget-box"> 
-    <h3>Filter Licenses</h3>
-    <form>
-      <input id="license-search-button" type="button" value="Search"/>
-      {{ license_search_form }}
-      <p><input id="clear-license-search" class="button" type="reset" value="Clear"/></p>
-    </form>
-  </div>
-
-  <h3 class="table-label"> Licenses </h3>
-  <form method="post">
-    {% csrf_token %}
-    <div class="table-container">
-        <table id="license-table" class="widget-table">
-          <thead>
-            <tr> 
-              <th></th>
-            </tr>
-          </thead>
-        </table>
+      <h3>Filter Licenses</h3>
+      <form>
+        <input id="license-search-button" type="button" value="Search"/>
+        {{ license_search_form }}
+        <p><input id="clear-license-search" class="button" type="reset" value="Clear"/></p>
+      </form>
     </div>
-    <p><input type="button" name="delete_license_button" id="delete-license-button" value="Delete"></p>
-    <p><input type="submit" name="generate_license_selection" id="generate-license-selection" value="Generate"></p>               
-  </form>
-</div>
+  {% comment %} </div> {% endcomment %}
 
-<div id="products-tab" class="js-tabcontent">
+    <div class="flex-container widget-box flex-center">
+      <h2 class="table-label"> Licenses </h2>
+      <div class="table-container widget-box">
+        <form method="post">
+          {% csrf_token %}
+            <table id="license-table" class="widget-table">
+              <thead>
+                <tr> 
+                  <th></th>
+                </tr>
+              </thead>
+            </table>
+            <div class="flex-box flex-row">
+              <p><input type="button" name="delete_license_button" id="delete-license-button" value="Delete"></p>
+              <p><input type="submit" name="generate_license_selection" id="generate-license-selection" value="Generate"></p>  
+            </div>
+        </form>
+      </div>
+    </div>
+
+
+ </div>
+
+
+
+ <div id="products-tab" class="js-tabcontent">
+  
   <div class="flex-box widget-box">
     <h3>Filter Products</h3>
     <form>
@@ -96,7 +100,7 @@
   </div>
 
   <h3 class="table-label">Product Entitlements</h3>
-  <div class="table-container">
+  <div class="table-container widget-box">
     <table id="entitlement-table" class="widget-table">
       <thead>
         <tr> 
@@ -105,8 +109,9 @@
       </thead>
     </table>
   </div>
-</div>
 
+</div>
+{% comment %} </div> {% endcomment %}
 {% endblock main%}
 
 {% block footer %}{% endblock footer %}

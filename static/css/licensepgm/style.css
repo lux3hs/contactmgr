@@ -11,19 +11,26 @@ body {
     margin-right:50px;
     /* overflow: auto; */
     font-size: 14px;
-    font-family: arial;
-    background: white;
+    /* font-family: cursive; */
+    background: whitesmoke;
 
   }
 
+  p {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+
 a{
-    background-color:white;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     color: black;
-    border: 1px solid black;
-    /* border-radius: 25px; */
+    /* border: 1px solid black; */
+    border:none;
+    border-radius: 5px;
     text-align: center;
-    padding: 10px 20px;
+    padding: 10px 15px;
     text-decoration: none;
+    margin:5px;
   }
 
 a:hover, a:active {
@@ -31,11 +38,14 @@ a:hover, a:active {
 }
 
 input{
-  background-color:white;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
   color: black;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border:none;
   text-align: left;
-  padding:10px 20px;
+  padding:10px 15px;
   text-decoration: none;
 
 }
@@ -45,43 +55,48 @@ input:hover, input:active{
 }
 
 button {
-    background-color:white;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     color: black;
     border: 1px solid black;
-    /* border-radius: 24px; */
+    border-radius: 5px;
     text-align: center;
-    padding: 10px 20px;
+    padding: 10px 15px;
     text-decoration: none;
-    /* display: inline-block; */
+    display: inline-block;
 }
 
 button:hover, button:active {
     background-color: whitesmoke;
   }
 
-input.button {
-    background-color:white;
+/* input.button {
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     color: black;
     border: 1px solid black;
-    /* border-radius: 24px; */
+    border-radius: 24px;
     text-align: center;
     padding: 10px 20px;
-    /* margin: 5px; */
+    margin: 5px;
     text-decoration: none;
     display: inline-block;
-    /* cursor: pointer; */
-  }
+    cursor: pointer;
+  } */
 
-input.button:hover, input.button:active {
+/* input.button:hover, input.button:active {
     background-color: whitesmoke;
-  }
+  } */
 
 select{
-  background-color:white;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
   color: black;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border:none;
   text-align: left;
-  padding:10px 20px;
+  padding:10px 15px;
   text-decoration: none;
 }
 
@@ -105,11 +120,14 @@ select:hover, select:active {
 /* Style the tab buttons */
 .tab button {
     /* background-color: inherit; */
+    /* background-color: white; */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     float: left;
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 10px 15px;
+    /* background-color: whitesmoke; */
   }
 
 /* Create an active/current tablink class */
@@ -120,7 +138,7 @@ select:hover, select:active {
 
 .tab button.hover {
   /* border-bottom: 1px solid black; */
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 
@@ -142,14 +160,14 @@ select:hover, select:active {
 
 
 /* Style navigation links */
-.navigation-buttons a{
+/* .navigation-buttons a{
   border: none;
-}
+} */
 
 /* Style naviation links */
-.navigation-buttons a:hover{
+/* .navigation-buttons a:hover{
   background-color: whitesmoke;
-}
+} */
 
 /* Style the navigation row */
 .nav-row{
@@ -161,6 +179,14 @@ select:hover, select:active {
   overflow: hidden;
 }
 
+/* .nav-row a{
+  border:none;
+} */
+
+/* nav-row a:hover{
+  background-color: whitesmoke;
+} */
+
 
 
 
@@ -169,34 +195,31 @@ select:hover, select:active {
 /*                 */
 
 /* Style the homepage header */
-.site-header{
+/* .site-header{
   align-items: center;
-  height: 50px;
+  height: 50px; */
   /* border:2px solid black; */
-}
-
+/* } */
 
 .app-header{
   display: flex;
   flex-direction: row;
   padding:5px;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
   /* background-image: linear-gradient(blue, black); */
 }
 
 
 .org-logo {
-  width:50%;
+  width:15%;
 } 
-
 
 .login-container{
   display: flex;
-  /* block-size: fit-content; */
-
   align-items: center;
   justify-content: center;
   padding-top:10%;
+  /* border-radius:5px; */
 
 }
 /*                   */
@@ -204,37 +227,37 @@ select:hover, select:active {
 /*                   */
 
 /* Style choice field box */
-.ChoiceField{
-  background-color:white;
+/* .ChoiceField{
+  background-color:whitesmoke; */
   /* border:none; */
   /* border-radius: 15px; */
-  text-align: center;
+  /* text-align: center;
   padding: 10px 20px;
-  margin: 5px;
+  margin: 5px; */
 
   /* text-decoration: none; */
   /* display: inline-block; */
-}
+/* } */
 
-.ChoiceField:hover, .ChoiceField:active {
-  background-color: whitesmoke;
-}
+/* .ChoiceField:hover, .ChoiceField:active {
+  background-color: white; */
+/* } */
 
 /* Style char field box */
-.CharField{
-background-color:white;
-color: black;
+/* .CharField{
+background-color:whitesmoke;
+color: black; */
 /* border: none; */
 /* border-radius: px; */
-text-align: left;
+/* text-align: left;
 padding: 10px 20px;
-margin: 5px;
+margin: 5px; */
 
-}
+/* } */
 
-.CharField:hover, .CharField:active {
-background-color: whitesmoke;
-}
+/* .CharField:hover, .CharField:active {
+background-color: white;
+} */
 
 
 
@@ -244,8 +267,10 @@ background-color: whitesmoke;
 
 /* Style box as widget */
 .widget-box{
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   padding:15px;
+  border-radius: 5px;
 
   /* border:none; */
   /* outline:none; */
@@ -312,6 +337,8 @@ background-color: whitesmoke;
   margin-left: auto;
   margin-right: auto;
   overflow: auto;
+  /* border:2px solid black; */
+  /* background-color: white; */
 }
 
 .table-label {
@@ -319,6 +346,10 @@ background-color: whitesmoke;
   margin-right: auto;
   width: fit-content;
 }
+
+/* tbody tr:nth-child(odd) {background:green; } */
+
+
 
 /* Style table as widget */
 
@@ -329,17 +360,14 @@ background-color: whitesmoke;
   font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-.widget-table thead tr {
-  /* background-color: #009879; */
-  color: #ffffff;
-  text-align: left;
+  /* background-color: white; */
 }
 
 
 .widget-table tr:nth-child(1){
-    background-color: darkgray;
+    background-color: gainsboro;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
+
 }
 
 .widget-table th{
@@ -348,8 +376,8 @@ background-color: whitesmoke;
   }
 
 .widget-table td{
-  background: lightgray;
-  color: black;
+  background: white;
+  /* color: black; */
   padding:1em;
   
 }
@@ -364,6 +392,7 @@ background-color: whitesmoke;
   display:flex;
   /* border:2px solid blue; */
   flex-direction: column;
+  margin:5px;
   /* padding:5px; */
 }
 
@@ -372,6 +401,7 @@ background-color: whitesmoke;
   flex-direction: column;
   width:fit-content;
   block-size: fit-content;
+  margin:5px;
   /* padding:5px; */
 }
 
@@ -410,9 +440,13 @@ background-color: whitesmoke;
 flex-direction: row;
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
 .flex-center{
-  align-items: center;
-  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .flex-left{
@@ -425,6 +459,10 @@ flex-direction: row;
 
 .center-text{
   text-align:center;
+}
+
+.full-height{
+  height: 100vh;
 }
 
 

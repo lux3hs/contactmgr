@@ -15,20 +15,22 @@
     {% block logincheck %}
     {% if user.is_authenticated %}
 
+<header>
     {% block header %} 
     
-      <header class="app-header">  
         <div class="flex-widget">
+          {% block logo %}
           <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
-          </div>
-          
-          <div class="nav-row navigation-buttons">
-            <p><a href="{% url 'info' %}">Info</a></p>
-            <p><a href="{% url 'logout' %}">Log Out</a></p>
-          </div>
-      </header>
+          {% endblock logo %}
+        </div>
+        
+        <div class="nav-row">
+          <p><a href="{% url 'info' %}">Info</a></p>
+          <p><a href="{% url 'logout' %}">Log Out</a></p>
+        </div>
 
     {% endblock header %}  
+    </header>
 
     <main>
 
@@ -45,7 +47,7 @@
       {% block main %}{% endblock main %}
     </main>
 
-    {% block footer %}<footer></footer>{% endblock footer %}
+    <footer>{% block footer %}{% endblock footer %}</footer>
   
     {% else %}
   <div class="login-container">

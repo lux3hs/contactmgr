@@ -17,8 +17,8 @@
   </div>
   
   <div class="nav-row navigation-buttons">
-    <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
-    <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
+    <p><a href="{% url 'manage_contacts' %}">Contacts</a></p>
+    <p><a href="{% url 'manage_licenses' %}">Licenses</a></p>
     <p><a href="{% url 'homepage' %}">Home</a></p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
@@ -29,13 +29,13 @@
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
-<h2>Admin console</h2>
-
-<div class="flex-container">
-  <p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
-</div>
-
 {% if user_org == "automai" and user_role == "admin" %}
+
+  <div class="flex-box widget-box">
+    <h2>Admin console</h2>
+    <p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
+  </div>
+
 
 <div id="organizations-tab" class="js-tabcontent">
   
@@ -44,7 +44,7 @@
   <h3 class="table-label">Organizations</h3>
 
   <form>
-    <div class="table-container">
+    <div class="table-container widget-box">
       <table id="org-table" class="widget-table">
         <thead>
           <tr> 
@@ -52,8 +52,8 @@
           </tr>
         </thead>
       </table>
+      <p><input type="submit" name="delete_org_button" id="delete-org-button" value="Delete"></p>
     </div>
-    <p><input type="submit" name="delete_org_button" id="delete-org-button" value="Delete"></p>
   </form>
 
 
@@ -65,7 +65,7 @@
   <h3 class="table-label">Products</h3>
 
   <form>
-    <div class="table-container">
+    <div class="table-container widget-box">
       <table id="product-table" class="widget-table">
         <thead>
           <tr> 
@@ -73,8 +73,8 @@
           </tr>
         </thead>
       </table>
+      <p><input type="submit" name="delete_product_button" id="delete-product-button" value="Delete"></p>
     </div>
-    <p><input type="submit" name="delete_product_button" id="delete-product-button" value="Delete"></p>
   </form>
 
 </div>
@@ -85,7 +85,7 @@
     <h3 class="table-label">Entitlements</h3>
 
     <form>
-      <div class="table-container">
+      <div class="table-container widget-box">
         <table id="entitlement-table" class="widget-table">
           <thead>
             <tr> 
@@ -93,8 +93,8 @@
             </tr>
           </thead>
         </table>
+        <p><input type="submit" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
       </div>
-      <p><input type="submit" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
     </form>
 </div>
 
