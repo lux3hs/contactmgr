@@ -22,10 +22,10 @@
 </ul>
 {% endif %}
 
-<div class="flex-container">
-  {% if user_role == "admin" %}
+  {% if contact_data.role == "admin" %}
+
     <div class="flex-box widget-box">
-      <h3 class="text-container">Add Contact</h3>
+      <h3>Add Contact</h3>
       <form id="new-contact-form" method="post">
         {% csrf_token %}
         {{ contact_form.as_p }}     
@@ -42,14 +42,13 @@
     </div>
 
   {% else %}
-    <p>Not authorized.</p>
+    <p>Not authorized. ({{ contact_data.role }}) </p>
   {% endif %}
-</div>
 
 <div class="flex-container flex-row navigation-buttons">
-<p><a href="{% url 'manage_contacts' %}">Return</a></p>
-<p><a href="{% url 'homepage' %}">Home</a></p>
-<p><a href="{% url 'logout' %}">Logout</a></p>
+  <p><a href="{% url 'manage_contacts' %}">Return</a></p>
+  <p><a href="{% url 'homepage' %}">Home</a></p>
+  <p><a href="{% url 'logout' %}">Logout</a></p>
 </div>
 {% endblock main %}
 

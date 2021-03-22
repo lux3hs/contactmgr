@@ -17,47 +17,13 @@ from .services import *
 @login_required
 def manage_contacts(request):
     """ Render manage-contacts html page """
-    #Get current user info
     current_user = request.user
-    user_id = current_user.id
-    user_email = current_user.email
-    user_data = Contact.objects.filter(user_id=user_id).get()
-    user_role = user_data.role
-    user_org = user_data.organization.org_name
-    org_id = user_data.organization.id
-
-    # contact_objects = Contact.objects.filter(organization=org_id)
-    
+    contact_data = Contact.objects.filter(user_id=current_user.id).get()
     contact_header = get_contact_header()
     contact_choice_list = get_choice_list(contact_header)
-
     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
-    # if request.GET.get("filter_contactchoice"):
-    #     user_query = request.GET
-    #     filter_choice = user_query.get("filter_choice")
-    #     search_field = user_query.get("search_field")
-    #     contact_list = filter_contacts(contact_list=contact_list, filter_choice=filter_choice, search_field=search_field)
-
-    #Clear search filter on response from clear search button
-    # elif request.GET.get("clear_search"):
-    #     contact_list = []
-    #     for contact in contact_objects:
-    #         user_dict = contact.get_table_dictionary()
-    #         contact_list.append(user_dict)
-
-    #Check for input from delete contacts
-    # if request.GET.get('delete_contact_button'):
-    #     user_selection = request.GET.getlist("check-box")
-    #     message = delete_contacts(user_selection)
-    #     messages.add_message(request, messages.INFO, message)
-    #     return HttpResponseRedirect(request.path_info)
-
-    #Render variables in html
-    context = {'user_email':user_email,
-               'user_role':user_role,
-               'org_id':org_id,
-               'user_org':user_org,
+    context = {'contact_data':contact_data,
                'contact_search_form':contact_search_form,
             }
 
@@ -66,22 +32,16 @@ def manage_contacts(request):
 @login_required
 def add_contact(request):
     """ Render add-contact html page """
-    #Get current contact role to check for admin access
     current_user = request.user
     user_id = current_user.id
-    user_data = Contact.objects.filter(user_id=user_id).get()
-    user_role = user_data.role
-
-    #Get current contact organization
     contact_data = Contact.objects.filter(user_id=user_id).get()
-    new_contact_org = contact_data.organization
+    contact_data = Contact.objects.filter(user_id=user_id).get()
 
     org_objects = Organization.objects.all()
     choice_list = []
     for org_object in org_objects:
         choice_list.append(org_object.org_name)
 
-    #Check for user submission
     if request.method == 'POST':
         contact_form = ContactCreationForm(request.POST)
 
@@ -89,36 +49,28 @@ def add_contact(request):
             user_query = request.POST
             if request.POST.get('select_org'):
                 org_selection = request.POST.get('select_org')
-                print(org_selection)
                 new_contact_org = Organization.objects.filter(org_name=org_selection).get()
+
+            else:
+                new_contact_org = contact_data.organization
 
             add_new_contact(user_query=user_query, contact_organization=new_contact_org)
             messages.add_message(request, messages.INFO, 'New contact created')
             return HttpResponseRedirect(request.path_info)
 
-
     else:
-        #Create a contact form if no data has been posted
         contact_form = ContactCreationForm()
 
-
-    #Render variables in html
-    context = {'user_role':user_role, 'contact_org':new_contact_org, 'contact_form':contact_form, 'choice_list':choice_list}
+    context = {'contact_data':contact_data, 'contact_form':contact_form, 'choice_list':choice_list}
     return render(request, "manage_contacts/add-contact.html", context)
 
 
 def delete_contact_selection(request, contact_id):
-
-        # user_selection = request.GET.getlist("check-box")
-        response = delete_contact(contact_id)
-        
-
-        return get_contact_data(request)
-        
-        # messages.add_message(request, messages.INFO, message)
-
-
-        # return HttpResponseRedirect(request.path_info)
+        check_response = delete_contact(contact_id)
+        if check_response:
+            return get_contact_data(request)
+        else:
+            return check_response
 
 
 def get_contact_data(request):
@@ -130,6 +82,20 @@ def get_contact_data(request):
     table_header = get_contact_header()
     table_data = get_table_data(table_header, contact_data)
     return JsonResponse(table_data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -202,16 +168,21 @@ def add_organization(request):
     
 
 def get_org_data(request):
-    # current_user = request.user
-    # user_id = current_user.id
-    # user_data = Contact.objects.get()
-    # org_id = user_data.organization.id
-    # org_data = Contact.objects.filter(organization=org_id)
     org_data = Organization.objects.all()
-
     table_header = get_org_header()
     table_data = get_table_data(table_header, org_data)
+    return JsonResponse(table_data)
 
+def get_product_data(request):
+    product_data = Product.objects.all()
+    table_header = get_product_header()
+    table_data = get_table_data(table_header, product_data)
+    return JsonResponse(table_data)
+
+def get_entitlement_data(request):
+    entitlement_data = Entitlement.objects.all()
+    table_header = get_entitlement_header()
+    table_data = get_table_data(table_header, entitlement_data)
     return JsonResponse(table_data)
 
 
@@ -277,15 +248,3 @@ def add_entitlement(request):
 
     context = {'user_role':user_role, 'user_org':user_org, 'entitlement_form':entitlement_form}
     return render(request, "manage_contacts/add-entitlement.html", context)
-
-
-
-
-
-def check_return(request, pk):
-    # username = request.GET.get('username', None)
-    data = {
-        'check':pk
-    }
-    return JsonResponse(data)
-    

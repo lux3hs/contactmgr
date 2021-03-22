@@ -61,6 +61,13 @@ class Product(models.Model):
     product_name = models.CharField(max_length=50, unique=True)
     product_version = models.CharField(max_length=50, null=True)
 
+    def get_table_dictionary(self):
+        product_dict = {}
+        product_dict["data_id"] = self.id
+        product_dict["product_name"] = self.product_name
+        product_dict["product_version"] = self.product_version
+        return product_dict
+
     def __str__(self):
         return self.product_name
 

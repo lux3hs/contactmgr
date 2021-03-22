@@ -32,13 +32,9 @@ def manage_licenses(request):
     org_id = contact_data.organization.id
     org_name = user_org.org_name
 
-    #Get entitlement data for current contact organization
     product_entitlements = Entitlement.objects.filter(organization=org_id)
 
-    #Get product data for current contact organization
-    # product_licenses = License.objects.filter(org_id=org_id)
 
-    #Retrieve data objects for tables
     license_header = get_license_header()
     license_choice_list = get_choice_list(license_header)
     license_search_form =  SearchChoiceForm(auto_id='license_search_form_%s', choice_list=license_choice_list)
@@ -47,51 +43,31 @@ def manage_licenses(request):
     entitlement_choice_list = get_choice_list(entitlement_header)
     entitlement_search_form =  SearchChoiceForm(auto_id='entitlement_search_form_%s', choice_list=entitlement_choice_list)
 
-    #Create product choices from entitlements
     product_choices = []
     for entitlement in product_entitlements:
         product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
 
-    # product_choices = get_choice_list()
-
-    #Create a form for license creation
     new_license_form = NewLicenseForm(product_choices=product_choices)
 
-    #Generate license on response from form
-    if request.method == "POST":
+    if request.POST.get("save-license"):
         user_query = request.POST
         product_choice = user_query.get('product_choice')
 
-        #Get entitlement data
         entitlement_product = Product.objects.filter(product_name=product_choice).get()
         product_id = entitlement_product.id
         entitlement_data = product_entitlements.filter(product=product_id).get()
 
-        #Create license if entitlements exist
-        if entitlement_data.check_allocated_licenses():
-            
+        if entitlement_data.check_allocated_licenses():  
             new_license = create_license(current_user, user_query)
-
-            #Reduce license allocations after successful generation
-            # entitlement_data.total_licenses -= 1
-            # entitlement_data.save()
             messages.add_message(request, messages.INFO, 'New license created')
             return HttpResponseRedirect(request.path_info)
 
         else:
             messages.add_message(request, messages.INFO, 'Not enough product entitlements')
             return HttpResponseRedirect(request.path_info)
-
-    # #Check for input from delete license
-    # if request.GET.get('delete_license_button'):
-    #     user_selection = request.GET.getlist("check-box")
-    #     message = delete_license(org_id, user_selection)
-    #     messages.add_message(request, messages.INFO, message)
-    #     return HttpResponseRedirect(request.path_info)
-
-    # Check for input to generate license
-    if request.GET.get("generate_license_selection"):
-        user_selection = request.GET.getlist("check-box")
+    
+    if request.POST.get("generate_license_selection"):
+        user_selection = request.POST.getlist("check-box")
         
         if len(user_selection) > 0:
             license_array = generate_license_array(current_user, user_selection)
@@ -158,7 +134,7 @@ def get_license_data(request):
     table_header = get_license_header()
     table_data = get_table_data(table_header, license_data)
     return JsonResponse(table_data)
-    
+
 
 def delete_license_selection(request, license_id):
     current_user = request.user

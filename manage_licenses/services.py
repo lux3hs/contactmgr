@@ -10,6 +10,12 @@ from django.conf import settings
 base_dir = str(settings.BASE_DIR)
 
 
+def check_entitlements(org, product):
+    print("hello")
+    entitlement_data = Entitlement.objects.filter(org, product)
+    print(entitlement_data)
+
+
 def create_license(current_user, user_query):
     try:
         # current_user = request.user
@@ -23,6 +29,9 @@ def create_license(current_user, user_query):
 
         product_choice = user_query.get('product_choice')
         ip_host = user_query.get('ip_host')
+
+
+        # check_entitlements(current_user.org, product_choice)
         
         #Get entitlement data for current contact organization
         entitlement_product = Product.objects.filter(product_name=product_choice).get()
@@ -204,6 +213,7 @@ def get_entitlement_header():
                           }
 
     return entitlement_header
+
 
 
 def get_choice_list(model_header):

@@ -29,9 +29,7 @@
 {% block main %}
 <h2> Manage Contacts </h2>
 
-  <div class="flex-box">
-    <p> {{ user_email }} - {{ user_role }} - {{ user_org }} </h3>
-  </div>
+  <h3> {{ user.email }} - {{ contact_data.role }} - {{ contact_data.organization }} </h3>
 
 <div id="contacts-tab" class="js-tabcontent">
   <div>
@@ -69,11 +67,11 @@
 <div id="information-tab" class="js-tabcontent">
     <div class="flex-box widget-box">
       <h3>{{ user.username }}</h3>
+        <p>UserEmail: {{ user.email }}</p>
+        <p>Role: {{ contact_data.role }}</p>
+        <p>Org: {{ contact_data.organization }}</p>
         <p>UserID: {{ user.id }}</p>
-        <p>UserEmail: {{ user_email }}</p>
-        <p>Role: {{ user_role }}</p>
-        <p>Org: {{ user_org }}</p>
-        <p>OrgID: {{ org_id }}</p>
+        <p>OrgID: {{ contact_data.organization.id }}</p>
         <p><a href="{% url 'password_change' %}">Change Password</a></p>
         <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
     </div> 

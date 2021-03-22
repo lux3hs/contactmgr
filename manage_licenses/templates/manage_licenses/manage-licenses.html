@@ -29,11 +29,18 @@
 {% block main %}
 <div class="flex-container">
   <h2> Manage Licenses </h2>
+  
+    {% comment %} {% if messages %}
+      <ul class="messages">
+       {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %} {% endcomment %}
 
-  <div class="flex-box">
-    <p class="text-container"> {{ user_email }} - {{ user_role }} - {{ user_org }} </h3>
-  </div>
 
+
+    <pclass="text-container"> {{ user.email }} - {{ contact_data.role }} - {{ contact_data.organization }}</p>
 
 <div id="licenses-tab" class="js-tabcontent">
   <div>
@@ -45,10 +52,10 @@
   
   <div class="flex-box widget-box">
     <h3>Add License</h3>
-    <form method = "post">
+    <form method="post">
         {% csrf_token %}
         {{ new_license_form }}
-        <p><input class="button" type="submit" value="Save License"/></p>
+        <p><input class="button" name="save-license" type="submit" value="Save License"/></p>
     </form>
   </div>
 
@@ -62,18 +69,19 @@
   </div>
 
   <h3 class="table-label"> Licenses </h3>
-  <form>
-  <div class="table-container">
-    <table id="license-table" class="widget-table">
-        <thead>
-          <tr> 
-            <th></th>
-          </tr>
-        </thead>
-    </table>
-  </div>
-  <p><input type="button" name="delete_license_button" id="delete-license-button" value="Delete"></p>
-  <p><input type="submit" name="generate_license_selection" id="generate-license-selection" value="Generate"></p>               
+  <form method="post">
+    {% csrf_token %}
+    <div class="table-container">
+        <table id="license-table" class="widget-table">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+    </div>
+    <p><input type="button" name="delete_license_button" id="delete-license-button" value="Delete"></p>
+    <p><input type="submit" name="generate_license_selection" id="generate-license-selection" value="Generate"></p>               
   </form>
 </div>
 

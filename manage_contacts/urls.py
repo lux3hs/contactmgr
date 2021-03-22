@@ -10,6 +10,9 @@ urlpatterns = [
     path('add-entitlement', views.add_entitlement, name="add_entitlement"),
     path('get-contact-data', views.get_contact_data, name="get_contact_data"),
     path('get-org-data', views.get_org_data, name='get_org_data'),
+    path('get-product-data', views.get_product_data, name='get_product_data'),
+    path('get-entitlement-data', views.get_entitlement_data, name='get_entitlement_data'),
+
     path('delete-contact-selection/<int:contact_id>/', views.delete_contact_selection, name='delete_contact_selection'),
 
 ]

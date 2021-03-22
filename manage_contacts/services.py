@@ -36,7 +36,7 @@ def delete_contact(user_id):
             contact_data = Contact.objects.filter(id=user_id)
             contact_data.delete()
             
-            return "selection deleted"
+            return True
 
         except:
             return "error"
@@ -197,6 +197,22 @@ def get_org_header():
                 }
 
     return org_header
+
+def get_product_header():
+    product_header = {'product_name':'Product',
+                      'product_version':'Version',
+                        }
+
+    return product_header
+
+def get_entitlement_header():
+    entitlement_header = {"product_name":"Product",
+                          "product_version":"Version",
+                          "max_licenses":"Max",
+                          "total_licenses":"Total",
+                          "num_allocated":"Num Allocated",
+    }
+    return entitlement_header
 
 def get_choice_list(model_header):
     choice_list = []
