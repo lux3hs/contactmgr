@@ -18,14 +18,17 @@ function changePage(evt, pageName) {
     document.getElementById(pageName).style.display = "block";
     evt.currentTarget.className += " active";
   }
-  
-  
+
+
+
+  // Collect data from a url
   function fetchRequest(url) {
     return fetch(url)
     .then(response => { return response.json()})
     .catch(error => console.log('error:', error))
   }
   
+  // Filter collected data
   function filterData(data, key, value) {
     var tableData = data
     var keyQuery = key;
@@ -53,8 +56,8 @@ function changePage(evt, pageName) {
    }
     return dataFilter
   }
-  
-  
+
+  // Build a data table out of collected data
   function buildDataTable(tableData, tableHeader, tableID) {
     let headerData=tableHeader;
     let data = tableData;
@@ -87,7 +90,9 @@ function changePage(evt, pageName) {
     }
   }
   
-  
+
+
+  // Add checkboxes to tables (Switch to widgets)
   function addCheckBoxes(tableID) {
     var x = document.getElementById(tableID).rows.length;
     var table = document.getElementById(tableID);
@@ -111,10 +116,67 @@ function changePage(evt, pageName) {
         var x = document.createElement("INPUT");
         x.setAttribute("type", "checkbox");
         x.setAttribute("name", "check-box")
-        x.setAttribute("id", "checkBox")
+        x.setAttribute("class", "checkBox")
         x.setAttribute("value", rowID);
         cell.appendChild(x);
   
       }
     }
   }
+
+
+
+
+  // Dynamic table processing
+
+  // Load a table
+  function loadTableData(url, tableID) {
+  var fetchData = fetchRequest(url);
+  fetchData.then(data => {
+    tableHeader = data.table_header
+    tableData = data.table_data
+    buildDataTable(tableData, tableHeader, tableID)
+    addCheckBoxes(tableID)
+
+  })
+  }
+    
+  // Delete data from a table
+  function deleteTableData(url, tableID) {  
+    var nodeList = document.getElementsByName("check-box");
+
+    for (i = 0; i <	nodeList.length; i++) {
+      checked = nodeList[i].checked;
+      value = nodeList[i].value;
+     
+      if (checked == true) {
+        requestURL = url + '/' + value     
+        newRequest = fetchRequest(requestURL)
+        newRequest.then(data => {
+
+          tableData = data.table_data
+          tableHeader = data.table_header
+          buildDataTable(tableData, tableHeader, tableID)
+          addCheckBoxes(tableID)
+                 
+        })
+      }
+    }
+  }
+
+  // Search data within a table
+  function searchTableData(url, choiceQuery, searchQuery, tableID) {
+      var fetchData = fetchRequest(url);
+      var choice = document.getElementById(choiceQuery).value;
+      var search = document.getElementById(searchQuery).value;
+      
+      fetchData.then(data => {
+      tableData = data.table_data
+      tableHeader = data.table_header
+      filteredData = filterData(tableData, choice, search);
+      buildDataTable(filteredData, tableHeader, tableID);
+
+      addCheckBoxes(tableID)
+
+      })
+    }

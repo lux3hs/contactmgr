@@ -72,30 +72,27 @@ def create_license(current_user, user_query):
     except:
         return "error"
 
-def delete_license(org_id, user_selection):
+def delete_license(license_id):
     """ Delete license object from database based on user selection """
     # current_user = request.user
-    try:
-        if len(user_selection) > 0:
-            product_licenses = License.objects.filter(org_id=org_id)
-            for license_id in user_selection:
-                license_selection = product_licenses.filter(id=license_id)
-                license_selection.delete()
+    if (license_id):
+        try:
+            # entitlement_id = license_selection.get().entitlement_id
+            # product_entitlements = Entitlement.objects.filter(organization=org_id)
+            # entitlement_data = product_entitlements.filter(id=entitlement_id).get()
+            # entitlement_data.total_licenses += 1
+            # entitlement_data.save()
 
-                product_entitlements = Entitlement.objects.filter(organization=org_id)
-                license_object = license_selection.get()
-                entitlement_id = license_object.entitlement_id
-                entitlement_data = product_entitlements.filter(id=entitlement_id).get()
-                entitlement_data.total_licenses += 1
-                entitlement_data.save()
-            
+            license_selection = License.objects.filter(id=license_id)
+            license_selection.delete()
+
             return "selection deleted"
 
-        else:
-            return "no licenses selected"
+        except:
+            return "error"
 
-    except:
-        return "error"
+    else:
+        return "no licenses selected"
 
 def generate_license_array(current_user, user_selection):
     """ Generate license files for download """

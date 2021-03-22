@@ -2,19 +2,65 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% block head %}{% endblock head %}
     <title>{% block title %}Name of Page{% endblock title %}</title>
     {% load static %}
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">    
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">  
+      
     <link rel="stylesheet" type="text/css" href="{% static '/css/licensepgm/style.css' %}">
     <script src="{% static '/js/licensepgm/script.js' %}"></script>
-
+    {% block head %}{% endblock head %}
   </head>
+
   <body>  
-    {% block banner %}{% endblock banner %}
+    {% block logincheck %}
+    {% if user.is_authenticated %}
+
+    {% block header %} 
+    
+      <header class="app-header">  
+        <div class="flex-widget">
+          <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
+          </div>
+          
+          <div class="nav-row navigation-buttons">
+            <p><a href="{% url 'info' %}">Info</a></p>
+            <p><a href="{% url 'logout' %}">Log Out</a></p>
+          </div>
+      </header>
+
+    {% endblock header %}  
+
     <main>
+
+     {% block messages %}
+     {% if messages %}
+     <ul class="messages">
+       {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+       {% endfor %}
+      </ul>
+      {% endif %}
+      {% endblock messages %}
+
       {% block main %}{% endblock main %}
     </main>
+
+    {% block footer %}<footer></footer>{% endblock footer %}
+  
+    {% else %}
+  <div class="login-container">
+    <div class="flex-box widget-box">
+    <p class="text-container">You are not logged in.</p>
+    <p><a href="{% url 'login' %}">Log In</a></p>
+    </div>
+  <div>
+  {% endif %}
+
+
+
+  {% endblock logincheck %}
   </body>
+
+
 
 </html>

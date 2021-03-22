@@ -13,6 +13,14 @@ class Organization(models.Model):
     org_name = models.CharField(max_length=50, unique=True)
     domain = models.CharField(max_length=50)
 
+    def get_table_dictionary(self):
+        org_dict = {}
+        org_dict["data_id"] = self.id
+        org_dict["org_type"] = self.org_type
+        org_dict["org_name"] = self.org_name
+        org_dict["domain"] = self.domain
+        return org_dict
+
     def __str__(self):
         return self.org_name
 

@@ -54,7 +54,7 @@ def manage_licenses(request):
 
     # product_choices = get_choice_list()
 
-    #Create a form for license generation
+    #Create a form for license creation
     new_license_form = NewLicenseForm(product_choices=product_choices)
 
     #Generate license on response from form
@@ -82,12 +82,12 @@ def manage_licenses(request):
             messages.add_message(request, messages.INFO, 'Not enough product entitlements')
             return HttpResponseRedirect(request.path_info)
 
-    #Check for input from delete license
-    if request.GET.get('delete_license_button'):
-        user_selection = request.GET.getlist("check-box")
-        message = delete_license(org_id, user_selection)
-        messages.add_message(request, messages.INFO, message)
-        return HttpResponseRedirect(request.path_info)
+    # #Check for input from delete license
+    # if request.GET.get('delete_license_button'):
+    #     user_selection = request.GET.getlist("check-box")
+    #     message = delete_license(org_id, user_selection)
+    #     messages.add_message(request, messages.INFO, message)
+    #     return HttpResponseRedirect(request.path_info)
 
     # Check for input to generate license
     if request.GET.get("generate_license_selection"):
@@ -158,3 +158,16 @@ def get_license_data(request):
     table_header = get_license_header()
     table_data = get_table_data(table_header, license_data)
     return JsonResponse(table_data)
+    
+
+def delete_license_selection(request, license_id):
+    current_user = request.user
+    user_id = current_user.id
+
+    contact_data = Contact.objects.filter(user=user_id).get()
+
+    response = delete_license(license_id)
+    data = {"response":response}
+    
+    return get_license_data(request)
+

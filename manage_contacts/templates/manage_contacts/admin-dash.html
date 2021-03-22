@@ -6,12 +6,10 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
-
 {% endblock head %}
 
-{% block banner %}
-
-<div class="flex-container flex-row border-top app-banner">
+{% block header %}
+<div class="app-header">
   <div class="tab">
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'organizations-tab')">Organizations</button>
     <button class="js-tablinks" onclick="changePage(event, 'products-tab')">Products</button>
@@ -19,57 +17,55 @@
   </div>
   
   <div class="nav-row navigation-buttons">
-    <p><a href="{% url 'manage_contacts' %}">Contacts</a></p>
-    <p><a href="{% url 'manage_licenses' %}">Licenses</a></p>
+    <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
+    <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
     <p><a href="{% url 'homepage' %}">Home</a></p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
 </div>
 
-{% endblock banner %}
+{% endblock header %}
 
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
-<h2 class="flex-container">Admin console</h2>
+<h2>Admin console</h2>
+
+  
+ <form>
+    {% csrf_token %}
+    {% comment %} {{ form.as_p }} {% endcomment %}
+    <button id="data-test" type="button">Change Data</button>
+  </form>
+
 <div class="flex-container">
   <p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
 </div>
+
 {% if user_org == "automai" and user_role == "admin" %}
 
 <div id="organizations-tab" class="js-tabcontent">
-  <script>document.getElementById("js-default-open").click();</script>
-  <div class="flex-box">
-  <p class="text-container"><a href="{% url 'add_organization' %}">Add Organization</a></p>
-  </div>
-  <form method="get">
-    <div class="flex-box table-scroll">
-      <table>
-        <tr>
-          <th></th>
-          <th>Organization</th>
-          <th>Org Type</th>
-          <th>Domain</th>
-          <th></th>
-        </tr>
+  {% comment %} <script>document.getElementById("js-default-open").click();</script> {% endcomment %}
+  
+  <p><a href="{% url 'add_organization' %}">Add Organization</a></p>
+  
+  <h3 class="table-label">Organizations</h3>
 
-        {% for org in org_objects %}
-        <tr>
-          <td><input type="checkbox" name="org_selection" value="{{ org.id }}"></td>
-          <td>{{ org }}</td>
-          <td>{{ org.org_type }}</td>
-          <td>{{ org.domain }}</td>
-          <td></td>
 
-        </tr>
-        {% endfor %}
+  <form>
+    <div class="table-container">
+      <table id="org-table" class="widget-table">
+        <thead>
+          <tr> 
+            <th></th>
+          </tr>
+        </thead>
       </table>
     </div>
-
-    <div class="flex-container flex-row border-top">
-      <p class="text-container"><input type="submit" name="delete_organization_selection" value="Delete Selection"></p>
-    </div>
+    <p><input type="submit" name="delete_org_button" id="delete-org-button" value="Delete"></p>
   </form>
+
+
 </div>
 
 <div id="products-tab" class="js-tabcontent">

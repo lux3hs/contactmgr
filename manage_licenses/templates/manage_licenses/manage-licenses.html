@@ -1,6 +1,6 @@
 <!-- templates/manage_licenses/manage-licenses.html -->
-
 {% extends "base.html" %}
+
 {% block title %}Manage Licenses{% endblock title %}
 
 {% block head %}
@@ -9,11 +9,11 @@
 <script src="{% static "manage_licenses/js/script.js" %}"></script>
 {% endblock head %}
 
-{% block banner %}
-<div class="flex-container flex-row app-banner">
+{% block header %}
+<div class="app-header">
   <div class="tab">
-  <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
-  <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
+    <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
+    <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
   </div>
 
   <div class="nav-row navigation-buttons">
@@ -22,128 +22,83 @@
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
 </div>
-{% endblock banner %}
+{% endblock header %}
 
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
 <div class="flex-container">
-  <h2 class="text-container"> Manage Licenses </h2>
-  <div class="flex-box">
-  <p class="text-container"> {{ user_email }} - {{ user_role }} - {{ user_org }} </h3>
-  </div>
-</div>
+  <h2> Manage Licenses </h2>
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+  <div class="flex-box">
+    <p class="text-container"> {{ user_email }} - {{ user_role }} - {{ user_org }} </h3>
+  </div>
+
 
 <div id="licenses-tab" class="js-tabcontent">
-
-  <div class="flex-container widget-container">
-    <p class="text-container">
+  <div>
+    <p>
     This screen displays the licenses for the entire Organization. If you want to view associated products, 
     click on 'View my products' menu item above.
     </p>
   </div>
-
-  <div class="flex-container">
-    <div class="flex-container flex-center"><h3>Add License</h3></div>
-    <div class="flex-box widget-box">
-      <form method = "post">
-          {% csrf_token %}
-          {{ new_license_form }}
-          <p><input class="button" type="submit" value="Save License"/></p>
-      </form>
-    </div>
-  </div>
-
   
-
-  <div class="flex-container">
-    
-    <div class="flex-container flex-center">
-
-      <div class="flex-container flex-center">
-        <div class="flex-container flex-center">
-          <h3 class="text-container"> Licenses </h3>
-        </div>
-      </div>
-
-
-      <div class="flex-container">
-        <div class="flex-box widget-box"> 
-          <p class="text-container">Filter Licenses Using the Fields Below</p>
-
-          <form>
-            <input id="license-search-button" type="button" value="Search"/>
-            {{ license_search_form }}
-          
-            <div><input id="clear-license-search" class="button" type="reset" value="Clear"/></div>
-          </form>
-        </div>
-      </div>
-
-      <form>
-        <div class="table-scroll">
-          <table id="license-table" class="widget-table">
-              <thead>
-                <tr> 
-                  <th></th>
-                </tr>
-              </thead>
-          </table>
-        </div>
-        
-        <div class="flex-container flex-row">
-          <p><input type="submit" name="delete_license_button" id="delete-license-button" value="Delete"></p>
-          <p><input type="submit" name="generate_license_selection" id="generate-license-selection" value="Generate"></p>          
-        </div>
-        
-      </form>
-    </div>
+  <div class="flex-box widget-box">
+    <h3>Add License</h3>
+    <form method = "post">
+        {% csrf_token %}
+        {{ new_license_form }}
+        <p><input class="button" type="submit" value="Save License"/></p>
+    </form>
   </div>
-</div>
 
+  <div class="flex-box widget-box"> 
+    <h3>Filter Licenses</h3>
+    <form>
+      <input id="license-search-button" type="button" value="Search"/>
+      {{ license_search_form }}
+      <p><input id="clear-license-search" class="button" type="reset" value="Clear"/></p>
+    </form>
+  </div>
 
-
-<div id="products-tab" class="js-tabcontent">
-
-  <div class="flex-container flex-center">
-
-    <div class="flex-container flex-center">
-      <h3 class="text-container">Product Entitlements</h3>
-    </div>
-    
-    <div class="flex-container">
-      <div class="flex-box widget-box">
-        <p>Filter Products</p>
-        
-        <form>
-          <input id="entitlement-search-button" Value="Search" type="button">
-          {{ entitlement_search_form }}
-          <div><input type="reset" class="button" id="clear-entitlement-search" value="Clear"></div>
-        </form>
-      </div>
-    </div>
-
-    <div class="table-scroll">
-      <table id="entitlement-table" class="widget-table">
+  <h3 class="table-label"> Licenses </h3>
+  <form>
+  <div class="table-container">
+    <table id="license-table" class="widget-table">
         <thead>
           <tr> 
             <th></th>
           </tr>
         </thead>
-      </table>
-    </div>
+    </table>
+  </div>
+  <p><input type="button" name="delete_license_button" id="delete-license-button" value="Delete"></p>
+  <p><input type="submit" name="generate_license_selection" id="generate-license-selection" value="Generate"></p>               
+  </form>
+</div>
+
+<div id="products-tab" class="js-tabcontent">
+  <div class="flex-box widget-box">
+    <h3>Filter Products</h3>
+    <form>
+      <input id="entitlement-search-button" Value="Search" type="button">
+      {{ entitlement_search_form }}
+      <input type="reset" class="button" id="clear-entitlement-search" value="Clear">
+    </form>
+  </div>
+
+  <h3 class="table-label">Product Entitlements</h3>
+  <div class="table-container">
+    <table id="entitlement-table" class="widget-table">
+      <thead>
+        <tr> 
+          <th></th>
+        </tr>
+      </thead>
+    </table>
   </div>
 </div>
 
-<div class="flex-container">
-</div>
-
 {% endblock main%}
+
+{% block footer %}{% endblock footer %}

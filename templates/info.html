@@ -1,23 +1,23 @@
 <!-- templates/homepage.html -->
 {% extends 'base.html' %}
-    {% load static %}
+{% load static %}
 
 {% block title %}Home{% endblock title %}
 
 {% block main %}
   {% if user.is_authenticated %}
-  <header class="site-header flex-container flex-row border-bottom">
+  {% block header %}
+  <header class="site-header flex-container flex-row border-bottom">  
+    <div class="flex-widget">
+    <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="org-logo" alt="Generic logo"/>
+    </div>
       
-      <div class="flex-widget">
-      <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="org-logo" alt="Generic logo"/>
-      </div>
-      
-      <div class="nav-row navigation-buttons">
-        <p><a href="{% url 'homepage' %}">Home</a></p>
-        <p><a href="{% url 'logout' %}">Log Out</a></p>
-      </div>
-
+    <div class="nav-row navigation-buttons">
+      <p><a href="{% url 'homepage' %}">Home</a></p>
+      <p><a href="{% url 'logout' %}">Log Out</a></p>
+    </div>
   </header>
+  {% endblock header %}
 
   <div>
   <h3>Welcome to LicensePGM>
@@ -25,11 +25,12 @@
   </div>
 
   {% else %}
-  <div class="flex-container flex-center login-container">
+  {% comment %} <div class="flex-container flex-center login-container"> {% endcomment %}
     <div class="flex-box widget-box">
-    <p class="text-container">You are not logged in.</p>
+    <p>You are not logged in.</p>
     <p><a href="{% url 'login' %}">Log In</a></p>
     </div>
-  <div>
+  {% comment %} <div> {% endcomment %}
   {% endif %}
+
 {% endblock main %}

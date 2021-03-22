@@ -1,36 +1,15 @@
 <!-- templates/homepage.html -->
 {% extends 'base.html' %}
-    {% load static %}
+{% comment %} {% load static %} {% endcomment %}
 
 {% block title %}Home{% endblock title %}
 
-{% block main %}
-  {% if user.is_authenticated %}
-  <header class="site-header flex-container flex-row border-bottom">
-      
-      <div class="flex-widget">
-      <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="org-logo" alt="Generic logo"/>
-      </div>
-      
-      <div class="nav-row navigation-buttons">
-        <p><a href="{% url 'info' %}">Info</a></p>
+ {% block main %}
 
-        <p><a href="{% url 'logout' %}">Log Out</a></p>
-      </div>
+  <div class="flex-container flex-center flex-row navigation-buttons">
+    <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
+    <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
+    <p><a href="{% url 'admin_dash' %}">Automai Admin</a></p>
+  </div>
 
-  </header>
-
-    <div class="flex-container flex-center flex-row navigation-buttons">
-        <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
-        <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
-        <p><a href="{% url 'admin_dash' %}">Automai Admin</a></p>
-
-  {% else %}
-  <div class="flex-container flex-center login-container">
-    <div class="flex-box widget-box">
-    <p class="text-container">You are not logged in.</p>
-    <p><a href="{% url 'login' %}">Log In</a></p>
-    </div>
-  <div>
-  {% endif %}
 {% endblock main %}

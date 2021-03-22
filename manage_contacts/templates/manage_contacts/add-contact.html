@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
 {% endblock head %}
 
-{% block banner %}{% endblock banner %}
+{% block header %}{% endblock header %}
 
 {% block logocontainer %}{% endblock logocontainer %}
 
@@ -23,38 +23,26 @@
 {% endif %}
 
 <div class="flex-container">
-  
   {% if user_role == "admin" %}
+    <div class="flex-box widget-box">
+      <h3 class="text-container">Add Contact</h3>
+      <form id="new-contact-form" method="post">
+        {% csrf_token %}
+        {{ contact_form.as_p }}     
+        {% if contact_org.org_name == "automai" %}
+          <label>Organization:</label>
+          <select name="select_org">
+            {% for choice in choice_list %}
+              <option value="{{ choice }}">{{ choice }}</option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        <p><input class="button" type = "submit" value = "Submit"/></p>
+      </form> 
+    </div>
 
-  
-        <div class="flex-box widget-box">
-          <h3 class="text-container">Add Contact</h3>
-
-          <form id="new-contact-form" method="post">
-          {% csrf_token %}
-            {{ contact_form.as_p }}
-
-            {% if contact_org.org_name == "automai" %}
-            
-            <label>Organization:</label>
-              <select name="select_org">
-              {% for choice in choice_list %}
-                <option value="{{ choice }}">{{ choice }}</option>
-              {% endfor %}
-            </select>
-            {% endif %}
-
-            <div class="flex-box">
-            <input class="button" type = "submit" value = "Submit"/>
-            </div>
-          </form>
-        </div>
-
-
-
-  
   {% else %}
-  <p>Not authorized.</p>
+    <p>Not authorized.</p>
   {% endif %}
 </div>
 
@@ -63,5 +51,6 @@
 <p><a href="{% url 'homepage' %}">Home</a></p>
 <p><a href="{% url 'logout' %}">Logout</a></p>
 </div>
-
 {% endblock main %}
+
+{% block footer %}{% endblock footer %}

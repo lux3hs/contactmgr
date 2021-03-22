@@ -132,28 +132,14 @@ select:hover, select:active {
 
 
 
-/*                */
-/*  Login styles  */
-/*                */
 
-#login-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top:10%;
-
-}
 
 
 /*            */
 /* Nav styles */
 /*            */
 
-.app-banner{
-  padding:5px;
-  border-bottom: 1px solid black;
-  /* background-image: linear-gradient(blue, black); */
-}
+
 
 /* Style navigation links */
 .navigation-buttons a{
@@ -189,11 +175,30 @@ select:hover, select:active {
   /* border:2px solid black; */
 }
 
-#org-logo {
+
+.app-header{
+  display: flex;
+  flex-direction: row;
+  padding:5px;
+  border-bottom: 1px solid black;
+  /* background-image: linear-gradient(blue, black); */
+}
+
+
+.org-logo {
   width:50%;
 } 
 
 
+.login-container{
+  display: flex;
+  /* block-size: fit-content; */
+
+  align-items: center;
+  justify-content: center;
+  padding-top:10%;
+
+}
 /*                   */
 /* Form field styles */
 /*                   */
@@ -237,7 +242,7 @@ background-color: whitesmoke;
 /* Widget styles */
 /*               */
 
-/* Style the widget border */
+/* Style box as widget */
 .widget-box{
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   padding:15px;
@@ -300,11 +305,26 @@ background-color: whitesmoke;
 
 /* Table border radius added to app-specific css files due to different column numbers  */
 
+.table-container {
+  max-height: 75vh;
+  max-width: 75vw;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+}
+
+.table-label {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+/* Style table as widget */
 
 .widget-table {
-
   border-collapse: collapse;
-  margin: 25px 0;
+  /* margin: 25px 0; */
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
@@ -355,14 +375,18 @@ background-color: whitesmoke;
   /* padding:5px; */
 }
 
-.text-container{
-  /* border:2px solid Black; */
+/* .text-container{
+  border:2px solid Black;
   padding:5px;
   display:block;
   width:fit-content;
   height: fit-content;
   text-align: center;
-}
+} */
+
+
+
+
 
 /* Generic styling classes */
 
@@ -402,4 +426,6 @@ flex-direction: row;
 .center-text{
   text-align:center;
 }
+
+
 

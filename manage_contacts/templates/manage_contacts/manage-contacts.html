@@ -1,119 +1,84 @@
 <!-- templates/manage_contacts/manage-contacts.html -->
-
 {% extends "base.html" %}
+
 {% block title %}Manage Contacts{% endblock title %}
 
 {% block head %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
-
 {% endblock head %}
 
-{% block banner %}
-<div class="flex-container flex-row app-banner">
+{% block header %}
+<div class="app-header">
   <div class="tab">
-  <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
-  <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
+    <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
+    <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
   </div>
+
   <div class="nav-row navigation-buttons">
     <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
     <p><a href="{% url 'homepage' %}">Home</a></p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
   </div>
 </div>
-{% endblock banner %}
+{% endblock header %}
 
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
-<div class="flex-container">
-  <h2 class="text-container"> Manage Contacts </h2>
-</div>
+<h2> Manage Contacts </h2>
 
-{% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-    </ul>
-{% endif %}
+  <div class="flex-box">
+    <p> {{ user_email }} - {{ user_role }} - {{ user_org }} </h3>
+  </div>
 
 <div id="contacts-tab" class="js-tabcontent">
-  
-  <div class="flex-container widget-container">
-    <p class="text-container">
-    This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
-    click on 'My Information' menu item above.
+  <div>
+    <p>
+      This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
+      click on 'My Information' menu item above.
     </p>
-
-    <div class="flex-box"><a href="{% url 'add_contact' %}">New Contact</a></div>
+    <p><a href="{% url 'add_contact' %}">New Contact</a></p>
   </div>
 
-
-  <div class="flex-container flex-center">  
-
-    <div class="flex-container flex-center">
-      <div class="flex-container flex-center">
-        <h3 class="text-container">Contacts</h3>
-      </div>
-    </div>
-
-    <div class="flex-container">
-      <div class="flex-box widget-box"> 
-        <p class="text-container">Filter Contacts</p>
-        
-        <form>
-          <input id="contact-search-button" type="button" value="Search"/>
-          {{ contact_search_form }}
-
-          <div><input id="clear-contact-search" class="button" type="reset" value="Clear"/></div>
-          </form>
-
-      </div>
-    </div>
-    
-
-        <form>
-          <div class="table-scroll">
-            <table id="contact-table" class="widget-table">
-              <thead>
-                <tr> 
-                  <th></th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          
-          <p><input type="submit" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
-        </form>
-
- 
+  <div class="flex-box widget-box"> 
+    <h3>Filter Contacts</h3>
+    <form>
+      <input id="contact-search-button" type="button" value="Search"/>
+      {{ contact_search_form }}
+      <input id="clear-contact-search" class="button" type="reset" value="Clear"/>
+    </form>
   </div>
+
+  <h3 class="table-label">Contacts</h3>
+  <form>
+    <div class="table-container">
+      <table id="contact-table" class="widget-table">
+        <thead>
+          <tr> 
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <p><input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
+  </form>
 </div>
 
 <div id="information-tab" class="js-tabcontent">
-  <div class="flex-container"> 
     <div class="flex-box widget-box">
-      <h3 class="text-container">{{ user.username }}</h3>
-      <div class="flex-box">
+      <h3>{{ user.username }}</h3>
         <p>UserID: {{ user.id }}</p>
         <p>UserEmail: {{ user_email }}</p>
         <p>Role: {{ user_role }}</p>
         <p>Org: {{ user_org }}</p>
         <p>OrgID: {{ org_id }}</p>
-      </div>
-
-      <div class="flex-box">
         <p><a href="{% url 'password_change' %}">Change Password</a></p>
         <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
-
-      </div>
     </div> 
-  </div>
-</div>
-
-<div class="flex-container">
 </div>
 
 {% endblock main %}
+
+{% block footer %}{% endblock footer %}

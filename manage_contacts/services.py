@@ -30,16 +30,19 @@ def add_new_contact(user_query, contact_organization):
 
     return new_contact
 
-def delete_contacts(user_selection):
-    if len(user_selection) > 0:
-        for user_id in user_selection:
+def delete_contact(user_id):
+    if user_id:
+        try:
             contact_data = Contact.objects.filter(id=user_id)
             contact_data.delete()
             
-            return "Selection deleted"
+            return "selection deleted"
+
+        except:
+            return "error"
 
     else:
-        return "No contacts selected"
+        return "no contacts selected"
 
 
 def add_new_organization(user_query):
@@ -184,6 +187,16 @@ def get_contact_header():
                     }
 
     return contact_header
+
+
+
+def get_org_header():
+    org_header = {"org_type":"Type",
+                  "org_name":"Name",
+                  "domain":"Domain",
+                }
+
+    return org_header
 
 def get_choice_list(model_header):
     choice_list = []

@@ -26,7 +26,7 @@ def manage_contacts(request):
     user_org = user_data.organization.org_name
     org_id = user_data.organization.id
 
-    contact_objects = Contact.objects.filter(organization=org_id)
+    # contact_objects = Contact.objects.filter(organization=org_id)
     
     contact_header = get_contact_header()
     contact_choice_list = get_choice_list(contact_header)
@@ -47,11 +47,11 @@ def manage_contacts(request):
     #         contact_list.append(user_dict)
 
     #Check for input from delete contacts
-    if request.GET.get('delete_contact_button'):
-        user_selection = request.GET.getlist("check-box")
-        message = delete_contacts(user_selection)
-        messages.add_message(request, messages.INFO, message)
-        return HttpResponseRedirect(request.path_info)
+    # if request.GET.get('delete_contact_button'):
+    #     user_selection = request.GET.getlist("check-box")
+    #     message = delete_contacts(user_selection)
+    #     messages.add_message(request, messages.INFO, message)
+    #     return HttpResponseRedirect(request.path_info)
 
     #Render variables in html
     context = {'user_email':user_email,
@@ -105,6 +105,20 @@ def add_contact(request):
     #Render variables in html
     context = {'user_role':user_role, 'contact_org':new_contact_org, 'contact_form':contact_form, 'choice_list':choice_list}
     return render(request, "manage_contacts/add-contact.html", context)
+
+
+def delete_contact_selection(request, contact_id):
+
+        # user_selection = request.GET.getlist("check-box")
+        response = delete_contact(contact_id)
+        
+
+        return get_contact_data(request)
+        
+        # messages.add_message(request, messages.INFO, message)
+
+
+        # return HttpResponseRedirect(request.path_info)
 
 
 def get_contact_data(request):
@@ -186,6 +200,21 @@ def add_organization(request):
     context = {'user_role':user_role, 'user_org':user_org, 'org_form':org_form}
     return render(request, "manage_contacts/add-organization.html", context)
     
+
+def get_org_data(request):
+    # current_user = request.user
+    # user_id = current_user.id
+    # user_data = Contact.objects.get()
+    # org_id = user_data.organization.id
+    # org_data = Contact.objects.filter(organization=org_id)
+    org_data = Organization.objects.all()
+
+    table_header = get_org_header()
+    table_data = get_table_data(table_header, org_data)
+
+    return JsonResponse(table_data)
+
+
 @login_required
 def add_product(request):
     """ Render add product page """
@@ -249,3 +278,14 @@ def add_entitlement(request):
     context = {'user_role':user_role, 'user_org':user_org, 'entitlement_form':entitlement_form}
     return render(request, "manage_contacts/add-entitlement.html", context)
 
+
+
+
+
+def check_return(request, pk):
+    # username = request.GET.get('username', None)
+    data = {
+        'check':pk
+    }
+    return JsonResponse(data)
+    

@@ -1,17 +1,24 @@
 <!-- templates/registration/login.html -->
-
 {% extends 'base.html' %}
-{% block title %}Login{% endblock %}
+
+{% block title %}Login{% endblock title %}
+
+{% block logincheck %}
+
+{% block header %}{% endblock header %}
+
 
 {% block main %}
-<div id="login-container">
-  <div class="flex-box widget-box">
-    <h3>Log In</h3>
-    <form method="post">
+  <div class=" login-container">
+    <form class="flex-box widget-box login-box" method="post">
+      <h3>Log In</h3>
+
       {% csrf_token %}
       {{ form.as_p }}
       <p><button type="submit">Log In</button></p>
     </form>
   </div>
-</div>
+  
 {% endblock main %}
+
+{% endblock logincheck %}

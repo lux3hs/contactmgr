@@ -9,5 +9,7 @@ urlpatterns = [
     path('add-product', views.add_product, name="add_product"),
     path('add-entitlement', views.add_entitlement, name="add_entitlement"),
     path('get-contact-data', views.get_contact_data, name="get_contact_data"),
+    path('get-org-data', views.get_org_data, name='get_org_data'),
+    path('delete-contact-selection/<int:contact_id>/', views.delete_contact_selection, name='delete_contact_selection'),
 
 ]
