@@ -137,13 +137,31 @@ def get_license_data(request):
 
 
 def delete_license_selection(request, license_id):
-    current_user = request.user
-    user_id = current_user.id
+    license_data = License.objects.filter(id=license_id).get()
+    entitlement_id = license_data.entitlement_id
+    entitlement_data = Entitlement.objects.filter(id=entitlement_id).get()
+    delete_check = delete_license(license_id)
 
-    contact_data = Contact.objects.filter(user=user_id).get()
+    if delete_check: 
+        entitlement_data.add_license()
+        data = get_license_data(request)
+        return data
 
-    response = delete_license(license_id)
-    data = {"response":response}
-    
-    return get_license_data(request)
+    else:
+        response = HttpResponse("error", content_type="text/plain")
+        return response
 
+        
+
+
+
+
+    # print(check_entitlements(product, org))
+
+    # response = delete_license(license_id)
+    # if response == "success":
+    #     return get_license_data(request)
+
+    # else:
+    #     response = HttpResponse(response, content_type="text/plain")
+    #     return response

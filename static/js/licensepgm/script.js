@@ -129,7 +129,7 @@ function changePage(evt, pageName) {
 
   // Dynamic table processing
 
-  // Load a table
+  // Build a table on page load
   function loadTableData(url, tableID) {
   var fetchData = fetchRequest(url);
   fetchData.then(data => {
@@ -141,7 +141,7 @@ function changePage(evt, pageName) {
   })
   }
     
-  // Delete data from a table
+  // Delete data from a table and rebuild
   function deleteTableData(url, tableID) {  
     var nodeList = document.getElementsByName("check-box");
 
@@ -164,7 +164,7 @@ function changePage(evt, pageName) {
     }
   }
 
-  // Search data within a table
+  // Search data within a table and rebuild
   function searchTableData(url, choiceQuery, searchQuery, tableID) {
       var fetchData = fetchRequest(url);
       var choice = document.getElementById(choiceQuery).value;

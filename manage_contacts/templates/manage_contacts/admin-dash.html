@@ -9,7 +9,8 @@
 {% endblock head %}
 
 {% block header %}
-<div class="app-header">
+<div class="flex-container flex-row widget-box">
+
   <div class="tab">
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'organizations-tab')">Organizations</button>
     <button class="js-tablinks" onclick="changePage(event, 'products-tab')">Products</button>
@@ -31,18 +32,18 @@
 {% block main %}
 {% if user_org == "automai" and user_role == "admin" %}
 
-  <div class="flex-box widget-box">
-    <h2>Admin console</h2>
-    <p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
-  </div>
-
+<div class="flex-container widget-box">
+  <h2>Admin console</h2>
+  <p class="text-container">Automai admins can add Organizations, products, and entitlements here</p>
+</div>
 
 <div id="organizations-tab" class="js-tabcontent">
   
-  <p><a href="{% url 'add_organization' %}">Add Organization</a></p>
   
-  <h3 class="table-label">Organizations</h3>
+  <div class="flex-container flex-center widget-box">
+    <p><a href="{% url 'add_organization' %}">Add Organization</a></p>
 
+  <h3 class="table-label">Organizations</h3>
   <form>
     <div class="table-container widget-box">
       <table id="org-table" class="widget-table">
@@ -55,31 +56,38 @@
       <p><input type="submit" name="delete_org_button" id="delete-org-button" value="Delete"></p>
     </div>
   </form>
-
+  </div>
 
 </div>
 
 <div id="products-tab" class="js-tabcontent">
-  <p class="text-container"><a href="{% url 'add_product' %}">Add Product</a></p>
-  
-  <h3 class="table-label">Products</h3>
 
-  <form>
-    <div class="table-container widget-box">
-      <table id="product-table" class="widget-table">
-        <thead>
-          <tr> 
-            <th></th>
-          </tr>
-        </thead>
-      </table>
-      <p><input type="submit" name="delete_product_button" id="delete-product-button" value="Delete"></p>
-    </div>
-  </form>
 
+  <div class="flex-container flex-center widget-box">
+
+    <p class="text-container"><a href="{% url 'add_product' %}">Add Product</a></p>
+    
+    <h3 class="table-label">Products</h3>
+
+    <form>
+      <div class="table-container widget-box">
+        <table id="product-table" class="widget-table">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+        <p><input type="submit" name="delete_product_button" id="delete-product-button" value="Delete"></p>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div id="entitlements-tab" class="js-tabcontent">
+
+  <div class="flex-container flex-center widget-box">
+
     <p class="text-container"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
 
     <h3 class="table-label">Entitlements</h3>
@@ -96,6 +104,8 @@
         <p><input type="submit" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
       </div>
     </form>
+
+  </div>
 </div>
 
 {% else %}

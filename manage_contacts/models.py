@@ -79,14 +79,14 @@ class Entitlement(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
 
-    def get_product_name(self):
-        return self.product.product_name
+    # def get_product_name(self):
+    #     return self.product.product_name
 
-    def get_version_number(self):
-        return self.product.product_version
+    # def get_version_number(self):
+    #     return self.product.product_version
 
-    def get_organization_name(self):
-        return self.organization.org_name
+    # def get_organization_name(self):
+    #     return self.organization.org_name
 
     def get_table_dictionary(self):
         table_dict = {}
@@ -107,12 +107,37 @@ class Entitlement(models.Model):
         return header_list
 
     def check_allocated_licenses(self):
-        remaining_licenses = self.max_licenses - self.total_licenses
-        if remaining_licenses < self.max_licenses:
+        used_licenses = self.max_licenses - self.total_licenses
+        if used_licenses < self.max_licenses:
             return True
 
         else:
             return False
+
+    def subtract_license(self):
+        if self.total_licenses > 0:
+            self.total_licenses -= 1
+            self.save()
+            return True
+
+        elif self.total_licenses == 0:
+            return "no entitlements"
+
+        else:
+            return "number out of range"
+
+    def add_license(self):
+        if self.total_licenses < self.max_licenses:
+            self.total_licenses += 1
+            self.save()
+
+            return True
+
+        elif self.total_licenses == self.max_licenses:
+            return "entitlements at max"
+
+        else: 
+            return "number out of range"
 
     def get_entitlement_name(self):
         return self.organization.org_name + "/" + self.product.product_name

@@ -9,9 +9,6 @@
   <div class="flex-container flex-row widget-box">
     <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
 
-    {% comment %} <div class="nav-row">
-    </div> {% endcomment %}
-
   <div class="nav-row">
     <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
     <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
@@ -20,14 +17,9 @@
 
   </div>
  </div>
-
-
-  <div class="flex-container widget-box full-height">
-    <div class="flex-box flex-center widget-box">
-      <h3>Welcome to LicensePGM</h3>
-      <p><a href="{% url 'info' %}">More Info</a></p>
+    <div class="flex-box widget-box flex-column">
+          <p><a href="{% url 'info' %}">More Info</a></p>
     </div>
-  </div>
 
 
 {% endblock main %}

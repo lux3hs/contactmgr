@@ -11,56 +11,53 @@
     {% block head %}{% endblock head %}
   </head>
 
+
   <body>  
+    
     {% block logincheck %}
     {% if user.is_authenticated %}
 
-<header>
+    <header>
     {% block header %} 
     
-        <div class="flex-widget">
-          {% block logo %}
-          <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
-          {% endblock logo %}
-        </div>
-        
-        <div class="nav-row">
-          <p><a href="{% url 'info' %}">Info</a></p>
-          <p><a href="{% url 'logout' %}">Log Out</a></p>
-        </div>
+    <div class="flex-widget">
+      {% block logo %}
+      <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
+      {% endblock logo %}
+    </div>
+    
+    <div class="nav-row">
+      <p><a href="{% url 'info' %}">Info</a></p>
+      <p><a href="{% url 'logout' %}">Log Out</a></p>
+    </div>
 
     {% endblock header %}  
     </header>
 
+    
     <main>
+        <div class="main-container">
+        {% block main %}{% endblock main %}
+        </div>
 
-     {% block messages %}
-     {% if messages %}
-     <ul class="messages">
-       {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-       {% endfor %}
-      </ul>
-      {% endif %}
-      {% endblock messages %}
+      </main>
 
-      {% block main %}{% endblock main %}
-    </main>
-
-    <footer>{% block footer %}{% endblock footer %}</footer>
+      <footer>{% block footer %}{% endblock footer %}</footer>
   
+      
+      
+      
     {% else %}
-  <div class="login-container">
-    <div class="flex-box widget-box">
-    <p class="text-container">You are not logged in.</p>
-    <p><a href="{% url 'login' %}">Log In</a></p>
-    </div>
-  <div>
-  {% endif %}
+    <div class="login-container">
+      <div class="flex-box widget-box">
+      <p class="text-container">You are not logged in.</p>
+      <p><a href="{% url 'login' %}">Log In</a></p>
+      </div>
+    <div>
+    {% endif %}
+    {% endblock logincheck %}
 
 
-
-  {% endblock logincheck %}
   </body>
 
 

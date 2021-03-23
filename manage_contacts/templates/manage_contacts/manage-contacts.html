@@ -10,68 +10,79 @@
 {% endblock head %}
 
 {% block header %}
-<div class="flex-container flex-row widget-box">
+
+<div class="flex-box flex-row container">
+  
   <div class="tab">
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
     <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
   </div>
 
-  <div class="nav-row">
-    <p><a href="{% url 'manage_licenses' %}">Licenses</a></p>
-    <p><a href="{% url 'homepage' %}">Home</a></p>
-    <p><a href="{% url 'admin_dash' %}">Admin</a></p>
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
+  <div class="h-center">
+    <p>Welcome
+    {{ user.username }}</p>
+  </div>
+
+  <div>
+    <p>
+    <a href="{% url 'manage_licenses' %}">Licenses</a>
+    <a href="{% url 'homepage' %}">Home</a>
+    <a href="{% url 'admin_dash' %}">Admin</a>
+    <a href="{% url 'logout' %}">Log Out</a>
+    </p>
   </div>
 
 </div>
+
+
+
 {% endblock header %}
 
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
 {% comment %} <div class="flex-container widget-box"> {% endcomment %}
-  <div class="flex-container widget-box">
-    <h2> Manage Contacts </h2>
-    <p> {{ user.email }} - {{ contact_data.role }} - {{ contact_data.organization }} </p>
-    <p>
-      This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
-      click on 'My Information' menu item above.
-    </p>
-    <p><a href="{% url 'add_contact' %}">New Contact</a></p>
-  </div>
+
+
+ 
+
 
 <div id="contacts-tab" class="js-tabcontent">
-  
-  <div class="flex-container widget-box"> 
-    <h3>Filter Contacts</h3>
-    <form>
-      <input id="contact-search-button" type="button" value="Search"/>
-      {{ contact_search_form }}
-      <input id="clear-contact-search" class="button" type="reset" value="Clear"/>
-    </form>
+ <p>
+    This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
+    click on 'My Information' menu item above.
+  </p>
+      
+  <div class="flex-box flex-center widget-box">
+
+      <form>
+        <input id="contact-search-button" type="button" value="Search"/>
+        {{ contact_search_form }}
+         <input id="clear-contact-search" type="button" value="Clear"/>
+         <a href="{% url 'add_contact' %}">Add Contact</a>
+
+      </form>
+
+      <form>
+        <div class="table-container widget">
+          <table id="contact-table" class="widget">
+            <thead>
+              <tr> 
+                <th></th>
+              </tr>
+            </thead>
+            </table>
+            <p><input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
+            
+        </div>
+      </form>
+
   </div>
 
-
-  <div class="flex-container widget-box flex-center">
-
-    <h3 class="table-label">Contacts</h3>
-    <form>
-      <div class="table-container widget-box">
-         <table id="contact-table" class="widget-table">
-           <thead>
-            <tr> 
-              <th></th>
-            </tr>
-           </thead>
-         </table>
-        <input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete">
-      </div>
-    </form>
-  </div>
 </div>
 
 <div id="information-tab" class="js-tabcontent">
-    <div class="flex-box widget-box">
+    <div class="container">
       <h3>{{ user.username }}</h3>
         <p>UserEmail: {{ user.email }}</p>
         <p>Role: {{ contact_data.role }}</p>

@@ -10,10 +10,15 @@ from django.conf import settings
 base_dir = str(settings.BASE_DIR)
 
 
-def check_entitlements(org, product):
-    print("hello")
-    entitlement_data = Entitlement.objects.filter(org, product)
-    print(entitlement_data)
+# def check_entitlements(org, product):
+
+#     print("hello")
+#     entitlement_data = Entitlement.objects.filter(organization=org, product=product).get()
+#     if check_entitlements(org, product)
+
+
+#     print(entitlement_data.max_licenses)
+#     print(entitlement_data.total_licenses)
 
 
 def create_license(current_user, user_query):
@@ -27,10 +32,12 @@ def create_license(current_user, user_query):
         org_id = org_object.id
         org_id = contact_data.organization.id
 
+        
+        
+        
+        
         product_choice = user_query.get('product_choice')
         ip_host = user_query.get('ip_host')
-
-
         # check_entitlements(current_user.org, product_choice)
         
         #Get entitlement data for current contact organization
@@ -86,22 +93,16 @@ def delete_license(license_id):
     # current_user = request.user
     if (license_id):
         try:
-            # entitlement_id = license_selection.get().entitlement_id
-            # product_entitlements = Entitlement.objects.filter(organization=org_id)
-            # entitlement_data = product_entitlements.filter(id=entitlement_id).get()
-            # entitlement_data.total_licenses += 1
-            # entitlement_data.save()
-
             license_selection = License.objects.filter(id=license_id)
             license_selection.delete()
 
-            return "selection deleted"
+            return True
 
         except:
-            return "error"
+            return False
 
     else:
-        return "no licenses selected"
+        return False
 
 def generate_license_array(current_user, user_selection):
     """ Generate license files for download """

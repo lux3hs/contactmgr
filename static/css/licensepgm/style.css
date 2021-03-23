@@ -4,20 +4,18 @@
 /*            */
 
 body {
-    /* border: 2px black; */
-    /* height: 100vh; */
-    /* max-width: 100vw; */
-    margin-left:50px;
-    margin-right:50px;
-    /* overflow: auto; */
-    font-size: 14px;
-    /* font-family: cursive; */
-    background: whitesmoke;
+  margin-left:50px;
+  margin-right:50px;
+  background: whitesmoke;
 
   }
 
+  h1, h2, h3 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
   p {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 
 a{
@@ -70,23 +68,7 @@ button:hover, button:active {
     background-color: whitesmoke;
   }
 
-/* input.button {
-  background-color: white;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    color: black;
-    border: 1px solid black;
-    border-radius: 24px;
-    text-align: center;
-    padding: 10px 20px;
-    margin: 5px;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-  } */
 
-/* input.button:hover, input.button:active {
-    background-color: whitesmoke;
-  } */
 
 select{
   background-color: white;
@@ -105,23 +87,32 @@ select:hover, select:active {
 }
 
 
+
+
+
 /*            */
 /* Tab Styles */
 /*            */
+
+
+/* Control active tab content for pages */
+  .js-tabcontent {
+    display: none;
+  }
 
 /* Style the tab container */
 .tab {
     /* border: 2px solid black; */
     width:fit-content;
     height: fit-content;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 
 /* Style the tab buttons */
 .tab button {
     /* background-color: inherit; */
-    /* background-color: white; */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     float: left;
     border: none;
     outline: none;
@@ -138,14 +129,8 @@ select:hover, select:active {
 
 .tab button.hover {
   /* border-bottom: 1px solid black; */
-  background-color: white;
+  background-color: whitesmoke;
 }
-
-
-  /* Control active tab content for pages */
-.js-tabcontent {
-    display: none;
-  }
 
 
 
@@ -222,113 +207,47 @@ select:hover, select:active {
   /* border-radius:5px; */
 
 }
-/*                   */
-/* Form field styles */
-/*                   */
 
-/* Style choice field box */
-/* .ChoiceField{
-  background-color:whitesmoke; */
-  /* border:none; */
-  /* border-radius: 15px; */
-  /* text-align: center;
-  padding: 10px 20px;
-  margin: 5px; */
-
-  /* text-decoration: none; */
-  /* display: inline-block; */
-/* } */
-
-/* .ChoiceField:hover, .ChoiceField:active {
-  background-color: white; */
-/* } */
-
-/* Style char field box */
-/* .CharField{
-background-color:whitesmoke;
-color: black; */
-/* border: none; */
-/* border-radius: px; */
-/* text-align: left;
-padding: 10px 20px;
-margin: 5px; */
-
-/* } */
-
-/* .CharField:hover, .CharField:active {
-background-color: white;
-} */
-
-
-
-/*               */
-/* Widget styles */
-/*               */
-
-/* Style box as widget */
-.widget-box{
+main{
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  padding:15px;
+  border-radius: 15px;
+  /* margin:2px; */
+  padding: 5px;
+  min-height: 75vh;
+  /* max-width: 100vh; */
+}
+
+
+
+/*                         */
+/* widget background color */
+/*                         */
+
+/* Style box as widget */
+.widget{
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  padding: 5px;
+  border-radius: 15px;
+  margin:2px;
+  padding: 5px;
+  block-size: fit-content;
+}
+
+.container {
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+  padding:5px;
 
-  /* border:none; */
-  /* outline:none; */
-
-  /* width:fit-content; */
-  /* block-size: fit-content; */
-  /* border:none; */
-  /* border:2px solid darkgray; */
-  /* border-radius: 15px; */
-  /* padding: 5px; */
-  /* background-color: lightgray; */
-  /* background-image: linear-gradient(to bottom right, darkgray,whitesmoke); */
 }
-
-/* Style the widget buttons */
-.widget-box .CharField{
-  /* border:none; */
-  /* border:1px solid black; */
-  /* border-radius: 15px; */
-  /* outline:none; */
-}
-
-.widget-box .ChoiceField{
-  /* border:none; */
-  /* border: 1px solid black; */
-  /* border-radius: 15px; */
-  /* outline:none; */
-}
-
-.widget-box input{
-  /* border:none; */
-  /* border:1px solid black; */
-  /* border-radius: 15px; */
-  /* outline:none; */
-}
-
-.widget-box a{
-  /* border:none; */
-  /* border:1px solid black; */
-  /* border-radius: 15px; */
-  /* outline:none; */
-}
-
-.widget-box button{
-  /* border:none; */
-  /* border:1px solid black; */
-  /* border-radius: 15px; */
-  /* outline:none; */
-}
-
 
 
 
 /*              */
 /* Table styles */
 /*              */
-
-/* Table border radius added to app-specific css files due to different column numbers  */
 
 .table-container {
   max-height: 75vh;
@@ -337,50 +256,40 @@ background-color: white;
   margin-left: auto;
   margin-right: auto;
   overflow: auto;
-  /* border:2px solid black; */
-  /* background-color: white; */
 }
 
-.table-label {
-  margin-left: auto;
-  margin-right: auto;
-  width: fit-content;
-}
+/* Style table */
 
-/* tbody tr:nth-child(odd) {background:green; } */
-
-
-
-/* Style table as widget */
-
-.widget-table {
+table {
   border-collapse: collapse;
   /* margin: 25px 0; */
   font-size: 0.9em;
-  font-family: sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   /* background-color: white; */
 }
 
 
-.widget-table tr:nth-child(1){
+table tr:nth-child(1){
     background-color: gainsboro;
     /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
 
 }
 
-.widget-table th{
+table th{
     padding:1em;
 
   }
 
-.widget-table td{
+table td{
   background: white;
   /* color: black; */
   padding:1em;
   
 }
+
+
 
 
 
@@ -390,29 +299,17 @@ background-color: white;
 
 .flex-container{
   display:flex;
-  /* border:2px solid blue; */
   flex-direction: column;
-  margin:5px;
-  /* padding:5px; */
+
 }
 
 .flex-box{
   display:flex;
   flex-direction: column;
-  width:fit-content;
-  block-size: fit-content;
-  margin:5px;
-  /* padding:5px; */
+  /* width:fit-content;
+  block-size: fit-content; */
 }
 
-/* .text-container{
-  border:2px solid Black;
-  padding:5px;
-  display:block;
-  width:fit-content;
-  height: fit-content;
-  text-align: center;
-} */
 
 
 
@@ -445,6 +342,11 @@ flex-direction: row;
 }
 
 .flex-center{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.h-center{
   margin-left: auto;
   margin-right: auto;
 }

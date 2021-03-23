@@ -16,13 +16,15 @@
     </div>
       
     <div class="nav-row navigation-buttons">
-      <p><a href="{% url 'homepage' %}">Home</a></p>
       <p><a href="{% url 'logout' %}">Log Out</a></p>
     </div>
   </header>
 
-  <h3>Welcome to LicensePGM>
+<div class="flex-box widget-box flex-center">
+  <h3>Welcome to LicensePGM</h3>
   <p>A tool for generating product licenses</p>
+  <p><a href="{% url 'homepage' %}">Home</a></p>
+</div>
 
   {% else %}
   <div class="flex-box widget-box">

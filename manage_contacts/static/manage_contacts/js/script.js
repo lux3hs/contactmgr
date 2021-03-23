@@ -33,9 +33,9 @@ window.addEventListener('load', (event) => {
 
 
 
-    var orgTable = document.getElementById("org-table");
-    if (orgTable) {
-      loadTableData(url='get-org-data', tableID='org-table')
+  var orgTable = document.getElementById("org-table");
+  if (orgTable) {
+    loadTableData(url='get-org-data', tableID='org-table')
   
 
     var productTable = document.getElementById("product-table");
@@ -50,4 +50,11 @@ window.addEventListener('load', (event) => {
     }
 
   }
+
+
+
+  
+
+
+
 })
