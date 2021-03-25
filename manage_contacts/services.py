@@ -45,6 +45,28 @@ def delete_contact(user_id):
         return "no contacts selected"
 
 
+
+
+
+def delete_org_data(org_selection):
+    except_list = ['automai']
+    print("orgs:" + str(org_selection))
+    try:
+        for org_id in org_selection:
+            org_data = Organization.objects.filter(id=int(org_id)).get()
+            if org_data.org_name in except_list:
+                pass
+            
+            else:      
+                org_data.delete()
+                return True
+
+    except:
+        return org_id
+
+
+
+
 def add_new_organization(user_query):
     org_type = user_query.get('org_type')
     org_name = user_query.get('org_name')

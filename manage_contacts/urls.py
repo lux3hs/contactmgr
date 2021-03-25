@@ -14,5 +14,9 @@ urlpatterns = [
     path('get-entitlement-data', views.get_entitlement_data, name='get_entitlement_data'),
 
     path('delete-contact-selection/<int:contact_id>/', views.delete_contact_selection, name='delete_contact_selection'),
+    path('delete-org-selection/<str:query_string>/', views.delete_org_selection, name='delete_org_selection'),
+    # path('delete-org-selection/<str:query_string>/redirect', views.delete_org_redirect, name='delete_org_redirect'),
+
+
 
 ]

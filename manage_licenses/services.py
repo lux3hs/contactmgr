@@ -1,6 +1,10 @@
 import datetime
 import os.path
 
+import json
+
+from django.contrib.auth.models import User
+
 
 from .models import License
 from manage_contacts.models import Contact, Product, Entitlement, Organization
@@ -9,16 +13,6 @@ from django.conf import settings
 
 base_dir = str(settings.BASE_DIR)
 
-
-# def check_entitlements(org, product):
-
-#     print("hello")
-#     entitlement_data = Entitlement.objects.filter(organization=org, product=product).get()
-#     if check_entitlements(org, product)
-
-
-#     print(entitlement_data.max_licenses)
-#     print(entitlement_data.total_licenses)
 
 
 def create_license(current_user, user_query):
@@ -31,10 +25,6 @@ def create_license(current_user, user_query):
         user_org = org_object.org_name
         org_id = org_object.id
         org_id = contact_data.organization.id
-
-        
-        
-        
         
         product_choice = user_query.get('product_choice')
         ip_host = user_query.get('ip_host')
@@ -79,17 +69,14 @@ def create_license(current_user, user_query):
         )
 
         new_license.save()
-
-        entitlement_data.total_licenses -= 1
-        entitlement_data.save()
         
-        return "New license created"
+        return True
 
     except:
-        return "error"
+        return False
 
 def delete_license(license_id):
-    """ Delete license object from database based on user selection """
+    """ Delete license object from database """
     # current_user = request.user
     if (license_id):
         try:
@@ -104,61 +91,33 @@ def delete_license(license_id):
     else:
         return False
 
-def generate_license_array(current_user, user_selection):
-    """ Generate license files for download """
-    print(user_selection)
-    user_id = current_user.id
-    contact_data = Contact.objects.filter(user=user_id).get()
-    org_object = contact_data.organization
 
-    org_id = org_object.id
-    product_licenses = License.objects.filter(org_id=org_id)
+def package_license_data(license_values):
+    product_licenses = License.objects.all()
+    data_string = ""
+    for license_id in license_values:
+        license_selection = product_licenses.filter(id=license_id).get()
+        license_data = license_selection.get_package_data()
+        data_string += str(license_data) + "\n"
 
-    license_data = ""
-    license_array = {}
-    license_file = base_dir + "/bin/Product-License.lic"
-    if os.path.isfile(license_file):
-        license_array["Success"] = False
-        license_array["Message"] = "File exists"
+    return data_string
 
-    else:
-        try:
-            for license_id in user_selection:
-                license_selection = product_licenses.filter(id=license_id).get()
-                license_dict = license_selection.get_table_dictionary()
+def check_license_data(license_selection):
+    for license_id in license_selection:
+        license_check = License.objects.filter(id=license_id)
+        if len(license_check) > 0:
+            pass
 
-                temp_data = ""
-                for field in license_dict:
-                    temp_data = temp_data + str(field) + ": " + str(license_dict[field]) + "\n"
-                    
-                temp_data = temp_data + "\n"
-                license_data = license_data + temp_data
+        else:
+            return False
 
-                license_selection.delete()
-
-            license_key = generate_license_key(license_data)            
-            license_data = license_data + "Key=" + license_key
-
-            license_file = base_dir + "/bin/Product-License.lic"
-            f = open(license_file, "w")
-            f.write(license_data)
-            f.close()
-                
-            license_array["Data"] = license_data
-            license_array["Success"] = True
-            license_array["Message"] = "File successfully generated"
-
-        except:
-            license_array["Success"] = False
-            license_array["Message"] = "error"
+    return True
 
 
-    return license_array
 
 def generate_license_key(license_data):
-    print("I need a function to encrypt " + license_data)
-    return "MyLicenseKey"
-
+    license_key = license_data + 'MyKey="EncryptedData"'
+    return license_key
 
 
 def get_table_data(table_header, object_data):
@@ -170,30 +129,34 @@ def get_table_data(table_header, object_data):
     
     data['table_header'] = header_list
     if len(object_data) > 0:
-        try:
-            data_list = []
-            for obj in object_data:
+        data_list = []
+        for obj in object_data:
+            try:
                 object_dictionary = obj.get_table_dictionary()
                 temp_dict = {}
                 temp_dict["data_id"] = object_dictionary.get("data_id")
                 for key in table_header.keys():
                     if key in object_dictionary.keys():
                         temp_dict[key] = object_dictionary.get(key)
+                    
+                    else:
+                        temp_dict[key] = "error"
 
                 data_list.append(temp_dict)
 
-            data['table_data'] = data_list
-            data['Success'] = True
+                data['table_data'] = data_list
+                data['Success'] = True
 
-        except:
-            data['Success'] = False
+            except:
+                data['Success'] = False
 
     return data
                     
 
 
 def get_license_header():
-    license_header = {'product_name':'Product',
+    license_header = {'id':'ID',
+                    'product_name':'Product',
                     'version_number':'Version',
                     'org_name':'Org', 
                     'IP_Host':'IP Host', 
@@ -202,7 +165,8 @@ def get_license_header():
                     'product_grade': 'Grade',
                     'product_stations': 'Stations',
                     'creation_date': 'Created',
-                    'expiration_date': 'Expires'}
+                    'expiration_date': 'Expires',
+                    }
 
     return license_header
 
@@ -216,11 +180,9 @@ def get_entitlement_header():
     return entitlement_header
 
 
-
 def get_choice_list(model_header):
     choice_list = []
     for key in model_header:
         choice_list.append((key, model_header[key]))
 
     return choice_list
-

@@ -4,33 +4,45 @@
 
 {% block title %}Home{% endblock title %}
 
-{% block main %}
-  {% if user.is_authenticated %}
+  {% comment %} {% if user.is_authenticated %} {% endcomment %}
   
-  {% block header %}  {% endblock header %}
-
-  <header class="app-header flex-container flex-row">  
+  {% block header %}  
+  <div class="flex-box flex-row container">   
+    <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
     
-    <div class="flex-widget">
-    <img src="{% static 'images/licensepgm/logo-generic.svg' %}" id="org-logo" alt="Generic logo"/>
+    <div class="align-right">
+      <p>
+      <a href="{% url 'homepage' %}">Home</a>
+      <a href="{% url 'logout' %}">Log Out</a>
+      </p>
     </div>
-      
-    <div class="nav-row navigation-buttons">
-      <p><a href="{% url 'logout' %}">Log Out</a></p>
-    </div>
-  </header>
+  </div>
+  {% endblock header %}
 
-<div class="flex-box widget-box flex-center">
-  <h3>Welcome to LicensePGM</h3>
-  <p>A tool for generating product licenses</p>
-  <p><a href="{% url 'homepage' %}">Home</a></p>
+{% block main %}
+
+  <h2 class="center-text">Welcome to LicensePGM</h2>
+  <h3 class="center-text">A tool for generating Automai product licenses</h3>
+<div class="flex-box flex-center">
+  <div class="card footer-container">
+  <h3>Manage Contacts</h3>
+  
+  <p>Use 'Manage Contacts' to create or update user info.</p>
+  <a class="footer" href="{% url 'manage_contacts' %}">Contacts</a>
+  </div>
+
+  <div class="card footer-container">
+  <h3> Manage Licenses</h3>
+  <p>Use 'Manage Licenses' to create or download product licenses</p>
+    <a class="footer" href="{% url 'manage_licenses' %}">Licenses</a>
+  </div>
+
+  <div class="card footer-container">
+  <h3>Admin</h3>
+  <p>Automai administrators can access the admin page to create, edit, or delete organizations, products, and product entitlements.</p>
+    <a class="footer" href="{% url 'admin_dash' %}">Admin</a>
+  </div>
 </div>
 
-  {% else %}
-  <div class="flex-box widget-box">
-    <p>You are not logged in.</p>
-    <p><a href="{% url 'login' %}">Log In</a></p>
-  </div>
-  {% endif %}
 
 {% endblock main %}

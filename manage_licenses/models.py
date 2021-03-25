@@ -20,9 +20,13 @@ class License(models.Model):
     creation_date = models.DateTimeField("Date created ", null=True)
     expiration_date = models.DateTimeField("Expiration date ", null=True)
 
+    def get_model_fields(model):
+        return model._meta.fields
+
     def get_table_dictionary(self):
         license_dict = {}
         license_dict["data_id"] = self.id
+        license_dict["id"] = self.id
         license_dict["org_name"] = self.org_name
         license_dict["org_id"] = self.org_id
         license_dict["entitlement_id"] = self.entitlement_id
@@ -34,10 +38,27 @@ class License(models.Model):
         license_dict["product_grade"] = self.product_grade
         license_dict["product_stations"] = self.product_stations
         license_dict["allowed_ips"] = self.allowed_ips
-        license_dict["creation_date"] = self.creation_date
-        license_dict["expiration_date"] = self.expiration_date
+        license_dict["creation_date"] = str(self.creation_date)
+        license_dict["expiration_date"] = str(self.expiration_date)
 
         return license_dict
+
+    def get_package_data(self):
+        package_data = {}
+        package_data["Product"] = str(self.product_name)
+        package_data["Version"] = str(self.version_number)
+        package_data["Org Name"] = str(self.org_name)
+        package_data["org ID"] = str(self.org_id)
+        package_data["IP Host"] = str(self.IP_Host)
+        package_data["Email"] = str(self.creator_email)
+        package_data["Permanent"] = str(self.is_permanent)
+        package_data["Grade"] = str(self.product_grade)
+        package_data["Stations"] = str(self.product_stations)
+        package_data["creation_date"] = str(self.creation_date)
+        package_data["expiration_date"] = str(self.expiration_date)
+        return package_data
+
+
 
     # def get_user_licenses(self, current_user):
     #     org_id = current_user.organization.id

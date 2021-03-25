@@ -48,19 +48,22 @@
 
 
 <div id="contacts-tab" class="js-tabcontent">
- <p>
-    This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
-    click on 'My Information' menu item above.
-  </p>
-      
-  <div class="flex-box flex-center widget-box">
+ 
+    
+      <p>
+        This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
+        click on 'My Information' menu item above.
+      </p>
+    
+  <h3 class="center-text">Manage Contacts</h3>
+
+  <div class="h-center fit-width">
 
       <form>
         <input id="contact-search-button" type="button" value="Search"/>
         {{ contact_search_form }}
          <input id="clear-contact-search" type="button" value="Clear"/>
          <a href="{% url 'add_contact' %}">Add Contact</a>
-
       </form>
 
       <form>
@@ -71,10 +74,11 @@
                 <th></th>
               </tr>
             </thead>
-            </table>
-            <p><input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>
-            
+          </table>
         </div>
+        <div>
+          <input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete">
+        </div>  
       </form>
 
   </div>
@@ -82,21 +86,30 @@
 </div>
 
 <div id="information-tab" class="js-tabcontent">
-    <div class="container">
+  
+  
+
+    <div class="card">
+      <div class="box">
       <h3>{{ user.username }}</h3>
         <p>UserEmail: {{ user.email }}</p>
         <p>Role: {{ contact_data.role }}</p>
         <p>Org: {{ contact_data.organization }}</p>
         <p>UserID: {{ user.id }}</p>
         <p>OrgID: {{ contact_data.organization.id }}</p>
-        <p><a href="{% url 'password_change' %}">Change Password</a></p>
-        <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
-    </div> 
+      </div>
+      <div class="box footer-container">
+        <p class="box"><a href="{% url 'password_change' %}">Change Password</a></p>
+        
+        <p class="box"><a href="{% url 'password_reset' %}">Reset Password</a></p>
+      </div>
+  </div>
+
+
 </div>
 
 
 
-{% comment %} </div> {% endcomment %}
 {% endblock main %}
 
 {% block footer %}{% endblock footer %}

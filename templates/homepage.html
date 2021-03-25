@@ -4,22 +4,27 @@
 
 {% block title %}Home{% endblock title %}
 
- {% block main %}
- {% block header %}{% endblock header %}
-  <div class="flex-container flex-row widget-box">
-    <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
-
-  <div class="nav-row">
-    <p><a href="{% url 'manage_licenses' %}">Manage Licenses</a></p>
-    <p><a href="{% url 'manage_contacts' %}">Manage Contacts</a></p>
-    <p><a href="{% url 'admin_dash' %}">Automai Admin</a></p>
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-
+ {% block header %}
+<div class="flex-box flex-row container">
+  <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
+  <h3 class="h-center">LicensePGM</h3>
+  <div class="align-right">
+    <p>
+    <a href="{% url 'manage_licenses' %}">Manage Licenses</a>
+    <a href="{% url 'manage_contacts' %}">Manage Contacts</a>
+    <a href="{% url 'admin_dash' %}">Automai Admin</a>
+    <a href="{% url 'logout' %}">Log Out</a>
+    </p>
   </div>
- </div>
-    <div class="flex-box widget-box flex-column">
-          <p><a href="{% url 'info' %}">More Info</a></p>
-    </div>
+</div>
+{% endblock header %}
 
 
+
+{% block main %}
+</div>
+  <div class="flex-box flex-column fit-width">
+  <p><a href="{% url 'info' %}">More Info</a></p>
+  </div>
+</div>
 {% endblock main %}

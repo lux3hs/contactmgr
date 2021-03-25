@@ -10,13 +10,29 @@ body {
 
   }
 
+main{
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  /* margin:2px; */
+  padding: 5px;
+  min-height: 75vh;
+  /* max-width: 100vh; */
+  }
+  
+
   h1, h2, h3 {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   p {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
   }
+
+
+/*                   */
+/* Link/Input styles */
+/*                   */
 
 a{
   background-color: white;
@@ -26,7 +42,7 @@ a{
     border:none;
     border-radius: 5px;
     text-align: center;
-    padding: 10px 15px;
+    padding: 10px;
     text-decoration: none;
     margin:5px;
   }
@@ -44,6 +60,7 @@ input{
   border:none;
   text-align: left;
   padding:10px 15px;
+  margin: 5px;
   text-decoration: none;
 
 }
@@ -60,6 +77,7 @@ button {
     border-radius: 5px;
     text-align: center;
     padding: 10px 15px;
+    margin: 5px;
     text-decoration: none;
     display: inline-block;
 }
@@ -67,7 +85,6 @@ button {
 button:hover, button:active {
     background-color: whitesmoke;
   }
-
 
 
 select{
@@ -79,14 +96,13 @@ select{
   border:none;
   text-align: left;
   padding:10px 15px;
+  margin: 5px;
   text-decoration: none;
 }
 
 select:hover, select:active {
   background-color: whitesmoke;
 }
-
-
 
 
 
@@ -135,56 +151,10 @@ select:hover, select:active {
 
 
 
-
-
-
-/*            */
-/* Nav styles */
-/*            */
-
-
-
-/* Style navigation links */
-/* .navigation-buttons a{
-  border: none;
-} */
-
-/* Style naviation links */
-/* .navigation-buttons a:hover{
-  background-color: whitesmoke;
-} */
-
-/* Style the navigation row */
-.nav-row{
-  display: flex;
-  flex-direction: row;
-  margin-left:auto;
-  width:fit-content;
-  height: fit-content;
-  overflow: hidden;
-}
-
-/* .nav-row a{
-  border:none;
-} */
-
-/* nav-row a:hover{
-  background-color: whitesmoke;
-} */
-
-
-
-
 /*                 */
 /* Homepage styles */
 /*                 */
 
-/* Style the homepage header */
-/* .site-header{
-  align-items: center;
-  height: 50px; */
-  /* border:2px solid black; */
-/* } */
 
 .app-header{
   display: flex;
@@ -208,41 +178,6 @@ select:hover, select:active {
 
 }
 
-main{
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  /* margin:2px; */
-  padding: 5px;
-  min-height: 75vh;
-  /* max-width: 100vh; */
-}
-
-
-
-/*                         */
-/* widget background color */
-/*                         */
-
-/* Style box as widget */
-.widget{
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  padding: 5px;
-  border-radius: 15px;
-  margin:2px;
-  padding: 5px;
-  block-size: fit-content;
-}
-
-.container {
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
-  padding:5px;
-
-}
-
 
 
 /*              */
@@ -258,79 +193,103 @@ main{
   overflow: auto;
 }
 
-/* Style table */
-
 table {
   border-collapse: collapse;
   /* margin: 25px 0; */
   font-size: 0.9em;
-  font-family:Arial, Helvetica, sans-serif;
-  min-width: 400px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  /* min-width: 10vw;
+  max-width: 50vw; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  /* background-color: white; */
+  background-color: ghostwhite;
 }
 
-
+/* Table header */
 table tr:nth-child(1){
     background-color: gainsboro;
-    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 
 }
 
+table tr:nth-child(even) {
+  background-color:white;
+}
+
+
+
+/* Header cells */
 table th{
+  /* background-color: gainsboro; */
+
     padding:1em;
 
   }
 
+
+/* Table cells */
 table td{
-  background: white;
-  /* color: black; */
+  /* background: white; */
   padding:1em;
-  
 }
 
 
 
 
+/* Style box as widget */
 
-/*                         */
-/* Generic flexbox classes */
-/*                         */
 
-.flex-container{
-  display:flex;
-  flex-direction: column;
+.container {
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  padding:5px;
 
+}
+
+.widget{
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  margin:2px;
+  padding: 5px;
+  width: fit-content;
+  block-size: fit-content;
+}
+
+.card{
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* flex-shrink: 1; */
+  /* flex-direction: column; */
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  padding:5px;
+  margin:15px;
+  
+  max-width: 300px;
+  min-width: 150px;
+  min-height: 250px;
+  width: fit-content;
+  block-size: fit-content;
+}
+
+
+/*                 */
+/* Generic classes */
+/*                 */
+
+.box{
+  /* padding:5px; */
+  padding:3px;
 }
 
 .flex-box{
   display:flex;
-  flex-direction: column;
-  /* width:fit-content;
-  block-size: fit-content; */
 }
-
-
-
-
-
-
-/* Generic styling classes */
 
 .border-full{
   border: 1px solid black;
-}
-
-.border-top{
-  border-top: 1px solid black;
-}
-
-.border-bottom{
-  border-bottom: 1px solid black;
-}
-
-.border-left{
-  border-left: 1px solid black;
 }
 
 .flex-row{
@@ -342,17 +301,16 @@ flex-direction: row;
 }
 
 .flex-center{
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.h-center{
-  margin-left: auto;
-  margin-right: auto;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-left{
   justify-content: left;
+}
+
+.flex-right{
+  justify-content: right;
 }
 
 .left-text{
@@ -363,9 +321,33 @@ flex-direction: row;
   text-align:center;
 }
 
+.h-center{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .full-height{
   height: 100vh;
 }
 
+.fit-width{
+  width: fit-content;
+}
 
+.align-right {
+  margin-left: auto; 
+  margin-right: 0;
+}
 
+.paper-box{
+  background-color: mintcream;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+}
+
+.footer-container{
+  position: relative;
+}

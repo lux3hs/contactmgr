@@ -24,7 +24,7 @@
 
   {% if contact_data.role == "admin" %}
 
-    <div class="flex-box widget-box">
+    <div class="flex-box flex-column widget">
       <h3>Add Contact</h3>
       <form id="new-contact-form" method="post">
         {% csrf_token %}
@@ -45,10 +45,12 @@
     <p>Not authorized. ({{ contact_data.role }}) </p>
   {% endif %}
 
-<div class="flex-container flex-row navigation-buttons">
-  <p><a href="{% url 'manage_contacts' %}">Return</a></p>
-  <p><a href="{% url 'homepage' %}">Home</a></p>
-  <p><a href="{% url 'logout' %}">Logout</a></p>
+<div>
+  <p>
+  <a href="{% url 'manage_contacts' %}">Return</a>
+  <a href="{% url 'homepage' %}">Home</a>
+  <a href="{% url 'logout' %}">Logout</a>
+  </p>
 </div>
 {% endblock main %}
 

@@ -125,6 +125,23 @@ function changePage(evt, pageName) {
   }
 
 
+  // Get values from checkboxes
+  function getCheckboxValues() {
+    
+    var nodeList = document.getElementsByName("check-box");
+    checkBoxValues = []
+    for (i = 0; i <	nodeList.length; i++) {
+      checked = nodeList[i].checked;
+      value = nodeList[i].value;
+     
+      if (checked == true) {
+        checkBoxValues.push(value)
+      }
+    }
+    return checkBoxValues
+  }
+
+
 
 
   // Dynamic table processing
@@ -140,28 +157,24 @@ function changePage(evt, pageName) {
 
   })
   }
-    
+
+
   // Delete data from a table and rebuild
   function deleteTableData(url, tableID) {  
-    var nodeList = document.getElementsByName("check-box");
+    
+    queryData = getCheckboxValues()
 
-    for (i = 0; i <	nodeList.length; i++) {
-      checked = nodeList[i].checked;
-      value = nodeList[i].value;
-     
-      if (checked == true) {
-        requestURL = url + '/' + value     
+    query_string = JSON.stringify(queryData)
+        requestURL = url + '/' + query_string     
         newRequest = fetchRequest(requestURL)
         newRequest.then(data => {
-
           tableData = data.table_data
           tableHeader = data.table_header
           buildDataTable(tableData, tableHeader, tableID)
           addCheckBoxes(tableID)
                  
         })
-      }
-    }
+     
   }
 
   // Search data within a table and rebuild

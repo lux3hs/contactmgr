@@ -1,5 +1,7 @@
 import datetime
 
+import json
+
 from django.contrib.auth.models import User
 
 from django.shortcuts import render
@@ -112,26 +114,28 @@ def admin_dash(request):
     product_objects = Product.objects.all()
     entitlement_objects = Entitlement.objects.all()
 
-    #Check for input to delete orgs
-    if request.GET.get('delete_organization_selection'):
-        user_selection = request.GET.getlist("org_selection")
-        delete_object_selection(data_objects=Organization, user_selection=user_selection)
-        messages.add_message(request, messages.INFO, 'Selection Deleted')
-        return HttpResponseRedirect(request.path_info)
 
-     #Check for input to delete products
-    if request.GET.get('delete_product_selection'):
-        user_selection = request.GET.getlist("product_selection")
-        delete_object_selection(data_objects=Product, user_selection=user_selection)
-        messages.add_message(request, messages.INFO, 'Selection Deleted')
-        return HttpResponseRedirect(request.path_info)
 
-     #Check for input from delete entitlements
-    if request.GET.get('delete_entitlement_selection'):
-        user_selection = request.GET.getlist("entitlement_selection")
-        delete_object_selection(data_objects=Entitlement, user_selection=user_selection)
-        messages.add_message(request, messages.INFO, 'Selection Deleted')
-        return HttpResponseRedirect(request.path_info)
+    # #Check for input to delete orgs
+    # if request.GET.get('delete_organization_selection'):
+    #     user_selection = request.GET.getlist("org_selection")
+    #     delete_object_selection(data_objects=Organization, user_selection=user_selection)
+    #     messages.add_message(request, messages.INFO, 'Selection Deleted')
+    #     return HttpResponseRedirect(request.path_info)
+
+    #  #Check for input to delete products
+    # if request.GET.get('delete_product_selection'):
+    #     user_selection = request.GET.getlist("product_selection")
+    #     delete_object_selection(data_objects=Product, user_selection=user_selection)
+    #     messages.add_message(request, messages.INFO, 'Selection Deleted')
+    #     return HttpResponseRedirect(request.path_info)
+
+    #  #Check for input from delete entitlements
+    # if request.GET.get('delete_entitlement_selection'):
+    #     user_selection = request.GET.getlist("entitlement_selection")
+    #     delete_object_selection(data_objects=Entitlement, user_selection=user_selection)
+    #     messages.add_message(request, messages.INFO, 'Selection Deleted')
+    #     return HttpResponseRedirect(request.path_info)
 
     context = {'user_role':user_role,
                'user_org':user_org,
@@ -140,6 +144,10 @@ def admin_dash(request):
                'entitlement_objects':entitlement_objects}
 
     return render(request, "manage_contacts/admin-dash.html", context)
+
+
+
+
 
 @login_required
 def add_organization(request):
@@ -167,23 +175,29 @@ def add_organization(request):
     return render(request, "manage_contacts/add-organization.html", context)
     
 
+
+def delete_org_selection(request, query_string):
+    org_selection = json.loads(query_string)
+    response = delete_org_data(org_selection)
+    
+    if response is True:
+        return get_org_data(request)
+        
+    else:
+
+        return get_org_data(request)
+
+
+
 def get_org_data(request):
     org_data = Organization.objects.all()
     table_header = get_org_header()
     table_data = get_table_data(table_header, org_data)
     return JsonResponse(table_data)
 
-def get_product_data(request):
-    product_data = Product.objects.all()
-    table_header = get_product_header()
-    table_data = get_table_data(table_header, product_data)
-    return JsonResponse(table_data)
 
-def get_entitlement_data(request):
-    entitlement_data = Entitlement.objects.all()
-    table_header = get_entitlement_header()
-    table_data = get_table_data(table_header, entitlement_data)
-    return JsonResponse(table_data)
+
+
 
 
 @login_required
@@ -213,6 +227,14 @@ def add_product(request):
     context = {'user_role':user_role, 'user_org':user_org, 'product_form':product_form}
     return render(request, "manage_contacts/add-product.html", context)
     
+
+def get_product_data(request):
+    product_data = Product.objects.all()
+    table_header = get_product_header()
+    table_data = get_table_data(table_header, product_data)
+    return JsonResponse(table_data)
+
+
 @login_required
 def add_entitlement(request):
     """ Render add entitlement page """
@@ -248,3 +270,10 @@ def add_entitlement(request):
 
     context = {'user_role':user_role, 'user_org':user_org, 'entitlement_form':entitlement_form}
     return render(request, "manage_contacts/add-entitlement.html", context)
+
+
+def get_entitlement_data(request):
+    entitlement_data = Entitlement.objects.all()
+    table_header = get_entitlement_header()
+    table_data = get_table_data(table_header, entitlement_data)
+    return JsonResponse(table_data)
