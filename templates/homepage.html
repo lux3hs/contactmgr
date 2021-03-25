@@ -12,7 +12,9 @@
   <div>
   
     <p>
-      <a href="{% url 'info' %}">More Info</a>
+      <a href="{% url 'manage_contacts' %}">Contacts</a>
+      <a href="{% url 'manage_licenses' %}">Licenses</a>
+      <a href="{% url 'admin_dash' %}">Admin</a>      
       <a href="{% url 'logout' %}">Log Out</a>
     </p>
 
@@ -23,10 +25,7 @@
 {% block main %}
     <h3 class="center-text">Welcome to LicensePGM</h3>
 
-    <div class="flex-box widget h-center">
-      <p><a href="{% url 'manage_contacts' %}">Contacts</a></p>
-      <p><a href="{% url 'manage_licenses' %}">Licenses</a></p>
-      <p><a href="{% url 'admin_dash' %}">Admin</a></p>
-      <p><a href="{% url 'logout' %}">Log Out</a></p>
+    <div class="flex-box fit-width h-center">
+        <a href="{% url 'info' %}">More Info</a>
     </div>
 {% endblock main %}

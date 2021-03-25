@@ -1,4 +1,5 @@
 import datetime
+import os
 import os.path
 
 import json
@@ -12,6 +13,50 @@ from manage_contacts.models import Contact, Product, Entitlement, Organization
 from django.conf import settings
 
 base_dir = str(settings.BASE_DIR)
+
+
+
+def get_choice_list(model_header):
+    choice_list = []
+    for key in model_header:
+        choice_list.append((key, model_header[key]))
+
+    return choice_list
+
+
+
+
+def exec_arg(arg):
+    os.system(arg)
+
+def generate_license_key(data_package):
+    run_dir = base_dir + "/bin/"
+    file_dir = base_dir + "/bin/keygen/"
+    data_string = data_package['data_string']
+    key_name = str(data_package['key_name']) + ".txt"
+    
+    exec_string = ("wine " + run_dir +
+                   "AlKeyMaker.exe string=" +
+                   '"' + str(data_string) + '"' +
+                   " flag=encrypt outputfile=" +
+                   file_dir + key_name)
+
+    print(exec_string)
+    try:
+        exec_arg(exec_string)
+        return key_name
+
+    except: 
+        return None
+
+def read_key_file(key_name):
+    file_dir = base_dir + "/bin/keygen/" + key_name
+    f = open(file_dir, "r")
+    key_text = f.read()
+    print(key_text)
+    return key_text
+
+
 
 
 
@@ -73,48 +118,77 @@ def create_license(current_user, user_query):
     except:
         return False
 
-def delete_license(license_id):
+def delete_license_data(license_selection):
     """ Delete license object from database """
-    if (license_id):
-        try:
-            license_selection = License.objects.filter(id=license_id)
-            license_selection.delete()
-
+    for license_id in license_selection:
+        try:    
+            license_data = License.objects.filter(id=license_id).get()
+            license_data.delete()
+            
+            entitlement_id = license_data.entitlement_id
+            entitlement_data = Entitlement.objects.filter(id=entitlement_id).get()
+            entitlement_data.add_license()
             return True
 
         except:
-            return False
-
-    else:
-        return False
+            return license_id
 
 
 def package_license_data(license_values):
     product_licenses = License.objects.all()
     data_string = ""
+    key_name = ""
     for license_id in license_values:
+        key_name += license_id
         license_selection = product_licenses.filter(id=license_id).get()
         license_data = license_selection.get_package_data()
         data_string += str(license_data) + "\n"
 
-    return data_string
+    data_package = {'key_name':key_name, 'data_string':data_string}
+
+    return data_package
 
 def check_license_data(license_selection):
-    for license_id in license_selection:
-        license_check = License.objects.filter(id=license_id)
-        if len(license_check) > 0:
-            pass
+    if len(license_selection) > 0:
+        for license_id in license_selection:
+            license_check = License.objects.filter(id=license_id)
+            if len(license_check) > 0:
+                pass
 
-        else:
-            return False
+            else:
+                return False
 
-    return True
+        return True
+
+    else: 
+        return False
 
 
 
-def generate_license_key(license_data):
-    license_key = license_data + 'MyKey="EncryptedData"'
-    return license_key
+def get_license_header():
+    license_header = {'id':'ID',
+                    'product_name':'Product',
+                    'version_number':'Version',
+                    'org_name':'Org', 
+                    'IP_Host':'IP Host', 
+                    'creator_email': 'Email', 
+                    'is_permanent': 'Permanent',
+                    'product_grade': 'Grade',
+                    'product_stations': 'Stations',
+                    'creation_date': 'Created',
+                    'expiration_date': 'Expires',
+                    }
+
+    return license_header
+
+
+def get_entitlement_header():
+    entitlement_header = {'product_name':'Product',
+                          'product_version':'Version',
+                          'num_allocated':'Allocated', 
+                          }
+
+    return entitlement_header
 
 
 def get_table_data(table_header, object_data):
@@ -151,35 +225,7 @@ def get_table_data(table_header, object_data):
                     
 
 
-def get_license_header():
-    license_header = {'id':'ID',
-                    'product_name':'Product',
-                    'version_number':'Version',
-                    'org_name':'Org', 
-                    'IP_Host':'IP Host', 
-                    'creator_email': 'Email', 
-                    'is_permanent': 'Permanent',
-                    'product_grade': 'Grade',
-                    'product_stations': 'Stations',
-                    'creation_date': 'Created',
-                    'expiration_date': 'Expires',
-                    }
-
-    return license_header
 
 
-def get_entitlement_header():
-    entitlement_header = {'product_name':'Product',
-                          'product_version':'Version',
-                          'num_allocated':'Allocated', 
-                          }
-
-    return entitlement_header
 
 
-def get_choice_list(model_header):
-    choice_list = []
-    for key in model_header:
-        choice_list.append((key, model_header[key]))
-
-    return choice_list

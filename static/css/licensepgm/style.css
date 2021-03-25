@@ -260,8 +260,9 @@ table td{
   /* flex-wrap: wrap; */
   /* flex-shrink: 1; */
   /* flex-direction: column; */
-  background-color: white;
+  background-color: whitesmoke;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  /* background-color:  blue; */
   border-radius: 15px;
   padding:5px;
   margin:15px;
@@ -279,8 +280,8 @@ table td{
 /*                 */
 
 .box{
-  /* padding:5px; */
-  padding:3px;
+  padding:5px;
+  /* padding:3px; */
 }
 
 .flex-box{

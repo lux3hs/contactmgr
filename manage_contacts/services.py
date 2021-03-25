@@ -28,6 +28,30 @@ def get_superorg_id(super_orgname):
     except:
         return None
 
+def get_model_fields(model):
+    return model._meta.fields
+
+def get_model_choices(model_fields):
+    choice_list = []
+    for field in model_fields:
+        choice_list.append((field.name, field.name))
+
+    return choice_list
+
+def get_choice_list(model_header):
+    choice_list = []
+    for key in model_header:
+        choice_list.append((key, model_header[key]))
+
+    return choice_list
+
+
+
+
+
+
+
+
 
 
 
@@ -57,19 +81,19 @@ def add_new_contact(user_query, contact_organization):
 
     return new_contact
 
-def delete_contact(user_id):
-    if user_id:
-        try:
-            contact_data = Contact.objects.filter(id=user_id)
-            contact_data.delete()
+# def delete_contact(user_id):
+#     if user_id:
+#         try:
+#             contact_data = Contact.objects.filter(id=user_id)
+#             contact_data.delete()
             
-            return True
+#             return True
 
-        except:
-            return "error"
+#         except:
+#             return "error"
 
-    else:
-        return "no contacts selected"
+#     else:
+#         return "no contacts selected"
 
 
 
@@ -98,50 +122,14 @@ def delete_contact_data(current_user, contact_selection):
 
 
 
-def delete_org_data(org_selection):
-    except_list = []
-    super_orgname = 'automai'
-    super_id = get_superorg_id(super_orgname)
-    print(super_id)
-    except_list.append(super_id)
-    print("orgs:" + str(org_selection))
-    try:
-        for org_id in org_selection:
-            print('orgid:' + str(org_id))
-            org_data = Organization.objects.filter(id=int(org_id)).get()
-            if org_data.id in except_list:
-                print("id found")
-                pass
-            
-            else:      
-                org_data.delete()
-                return True
 
-    except:
-        return org_id
 
 
         
-def delete_product_data(product_selection):
-    try:
-        for product_id in product_selection:
-            product_data = Product.objects.filter(id=int(product_id)).get()
-            product_data.delete()
-            return True
-
-    except:
-        return product_id
 
 
-def delete_entitlement_data(entitlement_selection):
-    try:
-        for ent_id in entitlement_selection:
-            ent_data = Entitlement.objects.filter(id=int(ent_id)).get()
-            ent_data.delete()
-            return True
 
-    except:
-        return ent_id
+
 
 
 
@@ -165,6 +153,23 @@ def add_new_organization(user_query):
 
     return success_message
 
+def delete_org_data(org_selection):
+    except_list = []
+    super_orgname = 'automai'
+    super_id = get_superorg_id(super_orgname)
+    except_list.append(super_id)
+    try:
+        for org_id in org_selection:
+            org_data = Organization.objects.filter(id=int(org_id)).get()
+            if org_data.id in except_list:
+                pass
+            
+            else:      
+                org_data.delete()
+                return True
+    except:
+        return org_id
+
 def add_new_product(user_query):
     product_name = user_query.get('product_name')
     product_version = user_query.get('product_version')
@@ -183,6 +188,18 @@ def add_new_product(user_query):
         success_message = "Product exists"
 
     return success_message
+
+
+def delete_product_data(product_selection):
+    try:
+        for product_id in product_selection:
+            product_data = Product.objects.filter(id=int(product_id)).get()
+            product_data.delete()
+            return True
+
+    except:
+        return product_id
+
 
 
 def add_new_entitlement(user_query):
@@ -218,62 +235,16 @@ def add_new_entitlement(user_query):
 
 
 
+def delete_entitlement_data(entitlement_selection):
+    try:
+        for ent_id in entitlement_selection:
+            ent_data = Entitlement.objects.filter(id=int(ent_id)).get()
+            ent_data.delete()
+            return True
 
-# def filter_contacts(contact_list, filter_choice, search_field):
-#     filter_list = []
-#     for contact in contact_list:
-#         if search_field.lower() in contact[filter_choice].lower():
-#             filter_list.append(contact)
+    except:
+        return ent_id
 
-#     return filter_list
-
-
-# def delete_object_selection(data_objects, user_selection):
-#     for object_id in user_selection:
-#         object_selection = data_objects.objects.filter(id=object_id)
-#         object_selection.delete()
-
-
-def get_model_fields(model):
-    return model._meta.fields
-
-def get_model_choices(model_fields):
-    choice_list = []
-    for field in model_fields:
-        choice_list.append((field.name, field.name))
-
-    return choice_list
-
-
-#Requires data table to have gat table dictionary function
-def get_table_data(table_header, object_data):
-    data = {}
-    header_list = []
-    for key in table_header.keys():
-        header_list.append(table_header[key])
-    data['table_header'] = header_list
-    if len(object_data) > 0:
-        try:
-            data_list = []
-            for obj in object_data:
-
-                object_dictionary = obj.get_table_dictionary()
-                temp_dict = {}
-                temp_dict["data_id"] = object_dictionary.get("data_id")
-
-                for key in table_header.keys():
-                    if key in object_dictionary.keys():
-                        temp_dict[key] = object_dictionary.get(key)
-
-                data_list.append(temp_dict)
-
-            data['table_data'] = data_list
-            data['success'] = True
-
-        except:
-            data['success'] = False
-
-    return data
 
 
 def get_contact_header():
@@ -314,9 +285,41 @@ def get_entitlement_header():
     }
     return entitlement_header
 
-def get_choice_list(model_header):
-    choice_list = []
-    for key in model_header:
-        choice_list.append((key, model_header[key]))
 
-    return choice_list
+
+#Requires data table to have get_table_dictionary function
+def get_table_data(table_header, object_data):
+    data = {}
+    header_list = []
+    for key in table_header.keys():
+        header_list.append(table_header[key])
+    data['table_header'] = header_list
+    if len(object_data) > 0:
+        try:
+            data_list = []
+            for obj in object_data:
+
+                object_dictionary = obj.get_table_dictionary()
+                temp_dict = {}
+                temp_dict["data_id"] = object_dictionary.get("data_id")
+
+                for key in table_header.keys():
+                    if key in object_dictionary.keys():
+                        temp_dict[key] = object_dictionary.get(key)
+
+                data_list.append(temp_dict)
+
+            data['table_data'] = data_list
+            data['success'] = True
+
+        except:
+            data['success'] = False
+
+    return data
+
+
+
+
+
+
+

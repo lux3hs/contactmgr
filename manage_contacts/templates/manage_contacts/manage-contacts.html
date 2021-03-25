@@ -25,8 +25,8 @@
   <div>
     <p>
     <a href="{% url 'manage_licenses' %}">Licenses</a>
-    <a href="{% url 'homepage' %}">Home</a>
     <a href="{% url 'admin_dash' %}">Admin</a>
+    <a href="{% url 'homepage' %}">Home</a>
     <a href="{% url 'logout' %}">Log Out</a>
     </p>
   </div>
@@ -59,7 +59,7 @@
   <div class="h-center widget fit-width">
 
       <form>
-               <a href="{% url 'add_contact' %}">Add Contact</a>
+        <a href="{% url 'add_contact' %}">Add Contact</a>
 
         <input id="contact-search-button" type="button" value="Search"/>
         {{ contact_search_form }}
