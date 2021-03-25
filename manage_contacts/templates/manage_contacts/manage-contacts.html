@@ -59,10 +59,11 @@
   <div class="h-center widget fit-width">
 
       <form>
+               <a href="{% url 'add_contact' %}">Add Contact</a>
+
         <input id="contact-search-button" type="button" value="Search"/>
         {{ contact_search_form }}
          <input id="clear-contact-search" type="button" value="Clear"/>
-         <a href="{% url 'add_contact' %}">Add Contact</a>
       </form>
 
       <form>

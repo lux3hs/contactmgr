@@ -15,6 +15,8 @@ from .forms import ContactCreationForm, SearchChoiceForm, OrgCreationForm, Produ
 from .services import *
 
 
+
+
 #Manage Contacts Views#
 @login_required
 def manage_contacts(request):
@@ -79,12 +81,16 @@ def get_contact_data(request):
 
 
 
-def delete_contact_selection(request, contact_id):
-        check_response = delete_contact(contact_id)
-        if check_response:
-            return get_contact_data(request)
-        else:
-            return check_response
+def delete_contact_selection(request, query_string):
+    contact_selection = json.loads(query_string)
+    current_user = request.user
+    response = delete_contact_data(current_user, contact_selection)
+    
+    if response is True:
+        return get_contact_data(request)
+    
+    else:
+        return get_contact_data(request)
 
 
 
@@ -208,7 +214,6 @@ def delete_product_selection(request, query_string):
         return get_product_data(request)
         
     else:
-
         return get_product_data(request)
 
 

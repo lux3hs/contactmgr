@@ -3,6 +3,33 @@ import datetime
 
 from django.contrib.auth.models import User
 from .models import Contact, Organization, Product, Entitlement
+# from .views import get_current_user
+
+def get_superuser_id(super_username):
+    """ Attempts to return the contact id for the specified string """
+    # super_name = 'superadmin'
+    try:
+        super_user = User.objects.filter(username=super_username).get()
+        contact_data = Contact.objects.filter(user=super_user.id).get()
+
+        super_id = contact_data.id 
+        return super_id
+
+    except:
+        return None
+
+def get_superorg_id(super_orgname):
+    """ Attempts to return the org name for the specified string """
+    try:
+        super_org = Organization.objects.filter(org_name=super_orgname).get()
+        super_id = super_org.id
+        return super_id
+
+    except:
+        return None
+
+
+
 
 def add_new_contact(user_query, contact_organization):
     contact_username = user_query.get('username')
@@ -46,15 +73,44 @@ def delete_contact(user_id):
 
 
 
+def delete_contact_data(current_user, contact_selection):
+    except_list = []
+    super_username = 'superuser'
+    super_id = get_superuser_id(super_username)
+
+    # superadmin = User.objects.filter(username='superadmin').get()
+    except_list.append(current_user.contact.id)
+    except_list.append(super_id)
+    try:
+        for contact_id in contact_selection:
+            if int(contact_id) in except_list:
+                print('matched' + str(contact_id))
+                pass
+
+            else:
+                contact_data = Contact.objects.filter(id=int(contact_id)).get()
+                contact_data.user.delete()
+                return True
+
+    except:
+        return contact_id
+
+
 
 
 def delete_org_data(org_selection):
-    except_list = ['automai']
+    except_list = []
+    super_orgname = 'automai'
+    super_id = get_superorg_id(super_orgname)
+    print(super_id)
+    except_list.append(super_id)
     print("orgs:" + str(org_selection))
     try:
         for org_id in org_selection:
+            print('orgid:' + str(org_id))
             org_data = Organization.objects.filter(id=int(org_id)).get()
-            if org_data.org_name in except_list:
+            if org_data.id in except_list:
+                print("id found")
                 pass
             
             else:      

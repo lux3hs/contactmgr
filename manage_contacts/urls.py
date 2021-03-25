@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     path('', views.manage_contacts, name='manage_contacts'),
+    # path('get_current_user', views.get_current_user, name="get_current_user"),
+
     path('add-contact', views.add_contact, name="add_contact"),
     path('admin-dash', views.admin_dash, name="admin_dash"),
     path('add-organization', views.add_organization, name="add_organization"),
@@ -13,7 +15,7 @@ urlpatterns = [
     path('get-product-data', views.get_product_data, name='get_product_data'),
     path('get-entitlement-data', views.get_entitlement_data, name='get_entitlement_data'),
 
-    path('delete-contact-selection/<int:contact_id>/', views.delete_contact_selection, name='delete_contact_selection'),
+    path('delete-contact-selection/<str:query_string>/', views.delete_contact_selection, name='delete_contact_selection'),
     path('delete-org-selection/<str:query_string>/', views.delete_org_selection, name='delete_org_selection'),
     # path('delete-org-selection/<str:query_string>/redirect', views.delete_org_redirect, name='delete_org_redirect'),
     path('delete-product-selection/<str:query_string>/', views.delete_product_selection, name='delete_product_selection'),

@@ -16,7 +16,7 @@ main{
   border-radius: 15px;
   /* margin:2px; */
   padding: 5px;
-  min-height: 75vh;
+  min-height: 100vh;
   /* max-width: 100vh; */
   }
   
@@ -249,8 +249,8 @@ table td{
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
-  margin:2px;
-  padding: 5px;
+  margin:5px;
+  padding: 15px;
   width: fit-content;
   block-size: fit-content;
 }
