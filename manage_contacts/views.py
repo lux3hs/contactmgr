@@ -67,14 +67,6 @@ def add_contact(request):
     return render(request, "manage_contacts/add-contact.html", context)
 
 
-def delete_contact_selection(request, contact_id):
-        check_response = delete_contact(contact_id)
-        if check_response:
-            return get_contact_data(request)
-        else:
-            return check_response
-
-
 def get_contact_data(request):
     current_user = request.user
     user_id = current_user.id
@@ -87,6 +79,12 @@ def get_contact_data(request):
 
 
 
+def delete_contact_selection(request, contact_id):
+        check_response = delete_contact(contact_id)
+        if check_response:
+            return get_contact_data(request)
+        else:
+            return check_response
 
 
 
@@ -95,11 +93,7 @@ def get_contact_data(request):
 
 
 
-
-
-
-
-
+## Admin Views ##
 
 ##Automai admin views
 @login_required
@@ -114,29 +108,6 @@ def admin_dash(request):
     product_objects = Product.objects.all()
     entitlement_objects = Entitlement.objects.all()
 
-
-
-    # #Check for input to delete orgs
-    # if request.GET.get('delete_organization_selection'):
-    #     user_selection = request.GET.getlist("org_selection")
-    #     delete_object_selection(data_objects=Organization, user_selection=user_selection)
-    #     messages.add_message(request, messages.INFO, 'Selection Deleted')
-    #     return HttpResponseRedirect(request.path_info)
-
-    #  #Check for input to delete products
-    # if request.GET.get('delete_product_selection'):
-    #     user_selection = request.GET.getlist("product_selection")
-    #     delete_object_selection(data_objects=Product, user_selection=user_selection)
-    #     messages.add_message(request, messages.INFO, 'Selection Deleted')
-    #     return HttpResponseRedirect(request.path_info)
-
-    #  #Check for input from delete entitlements
-    # if request.GET.get('delete_entitlement_selection'):
-    #     user_selection = request.GET.getlist("entitlement_selection")
-    #     delete_object_selection(data_objects=Entitlement, user_selection=user_selection)
-    #     messages.add_message(request, messages.INFO, 'Selection Deleted')
-    #     return HttpResponseRedirect(request.path_info)
-
     context = {'user_role':user_role,
                'user_org':user_org,
                'org_objects':org_objects,
@@ -144,9 +115,6 @@ def admin_dash(request):
                'entitlement_objects':entitlement_objects}
 
     return render(request, "manage_contacts/admin-dash.html", context)
-
-
-
 
 
 @login_required
@@ -176,6 +144,14 @@ def add_organization(request):
     
 
 
+def get_org_data(request):
+    org_data = Organization.objects.all()
+    table_header = get_org_header()
+    table_data = get_table_data(table_header, org_data)
+    return JsonResponse(table_data)
+
+
+
 def delete_org_selection(request, query_string):
     org_selection = json.loads(query_string)
     response = delete_org_data(org_selection)
@@ -186,17 +162,6 @@ def delete_org_selection(request, query_string):
     else:
 
         return get_org_data(request)
-
-
-
-def get_org_data(request):
-    org_data = Organization.objects.all()
-    table_header = get_org_header()
-    table_data = get_table_data(table_header, org_data)
-    return JsonResponse(table_data)
-
-
-
 
 
 
@@ -233,6 +198,20 @@ def get_product_data(request):
     table_header = get_product_header()
     table_data = get_table_data(table_header, product_data)
     return JsonResponse(table_data)
+
+
+def delete_product_selection(request, query_string):
+    product_selection = json.loads(query_string)
+    response = delete_product_data(product_selection)
+    
+    if response is True:
+        return get_product_data(request)
+        
+    else:
+
+        return get_product_data(request)
+
+
 
 
 @login_required
@@ -277,3 +256,14 @@ def get_entitlement_data(request):
     table_header = get_entitlement_header()
     table_data = get_table_data(table_header, entitlement_data)
     return JsonResponse(table_data)
+
+def delete_entitlement_selection(request, query_string):
+    entitlement_selection = json.loads(query_string)
+    response = delete_entitlement_data(entitlement_selection)
+    
+    if response is True:
+        return get_entitlement_data(request)
+        
+    else:
+
+        return get_entitlement_data(request)

@@ -7,24 +7,26 @@
  {% block header %}
 <div class="flex-box flex-row container">
   <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
-  <h3 class="h-center">LicensePGM</h3>
-  <div class="align-right">
+  <div class="h-center"></div>
+  
+  <div>
+  
     <p>
-    <a href="{% url 'manage_licenses' %}">Manage Licenses</a>
-    <a href="{% url 'manage_contacts' %}">Manage Contacts</a>
-    <a href="{% url 'admin_dash' %}">Automai Admin</a>
-    <a href="{% url 'logout' %}">Log Out</a>
+      <a href="{% url 'info' %}">More Info</a>
+      <a href="{% url 'logout' %}">Log Out</a>
     </p>
+
   </div>
 </div>
 {% endblock header %}
 
-
-
 {% block main %}
-</div>
-  <div class="flex-box flex-column fit-width">
-  <p><a href="{% url 'info' %}">More Info</a></p>
-  </div>
-</div>
+    <h3 class="center-text">Welcome to LicensePGM</h3>
+
+    <div class="flex-box widget h-center">
+      <p><a href="{% url 'manage_contacts' %}">Contacts</a></p>
+      <p><a href="{% url 'manage_licenses' %}">Licenses</a></p>
+      <p><a href="{% url 'admin_dash' %}">Admin</a></p>
+      <p><a href="{% url 'logout' %}">Log Out</a></p>
+    </div>
 {% endblock main %}

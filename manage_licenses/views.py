@@ -24,34 +24,20 @@ base_dir = str(settings.BASE_DIR)
 @login_required
 def manage_licenses(request):
     """ Render manage-licenses html page """
-    #Get current user info
     current_user = request.user
-    # user_email = current_user.email
     user_id = current_user.id
-
     contact_data = Contact.objects.filter(user=user_id).get()
-    # user_role = contact_data.role
-    # user_org = contact_data.organization
     org_id = contact_data.organization.id
-    # org_name = user_org.org_name
 
-
-    # license_header = get_license_header()
-    # license_choice_list = get_choice_list(license_header)
-    # license_search_form =  SearchChoiceForm(auto_id='license_search_form_%s', choice_list=license_choice_list)
-
-    # entitlement_header = get_entitlement_header()
-    # entitlement_choice_list = get_choice_list(entitlement_header)
-    # entitlement_search_form =  SearchChoiceForm(auto_id='entitlement_search_form_%s', choice_list=entitlement_choice_list)
-    
     
     product_entitlements = Entitlement.objects.filter(organization=org_id)
     product_choices = []
     for entitlement in product_entitlements:
         product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
 
+    
+    
     new_license_form = NewLicenseForm(product_choices=product_choices)
-
 
 
     if request.POST.get("save-license"):
@@ -82,21 +68,13 @@ def manage_licenses(request):
 
         license_check = check_license_data(license_selection)
 
-        # product_choices = []
-        # for entitlement in product_entitlements:
-        #     product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
-
-        # new_license_form = NewLicenseForm(product_choices=product_choices)
-
         if license_check:
             
             package_data = package_license_data(license_selection)
-            
             key_data = generate_license_key(package_data)
 
             for license_id in license_selection:
                 delete_license(license_id)
-
 
             return download_license_package(request, key_data)
 
@@ -106,7 +84,6 @@ def manage_licenses(request):
             
             return render(request, "manage_licenses/manage-licenses.html", context)
 
-    #Render variables in html
     context = {'new_license_form':new_license_form}
 
     return render(request, "manage_licenses/manage-licenses.html", context)
@@ -120,7 +97,7 @@ def download_license_package(request, data):
     return response
 
 
-def delete_license_selection(request, license_id):
+def delete_license_selection(request, license_query):
     license_data = License.objects.filter(id=license_id).get()
     entitlement_id = license_data.entitlement_id
     entitlement_data = Entitlement.objects.filter(id=entitlement_id).get()

@@ -16,6 +16,8 @@ urlpatterns = [
     path('delete-contact-selection/<int:contact_id>/', views.delete_contact_selection, name='delete_contact_selection'),
     path('delete-org-selection/<str:query_string>/', views.delete_org_selection, name='delete_org_selection'),
     # path('delete-org-selection/<str:query_string>/redirect', views.delete_org_redirect, name='delete_org_redirect'),
+    path('delete-product-selection/<str:query_string>/', views.delete_product_selection, name='delete_product_selection'),
+    path('delete-entitlement-selection/<str:query_string>/', views.delete_entitlement_selection, name='delete_entitlement_selection'),
 
 
 

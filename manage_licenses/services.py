@@ -28,9 +28,7 @@ def create_license(current_user, user_query):
         
         product_choice = user_query.get('product_choice')
         ip_host = user_query.get('ip_host')
-        # check_entitlements(current_user.org, product_choice)
         
-        #Get entitlement data for current contact organization
         entitlement_product = Product.objects.filter(product_name=product_choice).get()
         product_id = entitlement_product.id
 
@@ -77,7 +75,6 @@ def create_license(current_user, user_query):
 
 def delete_license(license_id):
     """ Delete license object from database """
-    # current_user = request.user
     if (license_id):
         try:
             license_selection = License.objects.filter(id=license_id)

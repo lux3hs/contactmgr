@@ -49,12 +49,10 @@
 
 <div id="organizations-tab" class="js-tabcontent">
     
-  <h3 class="center-text">Organizations</h3>
-  <br>
-  
+  <p class="center-text"><a href="{% url 'add_organization' %}">Add Organization</a></p>
+
   <div class="h-center fit-width">
           
-    <p><a href="{% url 'add_organization' %}">Add Organization</a></p>
 
     <form>
 
@@ -77,13 +75,9 @@
 
 <div id="products-tab" class="js-tabcontent">
 
-  <h3 class="center-text">Products</h3>
-  <br>
+  <p class="center-text"><a href="{% url 'add_product' %}">Add Product</a></p>
 
   <div class="h-center fit-width">
-
-    <p><a href="{% url 'add_product' %}">Add Product</a></p>
-    
 
     <form>
       <div class="table-container widget">
@@ -94,36 +88,37 @@
             </tr>
           </thead>
         </table>
-        <p><input type="submit" name="delete_product_button" id="delete-product-button" value="Delete"></p>
+        <p><input type="button" name="delete_product_button" id="delete-product-button" value="Delete"></p>
       </div>
     </form>
   </div>
 </div>
 
 <div id="entitlements-tab" class="js-tabcontent">
-    <h3 class="center-text">Entitlements</h3>
-    <br>
+
+        
+        
+        <p class="center-text"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
 
 
-  <div class="h-center fit-width">
+        <div class="h-center fit-width">
 
-    <p class="text-container"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
+          <form>
+            <div class="table-container widget">
+              <table id="entitlement-table" class="widget">
+                <thead>
+                  <tr> 
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <p><input type="button" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
+            </div>
+          </form>
+
+        </div>
 
 
-    <form>
-      <div class="table-container widget">
-        <table id="entitlement-table" class="widget">
-          <thead>
-            <tr> 
-              <th></th>
-            </tr>
-          </thead>
-        </table>
-        <p><input type="submit" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
-      </div>
-    </form>
-
-  </div>
 </div>
 
 {% else %}

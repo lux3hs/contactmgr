@@ -65,6 +65,28 @@ def delete_org_data(org_selection):
         return org_id
 
 
+        
+def delete_product_data(product_selection):
+    try:
+        for product_id in product_selection:
+            product_data = Product.objects.filter(id=int(product_id)).get()
+            product_data.delete()
+            return True
+
+    except:
+        return product_id
+
+
+def delete_entitlement_data(entitlement_selection):
+    try:
+        for ent_id in entitlement_selection:
+            ent_data = Entitlement.objects.filter(id=int(ent_id)).get()
+            ent_data.delete()
+            return True
+
+    except:
+        return ent_id
+
 
 
 def add_new_organization(user_query):
