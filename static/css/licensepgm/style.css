@@ -186,8 +186,10 @@ select:hover, select:active {
 
 .table-container {
   max-height: 75vh;
+  min-height: 25vh;
   max-width: 75vw;
-  width: fit-content;
+  min-width: 75vw;
+  /* width: fit-content; */
   margin-left: auto;
   margin-right: auto;
   overflow: auto;
@@ -202,6 +204,11 @@ table {
   max-width: 50vw; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   background-color: ghostwhite;
+
+  margin-left: auto;
+  margin-right: auto;
+
+
 }
 
 /* Table header */
@@ -246,7 +253,7 @@ table td{
 }
 
 .widget{
-  background-color: white;
+  background-color: cornflowerblue;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
   margin:5px;
@@ -260,16 +267,16 @@ table td{
   /* flex-wrap: wrap; */
   /* flex-shrink: 1; */
   /* flex-direction: column; */
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  /* background-color:  blue; */
+  background-color: cornflowerblue;
   border-radius: 15px;
   padding:5px;
   margin:15px;
   
   max-width: 300px;
-  min-width: 150px;
-  min-height: 250px;
+  min-width: 250px;
+  min-height: 300px;
   width: fit-content;
   block-size: fit-content;
 }
@@ -354,4 +361,8 @@ flex-direction: row;
 
 .top-margin {
   margin-top: 10%;
+}
+
+.inline-block {
+  display: inline-block;
 }

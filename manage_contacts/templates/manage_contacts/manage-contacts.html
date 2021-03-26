@@ -57,28 +57,27 @@
   <h3 class="center-text">Manage Contacts</h3>
 
   <div class="h-center widget fit-width">
-
+    
+    <div>
       <form>
-        <a href="{% url 'add_contact' %}">Add Contact</a>
-
+        <p><a href="{% url 'add_contact' %}">Add Contact</a></p>
+        <div class="box">
         <input id="contact-search-button" type="button" value="Search"/>
         {{ contact_search_form }}
          <input id="clear-contact-search" type="button" value="Clear"/>
+       </div>
       </form>
+    </div>
 
       <form>
-        <div class="table-container widget">
-          <table id="contact-table" class="widget">
+          <table id="contact-table">
             <thead>
               <tr> 
                 <th></th>
               </tr>
             </thead>
           </table>
-        </div>
-        <div>
-          <input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete">
-        </div>  
+        <p><input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>  
       </form>
 
   </div>
@@ -98,14 +97,14 @@
         <p>UserID: {{ user.id }}</p>
         <p>OrgID: {{ contact_data.organization.id }}</p>
       </div>
-      <div class="box footer-container">
+      
+  </div>
+
+      <div class="box">
         <p class="box"><a href="{% url 'password_change' %}">Change Password</a></p>
         
         <p class="box"><a href="{% url 'password_reset' %}">Reset Password</a></p>
       </div>
-  </div>
-
-
 </div>
 
 

@@ -54,7 +54,6 @@ def read_key_file(key_name):
     file_dir = base_dir + "/bin/keygen/" + key_name
     f = open(file_dir, "r")
     key_text = f.read()
-    print(key_text)
     return key_text
 
 
@@ -91,42 +90,29 @@ def check_license_data(license_selection):
         return False
 
 
-
 ##Model object services##
 
 def create_license(current_user, user_query):
     """ Create new license on user request """
-    print("creating license...")
-    # try:
-    # current_user = request.user
     user_id = current_user.id
 
-    # creator_phone = current_user
-    # print(creator_phone)
+
     contact_data = Contact.objects.filter(user=user_id).get()
-    # org_object = contact_data.organization
-    # user_org = org_object.org_name
-    # org_id = org_object.id
-    # org_id = contact_data.organization.id
 
     creator_email = contact_data.user.email
     creator_phone = contact_data.phone
     user_org = contact_data.organization.org_name
     org_id = contact_data.organization.id
-
-    print("got data...")
     
     product_name = user_query.get('product_name')
     host_ip = user_query.get('host_ip')
     product_grade = user_query.get("product_grade")
     product_stations = user_query.get("product_stations")
+
     expiration_date = user_query.get('expiration_date')
     clean_date = parse_datetime(expiration_date)
-
-    # strp_date = datetime.datetime.strptime(expiration_date)
     expiration_date = clean_date
-    # print(type(parse_date))
-    # print(type(expiration_date))
+
     allowed_ips = user_query.get('allowed_ips')
     re_seller = user_query.get('re_seller')
 
@@ -142,15 +128,6 @@ def create_license(current_user, user_query):
     
     else:
         is_permanent = False
-
-    #These values should be passed in
-    # weeks_allocated = 2
-    # expiration_date = datetime.timedelta(weeks = weeks_allocated)
-
-    # product_grade = "standard"
-    # product_stations = 10000
-    # allowed_ips = 10
-    print("creating...")
     
     new_license = License(org_name=user_org,
                             org_id=org_id,
@@ -168,14 +145,10 @@ def create_license(current_user, user_query):
                             creation_date=datetime.datetime.now(),
                             expiration_date=expiration_date,
     )
-    print("saving...")
+
     new_license.save()
-    print("success!")
     
     return True
-
-    # except:
-    #     return False
 
 
 def delete_license_data(license_selection):
@@ -199,7 +172,7 @@ def delete_license_data(license_selection):
 
 
 
-##JS Table Services##
+## JS Table Services ##
 
 def get_license_header():
     """ Get license table header """

@@ -18,7 +18,7 @@
   </div>
 
   <div class="h-center">
-    <p>{{ user.username }}</p>
+    <p>Welcome {{ user.username }}</p>
   </div>
 
   <div>
@@ -48,47 +48,45 @@
 {% endif %}
 
 <div id="licenses-tab" class="js-tabcontent">
-  
-    <p>
+
+    <p class="container">
     This screen displays the licenses for the entire Organization. If you want to view associated products, 
     click on 'View my products' menu item above.
     </p>
-
-  <h3 class="center-text">Manage Licenses</h3>
-
-  <div class="widget fit-width h-center">
+    <h1 class="center-text">Manage Licenses</h1>
 
 
+      <div class="h-center">
+
+      <div class="widget">
         <form method="post">
         {% csrf_token %}
         {{ new_license_form }}
         <p><input class="button" name="save-license" type="submit" value="New License"></p>
         </form>
+      </div>
 
-      <div class="h-center fit-width">
         <form id="generate-license-form" method="post">
           {% csrf_token %}
           
-          <div class="table-container widget">
-            <table id="license-table" class="widget">
+            <table id="license-table">
               <thead>
                 <tr> 
                   <th></th>
                 </tr>
               </thead>
             </table>
-          </div> 
 
-          <div>
+          <div class="h-center">
+            <p>
             <input type="button" name="delete_license_button" id="delete-license-button" value="Delete">
-
             <input type="submit" name="download-license-button" id="download-license-button" value="Download">
+            </p>
           </div>
 
         </form>
       </div>
 
-  </div>
 </div>
 
 
@@ -97,11 +95,10 @@
 
 <div id="products-tab" class="js-tabcontent">
 
-  <div class="fit-width center-text">
-    <b><p>Entitlements</p></b>
+    <b><p class="center-text">Entitlements</p></b>
 
-    <div class="table-container widget">
-      <table id="entitlement-table" class="widget">
+    <div>
+      <table id="entitlement-table">
         <thead>
           <tr> 
             <th></th>
@@ -109,7 +106,6 @@
         </thead>
       </table>
     </div>
-  </div>
 
 </div>
 {% endblock main%}

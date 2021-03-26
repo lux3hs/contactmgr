@@ -38,8 +38,8 @@ def add_contact(request):
     user_id = current_user.id
     contact_data = Contact.objects.filter(user_id=user_id).get()
     contact_data = Contact.objects.filter(user_id=user_id).get()
-
     org_objects = Organization.objects.all()
+    
     choice_list = []
     for org_object in org_objects:
         choice_list.append(org_object.org_name)
@@ -79,7 +79,6 @@ def get_contact_data(request):
     return JsonResponse(table_data)
 
 
-
 def delete_contact_selection(request, query_string):
     """ Delete contact selection on user request """
     contact_selection = json.loads(query_string)
@@ -91,7 +90,6 @@ def delete_contact_selection(request, query_string):
     
     else:
         return get_contact_data(request)
-
 
 
 ## Admin Views for Automai users ##
@@ -120,7 +118,6 @@ def admin_dash(request):
 @login_required
 def add_organization(request):
     """ Render add organization page"""
-    org_form = OrgCreationForm()
     current_user = request.user
     user_id = current_user.id
     user_data = Contact.objects.filter(user_id=user_id).get()
@@ -135,9 +132,9 @@ def add_organization(request):
             messages.add_message(request, messages.INFO, success_message)
             return HttpResponseRedirect(request.path_info)
 
-        else:
-            messages.add_message(request, messages.INFO, "Invalid submission")
-            return HttpResponseRedirect(request.path_info)
+    else:
+        org_form = OrgCreationForm()
+
 
     context = {'user_role':user_role, 'user_org':user_org, 'org_form':org_form}
     return render(request, "manage_contacts/add-organization.html", context)
@@ -168,7 +165,6 @@ def delete_org_selection(request, query_string):
 @login_required
 def add_product(request):
     """ Render add product page """
-    product_form = ProductCreationForm()
     current_user = request.user
     user_id = current_user.id
     user_data = Contact.objects.filter(user_id=user_id).get()
@@ -184,9 +180,9 @@ def add_product(request):
             messages.add_message(request, messages.INFO, success_message)
             return HttpResponseRedirect(request.path_info)
 
-        else:
-            messages.add_message(request, messages.INFO, "Invalid submission")
-            return HttpResponseRedirect(request.path_info)
+    else:
+        product_form = ProductCreationForm()
+
 
 
     context = {'user_role':user_role, 'user_org':user_org, 'product_form':product_form}
@@ -232,7 +228,6 @@ def add_entitlement(request):
     for product in product_data:
         product_list.append((product.product_name, product.product_name))
         
-    entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
 
     if request.method == 'POST':
         entitlement_form = EntitlementCreationForm(request.POST, product_list=product_list, org_list=org_list)
@@ -242,9 +237,9 @@ def add_entitlement(request):
             messages.add_message(request, messages.INFO, success_message)
             return HttpResponseRedirect(request.path_info)
 
-        else:
-            messages.add_message(request, messages.INFO, "Invalid submission")
-            return HttpResponseRedirect(request.path_info)
+    else:
+        entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
+
 
     context = {'user_role':user_role, 'user_org':user_org, 'entitlement_form':entitlement_form}
     return render(request, "manage_contacts/add-entitlement.html", context)
