@@ -33,28 +33,34 @@ def manage_licenses(request):
     for entitlement in product_entitlements:
         product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
 
-    new_license_form = NewLicenseForm(product_choices=product_choices)
-
     if request.POST.get("save-license"):
-        user_query = request.POST
-        product_choice = user_query.get('product_choice')
+        new_license_form = NewLicenseForm(request.POST, product_choices=product_choices)
 
-        entitlement_product = Product.objects.filter(product_name=product_choice).get()
-        product_id = entitlement_product.id
-        entitlement_data = product_entitlements.filter(product=product_id).get()
+        if new_license_form.is_valid():
 
-        if entitlement_data.check_allocated_licenses():  
-            success_check = create_license(current_user, user_query)
+            user_query = request.POST
+            product_choice = user_query.get('product_name')
 
-            if success_check:
-                entitlement_data.subtract_license()
+            entitlement_product = Product.objects.filter(product_name=product_choice).get()
+            product_id = entitlement_product.id
+            entitlement_data = product_entitlements.filter(product=product_id).get()
 
-                messages.add_message(request, messages.INFO, 'new license created')
+            if entitlement_data.check_allocated_licenses(): 
+                success_check = create_license(current_user, user_query)
+
+                if success_check:
+                    entitlement_data.subtract_license()
+
+                    messages.add_message(request, messages.INFO, 'new license created')
+                    return HttpResponseRedirect(request.path_info)
+
+            else:
+                messages.add_message(request, messages.INFO, 'no entitlements')
                 return HttpResponseRedirect(request.path_info)
 
-        else:
-            messages.add_message(request, messages.INFO, 'no entitlements')
-            return HttpResponseRedirect(request.path_info)
+    else:
+        new_license_form = NewLicenseForm(product_choices=product_choices)
+
 
     if request.POST.get ("download-license-button"):
         license_selection = request.POST.getlist("check-box")

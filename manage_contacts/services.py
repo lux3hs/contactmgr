@@ -114,7 +114,8 @@ def delete_contact_data(current_user, contact_selection):
             else:
                 contact_data = Contact.objects.filter(id=int(contact_id)).get()
                 contact_data.user.delete()
-                return True
+                
+        return True
 
     except:
         return contact_id
@@ -142,12 +143,13 @@ def add_new_organization(user_query):
     return success_message
 
 
-def delete_org_data(org_selection):
+def delete_org_data(current_user, org_selection):
     """ Delete org selection from database """
     except_list = []
     super_orgname = 'automai'
     super_id = get_superorg_id(super_orgname)
     except_list.append(super_id)
+    except_list.append(current_user.contact.organization.id)
     try:
         for org_id in org_selection:
             org_data = Organization.objects.filter(id=int(org_id)).get()
@@ -156,7 +158,9 @@ def delete_org_data(org_selection):
             
             else:      
                 org_data.delete()
-                return True
+        
+        return True
+
     except:
         return org_id
 
@@ -188,7 +192,8 @@ def delete_product_data(product_selection):
         for product_id in product_selection:
             product_data = Product.objects.filter(id=int(product_id)).get()
             product_data.delete()
-            return True
+        
+        return True
 
     except:
         return product_id
@@ -233,7 +238,8 @@ def delete_entitlement_data(entitlement_selection):
         for ent_id in entitlement_selection:
             ent_data = Entitlement.objects.filter(id=int(ent_id)).get()
             ent_data.delete()
-            return True
+        
+        return True
 
     except:
         return ent_id

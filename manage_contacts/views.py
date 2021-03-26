@@ -153,8 +153,9 @@ def get_org_data(request):
 
 def delete_org_selection(request, query_string):
     """ Delete org selection on user request """
+    current_user = request.user
     org_selection = json.loads(query_string)
-    response = delete_org_data(org_selection)
+    response = delete_org_data(current_user, org_selection)
     
     if response is True:
         return get_org_data(request)
