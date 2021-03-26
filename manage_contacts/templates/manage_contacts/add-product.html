@@ -23,7 +23,7 @@
 {% endif %}
 
 <div class="widget">
-  <form method="post">
+  <form method="post" class="style-form">
       {% csrf_token %}
       <div class="flex-box widget">
         {{ product_form.as_p }}

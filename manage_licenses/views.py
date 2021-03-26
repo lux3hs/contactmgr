@@ -46,45 +46,60 @@ def manage_licenses(request):
             entitlement_data = product_entitlements.filter(product=product_id).get()
 
             if entitlement_data.check_allocated_licenses(): 
-                success_check = create_license(current_user, user_query)
+                new_license = create_license(current_user, user_query)
 
-                if success_check:
+                if new_license:
                     entitlement_data.subtract_license()
 
-                    messages.add_message(request, messages.INFO, 'new license created')
-                    return HttpResponseRedirect(request.path_info)
+                    data_package = package_license_data(new_license.id)
+                    key_name = generate_license_key(data_package)
 
-            else:
-                messages.add_message(request, messages.INFO, 'no entitlements')
-                return HttpResponseRedirect(request.path_info)
+
+                    if key_name is not None:
+                        key_data = read_key_file(key_name)
+                        return download_license_package(request, key_data)
+
+
+
+
+
+    #                 messages.add_message(request, messages.INFO, 'new license created')
+    #                 return HttpResponseRedirect(request.path_info)
+
+    #         else:
+    #             messages.add_message(request, messages.INFO, 'no entitlements')
+    #             return HttpResponseRedirect(request.path_info)
 
     else:
         new_license_form = NewLicenseForm(product_choices=product_choices)
 
 
-    if request.POST.get ("download-license-button"):
-        license_selection = request.POST.getlist("check-box")
-        license_check = check_license_data(license_selection)
+    # if request.POST.get ("download-license-button"):
+    #     license_selection = request.POST.getlist("check-box")
+    #     license_check = check_license_data(license_selection)
 
-        if license_check:
-            data_package = package_license_data(license_selection)
-            key_name = generate_license_key(data_package)
+    #     if license_check:
             
-            if key_name is not None:
-                for license_id in license_selection:
-                    product_license = License.objects.filter(id=license_id)
-                    product_license.delete()
+            
+            
+        #     data_package = package_license_data(license_selection)
+        #     key_name = generate_license_key(data_package)
+            
+        #     if key_name is not None:
+        #         for license_id in license_selection:
+        #             product_license = License.objects.filter(id=license_id)
+        #             product_license.delete()
                 
-                key_data = read_key_file(key_name)
-                return download_license_package(request, key_data)
+        #         key_data = read_key_file(key_name)
+        #         return download_license_package(request, key_data)
 
-            else:
-                messages.success(request, 'package creation failed')
-                return HttpResponseRedirect(request.path_info)
+        #     else:
+        #         messages.success(request, 'package creation failed')
+        #         return HttpResponseRedirect(request.path_info)
 
-        else:
-            messages.success(request, 'no licenses selected')
-            return HttpResponseRedirect(request.path_info)
+        # else:
+        #     messages.success(request, 'no licenses selected')
+        #     return HttpResponseRedirect(request.path_info)
 
     context = {'new_license_form':new_license_form}
     return render(request, "manage_licenses/manage-licenses.html", context)

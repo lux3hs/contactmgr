@@ -29,7 +29,6 @@ class NewLicenseForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.product_choices = kwargs.pop('product_choices')
         super(NewLicenseForm, self).__init__(*args, **kwargs)
-        self.fields['re_seller'] = forms.CharField(max_length=50)
         self.fields['product_name'] = forms.ChoiceField(choices=self.product_choices)
         self.fields['product_name'].widget.attrs['class'] = "ChoiceField"
         self.fields['host_ip'] = forms.CharField(max_length=50)
@@ -37,5 +36,5 @@ class NewLicenseForm(forms.Form):
         self.fields["product_grade"] = forms.CharField(max_length=50)
         self.fields["product_stations"] = forms.IntegerField(max_value=999999)
         self.fields["allowed_ips"] = forms.IntegerField(max_value=999999)
-        # self.fields['creation_date'] = forms.DateTimeField()
+        self.fields['re_seller'] = forms.CharField(max_length=50)
         self.fields['expiration_date'] = forms.DateField()

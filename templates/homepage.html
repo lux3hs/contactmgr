@@ -5,9 +5,10 @@
 {% block title %}Home{% endblock title %}
 
  {% block header %}
-<div class="flex-box flex-row container">
-  <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
-      <h3 class="h-center">Welcome to LicensePGM</h3>
+<div class="flex-box flex-row">
+
+  <img src="{% static 'images/licensepgm/automai.svg' %}" class="org-logo" alt="Generic logo"/>
+      <p class="center-text h-center"></p>
   
     <p>
       <a href="{% url 'manage_contacts' %}">Contacts</a>
@@ -21,8 +22,9 @@
 {% endblock header %}
 
 {% block main %}
-
-    <div class="flex-box fit-width flex-column">
-        <a href="{% url 'info' %}">More Info</a>
-    </div>
+  <div class="h-center">
+    <b><p class="center-text">Welcome to</p></b>
+    <h1 class="center-text h-center">LicensePGM</h1>
+    <p class="fit-width h-center color-block"><a href="{% url 'info' %}">More Info</a></p>
+  </div>
 {% endblock main %}

@@ -10,15 +10,15 @@
 {% endblock head %}
 
 {% block header %}
-<div class="flex-box flex-row container">
+<div class="flex-box flex-row">
     
   <div class="tab">
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
     <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
   </div>
 
-  <div class="h-center">
-    <p>Welcome {{ user.username }}</p>
+  <div class="h-center center-text">
+    <p></p>
   </div>
 
   <div>
@@ -49,24 +49,27 @@
 
 <div id="licenses-tab" class="js-tabcontent">
 
-    <p class="container">
+  <div class="container">
+    <h1 class="center-text">Manage Licenses</h1>
+
+    <p class="center-text">
     This screen displays the licenses for the entire Organization. If you want to view associated products, 
     click on 'View my products' menu item above.
     </p>
-    <h1 class="center-text">Manage Licenses</h1>
+    <br>
+  </div>
 
-
-      <div class="h-center">
+    {% comment %} <div class="h-center"> {% endcomment %}
 
       <div class="widget">
         <form method="post">
         {% csrf_token %}
         {{ new_license_form }}
-        <p><input class="button" name="save-license" type="submit" value="New License"></p>
+        <p><input class="button" name="save-license" type="submit" value="Save"></p>
         </form>
       </div>
 
-        <form id="generate-license-form" method="post">
+        {% comment %} <form id="generate-license-form" method="post">
           {% csrf_token %}
           
             <table id="license-table">
@@ -84,8 +87,10 @@
             </p>
           </div>
 
-        </form>
-      </div>
+        </form> {% endcomment %}
+
+
+  {% comment %} </div> {% endcomment %}
 
 </div>
 
@@ -95,9 +100,10 @@
 
 <div id="products-tab" class="js-tabcontent">
 
-    <b><p class="center-text">Entitlements</p></b>
+    <h2 class="center-text">Allocated licenses</h2>
+    <div class="top-margin widget h-center">
+        <b><p class="center-text">Entitlements</p></b>
 
-    <div>
       <table id="entitlement-table">
         <thead>
           <tr> 

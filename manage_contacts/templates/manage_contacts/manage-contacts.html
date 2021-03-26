@@ -11,16 +11,14 @@
 
 {% block header %}
 
-<div class="flex-box flex-row container">
+<div class="flex-box flex-row">
   
   <div class="tab">
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
     <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
   </div>
 
-  <div class="h-center">
-    <p>{{ user.username }}</p>
-  </div>
+  <p class="center-text h-center"></p>
 
   <div>
     <p>
@@ -34,32 +32,27 @@
 </div>
 
 
-
 {% endblock header %}
 
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
-{% comment %} <div class="flex-container widget-box"> {% endcomment %}
-
-
- 
-
 
 <div id="contacts-tab" class="js-tabcontent">
- 
-    
-      <p>
-        This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
-        click on 'My Information' menu item above.
-      </p>
-    
-  <h3 class="center-text">Manage Contacts</h3>
+   
+   <div class="container">
+    <h1 class="center-text">Manage Contacts</h1>
+      
+        <p class="center-text">
+          This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
+          click on 'My Information' menu item above.
+        </p>
+   </div>
 
   <div class="h-center widget fit-width">
     
     <div>
-      <form>
+      <form class="">
         <p><a href="{% url 'add_contact' %}">Add Contact</a></p>
         <div class="box">
         <input id="contact-search-button" type="button" value="Search"/>
@@ -90,7 +83,7 @@
 
     <div class="card">
       <div class="box">
-      <h3>{{ user.username }}</h3>
+      <h2>{{ user.username }}</h2>
         <p>UserEmail: {{ user.email }}</p>
         <p>Role: {{ contact_data.role }}</p>
         <p>Org: {{ contact_data.organization }}</p>
@@ -102,7 +95,6 @@
 
       <div class="box">
         <p class="box"><a href="{% url 'password_change' %}">Change Password</a></p>
-        
         <p class="box"><a href="{% url 'password_reset' %}">Reset Password</a></p>
       </div>
 </div>

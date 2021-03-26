@@ -26,7 +26,7 @@
 
     <div class="flex-box flex-column widget">
       <h3>Add Contact</h3>
-      <form id="new-contact-form" method="post">
+      <form id="new-contact-form" class="style-form" method="post">
         {% csrf_token %}
         {{ contact_form.as_p }}     
         {% if contact_org.org_name == "automai" %}

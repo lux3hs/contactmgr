@@ -4,16 +4,39 @@
 /*            */
 
 body {
-  margin-left:50px;
-  margin-right:50px;
+  /* margin-left:50px;
+  margin-right:50px; */
   background: whitesmoke;
 
   }
 
+.style-form p {
+  font-size: small;
+}
+
+/* form p {
+  font-size: small;
+}
+
+form li {
+  font-size:  small;
+} */
+
+header {
+  /* background-color: blue; */
+  /* background-color: rgba(51, 51, 51); */
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.15); */
+  border-radius: 5px;
+  padding: none;
+  margin:none;
+  /* padding: 5px; */
+
+}
+
 main{
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
+  border-radius: 5px;
   /* margin:2px; */
   padding: 5px;
   min-height: 100vh;
@@ -21,9 +44,19 @@ main{
   }
   
 
-  h1, h2, h3 {
+  h1 {
     font-family: Arial, Helvetica, sans-serif;
   }
+
+h2 {
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+h3 {
+  font-family: Arial, Helvetica, sans-serif;
+
+}
 
   p {
     font-family: Arial, Helvetica, sans-serif;
@@ -35,24 +68,28 @@ main{
 /*                   */
 
 a{
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  /* background-color: white; */
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.15); */
     color: black;
     /* border: 1px solid black; */
     border:none;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     text-decoration: none;
-    margin:5px;
+    margin:1px;
+    /* background-color:; */
   }
 
 a:hover, a:active {
-    background-color: whitesmoke;
+  border-radius: none;
+
+    /* background-color: white; */
+
 }
 
 input{
-  background-color: white;
+  /* background-color: white; */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   color: black;
@@ -72,14 +109,14 @@ input:hover, input:active{
 button {
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-    color: black;
-    border: 1px solid black;
-    border-radius: 5px;
-    text-align: center;
-    padding: 10px 15px;
-    margin: 5px;
-    text-decoration: none;
-    display: inline-block;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px 15px;
+  margin: 5px;
+  text-decoration: none;
+  display: inline-block;
 }
 
 button:hover, button:active {
@@ -121,31 +158,39 @@ select:hover, select:active {
     /* border: 2px solid black; */
     width:fit-content;
     height: fit-content;
-    /* overflow: hidden; */
+    overflow: hidden;
+    margin:none;
+    padding:none;
   }
 
 /* Style the tab buttons */
 .tab button {
     /* background-color: inherit; */
-    background-color: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+    /* border-radius: 0px; */
+    /* height: fit-content; */
+    /* margin:none; */
+    /* padding:none; */
+
     float: left;
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 10px 15px;
-    /* background-color: whitesmoke; */
+    /* padding: 10px 20px; */
+
+    background-color: whitesmoke;
   }
 
 /* Create an active/current tablink class */
 .tab button.active {
   /* border-bottom: 1px solid black; */
-  background-color: whitesmoke;
+  background-color: white;
   }
 
 .tab button.hover {
   /* border-bottom: 1px solid black; */
-  background-color: whitesmoke;
+  background-color: white;
+
 }
 
 
@@ -154,15 +199,6 @@ select:hover, select:active {
 /*                 */
 /* Homepage styles */
 /*                 */
-
-
-.app-header{
-  display: flex;
-  flex-direction: row;
-  padding:5px;
-  /* border-bottom: 1px solid black; */
-  /* background-image: linear-gradient(blue, black); */
-}
 
 
 .org-logo {
@@ -179,21 +215,26 @@ select:hover, select:active {
 }
 
 
+.login-box{
+  background-color: white;
+}
+
+
 
 /*              */
 /* Table styles */
 /*              */
 
-.table-container {
+/* .table-container {
   max-height: 75vh;
   min-height: 25vh;
   max-width: 75vw;
   min-width: 75vw;
-  /* width: fit-content; */
+  width: fit-content;
   margin-left: auto;
   margin-right: auto;
   overflow: auto;
-}
+} */
 
 table {
   border-collapse: collapse;
@@ -203,6 +244,8 @@ table {
   /* min-width: 10vw;
   max-width: 50vw; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+
   background-color: ghostwhite;
 
   margin-left: auto;
@@ -215,6 +258,8 @@ table {
 table tr:nth-child(1){
     background-color: gainsboro;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+
 
 }
 
@@ -245,15 +290,16 @@ table td{
 /* Style boxes */
 
 .container {
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  /* background-color: white; */
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.15); */
   border-radius: 15px;
   padding:5px;
 
 }
 
 .widget{
-  background-color: cornflowerblue;
+  background-color: whitesmoke;
+  border: 1px solid lightgray;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
   margin:5px;
@@ -269,7 +315,8 @@ table td{
   /* flex-direction: column; */
   /* background-color: whitesmoke; */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  background-color: cornflowerblue;
+  background-color: whitesmoke;
+  border:1px solid lightgray;
   border-radius: 15px;
   padding:5px;
   margin:15px;
@@ -297,6 +344,10 @@ table td{
 
 .border-full{
   border: 1px solid black;
+}
+
+.border-bottom{
+  border-bottom: 1px solid black;
 }
 
 .flex-row{
@@ -346,9 +397,9 @@ flex-direction: row;
   margin-right: 0;
 }
 
-.paper-box{
+/* .paper-box{
   background-color: mintcream;
-}
+} */
 
 .footer {
   position: absolute;
@@ -360,9 +411,13 @@ flex-direction: row;
 }
 
 .top-margin {
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
-.inline-block {
+/* .inline-block {
   display: inline-block;
+} */
+
+.color-block {
+  background-color: cornflowerblue;
 }

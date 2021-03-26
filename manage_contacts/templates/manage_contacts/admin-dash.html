@@ -9,7 +9,7 @@
 {% endblock head %}
 
 {% block header %}
-<div class="flex-box flex-row container">
+<div class="flex-box flex-row">
 
   <div class="tab">
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'organizations-tab')">Organizations</button>
@@ -17,9 +17,8 @@
     <button class="js-tablinks" onclick="changePage(event, 'entitlements-tab')">Entitlements</button>
   </div>
 
-   <div class="h-center">
-    <p>Welcome
-    {{ user.username }}</p>
+   <div class="center-text h-center">
+    <p></p>
   </div>
   
   <div>
@@ -39,6 +38,15 @@
 {% block main %}
 {% if user_org == "automai" and user_role == "admin" %}
 
+<div class="container">
+    <h1 class="center-text">Admin Dash</h1>
+
+    <p class="center-text">
+    Automai admin can add products, organizations, and entitlements
+    </p>
+    <br>
+  </div>
+
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -48,30 +56,31 @@
 {% endif %}
 
 <div id="organizations-tab" class="js-tabcontent">
+    
 
-  <div class="top-margin fit-width h-center">
-    <p class="center-text"><a href="{% url 'add_organization' %}">Add Organization</a></p>
+      <div class="widget h-center">
+        <p class="left-text box"><a href="{% url 'add_organization' %}">Add Organization</a></p>
 
-    <form>
-        <table id="org-table" class="widget">
-          <thead>
-            <tr> 
-              <th></th>
-            </tr>
-          </thead>
-        </table>
-        <p><input type="button" name="delete_org_button" id="delete-org-button" value="Delete"></p>
-    </form>
-  
-  </div>
+        <form>
+            <table id="org-table" class="widget">
+              <thead>
+                <tr> 
+                  <th></th>
+                </tr>
+              </thead>
+            </table>
+            <p><input type="button" name="delete_org_button" id="delete-org-button" value="Delete"></p>
+        </form>
+      
+      </div>
 
 </div>
 
 
 <div id="products-tab" class="js-tabcontent">
 
-  <div class="top-margin fit-width h-center">
-    <p class="center-text"><a href="{% url 'add_product' %}">Add Product</a></p>
+  <div class="widget h-center">
+    <p class="left-text box"><a href="{% url 'add_product' %}">Add Product</a></p>
 
     <form>
         <table id="product-table" class="widget">
@@ -89,8 +98,8 @@
 
 <div id="entitlements-tab" class="js-tabcontent">
 
-  <div class="top-margin fit-width h-center">
-        <p class="center-text"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
+  <div class="widget h-center">
+        <p class="left-text box"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
 
     <form>
         <table id="entitlement-table" class="widget">
