@@ -1,3 +1,5 @@
+
+// Change page tabs
 function changePage(evt, pageName) {
     // Declare all variables
     var i, tabcontent, tablinks;
@@ -138,9 +140,9 @@ function changePage(evt, pageName) {
         checkBoxValues.push(value)
       }
     }
+
     return checkBoxValues
   }
-
 
 
 
@@ -148,22 +150,20 @@ function changePage(evt, pageName) {
 
   // Build a table on page load
   function loadTableData(url, tableID) {
-  var fetchData = fetchRequest(url);
-  fetchData.then(data => {
-    tableHeader = data.table_header
-    tableData = data.table_data
-    buildDataTable(tableData, tableHeader, tableID)
-    addCheckBoxes(tableID)
+    var fetchData = fetchRequest(url);
+    fetchData.then(data => {
+      tableHeader = data.table_header
+      tableData = data.table_data
+      buildDataTable(tableData, tableHeader, tableID)
+      addCheckBoxes(tableID)
 
-  })
+    })
   }
 
 
   // Delete data from a table and rebuild
-  function deleteTableData(url, tableID) {  
-    
+  function deleteTableData(url, tableID) {      
     queryData = getCheckboxValues()
-
     query_string = JSON.stringify(queryData)
         requestURL = url + '/' + query_string     
         newRequest = fetchRequest(requestURL)
@@ -174,7 +174,6 @@ function changePage(evt, pageName) {
           addCheckBoxes(tableID)
                  
         })
-     
   }
 
   // Search data within a table and rebuild
@@ -184,12 +183,12 @@ function changePage(evt, pageName) {
       var search = document.getElementById(searchQuery).value;
       
       fetchData.then(data => {
-      tableData = data.table_data
-      tableHeader = data.table_header
-      filteredData = filterData(tableData, choice, search);
-      buildDataTable(filteredData, tableHeader, tableID);
+        tableData = data.table_data
+        tableHeader = data.table_header
+        filteredData = filterData(tableData, choice, search);
+        buildDataTable(filteredData, tableHeader, tableID);
 
-      addCheckBoxes(tableID)
+        addCheckBoxes(tableID)
 
       })
-    }
+  }

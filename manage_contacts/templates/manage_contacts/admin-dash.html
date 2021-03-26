@@ -48,11 +48,9 @@
 {% endif %}
 
 <div id="organizations-tab" class="js-tabcontent">
-    
-  <p class="center-text"><a href="{% url 'add_organization' %}">Add Organization</a></p>
 
-  <div class="h-center fit-width">
-          
+  <div class="top-margin fit-width h-center">
+    <p class="center-text"><a href="{% url 'add_organization' %}">Add Organization</a></p>
 
     <form>
 
@@ -67,17 +65,16 @@
         <p><input type="button" name="delete_org_button" id="delete-org-button" value="Delete"></p>
       </div>
     </form>
-
   
   </div>
 
 </div>
 
+
 <div id="products-tab" class="js-tabcontent">
 
-  <p class="center-text"><a href="{% url 'add_product' %}">Add Product</a></p>
-
-  <div class="h-center fit-width">
+  <div class="top-margin fit-width h-center">
+    <p class="center-text"><a href="{% url 'add_product' %}">Add Product</a></p>
 
     <form>
       <div class="table-container widget">
@@ -94,30 +91,26 @@
   </div>
 </div>
 
+
 <div id="entitlements-tab" class="js-tabcontent">
 
-        
-        
+  <div class="top-margin fit-width h-center">
         <p class="center-text"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p>
 
+    <form>
+      <div class="table-container widget">
+        <table id="entitlement-table" class="widget">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+        <p><input type="button" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
+      </div>
+    </form>
 
-        <div class="h-center fit-width">
-
-          <form>
-            <div class="table-container widget">
-              <table id="entitlement-table" class="widget">
-                <thead>
-                  <tr> 
-                    <th></th>
-                  </tr>
-                </thead>
-              </table>
-              <p><input type="button" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
-            </div>
-          </form>
-
-        </div>
-
+  </div>
 
 </div>
 

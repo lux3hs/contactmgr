@@ -2,21 +2,18 @@ import datetime
 import os
 import os.path
 
-import json
-
-from django.contrib.auth.models import User
-
-
-from .models import License
-from manage_contacts.models import Contact, Product, Entitlement, Organization
-
 from django.conf import settings
 
+from .models import License
+from manage_contacts.models import Contact, Product, Entitlement
+
+#Set base directory
 base_dir = str(settings.BASE_DIR)
 
-
+##Basic service methods
 
 def get_choice_list(model_header):
+    """ Build list of choices based on model header """
     choice_list = []
     for key in model_header:
         choice_list.append((key, model_header[key]))
@@ -24,12 +21,14 @@ def get_choice_list(model_header):
     return choice_list
 
 
-
+##Keygen services
 
 def exec_arg(arg):
+    """ execute a string as an argument """
     os.system(arg)
 
 def generate_license_key(data_package):
+    """ Run AlKeyMaker.exe on license string """
     run_dir = base_dir + "/bin/"
     file_dir = base_dir + "/bin/keygen/"
     data_string = data_package['data_string']
@@ -41,7 +40,6 @@ def generate_license_key(data_package):
                    " flag=encrypt outputfile=" +
                    file_dir + key_name)
 
-    print(exec_string)
     try:
         exec_arg(exec_string)
         return key_name
@@ -49,7 +47,9 @@ def generate_license_key(data_package):
     except: 
         return None
 
+
 def read_key_file(key_name):
+    """ Read file created by AlKeyMaker.exe """
     file_dir = base_dir + "/bin/keygen/" + key_name
     f = open(file_dir, "r")
     key_text = f.read()
@@ -57,10 +57,44 @@ def read_key_file(key_name):
     return key_text
 
 
+def package_license_data(license_values):
+    """ Package license data for download """
+    product_licenses = License.objects.all()
+    data_string = ""
+    key_name = ""
+    for license_id in license_values:
+        key_name += license_id
+        license_selection = product_licenses.filter(id=license_id).get()
+        license_data = license_selection.get_package_data()
+        data_string += str(license_data) + "\n"
+
+    data_package = {'key_name':key_name, 'data_string':data_string}
+
+    return data_package
 
 
+def check_license_data(license_selection):
+    """ Check license data for integrity """
+    if len(license_selection) > 0:
+        for license_id in license_selection:
+            license_check = License.objects.filter(id=license_id)
+            if len(license_check) > 0:
+                pass
+
+            else:
+                return False
+
+        return True
+
+    else: 
+        return False
+
+
+
+##Model object services##
 
 def create_license(current_user, user_query):
+    """ Create new license on user request """
     try:
         # current_user = request.user
         user_id = current_user.id
@@ -118,8 +152,9 @@ def create_license(current_user, user_query):
     except:
         return False
 
+
 def delete_license_data(license_selection):
-    """ Delete license object from database """
+    """ Delete license selection from database """
     for license_id in license_selection:
         try:    
             license_data = License.objects.filter(id=license_id).get()
@@ -134,38 +169,11 @@ def delete_license_data(license_selection):
             return license_id
 
 
-def package_license_data(license_values):
-    product_licenses = License.objects.all()
-    data_string = ""
-    key_name = ""
-    for license_id in license_values:
-        key_name += license_id
-        license_selection = product_licenses.filter(id=license_id).get()
-        license_data = license_selection.get_package_data()
-        data_string += str(license_data) + "\n"
 
-    data_package = {'key_name':key_name, 'data_string':data_string}
-
-    return data_package
-
-def check_license_data(license_selection):
-    if len(license_selection) > 0:
-        for license_id in license_selection:
-            license_check = License.objects.filter(id=license_id)
-            if len(license_check) > 0:
-                pass
-
-            else:
-                return False
-
-        return True
-
-    else: 
-        return False
-
-
+##JS Table Services##
 
 def get_license_header():
+    """ Get license table header """
     license_header = {'id':'ID',
                     'product_name':'Product',
                     'version_number':'Version',
@@ -183,6 +191,7 @@ def get_license_header():
 
 
 def get_entitlement_header():
+    """ Get entitlement table header """
     entitlement_header = {'product_name':'Product',
                           'product_version':'Version',
                           'num_allocated':'Allocated', 
@@ -191,8 +200,10 @@ def get_entitlement_header():
     return entitlement_header
 
 
+#Create table data based on header keys and object data#
+## Data model must have get_table_dictionary function ##
 def get_table_data(table_header, object_data):
-    """ Create a data object to pass into tables """
+    """ Create a data object to populate table """
     data = {}
     header_list = []
     for key in table_header.keys():
@@ -222,10 +233,3 @@ def get_table_data(table_header, object_data):
                 data['Success'] = False
 
     return data
-                    
-
-
-
-
-
-

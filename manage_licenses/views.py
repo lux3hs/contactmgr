@@ -7,19 +7,18 @@ import json
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from json import dumps
 
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
-from manage_contacts.models import Contact, Product, Entitlement, Organization
+from manage_contacts.models import Contact, Product, Entitlement
 from .models import License
-from .forms import ChoiceForm, SearchForm, NewLicenseForm, SearchChoiceForm
+from .forms import NewLicenseForm
+
+#Specify method imports
 from .services import *
 
 base_dir = str(settings.BASE_DIR)
-
-# Create your views here.
 
 @login_required
 def manage_licenses(request):
@@ -28,16 +27,13 @@ def manage_licenses(request):
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
     org_id = contact_data.organization.id
-
-    
     product_entitlements = Entitlement.objects.filter(organization=org_id)
     product_choices = []
+
     for entitlement in product_entitlements:
         product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
 
-    
     new_license_form = NewLicenseForm(product_choices=product_choices)
-
 
     if request.POST.get("save-license"):
         user_query = request.POST
@@ -88,6 +84,7 @@ def manage_licenses(request):
     return render(request, "manage_licenses/manage-licenses.html", context)
 
 
+@login_required
 def download_license_package(request, data):
     """ Download a generated license """
     response = HttpResponse(data, content_type="text/plain")
@@ -95,7 +92,9 @@ def download_license_package(request, data):
     return response
 
 
+@login_required
 def delete_license_selection(request, query_string):
+    """ Delete license data on user request """
     license_selection = json.loads(query_string)
     delete_check = delete_license_data(license_selection)
     if delete_check: 
@@ -106,7 +105,10 @@ def delete_license_selection(request, query_string):
         response = HttpResponse("error", content_type="text/plain")
         return response
 
+
+@login_required
 def get_license_data(request):
+    """ Provide table data for populating licenses """
     current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
@@ -116,13 +118,15 @@ def get_license_data(request):
     table_data = get_table_data(table_header, license_data)
     return JsonResponse(table_data)
 
+
+@login_required
 def get_entitlement_data(request):
+    """ Provide entitlement data for populating tables """
     current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
     org_id = contact_data.organization.id
     entitlement_data = Entitlement.objects.filter(organization=org_id)
-
     table_header = get_entitlement_header()
     table_data = get_table_data(table_header, entitlement_data)
     return JsonResponse(table_data)

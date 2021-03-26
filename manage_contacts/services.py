@@ -3,11 +3,33 @@ import datetime
 
 from django.contrib.auth.models import User
 from .models import Contact, Organization, Product, Entitlement
-# from .views import get_current_user
 
+
+# Possibly redundant mehods #
+def get_model_fields(model):
+    """ Return the model fields for specified model """
+    return model._meta.fields
+
+def get_model_choices(model_fields):
+    """ Get model choices for form fields """
+    choice_list = []
+    for field in model_fields:
+        choice_list.append((field.name, field.name))
+
+    return choice_list
+
+def get_choice_list(model_header):
+    """ Get list of choices """
+    choice_list = []
+    for key in model_header:
+        choice_list.append((key, model_header[key]))
+
+    return choice_list
+
+
+##Basic service methods
 def get_superuser_id(super_username):
-    """ Attempts to return the contact id for the specified string """
-    # super_name = 'superadmin'
+    """ Attempts to return the contact id for the specified username """
     try:
         super_user = User.objects.filter(username=super_username).get()
         contact_data = Contact.objects.filter(user=super_user.id).get()
@@ -18,8 +40,9 @@ def get_superuser_id(super_username):
     except:
         return None
 
+
 def get_superorg_id(super_orgname):
-    """ Attempts to return the org name for the specified string """
+    """ Attempts to return the org name for the specified orgname """
     try:
         super_org = Organization.objects.filter(org_name=super_orgname).get()
         super_id = super_org.id
@@ -28,34 +51,11 @@ def get_superorg_id(super_orgname):
     except:
         return None
 
-def get_model_fields(model):
-    return model._meta.fields
 
-def get_model_choices(model_fields):
-    choice_list = []
-    for field in model_fields:
-        choice_list.append((field.name, field.name))
-
-    return choice_list
-
-def get_choice_list(model_header):
-    choice_list = []
-    for key in model_header:
-        choice_list.append((key, model_header[key]))
-
-    return choice_list
-
-
-
-
-
-
-
-
-
-
+##Model object services##
 
 def add_new_contact(user_query, contact_organization):
+    """ Add new contact on user request """
     contact_username = user_query.get('username')
     password1 = user_query.get('password1')
     contact_firstname = user_query.get('contact_firstname')
@@ -96,8 +96,8 @@ def add_new_contact(user_query, contact_organization):
 #         return "no contacts selected"
 
 
-
 def delete_contact_data(current_user, contact_selection):
+    """ Delete contact on user request """
     except_list = []
     super_username = 'superuser'
     super_id = get_superuser_id(super_username)
@@ -120,20 +120,8 @@ def delete_contact_data(current_user, contact_selection):
         return contact_id
 
 
-
-
-
-
-
-        
-
-
-
-
-
-
-
 def add_new_organization(user_query):
+    """ Add organization on user request """
     org_type = user_query.get('org_type')
     org_name = user_query.get('org_name')
     org_domain = user_query.get('org_domain')
@@ -153,7 +141,9 @@ def add_new_organization(user_query):
 
     return success_message
 
+
 def delete_org_data(org_selection):
+    """ Delete org selection from database """
     except_list = []
     super_orgname = 'automai'
     super_id = get_superorg_id(super_orgname)
@@ -170,7 +160,9 @@ def delete_org_data(org_selection):
     except:
         return org_id
 
+
 def add_new_product(user_query):
+    """ Add new product on user request """
     product_name = user_query.get('product_name')
     product_version = user_query.get('product_version')
     product_data = Product.objects.all()
@@ -191,6 +183,7 @@ def add_new_product(user_query):
 
 
 def delete_product_data(product_selection):
+    """ Delete product selection from database """
     try:
         for product_id in product_selection:
             product_data = Product.objects.filter(id=int(product_id)).get()
@@ -201,8 +194,8 @@ def delete_product_data(product_selection):
         return product_id
 
 
-
 def add_new_entitlement(user_query):
+    """ Add new entitlement on user selection """
     product_choice = user_query.get('product_choice')
     org_choice = user_query.get('org_choice')
     max_licenses = user_query.get('max_licenses')
@@ -234,8 +227,8 @@ def add_new_entitlement(user_query):
     return success_message
 
 
-
 def delete_entitlement_data(entitlement_selection):
+    """ Delete entitlement selection from database """
     try:
         for ent_id in entitlement_selection:
             ent_data = Entitlement.objects.filter(id=int(ent_id)).get()
@@ -247,7 +240,10 @@ def delete_entitlement_data(entitlement_selection):
 
 
 
+##JS Table Services##
+
 def get_contact_header():
+    """ Get header data for populating tables """
     contact_header = {'username':'User',
                       'first_name':'First Name',
                       'last_name':'Last Name',
@@ -258,7 +254,6 @@ def get_contact_header():
                     }
 
     return contact_header
-
 
 
 def get_org_header():
@@ -287,8 +282,10 @@ def get_entitlement_header():
 
 
 
-#Requires data table to have get_table_dictionary function
+#Create table data based on header keys and object data#
+## Data model must have get_table_dictionary function ##
 def get_table_data(table_header, object_data):
+    """ Create a data object to populate table """
     data = {}
     header_list = []
     for key in table_header.keys():
@@ -316,10 +313,3 @@ def get_table_data(table_header, object_data):
             data['success'] = False
 
     return data
-
-
-
-
-
-
-

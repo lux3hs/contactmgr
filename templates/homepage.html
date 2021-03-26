@@ -7,9 +7,10 @@
  {% block header %}
 <div class="flex-box flex-row container">
   <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
-  <div class="h-center"></div>
-  
-  <div>
+  {% comment %} <div class="h-center"></div> {% endcomment %}
+      <h3 class="h-center">Welcome to LicensePGM</h3>
+
+  {% comment %} <div> {% endcomment %}
   
     <p>
       <a href="{% url 'manage_contacts' %}">Contacts</a>
@@ -23,9 +24,9 @@
 {% endblock header %}
 
 {% block main %}
-    <h3 class="center-text">Welcome to LicensePGM</h3>
 
-    <div class="flex-box fit-width h-center">
+    <div class="flex-box container fit-width flex-column">
+    <h3>Links</h3>
         <a href="{% url 'info' %}">More Info</a>
     </div>
 {% endblock main %}

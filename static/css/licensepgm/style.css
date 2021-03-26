@@ -351,3 +351,7 @@ flex-direction: row;
 .footer-container{
   position: relative;
 }
+
+.top-margin {
+  margin-top: 10%;
+}

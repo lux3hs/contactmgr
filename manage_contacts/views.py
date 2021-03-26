@@ -12,12 +12,10 @@ from django.contrib.auth.decorators import login_required
 from .models import Contact, Organization, Product, Entitlement
 from .forms import ContactCreationForm, SearchChoiceForm, OrgCreationForm, ProductCreationForm, EntitlementCreationForm, ChoiceForm
 
+#Specify method imports
 from .services import *
 
 
-
-
-#Manage Contacts Views#
 @login_required
 def manage_contacts(request):
     """ Render manage-contacts html page """
@@ -70,6 +68,7 @@ def add_contact(request):
 
 
 def get_contact_data(request):
+    """ Provide contact data for populating tables """
     current_user = request.user
     user_id = current_user.id
     user_data = Contact.objects.filter(user_id=user_id).get()
@@ -82,6 +81,7 @@ def get_contact_data(request):
 
 
 def delete_contact_selection(request, query_string):
+    """ Delete contact selection on user request """
     contact_selection = json.loads(query_string)
     current_user = request.user
     response = delete_contact_data(current_user, contact_selection)
@@ -94,14 +94,8 @@ def delete_contact_selection(request, query_string):
 
 
 
+## Admin Views for Automai users ##
 
-
-
-
-
-## Admin Views ##
-
-##Automai admin views
 @login_required
 def admin_dash(request):
     """ Render admin dash """
@@ -149,16 +143,16 @@ def add_organization(request):
     return render(request, "manage_contacts/add-organization.html", context)
     
 
-
 def get_org_data(request):
+    """ Get org data for populating tables """
     org_data = Organization.objects.all()
     table_header = get_org_header()
     table_data = get_table_data(table_header, org_data)
     return JsonResponse(table_data)
 
 
-
 def delete_org_selection(request, query_string):
+    """ Delete org selection on user request """
     org_selection = json.loads(query_string)
     response = delete_org_data(org_selection)
     
@@ -168,7 +162,6 @@ def delete_org_selection(request, query_string):
     else:
 
         return get_org_data(request)
-
 
 
 @login_required
@@ -200,6 +193,7 @@ def add_product(request):
     
 
 def get_product_data(request):
+    """ Get product data for populating tables """
     product_data = Product.objects.all()
     table_header = get_product_header()
     table_data = get_table_data(table_header, product_data)
@@ -207,6 +201,7 @@ def get_product_data(request):
 
 
 def delete_product_selection(request, query_string):
+    """ Delete product selection on user request """
     product_selection = json.loads(query_string)
     response = delete_product_data(product_selection)
     
@@ -215,8 +210,6 @@ def delete_product_selection(request, query_string):
         
     else:
         return get_product_data(request)
-
-
 
 
 @login_required
@@ -257,12 +250,15 @@ def add_entitlement(request):
 
 
 def get_entitlement_data(request):
+    """ Get entitlement data for populating tables """
     entitlement_data = Entitlement.objects.all()
     table_header = get_entitlement_header()
     table_data = get_table_data(table_header, entitlement_data)
     return JsonResponse(table_data)
 
+
 def delete_entitlement_selection(request, query_string):
+    """ Delete entitlement selection on user request """
     entitlement_selection = json.loads(query_string)
     response = delete_entitlement_data(entitlement_selection)
     
