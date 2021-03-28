@@ -25,7 +25,32 @@ def manage_contacts(request):
     contact_choice_list = get_choice_list(contact_header)
     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
-    context = {'contact_data':contact_data,
+    org_data = Organization.objects.all()
+    org_list = []
+    for organization in org_data:
+        org_list.append((organization.org_name, organization.org_name))
+
+    product_data = Product.objects.all()
+    product_list = []
+    for product in product_data:
+        product_list.append((product.product_name, product.product_name))
+        
+
+    if request.method == 'POST':
+        entitlement_form = EntitlementCreationForm(request.POST, product_list=product_list, org_list=org_list)
+        if entitlement_form.is_valid():
+            user_query = request.POST
+            success_message = add_new_entitlement(contact_data, user_query)
+            messages.add_message(request, messages.INFO, success_message)
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        print("form invalid")
+        entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
+    
+    
+    context = {'entitlement_form':entitlement_form,
+            #    'contact_data':contact_data,
                'contact_search_form':contact_search_form,
             }
 

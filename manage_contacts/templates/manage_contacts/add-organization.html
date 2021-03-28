@@ -5,6 +5,8 @@
 {% block head %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+<script src="{% static "manage_contacts/js/script.js" %}"></script>
+
 {% endblock head %}
 
 {% block header %}{% endblock header %}
@@ -22,22 +24,29 @@
 </ul>
 {% endif %}
 
-  <div class="widget">
-    <form method="post" class="style-form">
+    <form method="post">
       {% csrf_token %}
-      <div class="flex-box widget">
+      <div>
         {{ org_form.as_p }}
       </div>
         <input class="button" type = "submit" value = "Create" name="newForm"/>
     </form>
-  </div>
 
-<div class="widget">
+    <form>
+      <table id="org-table">
+        <thead>
+          <tr> 
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+      <p><input type="button" class="button" name="delete_org_button" id="delete-org-button" value="Delete"></p>
+    </form>
 
 <p>
-<a href="{% url 'admin_dash' %}">Return</a>
+<a href="{% url 'manage_contacts' %}">Return</a>
 <a href="{% url 'homepage' %}">Home</a>
 <a href="{% url 'logout' %}">Logout</a>
 </p>
-</div>
+{% comment %} </div> {% endcomment %}
 {% endblock main %}

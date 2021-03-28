@@ -6,7 +6,7 @@ urlpatterns = [
     # path('get_current_user', views.get_current_user, name="get_current_user"),
 
     path('add-contact', views.add_contact, name="add_contact"),
-    path('admin-dash', views.admin_dash, name="admin_dash"),
+    # path('admin-dash', views.admin_dash, name="admin_dash"),
     path('add-organization', views.add_organization, name="add_organization"),
     path('add-product', views.add_product, name="add_product"),
     path('add-entitlement', views.add_entitlement, name="add_entitlement"),

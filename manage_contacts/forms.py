@@ -60,6 +60,16 @@ class EntitlementCreationForm(forms.Form):
         self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
         self.fields['org_choice'] = forms.ChoiceField(choices=self.org_list)
         self.fields['org_choice'].widget.attrs['class'] = "ChoiceField"
+        self.fields['host_ip'] = forms.CharField(max_length=50)
+        self.fields['is_permanent'] = forms.BooleanField(required=False)
+        self.fields["product_grade"] = forms.CharField(max_length=50)
+        self.fields["product_stations"] = forms.IntegerField(max_value=999999)
+        self.fields["allowed_ips"] = forms.IntegerField(max_value=999999)
+        self.fields['re_seller'] = forms.CharField(max_length=50)
+        self.fields['expiration_date'] = forms.DateField()
+
+
+
 
 class SearchForm(forms.Form):
     """ Form for searching """

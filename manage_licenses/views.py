@@ -20,9 +20,20 @@ from .services import *
 
 base_dir = str(settings.BASE_DIR)
 
+
+@login_required
+def client_portal(request):
+    current_user = request.user
+    user_id = current_user.id
+    contact_data = Contact.objects.filter(user=user_id).get()
+    context = {'contact_data':contact_data}
+    return render(request, "manage_licenses/client-portal.html", context)
+
+
 @login_required
 def manage_licenses(request):
     """ Render manage-licenses html page """
+    print("hello")
     current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
@@ -102,8 +113,12 @@ def manage_licenses(request):
         #     return HttpResponseRedirect(request.path_info)
 
     context = {'new_license_form':new_license_form}
+   
+   
     return render(request, "manage_licenses/manage-licenses.html", context)
-
+    
+    # response = HttpResponse("error", content_type="text/plain")
+    # return response
 
 @login_required
 def download_license_package(request, data):

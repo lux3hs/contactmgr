@@ -9,12 +9,12 @@
 <script src="{% static "manage_licenses/js/script.js" %}"></script>
 {% endblock head %}
 
-{% block header %}
+{% comment %} {% block header %}
 <div class="flex-box flex-row">
     
   <div class="tab">
-    <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">My licenses</button>
-    <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My products</button>
+    <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">Generate new license</button>
+    <button class="js-tablinks" onclick="changePage(event, 'products-tab')">My licenses</button>
   </div>
 
   <div class="h-center center-text">
@@ -23,9 +23,8 @@
 
   <div>
     <p>
-    <a href="{% url 'manage_contacts' %}">Contacts</a>
-    <a href="{% url 'admin_dash' %}">Admin</a>
-    <a href="{% url 'homepage' %}">Home</a>
+    {% comment %} <a href="{% url 'manage_contacts' %}">Contacts</a> {% endcomment %}
+    {% comment %} <a href="{% url 'homepage' %}">Home</a>
     <a href="{% url 'logout' %}">Log Out</a>
     </p>
   </div>
@@ -33,41 +32,60 @@
 </div>
 
 
-{% endblock header %}
+{% endblock header %} {% endcomment %}
 
-{% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
 
-{% if messages %}
+{% comment %} {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
-{% endif %}
+{% endif %} {% endcomment %}
+
+<ul class="nav-row">
+  {% comment %} <li><a href="{% url client_portal %}">Back</a></li> {% endcomment %}
+  <li><a href="{% url 'homepage' %}">Home</a></li>
+  <li><a href="{% url 'logout' %}">Log Out</a></li>
+</ul>
+
+<div class="tab">
+    <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'licenses-tab')">Generate new license</button>
+    <button class="js-tablinks" onclick="changePage(event, 'products-tab')">Active licenses</button>
+  </div>
+
+
+
 
 <div id="licenses-tab" class="js-tabcontent">
 
-  <div class="container">
-    <h1 class="center-text">Manage Licenses</h1>
+<h2>My Account:</h2>
+<p>Company:</p>
+<p>Main Contact:</p>
 
-    <p class="center-text">
-    This screen displays the licenses for the entire Organization. If you want to view associated products, 
-    click on 'View my products' menu item above.
-    </p>
-    <br>
-  </div>
+<h2>My Licenses:</h2>
+
+
+
+
+
+
+
 
     {% comment %} <div class="h-center"> {% endcomment %}
 
-      <div class="widget">
+      {% comment %} <div>
         <form method="post">
         {% csrf_token %}
         {{ new_license_form }}
         <p><input class="button" name="save-license" type="submit" value="Save"></p>
         </form>
-      </div>
+      </div> {% endcomment %}
+
+
+      
 
         {% comment %} <form id="generate-license-form" method="post">
           {% csrf_token %}
@@ -116,4 +134,4 @@
 </div>
 {% endblock main%}
 
-{% block footer %}{% endblock footer %}
+{% comment %} {% block footer %}{% endblock footer %} {% endcomment %}

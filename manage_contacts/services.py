@@ -1,5 +1,7 @@
 
 import datetime
+from django.utils.dateparse import parse_date
+
 
 from django.contrib.auth.models import User
 from .models import Contact, Organization, Product, Entitlement
@@ -199,15 +201,42 @@ def delete_product_data(product_selection):
         return product_id
 
 
-def add_new_entitlement(user_query):
+def add_new_entitlement(contact_data, user_query):
     """ Add new entitlement on user selection """
+    creator_email = contact_data.user.email
+    creator_phone = contact_data.phone
+    
     product_choice = user_query.get('product_choice')
     org_choice = user_query.get('org_choice')
+    product_object = Product.objects.filter(product_name=product_choice).get()
+    org_object = Organization.objects.filter(org_name=org_choice).get()
+
     max_licenses = user_query.get('max_licenses')
     total_licenses = max_licenses
 
-    product_object = Product.objects.filter(product_name=product_choice).get()
-    org_object = Organization.objects.filter(org_name=org_choice).get()
+    host_ip = user_query.get('host_ip')
+    product_grade = user_query.get("product_grade")
+    product_stations = user_query.get("product_stations")
+
+    expiration_date = user_query.get('expiration_date')
+    print(expiration_date)
+
+    clean_date = datetime.datetime.strptime(expiration_date, "%m/%d/%Y")
+
+    # expiration_date = "2018-3-11"
+    # clean_date = parse_date(expiration_date)
+    expiration_date = clean_date
+    print(type(clean_date))
+
+    allowed_ips = user_query.get('allowed_ips')
+    re_seller = user_query.get('re_seller')
+
+    is_permanent = user_query.get('is_permanent')
+    if is_permanent:
+        is_permanent = True
+    
+    else:
+        is_permanent = False
 
     entitlement_data = Entitlement.objects.all()
     entitlement_names = []
@@ -217,10 +246,21 @@ def add_new_entitlement(user_query):
     dup_check = org_object.org_name + '/' + product_object.product_name
     
     if dup_check not in entitlement_names:
-        new_entitlement = Entitlement(product=product_object, 
+        new_entitlement = Entitlement(max_licenses=max_licenses, 
+                                    total_licenses=total_licenses,
+                                    product=product_object, 
                                     organization=org_object, 
-                                    max_licenses=max_licenses, 
-                                    total_licenses=total_licenses)
+                                    creator_email=creator_email,
+                                    creator_phone=creator_phone,
+                                    re_seller=re_seller,
+                                    host_ip=host_ip,
+                                    is_permanent=is_permanent,
+                                    product_grade=product_grade,
+                                    product_stations=product_stations,
+                                    allowed_ips=allowed_ips,
+                                    creation_date=datetime.datetime.now(),
+                                    expiration_date=expiration_date,
+        )
 
         new_entitlement.save()
 

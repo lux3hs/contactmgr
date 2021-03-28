@@ -3,7 +3,7 @@ import os
 import os.path
 
 from django.conf import settings
-from django.utils.dateparse import parse_datetime
+from django.utils.dateparse import parse_date
 
 from .models import License
 from manage_contacts.models import Contact, Product, Entitlement
@@ -112,6 +112,7 @@ def create_license(current_user, user_query):
     expiration_date = user_query.get('expiration_date')
     clean_date = parse_datetime(expiration_date)
     expiration_date = clean_date
+    # print(clean_date)
 
     allowed_ips = user_query.get('allowed_ips')
     re_seller = user_query.get('re_seller')

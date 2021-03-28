@@ -5,8 +5,10 @@ window.addEventListener('load', (event) => {
 
   
   // Open default tab
+  var jsDefaultOpen = document.getElementById("js-default-open")
+  if (jsDefaultOpen) {
   document.getElementById("js-default-open").click();
-
+  }
 
   // Load contact table data
   var contactTable = document.getElementById("contact-table");

@@ -8,99 +8,108 @@
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
 {% endblock head %}
-
-{% block header %}
-
-<div class="flex-box flex-row">
   
+  
+{% block sidenav %}{% endblock sidenav %}
+{% block main %}
+
+  <ul class="nav-row">
+  <li><a href="{% url 'homepage' %}">Home</a></li>
+  <li><a href="{% url 'logout' %}">Log Out</a></li>
+  </ul>
+
   <div class="tab">
-    <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'contacts-tab')">Contact List</button>
-    <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button>
-  </div>
-
-  <p class="center-text h-center"></p>
-
-  <div>
     <p>
-    <a href="{% url 'manage_licenses' %}">Licenses</a>
-    <a href="{% url 'admin_dash' %}">Admin</a>
-    <a href="{% url 'homepage' %}">Home</a>
-    <a href="{% url 'logout' %}">Log Out</a>
+      <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'organizations-tab')">Clients</button>
+      {% comment %} <button class="js-tablinks" onclick="changePage(event, 'information-tab')">My Information</button> {% endcomment %}
+      <button class="js-tablinks" onclick="changePage(event, 'contacts-tab')">Users</button>
+      <button class="js-tablinks" onclick="changePage(event, 'products-tab')">Products</button>
+
     </p>
   </div>
 
+<div id="organizations-tab" class="js-tabcontent">
+
+    <p class="left-text box"><a href="{% url 'add_organization' %}">Add Client</a></p>
+
+    {% comment %} <form>
+      <table id="org-table">
+        <thead>
+          <tr> 
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+      <p><input type="button" class="button" name="delete_org_button" id="delete-org-button" value="Delete"></p>
+    </form> {% endcomment %}
+
+    <form method="post" class="style-form">
+    {% csrf_token %}
+    <div class="flex-box widget">
+      {{ entitlement_form.as_p }}
+    </div>
+      <input class="button" type = "submit" value = "Create" name="newForm"/>
+  </form>
+
+    {% comment %} <p class="left-text box"><a href="{% url 'add_entitlement' %}">Add Entitlement</a></p> {% endcomment %}
+
+    <form>
+        <table id="entitlement-table" class="widget">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+        <p><input type="button" class="button" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p>
+    </form>
+
 </div>
 
-
-{% endblock header %}
-
-{% block logocontainer %}{% endblock logocontainer %}
-
-{% block main %}
 
 <div id="contacts-tab" class="js-tabcontent">
-   
-   <div class="container">
-    <h1 class="center-text">Manage Contacts</h1>
-      
-        <p class="center-text">
-          This screen displays the contacts for the entire Organization. If you want to update your personal Information, 
-          click on 'My Information' menu item above.
-        </p>
-   </div>
-
-  <div class="h-center widget fit-width">
-    
-    <div>
-      <form class="">
-        <p><a href="{% url 'add_contact' %}">Add Contact</a></p>
-        <div class="box">
-        <input id="contact-search-button" type="button" value="Search"/>
-        {{ contact_search_form }}
-         <input id="clear-contact-search" type="button" value="Clear"/>
-       </div>
-      </form>
-    </div>
-
-      <form>
-          <table id="contact-table">
-            <thead>
-              <tr> 
-                <th></th>
-              </tr>
-            </thead>
-          </table>
-        <p><input type="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>  
-      </form>
-
+  
+  <div class="center-text">
+    <a class="button" href="{% url 'add_contact' %}">Add New User</a>
+    <form class="contact-search-form">
+      <input id="contact-search-button" type="button" value="Search"/>
+      {{ contact_search_form }}
+      <input id="clear-contact-search" type="button" value="Clear"/>
+    </form>
   </div>
+
+  <table id="contact-table">
+    <thead>
+      <tr> 
+        <th></th>
+      </tr>
+    </thead>
+  </table>
+  <p><input type="button" class="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>  
+</div>
+
+<div id="products-tab" class="js-tabcontent">
+
+   <p class="left-text box"><a href="{% url 'add_product' %}">Add Product</a></p>
+
+    <form>
+        <table id="product-table" class="widget">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+        <p><input type="button" name="delete_product_button" id="delete-product-button" value="Delete"></p>
+    </form>
 
 </div>
 
-<div id="information-tab" class="js-tabcontent">
-  
-  
-
-    <div class="card">
-      <div class="box">
-      <h2>{{ user.username }}</h2>
-        <p>UserEmail: {{ user.email }}</p>
-        <p>Role: {{ contact_data.role }}</p>
-        <p>Org: {{ contact_data.organization }}</p>
-        <p>UserID: {{ user.id }}</p>
-        <p>OrgID: {{ contact_data.organization.id }}</p>
-      </div>
-      
+{% comment %} <div id="information-tab" class="js-tabcontent">
+  <div class="box">
+    <p class="box"><a href="{% url 'password_change' %}">Change Password</a></p>
+    <p class="box"><a href="{% url 'password_reset' %}">Reset Password</a></p>
   </div>
-
-      <div class="box">
-        <p class="box"><a href="{% url 'password_change' %}">Change Password</a></p>
-        <p class="box"><a href="{% url 'password_reset' %}">Reset Password</a></p>
-      </div>
-</div>
-
-
+</div> {% endcomment %}
 
 {% endblock main %}
-
-{% block footer %}{% endblock footer %}

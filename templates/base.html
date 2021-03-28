@@ -12,39 +12,62 @@
   </head>
 
 
+ 
   <body>  
-    
-    {% block logincheck %}
-    {% if user.is_authenticated %}
+    <div class="foot-wrap">
 
-    <header>
-    {% block header %} {% endblock header %}  
-    </header>
+      <header>
+      {% block header %} 
+          <img src="{% static 'images/licensepgm/automai.svg' %}" class="org-logo" alt="Generic logo"/>
+      {% endblock header %}  
+      </header>
+        
+        <main class="main">
+            {% block logincheck %}
+            {% if user.is_authenticated %}
+          
+          {% block sidenav %} 
+            <div class="side-nav">
+            <h3>Useful articles</h3>
+            <p>Lorem Ipsum<p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            </div>
+            {% endblock sidenav %} 
 
-    
-      <main>
-        <div class="main-container">
-        {% block main %}{% endblock main %}
-        </div>
+            {% block main %}
+            
+          
+          
+          
+      
+        <ul class="nav-row">
+        <li><a href="{% url 'manage_licenses' %}">Clients</a></li>
+        <li><a href="{% url 'manage_contacts' %}">Admin</a></li>
+
+        <li><a href="{% url 'logout' %}">Log Out</a></li>
+        </ul>
+        
+        {% endblock main %}      
+        
+        {% else %}
+          <div class="fit-content center-text center-block">
+          <p>You are not logged in.</p>
+          <a href="{% url 'login' %}">Log In</a>
+          </div>
+        {% endif %}
+        {% endblock logincheck %}  
       </main>
 
-      <footer>{% block footer %}{% endblock footer %}</footer>
-  
-    {% else %}
-    <div class="login-container">
-      <div class="border-collapse widget login-box">
-      
-      <p class="box">You are not logged in.</p>
-      
-      <p><a href="{% url 'login' %}">Log In</a></p>
-      </div>
-    <div>
-    {% endif %}
-    {% endblock logincheck %}
+    </div>
 
+    <footer>
+     {% block footer %}
+      <p>Knowledge base  -  Community  -  Email sales  -  Open a ticket</p>
+    {% endblock footer %}
+    </footer>
 
   </body>
-
-
 
 </html>

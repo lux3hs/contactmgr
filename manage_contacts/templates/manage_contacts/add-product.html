@@ -1,10 +1,12 @@
 <!-- templates/manage_contacts/add-product.html -->
 {% extends "base.html" %}
-{% block title %}Add Organization{% endblock %}
+{% block title %}Add Product{% endblock %}
 
 {% block head %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+<script src="{% static "manage_contacts/js/script.js" %}"></script>
+
 {% endblock head %}
 
 {% block header %}{% endblock header %}
@@ -12,7 +14,6 @@
 {% block logocontainer %}{% endblock logocontainer %}
 
 {% block main %}
-<h1 class="box">Add product</h1>
 
 {% if messages %}
 <ul class="messages">
@@ -22,19 +23,28 @@
 </ul>
 {% endif %}
 
-<div class="widget">
-  <form method="post" class="style-form">
+  <form method="post">
       {% csrf_token %}
-      <div class="flex-box widget">
+      <div>
         {{ product_form.as_p }}
       </div>
       <input class="button" type = "submit" value = "Create" name="newForm"/>
   </form>
-</div>
 
-<div class="widget">
+    {% comment %} <form>
+      <table id="product-table">
+        <thead>
+          <tr> 
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+      <p><input type="button" name="delete_product_button" id="delete-product-button" value="Delete"></p>
+    </form> {% endcomment %}
+
+<div>
   <p>
-  <a href="{% url 'admin_dash' %}">Return</a>
+  <a href="{% url 'manage_contacts' %}">Back</a>
   <a href="{% url 'homepage' %}">Home</a>
   <a href="{% url 'logout' %}">Logout</a>
   </p>

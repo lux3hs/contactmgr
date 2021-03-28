@@ -5,12 +5,9 @@
 
 {% block logincheck %}
 
-{% block header %}{% endblock header %}
-
-
 {% block main %}
-  <div class=" login-container">
-    <form class="fit-width widget login-box" method="post">
+  <div class="login-box">
+    <form method="post">
       <h3>Log In</h3>
 
       {% csrf_token %}
@@ -18,7 +15,6 @@
       <p><button type="submit">Log In</button></p>
     </form>
   </div>
-  
 {% endblock main %}
 
 {% endblock logincheck %}

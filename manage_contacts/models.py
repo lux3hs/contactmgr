@@ -72,21 +72,21 @@ class Product(models.Model):
         return self.product_name
 
 class Entitlement(models.Model):
-    # PRODUCT_CHOICES = [("AppLoader", "AppLoader"), ("ScenarioBuilder", "ScenarioBuilder")]
-    # product_name = models.CharField(max_length=50, choices=PRODUCT_CHOICES, null=True)
     max_licenses = models.IntegerField(default=100)
     total_licenses = models.IntegerField(default=0)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    creator_email = models.CharField("Created by ", max_length=50, null=True)
+    creator_phone = models.IntegerField(default=0, null=True)
+    re_seller = models.CharField(max_length=50, null=True)
+    host_ip = models.CharField(max_length=50, null=True)
+    is_permanent = models.BooleanField(default=None, null=True)
+    product_grade = models.CharField(max_length=50, default="standard", null=True)
+    product_stations = models.IntegerField(default=0, null=True)
+    allowed_ips = models.IntegerField(default=10, null=True)
+    creation_date = models.DateField("Date created ", null=True)
+    expiration_date = models.DateField("Expiration date ", null=True)
 
-    # def get_product_name(self):
-    #     return self.product.product_name
-
-    # def get_version_number(self):
-    #     return self.product.product_version
-
-    # def get_organization_name(self):
-    #     return self.organization.org_name
 
     def get_table_dictionary(self):
         table_dict = {}

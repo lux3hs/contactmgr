@@ -1,423 +1,291 @@
 
-/*            */
-/* Page Style */
-/*            */
-
 body {
-  /* margin-left:50px;
-  margin-right:50px; */
-  background: whitesmoke;
+    /* border: 2px solid blue; */
+    height: 100%;
+    min-height: 100vh;
 
-  }
-
-.style-form p {
-  font-size: small;
+    overflow-x: hidden;
+    margin:0;
 }
 
-/* form p {
-  font-size: small;
+
+h1, h2, h3 {
+    color: cornflowerblue;
 }
 
-form li {
-  font-size:  small;
-} */
 
 header {
-  /* background-color: blue; */
-  /* background-color: rgba(51, 51, 51); */
-  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.15); */
-  border-radius: 5px;
-  padding: none;
-  margin:none;
-  /* padding: 5px; */
+    padding: 5px;
+    margin-bottom: 75px;
+}
+
+.org-logo {
+    display: block;
+    width: 250px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+  } 
+
+
+
+.side-nav {
+    border-right:3px solid cornflowerblue;
+    float:left;
+    height: 425px;
+    width: 200px; 
+    overflow: hidden;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    
+}
+
+.side-nav h3 {
+    text-align:center;
+    /* color: cornflowerblue; */
+    margin-top:75px;
 
 }
 
-main{
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
-  /* margin:2px; */
-  padding: 5px;
-  min-height: 100vh;
-  /* max-width: 100vh; */
-  }
+
+/* Foot wrap and footer min-height should equal 100 */
+.foot-wrap {
+    /* border: 5px solid green; */
+    min-height: 80vh;
+}
+
+footer {
+    background-color: indigo;
+    margin-top:75px;
+    width: 100%;
+    height: 20vh;
+    text-align: center;
+}
+
+footer p{
+    color: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin:5px;
+}
   
 
-  h1 {
-    font-family: Arial, Helvetica, sans-serif;
-  }
 
-h2 {
-  font-family: Arial, Helvetica, sans-serif;
 
+.login-box {
+    background-color: cornflowerblue;
+    color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    margin:5px;
+    padding: 25px;
+    width: 325px;
+    height: auto;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 10%;
 }
 
-h3 {
-  font-family: Arial, Helvetica, sans-serif;
-
-}
-
-  p {
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-
-/*                   */
-/* Link/Input styles */
-/*                   */
-
-a{
-  /* background-color: white; */
-  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.15); */
-    color: black;
-    /* border: 1px solid black; */
-    border:none;
-    /* border-radius: 5px; */
-    text-align: center;
-    padding: 5px;
-    text-decoration: none;
-    margin:1px;
-    /* background-color:; */
-  }
-
-a:hover, a:active {
-  border-radius: none;
-
-    /* background-color: white; */
-
-}
-
-input{
-  /* background-color: white; */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
-  color: black;
-  /* border: 1px solid black; */
-  border:none;
-  text-align: left;
-  padding:10px 15px;
-  margin: 5px;
-  text-decoration: none;
-
-}
-
-input:hover, input:active{
-  background-color: whitesmoke;
-}
-
-button {
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  color: black;
-  border: 1px solid black;
-  border-radius: 5px;
-  text-align: center;
-  padding: 10px 15px;
-  margin: 5px;
-  text-decoration: none;
-  display: inline-block;
-}
-
-button:hover, button:active {
-    background-color: whitesmoke;
-  }
-
-
-select{
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
-  color: black;
-  /* border: 1px solid black; */
-  border:none;
-  text-align: left;
-  padding:10px 15px;
-  margin: 5px;
-  text-decoration: none;
-}
-
-select:hover, select:active {
-  background-color: whitesmoke;
+.login-box a {
+    background-color: white;
 }
 
 
 
-/*            */
-/* Tab Styles */
-/*            */
+.nav-row {
+    /* border:2px solid black; */
+    padding: 0;
+    margin:0;
+    list-style-type: none;
+    text-align: right;
+    
+}
+
+.nav-row li {
+    display: inline;
+    margin:5px;
+
+}
 
 
-/* Control active tab content for pages */
-  .js-tabcontent {
+
+
+.js-tabcontent {
     display: none;
   }
 
-/* Style the tab container */
+
 .tab {
-    /* border: 2px solid black; */
-    width:fit-content;
-    height: fit-content;
-    overflow: hidden;
-    margin:none;
-    padding:none;
-  }
+    border:1px solid black;
+    background-color: inherit;
+    overflow:hidden;
+    margin-bottom: 50px;    
+    text-align: center;
+}
 
-/* Style the tab buttons */
+
 .tab button {
-    /* background-color: inherit; */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0);
-    /* border-radius: 0px; */
-    /* height: fit-content; */
-    /* margin:none; */
-    /* padding:none; */
-
-    float: left;
-    border: none;
-    outline: none;
+    border: 3px solid white;
+    background-color: white;    
+    color:cornflowerblue;
+    font-size:larger;
+    float: center;
+    outline:none;
+    padding: 10px 20px;
+    /* margin: 15px; */
     cursor: pointer;
-    /* padding: 10px 20px; */
+    
+}
 
+.tab button:hover {
+    /* border: 3px solid cornflowerblue; */
     background-color: whitesmoke;
-  }
+
+}
 
 /* Create an active/current tablink class */
 .tab button.active {
-  /* border-bottom: 1px solid black; */
-  background-color: white;
-  }
-
-.tab button.hover {
-  /* border-bottom: 1px solid black; */
-  background-color: white;
-
+    border:3px solid cornflowerblue;
+  
 }
 
 
 
 
-/*                 */
-/* Homepage styles */
-/*                 */
+
+/* Add to local contacts CSS directory */
+
+.contact-search-form {
+    /* border:2px solid black; */
+    text-align: center;
+    display: inline-block;
+}
+
+.contact-search-form input {
+    text-decoration: none;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px 20px;
+    
+
+}
+
+.contact-search-form .CharField {
+    background-color: white;
+    color: black;
+}
+
+.contact-search-form .ChoiceField {
+    background-color: white;
+    padding: 10px 20px;
+    display: inline-block;
+}
 
 
-.org-logo {
-  width:15%;
-} 
 
-.login-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top:10%;
-  /* border-radius:5px; */
+
+
+
+
+
+
+
+
+
+
+
+.button {
+    text-decoration: none;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px 20px;
+    cursor: default;
 
 }
 
 
-.login-box{
-  background-color: white;
+.button:hover {
+    background-color: indigo;
 }
 
 
 
-/*              */
-/* Table styles */
-/*              */
 
-/* .table-container {
-  max-height: 75vh;
-  min-height: 25vh;
-  max-width: 75vw;
-  min-width: 75vw;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: auto;
+/* 
+.table-container {
+    display: inline-block;
+    border: 2px solid black;
+    margin-left: 0px;
+    margin-right: 0px;
 } */
+
+
 
 table {
-  border-collapse: collapse;
-  /* margin: 25px 0; */
-  font-size: 0.9em;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  /* min-width: 10vw;
-  max-width: 50vw; */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
+    /* border:2px solid blue; */
+    border-collapse: collapse;
+    text-align: left;
 
-  background-color: ghostwhite;
-
-  margin-left: auto;
-  margin-right: auto;
-
-
-}
-
-/* Table header */
-table tr:nth-child(1){
-    background-color: gainsboro;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    border-radius: 15px;
-
-
-}
-
-table tr:nth-child(even) {
-  background-color:white;
+    font-size:0.9em;
+    margin-left: auto;
+    margin-right: auto;
+    min-width:85vw;
+    margin-top: 50px;
 }
 
 
+/* #contact-table .button {
+    margin-left: 220px;
+    border:2px solid black; */
+/* } */
 
-/* Header cells */
-table th{
-  /* background-color: gainsboro; */
+#delete-contact-button {
+    margin-top: 25px;
+    margin-left: 115px;
+    display: inline-block;
+    /* border:5px solid cornflowerblue; */
+}
 
-    padding:1em;
 
-  }
+#delete-org-button {
+    margin-top:25px;
+    margin-left: 115px;
+    /* display: inline-block;
+    border:5px solid blue; */
+}
 
-
-/* Table cells */
-table td{
-  /* background: white; */
-  padding:1em;
+#delete-entitlement-button {
+    margin-top: 25px;
+    margin-left: 115px;
+    /* display: inline-block;
+    border:5px solid blue; */
 }
 
 
 
-
-/* Style boxes */
-
-.container {
-  /* background-color: white; */
-  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.15); */
-  border-radius: 15px;
-  padding:5px;
-
+.border-full {
+    border:2px solid black;
 }
 
-.widget{
-  background-color: whitesmoke;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  margin:5px;
-  padding: 15px;
-  width: fit-content;
-  block-size: fit-content;
+.fit-content {
+    width:fit-content;
 }
 
-.card{
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* flex-shrink: 1; */
-  /* flex-direction: column; */
-  /* background-color: whitesmoke; */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  background-color: whitesmoke;
-  border:1px solid lightgray;
-  border-radius: 15px;
-  padding:5px;
-  margin:15px;
-  
-  max-width: 300px;
-  min-width: 250px;
-  min-height: 300px;
-  width: fit-content;
-  block-size: fit-content;
+.center-block {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-
-/*                 */
-/* Generic classes */
-/*                 */
-
-.box{
-  padding:5px;
-  /* padding:3px; */
+.right-block {
+    margin-right:0px;
 }
 
-.flex-box{
-  display:flex;
+.center-text {
+    text-align: center;
 }
 
-.border-full{
-  border: 1px solid black;
-}
-
-.border-bottom{
-  border-bottom: 1px solid black;
-}
-
-.flex-row{
-flex-direction: row;
-}
-
-.flex-column {
-  flex-direction: column;
-}
-
-.flex-center{
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-left{
-  justify-content: left;
-}
-
-.flex-right{
-  justify-content: right;
-}
-
-.left-text{
-  text-align:left;
-}
-
-.center-text{
-  text-align:center;
-}
-
-.h-center{
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.full-height{
-  height: 100vh;
-}
-
-.fit-width{
-  width: fit-content;
-}
-
-.align-right {
-  margin-left: auto; 
-  margin-right: 0;
-}
-
-/* .paper-box{
-  background-color: mintcream;
-} */
-
-.footer {
-  position: absolute;
-  bottom: 0;
-}
-
-.footer-container{
-  position: relative;
-}
-
-.top-margin {
-  margin-top: 5%;
-}
-
-/* .inline-block {
-  display: inline-block;
-} */
-
-.color-block {
-  background-color: cornflowerblue;
+.right-text {
+    text-align: right;
 }
