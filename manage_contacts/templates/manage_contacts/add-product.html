@@ -11,7 +11,10 @@
 
 {% block header %}{% endblock header %}
 
-{% block logocontainer %}{% endblock logocontainer %}
+{% comment %} {% block logocontainer %}{% endblock logocontainer %} {% endcomment %}
+
+{% block infobox %}{% endblock infobox %}
+
 
 {% block main %}
 
@@ -31,16 +34,6 @@
       <input class="button" type = "submit" value = "Create" name="newForm"/>
   </form>
 
-    {% comment %} <form>
-      <table id="product-table">
-        <thead>
-          <tr> 
-            <th></th>
-          </tr>
-        </thead>
-      </table>
-      <p><input type="button" name="delete_product_button" id="delete-product-button" value="Delete"></p>
-    </form> {% endcomment %}
 
 <div>
   <p>

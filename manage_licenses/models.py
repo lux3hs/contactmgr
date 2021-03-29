@@ -48,19 +48,19 @@ class License(models.Model):
     def get_package_data(self):
         """ Get data for generating license key """
         package_data = {}
-        package_data["Org Name"] = str(self.org_name)
-        package_data["org ID"] = str(self.org_id)
-        package_data["Email"] = str(self.creator_email)
-        package_data["Phone"] = str(self.creator_phone)
-        package_data["Product"] = str(self.product_name)
-        package_data["Version"] = str(self.version_number)
-        package_data["Host IP"] = str(self.host_ip)
-        package_data["Permanent"] = str(self.is_permanent)
-        package_data["Grade"] = str(self.product_grade)
-        package_data["Stations"] = str(self.product_stations)
-        package_data["IPs"] = str(self.allowed_ips)
-        package_data["Created"] = str(self.creation_date)
-        package_data["Expires"] = str(self.expiration_date)
+        package_data["Org Name: "] = str(self.org_name)
+        package_data["org ID: "] = str(self.org_id)
+        package_data["Email: "] = str(self.creator_email)
+        package_data["Phone: "] = str(self.creator_phone)
+        package_data["Product: "] = str(self.product_name)
+        package_data["Version: "] = str(self.version_number)
+        package_data["Host IP: "] = str(self.host_ip)
+        package_data["Permanent: "] = str(self.is_permanent)
+        package_data["Grade: "] = str(self.product_grade)
+        package_data["Stations: "] = str(self.product_stations)
+        package_data["IPs: "] = str(self.allowed_ips)
+        package_data["Created: "] = str(self.creation_date)
+        package_data["Expires: "] = str(self.expiration_date)
         
         return package_data
 

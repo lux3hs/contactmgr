@@ -72,10 +72,10 @@ class Product(models.Model):
         return self.product_name
 
 class Entitlement(models.Model):
-    max_licenses = models.IntegerField(default=100)
-    total_licenses = models.IntegerField(default=0)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    max_licenses = models.IntegerField(default=100)
+    total_licenses = models.IntegerField(default=0)
     creator_email = models.CharField("Created by ", max_length=50, null=True)
     creator_phone = models.IntegerField(default=0, null=True)
     re_seller = models.CharField(max_length=50, null=True)
@@ -99,12 +99,31 @@ class Entitlement(models.Model):
         table_dict["num_allocated"] = num_allocated
         return table_dict
 
-    def get_table_headers(self):
-        header_list = []
-        header_list.append("Product Name")
-        header_list.append("Access Code")
-        header_list.append("Remaining Licenses")
-        return header_list
+    # def get_table_headers(self):
+    #     header_list = []
+    #     header_list.append("Product Name")
+    #     header_list.append("Access Code")
+    #     header_list.append("Remaining Licenses")
+    #     return header_list
+
+    def get_package_data(self):
+        """ Get data for generating license key """
+        package_data = {}
+        package_data["Org Name: "] = str(self.organization.org_name)
+        package_data["org ID: "] = str(self.organization.id)
+        package_data["Email: "] = str(self.creator_email)
+        package_data["Phone: "] = str(self.creator_phone)
+        package_data["Product: "] = str(self.product.product_name)
+        package_data["Version: "] = str(self.product.product_version)
+        package_data["Host IP: "] = str(self.host_ip)
+        package_data["Permanent: "] = str(self.is_permanent)
+        package_data["Grade: "] = str(self.product_grade)
+        package_data["Stations: "] = str(self.product_stations)
+        package_data["IPs: "] = str(self.allowed_ips)
+        package_data["Created: "] = str(self.creation_date)
+        package_data["Expires: "] = str(self.expiration_date)
+        
+        return package_data
 
     def check_allocated_licenses(self):
         used_licenses = self.max_licenses - self.total_licenses

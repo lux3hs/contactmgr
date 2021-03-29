@@ -13,10 +13,10 @@ window.addEventListener('load', (event) => {
   if (licenseTable) {
     loadTableData(url='get-license-data', tableID='license-table')
 
-    document.getElementById("delete-license-button").addEventListener("click", function() {
-      deleteTableData(url='delete-license-selection', tableID='license-table');
+  //   document.getElementById("delete-license-button").addEventListener("click", function() {
+  //     deleteTableData(url='delete-license-selection', tableID='license-table');
 
-  })
+  // })
 }
 
 
@@ -26,6 +26,8 @@ window.addEventListener('load', (event) => {
 
     loadTableData(url='get-entitlement-data', tableID='entitlement-table')
   }
+
+
 
 })
 

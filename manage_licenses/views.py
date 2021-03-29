@@ -3,7 +3,6 @@ import os.path
 
 import json
 
-
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -13,13 +12,12 @@ from django.conf import settings
 
 from manage_contacts.models import Contact, Product, Entitlement
 from .models import License
-from .forms import NewLicenseForm
+from .forms import NewLicenseForm, ChoiceForm
 
 #Specify method imports
 from .services import *
 
 base_dir = str(settings.BASE_DIR)
-
 
 @login_required
 def client_portal(request):
@@ -33,7 +31,6 @@ def client_portal(request):
 @login_required
 def manage_licenses(request):
     """ Render manage-licenses html page """
-    print("hello")
     current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
@@ -45,80 +42,38 @@ def manage_licenses(request):
         product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
 
     if request.POST.get("save-license"):
-        new_license_form = NewLicenseForm(request.POST, product_choices=product_choices)
-
-        if new_license_form.is_valid():
-
+        # new_license_form = NewLicenseForm(request.POST, product_choices=product_choices)
+        license_choice_form = ChoiceForm(request.POST, field_choices=product_choices)
+        # user_query = request.POST
+        # product_choice = user_query.get('field_choice')
+        
+        if license_choice_form.is_valid():
             user_query = request.POST
-            product_choice = user_query.get('product_name')
+            product_choice = user_query.get('field_choice')
 
             entitlement_product = Product.objects.filter(product_name=product_choice).get()
             product_id = entitlement_product.id
             entitlement_data = product_entitlements.filter(product=product_id).get()
+            if entitlement_data.check_allocated_licenses():
+                entitlement_data.subtract_license()
 
-            if entitlement_data.check_allocated_licenses(): 
-                new_license = create_license(current_user, user_query)
+                data_package = package_license_data(entitlement_data)
+                key_name = generate_license_key(data_package)
 
-                if new_license:
-                    entitlement_data.subtract_license()
+                if key_name is not None:
+                    key_data = read_key_file(key_name)
+                    return download_license_package(request, key_data)
 
-                    data_package = package_license_data(new_license.id)
-                    key_name = generate_license_key(data_package)
-
-
-                    if key_name is not None:
-                        key_data = read_key_file(key_name)
-                        return download_license_package(request, key_data)
-
-
-
-
-
-    #                 messages.add_message(request, messages.INFO, 'new license created')
-    #                 return HttpResponseRedirect(request.path_info)
-
-    #         else:
-    #             messages.add_message(request, messages.INFO, 'no entitlements')
-    #             return HttpResponseRedirect(request.path_info)
+            else: 
+                response = HttpResponse("No licenses allocated", content_type="text/plain")
+                return response
 
     else:
-        new_license_form = NewLicenseForm(product_choices=product_choices)
+        license_choice_form = ChoiceForm(field_choices=product_choices)
 
-
-    # if request.POST.get ("download-license-button"):
-    #     license_selection = request.POST.getlist("check-box")
-    #     license_check = check_license_data(license_selection)
-
-    #     if license_check:
-            
-            
-            
-        #     data_package = package_license_data(license_selection)
-        #     key_name = generate_license_key(data_package)
-            
-        #     if key_name is not None:
-        #         for license_id in license_selection:
-        #             product_license = License.objects.filter(id=license_id)
-        #             product_license.delete()
-                
-        #         key_data = read_key_file(key_name)
-        #         return download_license_package(request, key_data)
-
-        #     else:
-        #         messages.success(request, 'package creation failed')
-        #         return HttpResponseRedirect(request.path_info)
-
-        # else:
-        #     messages.success(request, 'no licenses selected')
-        #     return HttpResponseRedirect(request.path_info)
-
-    context = {'new_license_form':new_license_form}
-   
-   
+    context = {'license_choice_form':license_choice_form, 'contact_data':contact_data}
     return render(request, "manage_licenses/manage-licenses.html", context)
-    
-    # response = HttpResponse("error", content_type="text/plain")
-    # return response
+
 
 @login_required
 def download_license_package(request, data):

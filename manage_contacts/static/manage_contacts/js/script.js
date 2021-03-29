@@ -59,7 +59,7 @@ window.addEventListener('load', (event) => {
     }
 
 
-    // Load entitlement table data
+    // // Load entitlement table data
     var entitlementTable = document.getElementById("entitlement-table");
     if (entitlementTable) {
       loadTableData(url='get-entitlement-data', tableID='entitlement-table')

@@ -11,7 +11,9 @@
 
 {% block header %}{% endblock header %}
 
-{% block logocontainer %}{% endblock logocontainer %}
+{% comment %} {% block logocontainer %}{% endblock logocontainer %} {% endcomment %}
+
+{% block infobox %}{% endblock infobox %}
 
 {% block main %}
 <h1 class="box">Add organization</h1>
@@ -44,7 +46,7 @@
     </form>
 
 <p>
-<a href="{% url 'manage_contacts' %}">Return</a>
+<a href="{% url 'manage_contacts' %}">Back</a>
 <a href="{% url 'homepage' %}">Home</a>
 <a href="{% url 'logout' %}">Logout</a>
 </p>

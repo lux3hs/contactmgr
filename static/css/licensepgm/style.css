@@ -1,11 +1,16 @@
 
-body {
+html, body {
     /* border: 2px solid blue; */
-    height: 100%;
-    min-height: 100vh;
-
+    /* height: 100%; */
+    min-height: 100%;
     overflow-x: hidden;
     margin:0;
+}
+
+main {
+    /* border:2px solid red; */
+    margin-bottom: 50px;
+    
 }
 
 
@@ -29,23 +34,41 @@ header {
 
 
 
-.side-nav {
-    border-right:3px solid cornflowerblue;
+/* Add this class to a div inside of main if showing
+  info border and make sure margin-left is set to info-box width */
+.info-border {
+    /* border:3px solid orange; */
+    margin-left:230px;
+    height: 100%;
+    min-height: 50vh;
+    border-left:3px solid cornflowerblue;
+
+}
+
+
+.info-box {
+    /* border-right:3px solid cornflowerblue; */
     float:left;
-    height: 425px;
+    min-height: 100%;
+    /* display: inline-block; */
+    /* max-height: 100vh; */
+    /* min-height: 100vh; */
     width: 200px; 
     overflow: hidden;
     padding-right: 15px;
-    padding-left: 15px;
+    padding-left: 25px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-top:25px;
+    padding-bottom:50px;
+    /* text-align:center; */
 
-    
+
 }
 
-.side-nav h3 {
+.info-box h3 {
     text-align:center;
     /* color: cornflowerblue; */
-    margin-top:75px;
+    /* margin-top:75px; */
 
 }
 
@@ -54,11 +77,12 @@ header {
 .foot-wrap {
     /* border: 5px solid green; */
     min-height: 80vh;
+
 }
 
 footer {
     background-color: indigo;
-    margin-top:75px;
+    /* margin-top:75px; */
     width: 100%;
     height: 20vh;
     text-align: center;
@@ -71,8 +95,6 @@ footer p{
     margin:5px;
 }
   
-
-
 
 .login-box {
     background-color: cornflowerblue;
@@ -118,7 +140,7 @@ footer p{
 
 
 .tab {
-    border:1px solid black;
+    /* border:1px solid black; */
     background-color: inherit;
     overflow:hidden;
     margin-bottom: 50px;    
@@ -155,12 +177,35 @@ footer p{
 
 
 
+.entitlement-creation-form {
+    /* border:2px solid black; */
+    /* font-size: small; */
+    text-align: right;
+    padding:0;
+    margin:15px;
+    display:inline-block;
+    /* margin-right: auto; */
+    margin-left: 35%;
+}
+
+.entitlement-creation-form p {
+    padding:0;
+    margin:2px;
+}
+
+
+
+.entitlement-creation-form .CharField {
+    padding: 200px 20px;
+}
+
+
 /* Add to local contacts CSS directory */
 
 .contact-search-form {
     /* border:2px solid black; */
     text-align: center;
-    display: inline-block;
+    /* display: inline-block; */
 }
 
 .contact-search-form input {
@@ -186,8 +231,10 @@ footer p{
 
 
 
-
-
+.license-choice-form .ChoiceField {
+    padding: 10px 20px;
+    /* display: inline-block; */
+}
 
 
 
@@ -226,13 +273,26 @@ footer p{
 table {
     /* border:2px solid blue; */
     border-collapse: collapse;
-    text-align: left;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    background-color: ghostwhite;
 
+    
+    text-align: left;
     font-size:0.9em;
     margin-left: auto;
     margin-right: auto;
-    min-width:85vw;
+    min-width:85%;
     margin-top: 50px;
+}
+
+/* Table header */
+table tr:nth-child(1){
+    background-color: gainsboro;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+
+
 }
 
 
@@ -244,7 +304,7 @@ table {
 #delete-contact-button {
     margin-top: 25px;
     margin-left: 115px;
-    display: inline-block;
+    /* display: inline-block; */
     /* border:5px solid cornflowerblue; */
 }
 
@@ -256,12 +316,26 @@ table {
     border:5px solid blue; */
 }
 
+#delete-product-button {
+    margin-top: 25px;
+    margin-left: 115px;
+}
+
 #delete-entitlement-button {
     margin-top: 25px;
     margin-left: 115px;
     /* display: inline-block;
     border:5px solid blue; */
 }
+
+
+.button-margin{
+    margin-left: 115px;
+
+}
+
+
+
 
 
 
@@ -289,3 +363,4 @@ table {
 .right-text {
     text-align: right;
 }
+

@@ -57,16 +57,17 @@ def read_key_file(key_name):
     return key_text
 
 
-def package_license_data(license_id):
+def package_license_data(license_data):
     """ Package license data for download """
-    license_selection = License.objects.filter(id=license_id).get()
+    # license_selection = License.objects.filter(id=license_id).get()
     data_string = ""
     key_name = ""
     # for license_id in license_values:
-    key_name = license_id
+    key_name = license_data.id
     # license_selection = product_licenses.filter(id=license_id).get()
-    license_data = license_selection.get_package_data()
-    data_string += str(license_data) + "\n"
+    license_data = license_data.get_package_data()
+    for key in license_data.keys():
+        data_string += str(key) + license_data[key] + "\n"
 
     data_package = {'key_name':key_name, 'data_string':data_string}
 
