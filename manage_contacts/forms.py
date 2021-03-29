@@ -8,8 +8,8 @@ class ContactCreationForm(UserCreationForm):
     contact_lastname = forms.CharField(max_length=50, label="Lastname")
     contact_email = forms.EmailField(max_length=50, label="Email")
     role_choices = [('user','user'), ('admin','admin')]
-    status_choices = [('active', 'active'), ('removed', 'removed')]
     contact_role = forms.ChoiceField(choices=role_choices, label="Role")
+    status_choices = [('active', 'active'), ('removed', 'removed')]
     contact_status = forms.ChoiceField(choices=status_choices, label="Status")
     
     #Extend init function to set widget class
@@ -17,8 +17,13 @@ class ContactCreationForm(UserCreationForm):
         super(ContactCreationForm, self).__init__(*args, **kwargs)
         
         self.fields["username"].widget.attrs['class'] = "CharField"
+        self.fields['username'].help_text = ""
         self.fields["password1"].widget.attrs['class'] = "CharField"
-        self.fields["password2"].widget.attrs['class'] = "CharField"        
+        self.fields["password1"].help_text = ""
+        self.fields["password2"].widget.attrs['class'] = "CharField"
+        self.fields["password2"].help_text = ""
+        self.fields["password2"].label = "Confirmation:"    
+        
         self.fields["contact_firstname"].widget.attrs['class'] = "CharField"
         self.fields["contact_lastname"].widget.attrs['class'] = "CharField"
         self.fields["contact_email"].widget.attrs['class'] = "CharField"

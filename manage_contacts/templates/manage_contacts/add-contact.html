@@ -12,8 +12,6 @@
 
 {% block header %}{% endblock header %}
 
-{% comment %} {% block logocontainer %}{% endblock logocontainer %} {% endcomment %}
-
 {% block main %}
 
 {% if messages %}
@@ -26,9 +24,8 @@
 
   {% if contact_data.role == "admin" %}
 
-    <div class="flex-box flex-column widget">
-      <h3>Add Contact</h3>
-      <form id="new-contact-form" method="post">
+      <h2 class="center-text border-full">Add Contact</h2>
+      <form id="new-contact-form" class="new-contact-form" method="post">
         {% csrf_token %}
         {{ contact_form.as_p }}     
         {% if contact_org.org_name == "automai" %}
@@ -41,7 +38,6 @@
         {% endif %}
         <p><input class="button" type = "submit" value = "Submit"/></p>
       </form> 
-    </div>
 
   {% else %}
     <p>Not authorized. ({{ contact_data.role }}) </p>

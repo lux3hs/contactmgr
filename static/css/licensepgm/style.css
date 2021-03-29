@@ -238,7 +238,20 @@ footer p{
 
 
 
+.new-contact-form {
+    /* padding-right: 0px; */
+    display: inline-block;
+    text-align: right;
+    border:2px solid yellow;
+    margin-left: 200px;
+    /* margin-right: 200px; */
+    padding-right:25px;
+    padding-left: 25px;
+}
 
+/* .new-contact-form .helptext{
+    visibility: hidden;
+  } */
 
 
 
@@ -329,14 +342,18 @@ table tr:nth-child(1){
 }
 
 
+
+
+
+
+
+
+
+
 .button-margin{
     margin-left: 115px;
 
 }
-
-
-
-
 
 
 .border-full {

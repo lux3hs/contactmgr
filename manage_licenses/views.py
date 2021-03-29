@@ -61,7 +61,11 @@ def manage_licenses(request):
                 key_name = generate_license_key(data_package)
 
                 if key_name is not None:
-                    key_data = read_key_file(key_name)
+                    key_text = read_key_file(key_name)
+                    key_field = "key=" + key_text
+                    key_data = data_package['header_string'] + key_field
+
+
                     return download_license_package(request, key_data)
 
             else: 

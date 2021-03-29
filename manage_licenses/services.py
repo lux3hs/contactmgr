@@ -54,22 +54,30 @@ def read_key_file(key_name):
     file_dir = base_dir + "/bin/keygen/" + key_name
     f = open(file_dir, "r")
     key_text = f.read()
-    return key_text
+    if "Key=" in key_text:
+        coded_key = key_text[key_text.index("Key=") + 4 : len(key_text)]
+
+    else:
+        coded_key = False
+
+    return coded_key
 
 
 def package_license_data(license_data):
     """ Package license data for download """
     # license_selection = License.objects.filter(id=license_id).get()
-    data_string = ""
+    header_string = ""
     key_name = ""
     # for license_id in license_values:
     key_name = license_data.id
     # license_selection = product_licenses.filter(id=license_id).get()
-    license_data = license_data.get_package_data()
-    for key in license_data.keys():
-        data_string += str(key) + license_data[key] + "\n"
+    license_header = license_data.get_license_header()
+    for key in license_header.keys():
+        header_string += str(key) + str(license_header[key]) + "\n"
 
-    data_package = {'key_name':key_name, 'data_string':data_string}
+    data_string = license_data.get_product_key()
+
+    data_package = {'key_name':key_name, 'header_string':header_string, 'data_string':data_string}
 
     return data_package
 

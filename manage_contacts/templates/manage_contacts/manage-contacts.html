@@ -9,11 +9,8 @@
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
 {% endblock head %}
   
-  
 {% block infobox %}{% endblock infobox %}
 {% block main %}
-{% comment %} <div class="info-border"> {% endcomment %}
-
 
 
   <div class="tab">
@@ -49,8 +46,6 @@
 </div>
 
 
-
-
 <div id="products-tab" class="js-tabcontent">
 
    <p><a class="button button-margin" href="{% url 'add_product' %}">Add Product</a></p>
@@ -72,7 +67,6 @@
 
 <div id="contacts-tab" class="js-tabcontent">
   
-  {% comment %} <div class="center-text"> {% endcomment %}
     <p><a class="button button-margin" href="{% url 'add_contact' %}">Add User</a></p>
     
     <form class="contact-search-form">
@@ -80,7 +74,6 @@
       {{ contact_search_form }}
       <input id="clear-contact-search" type="button" class="button" value="Clear"/>
     </form>
-  {% comment %} </div> {% endcomment %}
 
   <table id="contact-table">
     <thead>

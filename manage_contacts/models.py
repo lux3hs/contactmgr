@@ -106,24 +106,78 @@ class Entitlement(models.Model):
     #     header_list.append("Remaining Licenses")
     #     return header_list
 
-    def get_package_data(self):
+    def get_license_header(self):
         """ Get data for generating license key """
         package_data = {}
-        package_data["Org Name: "] = str(self.organization.org_name)
-        package_data["org ID: "] = str(self.organization.id)
-        package_data["Email: "] = str(self.creator_email)
-        package_data["Phone: "] = str(self.creator_phone)
-        package_data["Product: "] = str(self.product.product_name)
+        package_data["Product Name: "] = str(self.product.product_name)
+        package_data["Host/IP address: "] = str(self.host_ip)
         package_data["Version: "] = str(self.product.product_version)
-        package_data["Host IP: "] = str(self.host_ip)
-        package_data["Permanent: "] = str(self.is_permanent)
+        package_data["Num of stations: "] = str(self.product_stations)
+        package_data["Lease Start Date: "] = str(self.creation_date)
+        package_data["Lease End Date: "] = str(self.expiration_date)
         package_data["Grade: "] = str(self.product_grade)
-        package_data["Stations: "] = str(self.product_stations)
-        package_data["IPs: "] = str(self.allowed_ips)
-        package_data["Created: "] = str(self.creation_date)
-        package_data["Expires: "] = str(self.expiration_date)
+        package_data["User name: "] = str(self.creator_email)
+        package_data["Support ID: "] = self.check_trial()
+        package_data["Support Expiration Date: "] = str(self.expiration_date)
+
+
+
+        # package_data["Org Name: "] = str(self.organization.org_name)
+        # package_data["org ID: "] = str(self.organization.id)
+        # package_data["Email: "] = str(self.creator_email)
+        # package_data["Phone: "] = str(self.creator_phone)
+        # package_data["Permanent: "] = str(self.is_permanent)
+        # package_data["IPs: "] = str(self.allowed_ips)
         
         return package_data
+
+
+    def get_product_key(self):
+        organization = self.organization.org_name
+
+        task = "task"
+        log = "log"
+        node = "node"
+        system = "system"
+        snmp = "snmp"
+
+        product_key = "organization=" + organization
+        product_key += "&product=" + self.product.product_name
+        product_key += "&Ip address=" + self.host_ip
+        product_key += "&Hostname=" + self.host_ip
+        product_key += "&Version=" + self.product.product_version
+        product_key += "&Num of stations=" + str(self.product_stations)
+        product_key += "&ips=" + str(self.allowed_ips)
+        product_key += "&License Start Date=" + str(self.creation_date)
+        product_key += "&License End Date=" + str(self.expiration_date)
+        product_key += "&task=" + task
+        product_key += "&log=" + log
+        product_key += "&node=" + node
+        product_key += "&system=" + system
+        product_key += "&snmp=" + snmp
+        product_key += "&grade=" + self.product_grade
+        product_key += "&sid=" + str(self.id)
+        product_key += "&expdate=" + str(self.expiration_date)
+        product_key +="&username=all"
+
+        if (self.product.product_name is not "Backend" and
+            self.product.product_name is not "AppLoader" and
+            self.product.product_name is not "AppsWatch"):
+            product_key += "&end=true"
+
+        return product_key
+
+
+
+
+
+
+    def check_trial(self):
+        if self.is_permanent is True:
+            return "TRIAL"
+
+        else:
+            return self.id
 
     def check_allocated_licenses(self):
         used_licenses = self.max_licenses - self.total_licenses
