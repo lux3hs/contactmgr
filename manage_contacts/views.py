@@ -15,6 +15,36 @@ from .forms import ContactCreationForm, SearchChoiceForm, OrgCreationForm, Produ
 #Specify method imports
 from .services import *
 
+@login_required
+def client_portal(request):
+    context = {}
+    return render(request, "manage_contacts/client-portal.html", context)
+
+    # return "hello!"
+
+
+@login_required
+def admin_portal(request):
+    """ Render admin portal """
+    return "hello from admin!"
+#     current_user = request.user
+#     user_id = current_user.id
+#     user_data = Contact.objects.filter(user_id=user_id).get()
+#     user_role = user_data.role
+#     user_org = user_data.organization.org_name
+#     org_objects = Organization.objects.all()
+#     product_objects = Product.objects.all()
+#     entitlement_objects = Entitlement.objects.all()
+
+#     context = {'user_role':user_role,
+#                'user_org':user_org,
+#                'org_objects':org_objects,
+#                'product_objects':product_objects,
+#                'entitlement_objects':entitlement_objects}
+
+#     return render(request, "manage_contacts/admin-dash.html", context)
+
+
 
 @login_required
 def manage_contacts(request):
@@ -50,11 +80,32 @@ def manage_contacts(request):
     
     
     context = {'entitlement_form':entitlement_form,
-            #    'contact_data':contact_data,
                'contact_search_form':contact_search_form,
             }
 
     return render(request, "manage_contacts/manage-contacts.html", context)
+
+@login_required
+def get_entitlement_data(request):
+    """ Get entitlement data for populating tables """
+    entitlement_data = Entitlement.objects.all()
+    table_header = get_entitlement_header()
+    table_data = get_table_data(table_header, entitlement_data)
+    return JsonResponse(table_data)
+
+@login_required
+def delete_entitlement_selection(request, query_string):
+    """ Delete entitlement selection on user request """
+    entitlement_selection = json.loads(query_string)
+    response = delete_entitlement_data(entitlement_selection)
+    
+    if response is True:
+        return get_entitlement_data(request)
+        
+    else:
+
+        return get_entitlement_data(request)
+
 
 @login_required
 def add_contact(request):
@@ -92,7 +143,7 @@ def add_contact(request):
     context = {'contact_data':contact_data, 'contact_form':contact_form, 'choice_list':choice_list}
     return render(request, "manage_contacts/add-contact.html", context)
 
-
+@login_required
 def get_contact_data(request):
     """ Provide contact data for populating tables """
     current_user = request.user
@@ -104,7 +155,7 @@ def get_contact_data(request):
     table_data = get_table_data(table_header, contact_data)
     return JsonResponse(table_data)
 
-
+@login_required
 def delete_contact_selection(request, query_string):
     """ Delete contact selection on user request """
     contact_selection = json.loads(query_string)
@@ -116,29 +167,6 @@ def delete_contact_selection(request, query_string):
     
     else:
         return get_contact_data(request)
-
-
-## Admin Views for Automai users ##
-
-@login_required
-def admin_dash(request):
-    """ Render admin dash """
-    current_user = request.user
-    user_id = current_user.id
-    user_data = Contact.objects.filter(user_id=user_id).get()
-    user_role = user_data.role
-    user_org = user_data.organization.org_name
-    org_objects = Organization.objects.all()
-    product_objects = Product.objects.all()
-    entitlement_objects = Entitlement.objects.all()
-
-    context = {'user_role':user_role,
-               'user_org':user_org,
-               'org_objects':org_objects,
-               'product_objects':product_objects,
-               'entitlement_objects':entitlement_objects}
-
-    return render(request, "manage_contacts/admin-dash.html", context)
 
 
 @login_required
@@ -165,7 +193,7 @@ def add_organization(request):
     context = {'user_role':user_role, 'user_org':user_org, 'org_form':org_form}
     return render(request, "manage_contacts/add-organization.html", context)
     
-
+@login_required
 def get_org_data(request):
     """ Get org data for populating tables """
     org_data = Organization.objects.all()
@@ -173,7 +201,7 @@ def get_org_data(request):
     table_data = get_table_data(table_header, org_data)
     return JsonResponse(table_data)
 
-
+@login_required
 def delete_org_selection(request, query_string):
     """ Delete org selection on user request """
     current_user = request.user
@@ -214,7 +242,7 @@ def add_product(request):
     context = {'user_role':user_role, 'user_org':user_org, 'product_form':product_form}
     return render(request, "manage_contacts/add-product.html", context)
     
-
+@login_required
 def get_product_data(request):
     """ Get product data for populating tables """
     product_data = Product.objects.all()
@@ -222,7 +250,7 @@ def get_product_data(request):
     table_data = get_table_data(table_header, product_data)
     return JsonResponse(table_data)
 
-
+@login_required
 def delete_product_selection(request, query_string):
     """ Delete product selection on user request """
     product_selection = json.loads(query_string)
@@ -235,59 +263,3 @@ def delete_product_selection(request, query_string):
         return get_product_data(request)
 
 
-@login_required
-def add_entitlement(request):
-    """ Render add entitlement page """
-    current_user = request.user
-    user_id = current_user.id
-    user_data = Contact.objects.filter(user_id=user_id).get()
-    user_role = user_data.role
-    user_org = user_data.organization.org_name
-
-    org_data = Organization.objects.all()
-    org_list = []
-    for organization in org_data:
-        org_list.append((organization.org_name, organization.org_name))
-
-    product_data = Product.objects.all()
-    product_list = []
-    for product in product_data:
-        product_list.append((product.product_name, product.product_name))
-        
-
-    if request.method == 'POST':
-        entitlement_form = EntitlementCreationForm(request.POST, product_list=product_list, org_list=org_list)
-        if entitlement_form.is_valid():
-            user_query = request.POST
-            success_message = add_new_entitlement(user_query)
-            messages.add_message(request, messages.INFO, success_message)
-            return HttpResponseRedirect(request.path_info)
-
-    else:
-        entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
-        entitlement_form.order_fields([])
-
-
-    context = {'user_role':user_role, 'user_org':user_org, 'entitlement_form':entitlement_form}
-    return render(request, "manage_contacts/add-entitlement.html", context)
-
-
-def get_entitlement_data(request):
-    """ Get entitlement data for populating tables """
-    entitlement_data = Entitlement.objects.all()
-    table_header = get_entitlement_header()
-    table_data = get_table_data(table_header, entitlement_data)
-    return JsonResponse(table_data)
-
-
-def delete_entitlement_selection(request, query_string):
-    """ Delete entitlement selection on user request """
-    entitlement_selection = json.loads(query_string)
-    response = delete_entitlement_data(entitlement_selection)
-    
-    if response is True:
-        return get_entitlement_data(request)
-        
-    else:
-
-        return get_entitlement_data(request)

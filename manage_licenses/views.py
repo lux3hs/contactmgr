@@ -76,41 +76,30 @@ def download_license_package(request, data):
     return response
 
 
-@login_required
-def delete_license_selection(request, query_string):
-    """ Delete license data on user request """
-    license_selection = json.loads(query_string)
-    delete_check = delete_license_data(license_selection)
-    if delete_check: 
-        data = get_license_data(request)
-        return data
+# @login_required
+# def delete_license_selection(request, query_string):
+#     """ Delete license data on user request """
+#     license_selection = json.loads(query_string)
+#     delete_check = delete_license_data(license_selection)
+#     if delete_check: 
+#         data = get_license_data(request)
+#         return data
 
-    else:
-        response = HttpResponse("error", content_type="text/plain")
-        return response
-
-
-@login_required
-def get_license_data(request):
-    """ Provide table data for populating licenses """
-    current_user = request.user
-    user_id = current_user.id
-    contact_data = Contact.objects.filter(user=user_id).get()
-    org_id = contact_data.organization.id
-    license_data = License.objects.filter(org_id=org_id)
-    table_header = get_license_header()
-    table_data = get_table_data(table_header, license_data)
-    return JsonResponse(table_data)
+#     else:
+#         response = HttpResponse("error", content_type="text/plain")
+#         return response
 
 
 # @login_required
-# def get_entitlement_data(request):
-#     """ Provide entitlement data for populating tables """
+# def get_license_data(request):
+#     """ Provide table data for populating licenses """
 #     current_user = request.user
 #     user_id = current_user.id
 #     contact_data = Contact.objects.filter(user=user_id).get()
 #     org_id = contact_data.organization.id
-#     entitlement_data = Entitlement.objects.filter(organization=org_id)
-#     table_header = get_entitlement_header()
-#     table_data = get_table_data(table_header, entitlement_data)
+#     license_data = License.objects.filter(org_id=org_id)
+#     table_header = get_license_header()
+#     table_data = get_table_data(table_header, license_data)
 #     return JsonResponse(table_data)
+
+

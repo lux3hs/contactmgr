@@ -205,20 +205,6 @@ def add_new_entitlement(contact_data, user_query):
     product_grade = user_query.get("product_grade")
     product_stations = user_query.get("product_stations")
 
-    creation_date = datetime.datetime.now()
-
-    expiration_date = user_query.get('expiration_date')
-    exp_date_strp = datetime.datetime.strptime(expiration_date, "%m/%d/%Y")
-    expiration_date = exp_date_strp
-
-
-
-
-    # print(creation_date)
-    # print(expiration_date)
-
-    # crt_date_utc = creation_date.replace(tzinfo=timezone.utc).timestamp()
-    # exp_date_utc = expiration_date.replace(tzinfo=timezone.utc).timestamp()
 
 
     allowed_ips = user_query.get('allowed_ips')
@@ -231,6 +217,11 @@ def add_new_entitlement(contact_data, user_query):
     else:
         is_permanent = False
 
+    creation_date = datetime.datetime.now()
+    expiration_date = user_query.get('expiration_date')
+    exp_date_strp = datetime.datetime.strptime(expiration_date, "%m/%d/%Y")
+    expiration_date = exp_date_strp
+
     entitlement_data = Entitlement.objects.all()
     entitlement_names = []
     for entitlement in entitlement_data:
@@ -239,10 +230,10 @@ def add_new_entitlement(contact_data, user_query):
     dup_check = org_object.org_name + '/' + product_object.product_name
     
     if dup_check not in entitlement_names:
-        new_entitlement = Entitlement(max_licenses=max_licenses, 
+        new_entitlement = Entitlement(max_licenses=max_licenses,
                                     total_licenses=total_licenses,
-                                    product=product_object, 
-                                    organization=org_object, 
+                                    product=product_object,
+                                    organization=org_object,
                                     creator_email=creator_email,
                                     creator_phone=creator_phone,
                                     re_seller=re_seller,
@@ -276,7 +267,6 @@ def delete_entitlement_data(entitlement_selection):
 
     except:
         return ent_id
-
 
 
 ##JS Table Services##
@@ -322,7 +312,7 @@ def get_entitlement_header():
 
 
 #Create table data based on header keys and object data#
-## Data model must have get_table_dictionary function ##
+## Data model must have get_table_dictionary method ##
 def get_table_data(table_header, object_data):
     """ Create a data object to populate table """
     data = {}
