@@ -14,17 +14,17 @@
 
 {% block main %}
 
-{% if messages %}
+{% comment %} {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
-{% endif %}
+{% endif %} {% endcomment %}
 
   {% if contact_data.role == "admin" %}
 
-      <h2 class="center-text border-full">Add Contact</h2>
+      <h2 class="center-text">Add User</h2>
       <form id="new-contact-form" class="new-contact-form" method="post">
         {% csrf_token %}
         {{ contact_form.as_p }}     

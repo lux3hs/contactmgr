@@ -1,5 +1,6 @@
 
 import datetime
+from datetime import timezone
 from django.utils.dateparse import parse_date
 
 
@@ -82,20 +83,6 @@ def add_new_contact(user_query, contact_organization):
     new_contact.save()
 
     return new_contact
-
-# def delete_contact(user_id):
-#     if user_id:
-#         try:
-#             contact_data = Contact.objects.filter(id=user_id)
-#             contact_data.delete()
-            
-#             return True
-
-#         except:
-#             return "error"
-
-#     else:
-#         return "no contacts selected"
 
 
 def delete_contact_data(current_user, contact_selection):
@@ -218,15 +205,21 @@ def add_new_entitlement(contact_data, user_query):
     product_grade = user_query.get("product_grade")
     product_stations = user_query.get("product_stations")
 
+    creation_date = datetime.datetime.now()
+
     expiration_date = user_query.get('expiration_date')
-    print(expiration_date)
+    exp_date_strp = datetime.datetime.strptime(expiration_date, "%m/%d/%Y")
+    expiration_date = exp_date_strp
 
-    clean_date = datetime.datetime.strptime(expiration_date, "%m/%d/%Y")
 
-    # expiration_date = "2018-3-11"
-    # clean_date = parse_date(expiration_date)
-    expiration_date = clean_date
-    print(type(clean_date))
+
+
+    # print(creation_date)
+    # print(expiration_date)
+
+    # crt_date_utc = creation_date.replace(tzinfo=timezone.utc).timestamp()
+    # exp_date_utc = expiration_date.replace(tzinfo=timezone.utc).timestamp()
+
 
     allowed_ips = user_query.get('allowed_ips')
     re_seller = user_query.get('re_seller')
@@ -258,7 +251,7 @@ def add_new_entitlement(contact_data, user_query):
                                     product_grade=product_grade,
                                     product_stations=product_stations,
                                     allowed_ips=allowed_ips,
-                                    creation_date=datetime.datetime.now(),
+                                    creation_date=creation_date,
                                     expiration_date=expiration_date,
         )
 

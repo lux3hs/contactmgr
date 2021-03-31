@@ -4,18 +4,20 @@ from django.contrib.auth.forms import UserCreationForm
 
 class ContactCreationForm(UserCreationForm):
     #Set widget fields
-    contact_firstname = forms.CharField(max_length=50, label="Firstname")
-    contact_lastname = forms.CharField(max_length=50, label="Lastname")
-    contact_email = forms.EmailField(max_length=50, label="Email")
     role_choices = [('user','user'), ('admin','admin')]
     contact_role = forms.ChoiceField(choices=role_choices, label="Role")
     status_choices = [('active', 'active'), ('removed', 'removed')]
     contact_status = forms.ChoiceField(choices=status_choices, label="Status")
+    contact_firstname = forms.CharField(max_length=50, label="Firstname")
+    contact_lastname = forms.CharField(max_length=50, label="Lastname")
+    contact_email = forms.EmailField(max_length=50, label="Email")
+    
     
     #Extend init function to set widget class
     def __init__(self, *args, **kwargs):
         super(ContactCreationForm, self).__init__(*args, **kwargs)
-        
+        self.fields["contact_role"].widget.attrs['class'] = "ChoiceField"
+        self.fields["contact_status"].widget.attrs['class'] = "ChoiceField"
         self.fields["username"].widget.attrs['class'] = "CharField"
         self.fields['username'].help_text = ""
         self.fields["password1"].widget.attrs['class'] = "CharField"
@@ -23,12 +25,9 @@ class ContactCreationForm(UserCreationForm):
         self.fields["password2"].widget.attrs['class'] = "CharField"
         self.fields["password2"].help_text = ""
         self.fields["password2"].label = "Confirmation:"    
-        
         self.fields["contact_firstname"].widget.attrs['class'] = "CharField"
         self.fields["contact_lastname"].widget.attrs['class'] = "CharField"
         self.fields["contact_email"].widget.attrs['class'] = "CharField"
-        self.fields["contact_role"].widget.attrs['class'] = "ChoiceField"
-        self.fields["contact_status"].widget.attrs['class'] = "ChoiceField"
 
     #Validate passwords
     def clean_password2(self):
@@ -56,22 +55,23 @@ class ProductCreationForm(forms.Form):
 
 
 class EntitlementCreationForm(forms.Form):
-    max_licenses = forms.IntegerField(max_value=1000)
     def __init__(self, *args, **kwargs):
         self.product_list = kwargs.pop('product_list')
         self.org_list = kwargs.pop('org_list')
         super(EntitlementCreationForm, self).__init__(*args, **kwargs)
-        self.fields['product_choice'] = forms.ChoiceField(choices=self.product_list)
-        self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
         self.fields['org_choice'] = forms.ChoiceField(choices=self.org_list)
         self.fields['org_choice'].widget.attrs['class'] = "ChoiceField"
+        self.fields['product_choice'] = forms.ChoiceField(choices=self.product_list)
+        self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
+        self.fields['max_licenses'] = forms.IntegerField(max_value=1000)
         self.fields['host_ip'] = forms.CharField(max_length=50)
-        self.fields['is_permanent'] = forms.BooleanField(required=False)
         self.fields["product_grade"] = forms.CharField(max_length=50)
         self.fields["product_stations"] = forms.IntegerField(max_value=999999)
         self.fields["allowed_ips"] = forms.IntegerField(max_value=999999)
         self.fields['re_seller'] = forms.CharField(max_length=50)
-        self.fields['expiration_date'] = forms.DateField()
+        self.fields['expiration_date'] = forms.DateTimeField()
+        self.fields['is_permanent'] = forms.BooleanField(required=False)
+
 
 
 

@@ -20,15 +20,6 @@ from .services import *
 base_dir = str(settings.BASE_DIR)
 
 @login_required
-def client_portal(request):
-    current_user = request.user
-    user_id = current_user.id
-    contact_data = Contact.objects.filter(user=user_id).get()
-    context = {'contact_data':contact_data}
-    return render(request, "manage_licenses/client-portal.html", context)
-
-
-@login_required
 def manage_licenses(request):
     """ Render manage-licenses html page """
     current_user = request.user
@@ -62,7 +53,7 @@ def manage_licenses(request):
 
                 if key_name is not None:
                     key_text = read_key_file(key_name)
-                    key_field = "key=" + key_text
+                    key_field = "Key=" + key_text
                     key_data = data_package['header_string'] + key_field
 
 

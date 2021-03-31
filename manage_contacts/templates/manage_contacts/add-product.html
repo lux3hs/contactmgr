@@ -16,21 +16,35 @@
 
 {% block main %}
 
-{% if messages %}
+{% comment %} {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
-{% endif %}
+{% endif %} {% endcomment %}
 
-  <form method="post">
+      <h2 class="center-text">Product Versions</h2>
+
+
+  <form class="new-product-form" method="post">
       {% csrf_token %}
       <div>
         {{ product_form.as_p }}
       </div>
       <input class="button" type = "submit" value = "Create" name="newForm"/>
   </form>
+
+  <form>
+        <table id="product-table">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+        <p><input type="button" class="button" name="delete_product_button" id="delete-product-button" value="Delete"></p>
+    </form>
 
 
 <div>

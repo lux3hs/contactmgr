@@ -179,7 +179,7 @@ footer p{
 
 .entitlement-creation-form {
     /* border:2px solid black; */
-    /* font-size: small; */
+    font-size: small;
     text-align: right;
     padding:0;
     margin:15px;
@@ -239,19 +239,31 @@ footer p{
 
 
 .new-contact-form {
-    /* padding-right: 0px; */
     display: inline-block;
+    font-size: small;
     text-align: right;
-    border:2px solid yellow;
-    margin-left: 200px;
-    /* margin-right: 200px; */
+    margin-left: 35vw;
     padding-right:25px;
     padding-left: 25px;
 }
 
-/* .new-contact-form .helptext{
-    visibility: hidden;
-  } */
+.new-org-form {
+    display: inline-block;
+    font-size: small;
+    text-align: right;
+    margin-left: 35vw;
+    padding-right:25px;
+    padding-left: 25px;
+}
+
+.new-product-form {
+    display: inline-block;
+    font-size: small;
+    text-align: right;
+    margin-left: 35vw;
+    padding-right:25px;
+    padding-left: 25px;
+}
 
 
 
@@ -343,17 +355,27 @@ table tr:nth-child(1){
 
 
 
-
-
-
-
-
-
-
-.button-margin{
+.button-padding {
+    margin: 25px;
+    /* margin-top: 125px; */
+    /* margin-bottom: 125px; */
+    /* padding: 10px 15px; */
     margin-left: 115px;
+    /* border:2px solid red; */
 
 }
+
+/* .box-padding { 
+    padding:10px;
+    border:2px solid blue;    
+}
+
+.box-padding p {
+    margin: 125px;
+} */
+
+
+
 
 
 .border-full {

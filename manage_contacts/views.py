@@ -87,6 +87,7 @@ def add_contact(request):
 
     else:
         contact_form = ContactCreationForm()
+        contact_form.order_fields(["contact_role", "contact_status"])
 
     context = {'contact_data':contact_data, 'contact_form':contact_form, 'choice_list':choice_list}
     return render(request, "manage_contacts/add-contact.html", context)
@@ -264,6 +265,7 @@ def add_entitlement(request):
 
     else:
         entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
+        entitlement_form.order_fields([])
 
 
     context = {'user_role':user_role, 'user_org':user_org, 'entitlement_form':entitlement_form}

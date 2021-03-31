@@ -14,17 +14,17 @@
 {% block infobox %}{% endblock infobox %}
 
 {% block main %}
-<h1 class="box">Add organization</h1>
+<h2 class="center-text">Add organization</h2>
 
-{% if messages %}
+{% comment %} {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
-{% endif %}
+{% endif %} {% endcomment %}
 
-    <form method="post">
+    <form class="new-org-form" method="post">
       {% csrf_token %}
       <div>
         {{ org_form.as_p }}

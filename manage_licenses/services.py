@@ -40,6 +40,7 @@ def generate_license_key(data_package):
                    '"' + str(data_string) + '"' +
                    " flag=encrypt outputfile=" +
                    file_dir + key_name)
+    print(exec_string)
 
     try:
         exec_arg(exec_string)
@@ -73,7 +74,7 @@ def package_license_data(license_data):
     # license_selection = product_licenses.filter(id=license_id).get()
     license_header = license_data.get_license_header()
     for key in license_header.keys():
-        header_string += str(key) + str(license_header[key]) + "\n"
+        header_string += str(key) + str(license_header[key]) + "\r\n"
 
     data_string = license_data.get_product_key()
 
@@ -101,64 +102,64 @@ def check_license_data(license_selection):
 
 ##Model object services##
 
-def create_license(current_user, user_query):
-    """ Create new license on user request """
-    user_id = current_user.id
+# def create_license(current_user, user_query):
+#     """ Create new license on user request """
+#     user_id = current_user.id
 
 
-    contact_data = Contact.objects.filter(user=user_id).get()
+#     contact_data = Contact.objects.filter(user=user_id).get()
 
-    creator_email = contact_data.user.email
-    creator_phone = contact_data.phone
-    user_org = contact_data.organization.org_name
-    org_id = contact_data.organization.id
+#     creator_email = contact_data.user.email
+#     creator_phone = contact_data.phone
+#     user_org = contact_data.organization.org_name
+#     org_id = contact_data.organization.id
     
-    product_name = user_query.get('product_name')
-    host_ip = user_query.get('host_ip')
-    product_grade = user_query.get("product_grade")
-    product_stations = user_query.get("product_stations")
+#     product_name = user_query.get('product_name')
+#     host_ip = user_query.get('host_ip')
+#     product_grade = user_query.get("product_grade")
+#     product_stations = user_query.get("product_stations")
 
-    expiration_date = user_query.get('expiration_date')
-    clean_date = parse_datetime(expiration_date)
-    expiration_date = clean_date
-    # print(clean_date)
+#     expiration_date = user_query.get('expiration_date')
+#     clean_date = parse_datetime(expiration_date)
+#     expiration_date = clean_date
+#     # print(clean_date)
 
-    allowed_ips = user_query.get('allowed_ips')
-    re_seller = user_query.get('re_seller')
+#     allowed_ips = user_query.get('allowed_ips')
+#     re_seller = user_query.get('re_seller')
 
-    entitlement_product = Product.objects.filter(product_name=product_name).get()
-    product_id = entitlement_product.id
-    product_version = entitlement_product.product_version
-    entitlement_data = Entitlement.objects.filter(organization=org_id, product=product_id).get()
-    entitlement_id = entitlement_data.id
+#     entitlement_product = Product.objects.filter(product_name=product_name).get()
+#     product_id = entitlement_product.id
+#     product_version = entitlement_product.product_version
+#     entitlement_data = Entitlement.objects.filter(organization=org_id, product=product_id).get()
+#     entitlement_id = entitlement_data.id
 
-    is_permanent = user_query.get('is_permanent')
-    if is_permanent:
-        is_permanent = True
+#     is_permanent = user_query.get('is_permanent')
+#     if is_permanent:
+#         is_permanent = True
     
-    else:
-        is_permanent = False
+#     else:
+#         is_permanent = False
     
-    new_license = License(org_name=user_org,
-                            org_id=org_id,
-                            entitlement_id=entitlement_id,
-                            creator_email=creator_email,
-                            creator_phone=creator_phone,
-                            re_seller=re_seller,
-                            product_name=product_name,
-                            version_number=product_version,
-                            host_ip=host_ip,
-                            is_permanent=is_permanent,
-                            product_grade=product_grade,
-                            product_stations=product_stations,
-                            allowed_ips=allowed_ips,
-                            creation_date=datetime.datetime.now(),
-                            expiration_date=expiration_date,
-    )
+#     new_license = License(org_name=user_org,
+#                             org_id=org_id,
+#                             entitlement_id=entitlement_id,
+#                             creator_email=creator_email,
+#                             creator_phone=creator_phone,
+#                             re_seller=re_seller,
+#                             product_name=product_name,
+#                             version_number=product_version,
+#                             host_ip=host_ip,
+#                             is_permanent=is_permanent,
+#                             product_grade=product_grade,
+#                             product_stations=product_stations,
+#                             allowed_ips=allowed_ips,
+#                             creation_date=datetime.datetime.now(),
+#                             expiration_date=expiration_date,
+#     )
 
-    new_license.save()
+#     new_license.save()
     
-    return new_license
+#     return new_license
 
 
 def delete_license_data(license_selection):

@@ -1,3 +1,6 @@
+import datetime
+from datetime import timezone
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -84,9 +87,8 @@ class Entitlement(models.Model):
     product_grade = models.CharField(max_length=50, default="standard", null=True)
     product_stations = models.IntegerField(default=0, null=True)
     allowed_ips = models.IntegerField(default=10, null=True)
-    creation_date = models.DateField("Date created ", null=True)
-    expiration_date = models.DateField("Expiration date ", null=True)
-
+    creation_date = models.DateTimeField("Date created ", null=True)
+    expiration_date = models.DateTimeField("Expiration date ", null=True)
 
     def get_table_dictionary(self):
         table_dict = {}
@@ -98,13 +100,6 @@ class Entitlement(models.Model):
         num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
         table_dict["num_allocated"] = num_allocated
         return table_dict
-
-    # def get_table_headers(self):
-    #     header_list = []
-    #     header_list.append("Product Name")
-    #     header_list.append("Access Code")
-    #     header_list.append("Remaining Licenses")
-    #     return header_list
 
     def get_license_header(self):
         """ Get data for generating license key """
@@ -119,46 +114,40 @@ class Entitlement(models.Model):
         package_data["User name: "] = str(self.creator_email)
         package_data["Support ID: "] = self.check_trial()
         package_data["Support Expiration Date: "] = str(self.expiration_date)
-
-
-
-        # package_data["Org Name: "] = str(self.organization.org_name)
-        # package_data["org ID: "] = str(self.organization.id)
-        # package_data["Email: "] = str(self.creator_email)
-        # package_data["Phone: "] = str(self.creator_phone)
-        # package_data["Permanent: "] = str(self.is_permanent)
-        # package_data["IPs: "] = str(self.allowed_ips)
-        
         return package_data
-
 
     def get_product_key(self):
         organization = self.organization.org_name
+        
+        task = 0
+        log = 0
+        node = 0
+        system = 0
+        snmp = 0
 
-        task = "task"
-        log = "log"
-        node = "node"
-        system = "system"
-        snmp = "snmp"
+        creation_date = self.creation_date
+        expiration_date = self.expiration_date
+        crt_date_utc = creation_date.timestamp()
+        exp_date_utc = expiration_date.timestamp()
 
-        product_key = "organization=" + organization
+        product_key = "organization=" + str(organization)
         product_key += "&product=" + self.product.product_name
-        product_key += "&Ip address=" + self.host_ip
-        product_key += "&Hostname=" + self.host_ip
-        product_key += "&Version=" + self.product.product_version
+        product_key += "&Ip address=" + str(self.host_ip)
+        product_key += "&Hostname=" + str(self.host_ip)
+        product_key += "&Version=" + str(self.product.product_version)
         product_key += "&Num of stations=" + str(self.product_stations)
         product_key += "&ips=" + str(self.allowed_ips)
-        product_key += "&License Start Date=" + str(self.creation_date)
-        product_key += "&License End Date=" + str(self.expiration_date)
-        product_key += "&task=" + task
-        product_key += "&log=" + log
-        product_key += "&node=" + node
-        product_key += "&system=" + system
-        product_key += "&snmp=" + snmp
-        product_key += "&grade=" + self.product_grade
+        product_key += "&License Start Date=" + str(crt_date_utc)
+        product_key += "&License End Date=" + str(exp_date_utc)
+        product_key += "&task=" + str(task)
+        product_key += "&log=" + str(log)
+        product_key += "&node=" + str(node)
+        product_key += "&system=" + str(system)
+        product_key += "&snmp=" + str(snmp)
+        product_key += "&grade=" + str(self.product_grade)
         product_key += "&sid=" + str(self.id)
-        product_key += "&expdate=" + str(self.expiration_date)
-        product_key +="&username=all"
+        product_key += "&expdate=" + str(exp_date_utc)
+        product_key += "&username=all"
 
         if (self.product.product_name is not "Backend" and
             self.product.product_name is not "AppLoader" and
@@ -166,10 +155,6 @@ class Entitlement(models.Model):
             product_key += "&end=true"
 
         return product_key
-
-
-
-
 
 
     def check_trial(self):
