@@ -33,10 +33,7 @@ def manage_licenses(request):
         product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
 
     if request.POST.get("save-license"):
-        # new_license_form = NewLicenseForm(request.POST, product_choices=product_choices)
         license_choice_form = ChoiceForm(request.POST, field_choices=product_choices)
-        # user_query = request.POST
-        # product_choice = user_query.get('field_choice')
         
         if license_choice_form.is_valid():
             user_query = request.POST
@@ -56,6 +53,7 @@ def manage_licenses(request):
                     key_field = "Key=" + key_text
                     key_data = data_package['header_string'] + key_field
 
+                    entitlement_data.gen_license_image()
 
                     return download_license_package(request, key_data)
 
@@ -105,14 +103,14 @@ def get_license_data(request):
     return JsonResponse(table_data)
 
 
-@login_required
-def get_entitlement_data(request):
-    """ Provide entitlement data for populating tables """
-    current_user = request.user
-    user_id = current_user.id
-    contact_data = Contact.objects.filter(user=user_id).get()
-    org_id = contact_data.organization.id
-    entitlement_data = Entitlement.objects.filter(organization=org_id)
-    table_header = get_entitlement_header()
-    table_data = get_table_data(table_header, entitlement_data)
-    return JsonResponse(table_data)
+# @login_required
+# def get_entitlement_data(request):
+#     """ Provide entitlement data for populating tables """
+#     current_user = request.user
+#     user_id = current_user.id
+#     contact_data = Contact.objects.filter(user=user_id).get()
+#     org_id = contact_data.organization.id
+#     entitlement_data = Entitlement.objects.filter(organization=org_id)
+#     table_header = get_entitlement_header()
+#     table_data = get_table_data(table_header, entitlement_data)
+#     return JsonResponse(table_data)

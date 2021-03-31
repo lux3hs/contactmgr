@@ -40,8 +40,7 @@ def generate_license_key(data_package):
                    '"' + str(data_string) + '"' +
                    " flag=encrypt outputfile=" +
                    file_dir + key_name)
-    print(exec_string)
-
+                   
     try:
         exec_arg(exec_string)
         return key_name
@@ -76,7 +75,7 @@ def package_license_data(license_data):
     for key in license_header.keys():
         header_string += str(key) + str(license_header[key]) + "\r\n"
 
-    data_string = license_data.get_product_key()
+    data_string = license_data.get_key_string()
 
     data_package = {'key_name':key_name, 'header_string':header_string, 'data_string':data_string}
 
@@ -203,46 +202,46 @@ def get_license_header():
     return license_header
 
 
-def get_entitlement_header():
-    """ Get entitlement table header """
-    entitlement_header = {'product_name':'Product',
-                          'product_version':'Version',
-                          'num_allocated':'Allocated', 
-                          }
+# def get_entitlement_header():
+#     """ Get entitlement table header """
+#     entitlement_header = {'product_name':'Product',
+#                           'product_version':'Version',
+#                           'num_allocated':'Allocated', 
+#                           }
 
-    return entitlement_header
+#     return entitlement_header
 
 
 #Create table data based on header keys and object data#
 ## Data model must have get_table_dictionary function ##
-def get_table_data(table_header, object_data):
-    """ Create a data object to populate table """
-    data = {}
-    header_list = []
-    for key in table_header.keys():
-        header_list.append(table_header[key])
+# def get_table_data(table_header, object_data):
+#     """ Create a data object to populate table """
+#     data = {}
+#     header_list = []
+#     for key in table_header.keys():
+#         header_list.append(table_header[key])
     
-    data['table_header'] = header_list
-    if len(object_data) > 0:
-        data_list = []
-        for obj in object_data:
-            try:
-                object_dictionary = obj.get_table_dictionary()
-                temp_dict = {}
-                temp_dict["data_id"] = object_dictionary.get("data_id")
-                for key in table_header.keys():
-                    if key in object_dictionary.keys():
-                        temp_dict[key] = object_dictionary.get(key)
+#     data['table_header'] = header_list
+#     if len(object_data) > 0:
+#         data_list = []
+#         for obj in object_data:
+#             try:
+#                 object_dictionary = obj.get_table_dictionary()
+#                 temp_dict = {}
+#                 temp_dict["data_id"] = object_dictionary.get("data_id")
+#                 for key in table_header.keys():
+#                     if key in object_dictionary.keys():
+#                         temp_dict[key] = object_dictionary.get(key)
                     
-                    else:
-                        temp_dict[key] = "error"
+#                     else:
+#                         temp_dict[key] = "error"
 
-                data_list.append(temp_dict)
+#                 data_list.append(temp_dict)
 
-                data['table_data'] = data_list
-                data['Success'] = True
+#                 data['table_data'] = data_list
+#                 data['Success'] = True
 
-            except:
-                data['Success'] = False
+#             except:
+#                 data['Success'] = False
 
-    return data
+#     return data
