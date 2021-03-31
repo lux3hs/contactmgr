@@ -20,20 +20,26 @@
       {% block header %} 
         <img src="{% static 'images/licensepgm/automai.svg' %}" class="org-logo" alt="Generic logo"/>
         <ul class="nav-row">
-          <li><a href="{% url 'manage_licenses' %}">Clients</a></li>
-          <li><a href="{% url 'manage_contacts' %}">Admin</a></li>
-          <li><a href="{% url 'homepage' %}">Home</a></li>
+          <li><a href="{% url 'client_portal' %}">Clients</a></li>
+          <li><a href="{% url 'admin_portal' %}">Admin</a></li>
+          {% comment %} <li><a href="{% url 'homepage' %}">Home</a></li> {% endcomment %}
 
           <li><a href="{% url 'logout' %}">Log Out</a></li>
         </ul>
       {% endblock header %}  
       </header>
 
-        
-
-        
         {% block logincheck %}
         {% if user.is_authenticated %}
+
+                        
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
           
         {% block infobox %}           
           

@@ -1,25 +1,9 @@
-
 import datetime
-from datetime import timezone
-from django.utils.dateparse import parse_date
-
 
 from django.contrib.auth.models import User
+
 from .models import Contact, Organization, Product, Entitlement
 
-
-# Possibly redundant mehods #
-def get_model_fields(model):
-    """ Return the model fields for specified model """
-    return model._meta.fields
-
-def get_model_choices(model_fields):
-    """ Get model choices for form fields """
-    choice_list = []
-    for field in model_fields:
-        choice_list.append((field.name, field.name))
-
-    return choice_list
 
 def get_choice_list(model_header):
     """ Get list of choices """

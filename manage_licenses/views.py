@@ -1,77 +1,37 @@
-import datetime
-import os.path
-
-import json
-
-from django.shortcuts import render
-from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
+from django.contrib import messages
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 
-from manage_contacts.models import Contact, Product, Entitlement
-from .models import License
-from .forms import NewLicenseForm, ChoiceForm
-
-#Specify method imports
-from .services import *
-
-base_dir = str(settings.BASE_DIR)
+from manage_contacts.models import Product
+from .services import package_license_data, generate_license_key, read_key_file
 
 @login_required
-def manage_licenses(request):
-    """ Render manage-licenses html page """
-    current_user = request.user
-    user_id = current_user.id
-    contact_data = Contact.objects.filter(user=user_id).get()
-    org_id = contact_data.organization.id
-    product_entitlements = Entitlement.objects.filter(organization=org_id)
-    product_choices = []
-
-    for entitlement in product_entitlements:
-        product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
-
-    if request.POST.get("save-license"):
-        license_choice_form = ChoiceForm(request.POST, field_choices=product_choices)
+def download_license_package(request, product_choice, product_entitlements):
+    """ Download a product license if entitlements exist  """
+    entitlement_product = Product.objects.filter(product_name=product_choice).get()
+    product_id = entitlement_product.id
+    entitlement_data = product_entitlements.filter(product=product_id).get()
+    if entitlement_data.check_allocated_licenses():
         
-        if license_choice_form.is_valid():
-            user_query = request.POST
-            product_choice = user_query.get('field_choice')
+        entitlement_data.subtract_license()
+        data_package = package_license_data(entitlement_data)
+        key_name = generate_license_key(data_package)
 
-            entitlement_product = Product.objects.filter(product_name=product_choice).get()
-            product_id = entitlement_product.id
-            entitlement_data = product_entitlements.filter(product=product_id).get()
-            if entitlement_data.check_allocated_licenses():
-                entitlement_data.subtract_license()
+        if key_name is not None:
+            key_text = read_key_file(key_name)
+            key_field = "Key=" + key_text
+            key_data = data_package['header_string'] + key_field
 
-                data_package = package_license_data(entitlement_data)
-                key_name = generate_license_key(data_package)
+            entitlement_data.gen_license_image()
 
-                if key_name is not None:
-                    key_text = read_key_file(key_name)
-                    key_field = "Key=" + key_text
-                    key_data = data_package['header_string'] + key_field
+    else: 
+        messages.add_message(request, messages.INFO, 'Not enough licenses')
+        response = HttpResponseRedirect(reverse('manage_contacts'))
+        return response
 
-                    entitlement_data.gen_license_image()
-
-                    return download_license_package(request, key_data)
-
-            else: 
-                response = HttpResponse("No licenses allocated", content_type="text/plain")
-                return response
-
-    else:
-        license_choice_form = ChoiceForm(field_choices=product_choices)
-
-    context = {'license_choice_form':license_choice_form, 'contact_data':contact_data}
-    return render(request, "manage_licenses/manage-licenses.html", context)
-
-
-@login_required
-def download_license_package(request, data):
-    """ Download a generated license """
-    response = HttpResponse(data, content_type="text/plain")
+    response = HttpResponse(key_data, content_type="text/plain")
     response['Content-Disposition'] = 'attachment; filename="product-license.lic"'
     return response
 

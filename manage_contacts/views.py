@@ -1,54 +1,44 @@
-import datetime
-
 import json
 
-from django.contrib.auth.models import User
-
-from django.shortcuts import render
-from django.contrib import messages
-from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import reverse
 
+from manage_licenses.views import download_license_package
 from .models import Contact, Organization, Product, Entitlement
-from .forms import ContactCreationForm, SearchChoiceForm, OrgCreationForm, ProductCreationForm, EntitlementCreationForm, ChoiceForm
+from .forms import (ContactCreationForm,
+                   OrgCreationForm,
+                   ProductCreationForm,
+                   EntitlementCreationForm,
+                   SearchChoiceForm,
+                   ChoiceForm)
 
 #Specify method imports
 from .services import *
 
-@login_required
-def client_portal(request):
-    context = {}
-    return render(request, "manage_contacts/client-portal.html", context)
 
-    # return "hello!"
+@login_required
+def manage_contacts(request):
+    """ Redirect contact based on organization """
+    super_org = "automai"
+
+    super_org_id = get_superorg_id(super_org)
+    current_user = request.user
+    user_id = current_user.id
+    contact_data = Contact.objects.filter(user=user_id).get()
+    org_id = contact_data.organization.id
+
+    if org_id is super_org_id:
+        return HttpResponseRedirect(reverse('admin_portal'))
+
+    else:
+        return HttpResponseRedirect(reverse('client_portal'))
 
 
 @login_required
 def admin_portal(request):
-    """ Render admin portal """
-    return "hello from admin!"
-#     current_user = request.user
-#     user_id = current_user.id
-#     user_data = Contact.objects.filter(user_id=user_id).get()
-#     user_role = user_data.role
-#     user_org = user_data.organization.org_name
-#     org_objects = Organization.objects.all()
-#     product_objects = Product.objects.all()
-#     entitlement_objects = Entitlement.objects.all()
-
-#     context = {'user_role':user_role,
-#                'user_org':user_org,
-#                'org_objects':org_objects,
-#                'product_objects':product_objects,
-#                'entitlement_objects':entitlement_objects}
-
-#     return render(request, "manage_contacts/admin-dash.html", context)
-
-
-
-@login_required
-def manage_contacts(request):
-    """ Render manage-contacts html page """
     current_user = request.user
     contact_data = Contact.objects.filter(user_id=current_user.id).get()
     contact_header = get_contact_header()
@@ -65,7 +55,6 @@ def manage_contacts(request):
     for product in product_data:
         product_list.append((product.product_name, product.product_name))
         
-
     if request.method == 'POST':
         entitlement_form = EntitlementCreationForm(request.POST, product_list=product_list, org_list=org_list)
         if entitlement_form.is_valid():
@@ -83,7 +72,36 @@ def manage_contacts(request):
                'contact_search_form':contact_search_form,
             }
 
-    return render(request, "manage_contacts/manage-contacts.html", context)
+    return render(request, "manage_contacts/admin-portal.html", context)
+
+
+@login_required
+def client_portal(request):
+    """ Render manage-licenses html page """
+    current_user = request.user
+    user_id = current_user.id
+    contact_data = Contact.objects.filter(user=user_id).get()
+    org_id = contact_data.organization.id
+    product_entitlements = Entitlement.objects.filter(organization=org_id)
+    product_choices = []
+
+    for entitlement in product_entitlements:
+        product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
+
+    if request.POST.get("save-license"):
+        license_choice_form = ChoiceForm(request.POST, choice_list=product_choices)
+        
+        if license_choice_form.is_valid():
+            user_query = request.POST
+            product_choice = user_query.get('choice_field')
+            return download_license_package(request, product_choice, product_entitlements)
+
+    else:
+        license_choice_form = ChoiceForm(choice_list=product_choices)
+
+    context = {'license_choice_form':license_choice_form, 'contact_data':contact_data}
+    return render(request, "manage_contacts/client-portal.html", context)
+
 
 @login_required
 def get_entitlement_data(request):
@@ -103,7 +121,6 @@ def delete_entitlement_selection(request, query_string):
         return get_entitlement_data(request)
         
     else:
-
         return get_entitlement_data(request)
 
 
@@ -237,8 +254,6 @@ def add_product(request):
     else:
         product_form = ProductCreationForm()
 
-
-
     context = {'user_role':user_role, 'user_org':user_org, 'product_form':product_form}
     return render(request, "manage_contacts/add-product.html", context)
     
@@ -261,5 +276,3 @@ def delete_product_selection(request, query_string):
         
     else:
         return get_product_data(request)
-
-

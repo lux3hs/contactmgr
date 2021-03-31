@@ -1,27 +1,10 @@
-import datetime
 import os
 import os.path
 
 from django.conf import settings
-from django.utils.dateparse import parse_date
-
-from .models import License
-from manage_contacts.models import Contact, Product, Entitlement
 
 #Set base directory
-base_dir = str(settings.BASE_DIR)
-
-##Basic service methods
-def get_choice_list(model_header):
-    """ Build list of choices based on model header """
-    choice_list = []
-    for key in model_header:
-        choice_list.append((key, model_header[key]))
-
-    return choice_list
-
-
-##Keygen services##
+BASE_DIR = str(settings.BASE_DIR)
 
 def package_license_data(license_data):
     """ Package license data for download """
@@ -39,8 +22,8 @@ def package_license_data(license_data):
 
 def generate_license_key(data_package):
     """ Run AlKeyMaker.exe on license string """
-    run_dir = base_dir + "/bin/"
-    file_dir = base_dir + "/bin/keygen/"
+    run_dir = BASE_DIR + "/bin/"
+    file_dir = BASE_DIR + "/bin/keygen/"
     data_string = data_package['data_string']
     key_name = str(data_package['key_name']) + ".txt"
     
@@ -60,7 +43,7 @@ def generate_license_key(data_package):
 
 def read_key_file(key_name):
     """ Read file created by AlKeyMaker.exe """
-    file_dir = base_dir + "/bin/keygen/" + key_name
+    file_dir = BASE_DIR + "/bin/keygen/" + key_name
     f = open(file_dir, "r")
     key_text = f.read()
     if "Key=" in key_text:
@@ -90,8 +73,6 @@ def read_key_file(key_name):
 #             return license_id
 
 #     return True
-
-
 
 
 ## JS Table Services ##
