@@ -14,28 +14,18 @@
 
 {% block main %}
 
-{% comment %} {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %} {% endcomment %}
-
   {% if contact_data.role == "admin" %}
 
       <h2 class="center-text">Add User</h2>
       <form id="new-contact-form" class="new-contact-form" method="post">
         {% csrf_token %}
         {{ contact_form.as_p }}     
-        {% if contact_org.org_name == "automai" %}
           <label>Organization:</label>
           <select name="select_org">
             {% for choice in choice_list %}
               <option value="{{ choice }}">{{ choice }}</option>
             {% endfor %}
           </select>
-        {% endif %}
         <p><input class="button" type = "submit" value = "Submit"/></p>
       </form> 
 

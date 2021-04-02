@@ -6,10 +6,13 @@ from .models import Contact, Organization, Product, Entitlement
 
 
 def get_choice_list(model_header):
-    """ Get list of choices """
+    """ Get list of choices from table dictionary """
     choice_list = []
+    except_list = ["empty_column", "check_box", "delete_button"]
+
     for key in model_header:
-        choice_list.append((key, model_header[key]))
+        if key not in except_list:
+            choice_list.append((key, model_header[key]))
 
     return choice_list
 
@@ -201,10 +204,11 @@ def add_new_entitlement(contact_data, user_query):
     else:
         is_permanent = False
 
-    creation_date = datetime.datetime.now()
-    expiration_date = user_query.get('expiration_date')
-    exp_date_strp = datetime.datetime.strptime(expiration_date, "%m/%d/%Y")
-    expiration_date = exp_date_strp
+    creation_date = datetime.datetime.now().replace(microsecond=0)
+    
+    exp_date_string = user_query.get('expiration_date')
+    exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
+    expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
 
     entitlement_data = Entitlement.objects.all()
     entitlement_names = []
@@ -257,20 +261,25 @@ def delete_entitlement_data(entitlement_selection):
 
 def get_contact_header():
     """ Get header data for populating tables """
-    contact_header = {'username':'User',
+    contact_header = {"empty_column":"<pre>    </pre>",
+                    #   "check_box":"",
+                      'username':'User',
                       'first_name':'First Name',
                       'last_name':'Last Name',
                       'email':'Email',
                       'role':'Role',
                       'status':'Status',
                       'org_name':'Organization',
+                       "delete_button":"",
+
                     }
 
     return contact_header
 
 
 def get_org_header():
-    org_header = {"org_type":"Type",
+    org_header = {"check_box":"",
+                  "org_type":"Type",
                   "org_name":"Name",
                   "domain":"Domain",
                 }
@@ -285,13 +294,33 @@ def get_product_header():
     return product_header
 
 def get_entitlement_header():
-    entitlement_header = {"product_name":"Product",
+    entitlement_header = {"empty_column":"<pre>    </pre>",
+                        #   "product_name_widget":"Product",
+                        #   "product_name":"Product",
+                        "name_link":"Product",
                           "product_version":"Version",
                           "max_licenses":"Max",
                           "total_licenses":"Total",
                           "num_allocated":"Num Allocated",
+                          "delete_button":"",
+                        #   "check_box":"",
+
     }
     return entitlement_header
+
+def get_client_ent_header():
+    client_ent_header = {"empty_column":"<pre>    </pre>",
+                        #   "product_name_widget":"Product",
+                          "product_name":"Product",
+                          "product_version":"Version",
+                          "max_licenses":"Max",
+                          "total_licenses":"Total",
+                          "num_allocated":"Num Allocated",
+                        #   "delete_button":"",
+                        #   "check_box":"",
+
+    }
+    return client_ent_header
 
 
 

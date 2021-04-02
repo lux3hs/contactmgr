@@ -22,6 +22,9 @@ function changePage(evt, pageName) {
   }
 
 
+  // 
+  // Table Functions 
+                  // 
 
   // Collect data from a url
   function fetchRequest(url) {
@@ -30,6 +33,7 @@ function changePage(evt, pageName) {
     .catch(error => console.log('error:', error))
   }
   
+
   // Filter collected data
   function filterData(data, key, value) {
     var tableData = data
@@ -59,7 +63,8 @@ function changePage(evt, pageName) {
     return dataFilter
   }
 
-  // Build a data table out of collected data
+
+  // Build a table out of collected data
   function buildDataTable(tableData, tableHeader, tableID) {
     let headerData=tableHeader;
     let data = tableData;
@@ -95,86 +100,53 @@ function changePage(evt, pageName) {
 
 
   // Add checkboxes to tables (Switch to widgets)
-  function addCheckBoxes(tableID) {
-    var x = document.getElementById(tableID).rows.length;
-    var table = document.getElementById(tableID);
-    var num = table.rows;
+  // function addCheckBoxes(tableID) {
+  //   var x = document.getElementById(tableID).rows.length;
+  //   var table = document.getElementById(tableID);
+  //   var num = table.rows;
   
-    for (i in num){
-      let row = table.rows[i]
-      if (i == 0){
-        x = document.getElementById(tableID).rows[0]
-        cell = x.insertCell(0)
-        cell.outerHTML = "<th></th>"; 
+  //   for (i in num){
+  //     let row = table.rows[i]
+  //     if (i == 0){
+  //       x = document.getElementById(tableID).rows[0]
+  //       cell = x.insertCell(0)
+  //       cell.outerHTML = "<th></th>"; 
   
-      }
+  //     }
   
-      else if(!isNaN(i)) {
-        let row = document.getElementById(tableID).rows[i]
-        let cell = row.insertCell(0)
-        var tableRow = document.getElementById(tableID).getElementsByTagName("tr");
-        var rowID = tableRow[i].id
+  //     else if(!isNaN(i)) {
+  //       let row = document.getElementById(tableID).rows[i]
+  //       let cell = row.insertCell(0)
+  //       var tableRow = document.getElementById(tableID).getElementsByTagName("tr");
+  //       var rowID = tableRow[i].id
   
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-        x.setAttribute("name", "check-box")
-        x.setAttribute("class", "checkBox")
-        x.setAttribute("value", rowID);
-        cell.appendChild(x);
+  //       var x = document.createElement("INPUT");
+  //       x.setAttribute("type", "checkbox");
+  //       x.setAttribute("name", "js-check-box")
+  //       x.setAttribute("class", "check-box")
+  //       x.setAttribute("value", rowID);
+  //       cell.appendChild(x);
   
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
 
 
-  // Get values from checkboxes
-  function getCheckboxValues() {
-    
-    var nodeList = document.getElementsByName("check-box");
-    checkBoxValues = []
-    for (i = 0; i <	nodeList.length; i++) {
-      checked = nodeList[i].checked;
-      value = nodeList[i].value;
-     
-      if (checked == true) {
-        checkBoxValues.push(value)
-      }
-    }
+// 
+// Dynamic table processing
+                         //
 
-    return checkBoxValues
-  }
-
-
-
-  // Dynamic table processing
-
-  // Build a table on page load
+  // Load a data table
   function loadTableData(url, tableID) {
     var fetchData = fetchRequest(url);
     fetchData.then(data => {
       tableHeader = data.table_header
       tableData = data.table_data
       buildDataTable(tableData, tableHeader, tableID)
-      addCheckBoxes(tableID)
 
     })
   }
 
-
-  // Delete data from a table and rebuild
-  function deleteTableData(url, tableID) {      
-    queryData = getCheckboxValues()
-    query_string = JSON.stringify(queryData)
-        requestURL = url + '/' + query_string     
-        newRequest = fetchRequest(requestURL)
-        newRequest.then(data => {
-          tableData = data.table_data
-          tableHeader = data.table_header
-          buildDataTable(tableData, tableHeader, tableID)
-          addCheckBoxes(tableID)
-                 
-        })
-  }
 
   // Search data within a table and rebuild
   function searchTableData(url, choiceQuery, searchQuery, tableID) {
@@ -188,7 +160,55 @@ function changePage(evt, pageName) {
         filteredData = filterData(tableData, choice, search);
         buildDataTable(filteredData, tableHeader, tableID);
 
-        addCheckBoxes(tableID)
-
       })
+  }
+
+  // Delete data from a table and rebuild
+  function deleteTableData(url, queryData, tableID) {      
+    // queryData = getCheckboxValues()
+    query_string = JSON.stringify(queryData)
+        requestURL = url + '/' + query_string     
+        newRequest = fetchRequest(requestURL)
+        newRequest.then(data => {
+          tableData = data.table_data
+          tableHeader = data.table_header
+          buildDataTable(tableData, tableHeader, tableID)
+                 
+        })
+  }
+
+
+  // Get values from checkboxes
+  function getCheckboxValues(boxName) {
+  
+    var nodeList = document.getElementsByName(boxName);
+    checkBoxValues = []
+    for (i = 0; i <	nodeList.length; i++) {
+      checked = nodeList[i].checked;
+      value = nodeList[i].value;
+      
+      if (checked == true) {
+        checkBoxValues.push(value)
+      }
+    }
+
+    return checkBoxValues
+  }
+
+  function getButtonValues(buttonName) {
+    var nodeList = document.getElementsByName(buttonName)
+    buttonValues = []
+    for (i = 0; i <	nodeList.length; i++) {
+      value = nodeList[i].value;
+     
+    }
+
+    return value
+
+  }
+
+
+  function hello() {
+    console.log("hello!")
+    nodeList = getButtonValues('delete-button')
   }

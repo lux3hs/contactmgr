@@ -9,28 +9,29 @@ from django.urls import reverse
 from manage_licenses.views import download_license_package
 from .models import Contact, Organization, Product, Entitlement
 from .forms import (ContactCreationForm,
-                   OrgCreationForm,
-                   ProductCreationForm,
-                   EntitlementCreationForm,
-                   SearchChoiceForm,
-                   ChoiceForm)
+                    OrgCreationForm,
+                    ProductCreationForm,
+                    EntitlementCreationForm,
+                    SearchChoiceForm,
+                    ChoiceForm)
 
 #Specify method imports
 from .services import *
 
+SUPER_ORG = "automai"
+SUPER_USER = "superuser"
 
 @login_required
 def manage_contacts(request):
     """ Redirect contact based on organization """
-    super_org = "automai"
-
-    super_org_id = get_superorg_id(super_org)
+    SUPER_ORG_ID = get_superorg_id(SUPER_ORG)
     current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
-    org_id = contact_data.organization.id
+    # org_id = contact_data.organization.id
+    # contact_role = contact_data.role
 
-    if org_id is super_org_id:
+    if contact_data.organization.id == SUPER_ORG_ID:
         return HttpResponseRedirect(reverse('admin_portal'))
 
     else:
@@ -39,10 +40,20 @@ def manage_contacts(request):
 
 @login_required
 def admin_portal(request):
+    SUPER_ORG_ID = get_superorg_id(SUPER_ORG)
     current_user = request.user
-    contact_data = Contact.objects.filter(user_id=current_user.id).get()
+    user_id = current_user.id
+    contact_data = Contact.objects.filter(user=user_id).get()
+
+    if contact_data.organization.id != SUPER_ORG_ID:
+        return HttpResponseRedirect(reverse('client_portal'))
+
     contact_header = get_contact_header()
     contact_choice_list = get_choice_list(contact_header)
+    except_list = ["empty_column", "check_box", "delete_button"]
+    for choice in contact_choice_list:
+        if choice in except_list:
+            contact_choice_list.remove(choice)
     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
     org_data = Organization.objects.all()
@@ -68,7 +79,8 @@ def admin_portal(request):
         entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
     
     
-    context = {'entitlement_form':entitlement_form,
+    context = {'contact_data':contact_data,
+               'entitlement_form':entitlement_form,
                'contact_search_form':contact_search_form,
             }
 
@@ -106,10 +118,21 @@ def client_portal(request):
 @login_required
 def get_entitlement_data(request):
     """ Get entitlement data for populating tables """
-    entitlement_data = Entitlement.objects.all()
-    table_header = get_entitlement_header()
+    current_user = request.user
+    user_id = current_user.id
+    contact_data = Contact.objects.filter(user=user_id).get()
+
+    if contact_data.organization.org_name == SUPER_ORG:
+        entitlement_data = Entitlement.objects.all()
+        table_header = get_entitlement_header()
+
+    else:
+        entitlement_data = Entitlement.objects.filter(organization=contact_data.organization.id)
+        table_header = get_client_ent_header()
+    
     table_data = get_table_data(table_header, entitlement_data)
     return JsonResponse(table_data)
+
 
 @login_required
 def delete_entitlement_selection(request, query_string):

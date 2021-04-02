@@ -11,21 +11,20 @@
     {% block head %}{% endblock head %}
   </head>
 
-
- 
   <body>  
     <div class="foot-wrap">
 
       <header>
       {% block header %} 
         <img src="{% static 'images/licensepgm/automai.svg' %}" class="org-logo" alt="Generic logo"/>
+                
         <ul class="nav-row">
-          <li><a href="{% url 'client_portal' %}">Clients</a></li>
-          <li><a href="{% url 'admin_portal' %}">Admin</a></li>
-          {% comment %} <li><a href="{% url 'homepage' %}">Home</a></li> {% endcomment %}
-
+          {% comment %} <li><a href="{% url 'client_portal' %}">Clients</a></li>
+          <li><a href="{% url 'admin_portal' %}">Admin</a></li> {% endcomment %}
+          <li><a href="{% url 'manage_contacts' %}">Home</a></li>
           <li><a href="{% url 'logout' %}">Log Out</a></li>
         </ul>
+
       {% endblock header %}  
       </header>
 
@@ -76,7 +75,15 @@
 
     <footer>
      {% block footer %}
-      <p>Knowledge base  -  Community  -  Email sales  -  Open a ticket</p>
+
+        <ul>
+          <li><a href="https://help.automai.com/">Knowledge base</a></li>
+          <li><a href="https://community.automai.com/">Community</a></li>
+          <li><a href="mailto: sales@automai.com">Email sales</a></li>
+          <li><a href="https://help.automai.com/s/contactsupport">Open a ticket</a></li>
+        </ul>
+
+      {% comment %} <p> -    -    -  Open a ticket</p> {% endcomment %}
     {% endblock footer %}
     </footer>
 

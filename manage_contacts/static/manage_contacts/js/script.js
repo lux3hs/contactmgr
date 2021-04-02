@@ -14,17 +14,19 @@ window.addEventListener('load', (event) => {
   var contactTable = document.getElementById("contact-table");
   if (contactTable) {
 
-    loadTableData(url='get-contact-data', tableID='contact-table')
+    loadTableData(url='get-contact-data', tableID='contact-table', tableChecks=true)
 
-    document.getElementById("delete-contact-button").addEventListener("click", function() {
-      deleteTableData(url='delete-contact-selection', tableID='contact-table')
+
+    // document.getElementById("delete-contact-button").addEventListener("click", function() {
+
+    //   deleteTableData(url='delete-contact-selection', tableID='contact-table')
     
-    })
+    // })
 
     document.getElementById("contact-search-button").addEventListener("click", function() {
       var choiceQuery = "contact_search_form_choice_field";
       var searchQuery = "contact_search_form_search_field";
-      searchTableData(url='get-contact-data', choiceQyery=choiceQuery, searchQuery=searchQuery, "contact-table",)
+      searchTableData(url='get-contact-data', choiceQyery=choiceQuery, searchQuery=searchQuery, "contact-table")
 
     })
 
@@ -64,9 +66,14 @@ window.addEventListener('load', (event) => {
     if (entitlementTable) {
       loadTableData(url='get-entitlement-data', tableID='entitlement-table')
 
-      document.getElementById("delete-entitlement-button").addEventListener("click", function() {
-        deleteTableData(url='delete-entitlement-selection', tableID='entitlement-table')
-      })
+      // document.getElementById("delete-entitlement-button").addEventListener("click", function() {
+      //   var queryData = getCheckboxValues('js-check-box')
+      //   deleteTableData(url='delete-entitlement-selection', queryData=queryData, tableID='entitlement-table')
+
+      // })
+
+
     }
 
 })
+
