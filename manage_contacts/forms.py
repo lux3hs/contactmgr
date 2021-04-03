@@ -39,6 +39,47 @@ class ContactCreationForm(UserCreationForm):
         if password1 != password2:
             raise forms.ValidationError("Your passwords do not match")
         return password2
+        
+
+class ContactEditForm(forms.Form):
+    #Set widget fields
+    role_choices = [('user','user'), ('admin','admin')]
+    contact_role = forms.ChoiceField(choices=role_choices, label="Role", required=False)
+    status_choices = [('active', 'active'), ('removed', 'removed')]
+    contact_status = forms.ChoiceField(choices=status_choices, label="Status", required=False)
+    contact_firstname = forms.CharField(max_length=50, label="Firstname", required=False)
+    contact_lastname = forms.CharField(max_length=50, label="Lastname", required=False)
+    contact_email = forms.EmailField(max_length=50, label="Email", required=False)
+    password1 = forms.CharField(widget=forms.PasswordInput(), required=True)
+    password2 = forms.CharField(widget=forms.PasswordInput(), required=True)
+    
+    
+    #Extend init function to set widget class
+    def __init__(self, *args, **kwargs):
+        super(ContactEditForm, self).__init__(*args, **kwargs)
+        self.fields["contact_role"].widget.attrs['class'] = "ChoiceField"
+        self.fields["contact_status"].widget.attrs['class'] = "ChoiceField"
+        # self.fields["username"].widget.attrs['class'] = "CharField"
+        # self.fields['username'].help_text = ""
+        self.fields["password1"].widget.attrs['class'] = "CharField"
+        # self.fields["password1"].help_text = ""
+        self.fields["password2"].widget.attrs['class'] = "CharField"
+        # self.fields["password2"].help_text = ""
+        # self.fields["password2"].label = "Confirmation:"    
+        self.fields["contact_firstname"].widget.attrs['class'] = "CharField"
+        self.fields["contact_lastname"].widget.attrs['class'] = "CharField"
+        self.fields["contact_email"].widget.attrs['class'] = "CharField"
+
+    #Validate passwords
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+
+        if not password2:
+            raise forms.ValidationError("You must confirm your password")
+        if password1 != password2:
+            raise forms.ValidationError("Your passwords do not match")
+        return password2
 
 class OrgCreationForm(forms.Form):
     ORG_TYPE_CHOICES = [('customer', 'customer'), ('partner', 'partner')]
@@ -72,7 +113,23 @@ class EntitlementCreationForm(forms.Form):
         self.fields['expiration_date'] = forms.DateTimeField()
         self.fields['is_permanent'] = forms.BooleanField(required=False)
 
-
+class EntitlementEditForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.product_list = kwargs.pop('product_list')
+        self.org_list = kwargs.pop('org_list')
+        super(EntitlementEditForm, self).__init__(*args, **kwargs)
+        self.fields['org_choice'] = forms.ChoiceField(choices=self.org_list, required=False)
+        self.fields['org_choice'].widget.attrs['class'] = "ChoiceField"
+        self.fields['product_choice'] = forms.ChoiceField(choices=self.product_list, required=False)
+        self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
+        self.fields['max_licenses'] = forms.IntegerField(max_value=1000, required=False)
+        self.fields['host_ip'] = forms.CharField(max_length=50, required=False)
+        self.fields["product_grade"] = forms.CharField(max_length=50, required=False)
+        self.fields["product_stations"] = forms.IntegerField(max_value=999999, required=False)
+        self.fields["allowed_ips"] = forms.IntegerField(max_value=999999, required=False)
+        self.fields['re_seller'] = forms.CharField(max_length=50, required=False)
+        self.fields['expiration_date'] = forms.DateTimeField(required=False)
+        self.fields['is_permanent'] = forms.BooleanField(required=False)
 
 
 

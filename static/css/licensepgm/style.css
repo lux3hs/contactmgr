@@ -277,6 +277,34 @@ footer a{
 }
 
 
+.edit-contact-form {
+    display: inline-block;
+    font-size: small;
+    text-align: right;
+    margin-left: 35vw;
+    padding-right:25px;
+    padding-left: 25px;
+
+}
+
+.user-info {
+    /* display: inline-block; */
+    /* margin-left: 35vw; */
+    text-align: center;
+    color: cornflowerblue;
+}
+
+
+.edit-entitlement-form {
+    display: inline-block;
+    font-size: small;
+    text-align: right;
+    margin-left: 35vw;
+    padding-right:25px;
+    padding-left: 25px;
+
+}
+
 
 
 .button {
@@ -301,7 +329,7 @@ table {
     border-collapse: collapse;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
-    background-color: ghostwhite;
+    background-color: gainsboro;
 
     
     text-align: left;
@@ -313,13 +341,30 @@ table {
 }
 
 /* Table header */
-table tr:nth-child(1){
-    background-color: gainsboro;
+table tr:nth-child(0){
+    background-color: ghostwhite;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
 
-
 }
+
+table tr:nth-child(even) {
+    background: ghostwhite;
+}
+
+table .button {
+    font-size: smaller;
+    font-style: normal;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    box-shadow: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border:none;
+    margin:5px;
+    padding:10px;
+
+    border-radius: 25px;
+}
+
 
 
 /* #contact-table .button {
@@ -358,7 +403,7 @@ table tr:nth-child(1){
 
 .button-padding {
     margin: 25px;
-    margin-left: 115px;
+    margin-left: 375px;
     /* border:2px solid red; */
 
 }

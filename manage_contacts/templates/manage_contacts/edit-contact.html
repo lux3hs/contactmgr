@@ -14,13 +14,26 @@
 
 {% block main %}
 
-  {% if contact_data.role == "admin" %}
 
-      <h2 class="center-text">Add Contact</h2>
-      <form id="new-contact-form" class="new-contact-form" method="post">
+  
+  {% if current_contact.role == "admin" %}
+
+      <h2 class="center-text">Edit Contact</h2>
+        {% comment %} <div class="user-info"> {% endcomment %}
+        <p class="user-info">
+        Username: {{ contact_selection.user.username }}
+        -
+        Role: {{ contact_selection.role }}
+        -
+        Email: {{ contact_selection.user.email }}
+        -
+        Org: {{ contact_selection.organization }}
+        </p>
+        {% comment %} </div> {% endcomment %}
+      <form id="edit-contact-form" class="edit-contact-form" method="post">
         {% csrf_token %}
-        {{ contact_form.as_p }}
-        {% if contact_data.organization.org_name == super_org %}
+        {{ edit_contact_form.as_p }}
+        {% if current_contact.organization.org_name == super_org %}
           <label>Organization:</label>
           <select name="select_org">
             {% for choice in choice_list %}
@@ -32,7 +45,7 @@
       </form> 
 
   {% else %}
-    <p>Not authorized. ({{ contact_data.role }}) </p>
+    <p>Not authorized.</p>
   {% endif %}
 
 <div>

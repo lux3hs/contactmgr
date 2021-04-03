@@ -2,6 +2,8 @@ import datetime
 
 from django.contrib.auth.models import User
 
+from django.contrib.auth.hashers import check_password
+
 from .models import Contact, Organization, Product, Entitlement
 
 
@@ -70,6 +72,57 @@ def add_new_contact(user_query, contact_organization):
     new_contact.save()
 
     return new_contact
+
+def edit_contact(current_user, user_query, contact_object, contact_organization):
+    current_password = current_user.user.password
+    
+    password1 = user_query.get('password1')
+    password2 = user_query.get('password2')
+    if password1 is not None and password1 == password2:
+        
+        match_check = check_password(password1, current_password)
+        if match_check:
+            pass
+
+        else:
+            return "invalid password"
+
+    else:
+        return "invalid password"
+
+    contact_username = user_query.get('username')
+    
+    contact_firstname = user_query.get('contact_firstname')
+    contact_lastname = user_query.get('contact_lastname')
+    contact_email = user_query.get('contact_email')
+    contact_role = user_query.get('contact_role')
+    contact_status = user_query.get('contact_status')
+
+    if contact_firstname is not None:
+        contact_object.user.first_name = contact_firstname
+    
+    if contact_lastname is not None:
+        contact_object.user.last_name = contact_lastname
+    
+    if contact_email is not None:
+        contact_object.user.email = contact_email
+
+    if contact_username is not None:
+        contact_object.user.username = contact_username
+
+    if contact_role is not None:
+        contact_object.role = contact_role
+    
+    if contact_status is not None:
+        contact_object.status = contact_status
+
+    if contact_organization is not None:
+        contact_object.organization = contact_organization
+    
+    contact_object.user.save()
+    contact_object.save()
+
+    return "contact updated successfully"
 
 
 def delete_contact_data(current_user, contact_selection):
@@ -244,6 +297,78 @@ def add_new_entitlement(contact_data, user_query):
     return success_message
 
 
+def edit_entitlement(contact_data, entitlement_object, user_query):
+    """ Add new entitlement on user selection """
+    creator_email = contact_data.user.email
+    creator_phone = contact_data.phone
+    
+    product_choice = user_query.get('product_choice')
+    org_choice = user_query.get('org_choice')
+    product_object = Product.objects.filter(product_name=product_choice).get()
+    org_object = Organization.objects.filter(org_name=org_choice).get()
+
+    max_licenses = user_query.get('max_licenses')
+    total_licenses = max_licenses
+
+    host_ip = user_query.get('host_ip')
+    product_grade = user_query.get("product_grade")
+    product_stations = user_query.get("product_stations")
+
+
+
+    allowed_ips = user_query.get('allowed_ips')
+    re_seller = user_query.get('re_seller')
+
+    is_permanent = user_query.get('is_permanent')
+    if is_permanent:
+        is_permanent = True
+    
+    else:
+        is_permanent = False
+
+    creation_date = datetime.datetime.now().replace(microsecond=0)
+    
+    exp_date_string = user_query.get('expiration_date')
+    if exp_date_string:
+        exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
+        expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
+
+    else:
+        expiration_date = None
+
+    entitlement_data = Entitlement.objects.all()
+    entitlement_names = []
+    for entitlement in entitlement_data:
+        entitlement_names.append(entitlement.get_entitlement_name())
+
+    # dup_check = org_object.org_name + '/' + product_object.product_name
+    
+    # if dup_check not in entitlement_names:
+    entitlement_object.creator_email = creator_email
+    entitlement_object.creator_phone = creator_phone
+    entitlement_object.product = product_object
+    entitlement_object.organization = org_object
+    entitlement_object.max_licenses = max_licenses
+    entitlement_object.total_licenses = total_licenses
+    entitlement_object.host_ip = host_ip
+    entitlement_object.product_grade = product_grade
+    entitlement_object.product_stations = product_stations
+    entitlement_object.allowed_ips = allowed_ips
+    entitlement_object.re_seller = re_seller
+    entitlement_object.is_permanent = is_permanent
+    # entitlement_object.creation_date = creation_date
+    entitlement_object.expiration_date = expiration_date
+
+    entitlement_object.save()
+
+    success_message = "Entitlement successfully updated"
+
+    # else: 
+        # success_message = "Entitlement exists"
+
+    return success_message
+
+
 def delete_entitlement_data(entitlement_selection):
     """ Delete entitlement selection from database """
     try:
@@ -270,6 +395,7 @@ def get_contact_header():
                       'role':'Role',
                       'status':'Status',
                       'org_name':'Organization',
+                      'edit_button':'',
                        "delete_button":"",
 
                     }
@@ -287,8 +413,10 @@ def get_org_header():
     return org_header
 
 def get_product_header():
-    product_header = {'product_name':'Product',
+    product_header = {"empty_column":"<pre>    </pre>",
+                      'product_name':'Product',
                       'product_version':'Version',
+                      "delete_button":"",
                         }
 
     return product_header
@@ -299,9 +427,11 @@ def get_entitlement_header():
                         #   "product_name":"Product",
                         "name_link":"Product",
                           "product_version":"Version",
+                          "org_name":"Client",
                           "max_licenses":"Max",
                           "total_licenses":"Total",
                           "num_allocated":"Num Allocated",
+                          'edit_button':'',
                           "delete_button":"",
                         #   "check_box":"",
 
@@ -337,6 +467,7 @@ def get_table_data(table_header, object_data):
         try:
             data_list = []
             for obj in object_data:
+                print("obj: " + str(obj))
 
                 object_dictionary = obj.get_table_dictionary()
                 temp_dict = {}

@@ -1,0 +1,38 @@
+<!-- templates/manage_contacts/add-entitlement.html -->
+{% extends "base.html" %}
+{% block title %}Add Organization{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'manage_contacts/css/style.css' %}">
+{% endblock head %}
+
+
+{% block infobox %}{% endblock infobox %}
+
+{% block header %}{% endblock header %}
+
+{% block main %}
+<h2 class="center-text">Edit Entitlement</h2>
+<p class="user-info"> 
+  organization: {{ entitlement_selection.organization.org_name}}
+  Product: {{ entitlement_selection.product.product_name }}
+  Version: {{ entitlement_selection.product.product_version}}
+  </p>
+
+
+  <form id="edit-entitlement-form" class="edit-entitlement-form" method="post">
+    {% csrf_token %}
+    <div>
+      {{ edit_entitlement_form.as_p }}
+    </div>
+      <input class="button" type = "submit" value = "Create" name="newForm"/>
+  </form>
+
+<div>
+<p>
+<a href="{% url 'manage_contacts' %}">Home</a>
+<a href="{% url 'logout' %}">Logout</a>
+</p>
+</div>
+{% endblock main %}

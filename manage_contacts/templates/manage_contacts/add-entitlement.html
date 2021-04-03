@@ -22,7 +22,7 @@
 </ul>
 {% endif %}
 
-<div class="widget">
+<div>
   <form method="post" class="style-form">
     {% csrf_token %}
     <div class="flex-box widget">
@@ -32,9 +32,9 @@
   </form>
 </div>
 
-<div class="widget">
+<div>
 <p>
-<a href="{% url 'manage_contacts' %}">Return</a>
+<a href="{% url 'manage_contacts' %}">Home</a>
 {% comment %} <a href="{% url 'homepage' %}">Home</a> {% endcomment %}
 <a href="{% url 'logout' %}">Logout</a>
 </p>
