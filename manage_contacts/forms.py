@@ -53,7 +53,6 @@ class ContactEditForm(forms.Form):
     password1 = forms.CharField(widget=forms.PasswordInput(), required=True)
     password2 = forms.CharField(widget=forms.PasswordInput(), required=True)
     
-    
     #Extend init function to set widget class
     def __init__(self, *args, **kwargs):
         super(ContactEditForm, self).__init__(*args, **kwargs)
@@ -90,10 +89,22 @@ class OrgCreationForm(forms.Form):
         super(OrgCreationForm, self).__init__(*args, **kwargs)
         self.fields["org_type"].widget.attrs['class'] = "ChoiceField"
 
+class OrgEditForm(forms.Form):
+    ORG_TYPE_CHOICES = [('customer', 'customer'), ('partner', 'partner')]
+    org_type = forms.ChoiceField(choices=ORG_TYPE_CHOICES, required=False)
+    org_name = forms.CharField(max_length=50, required=False)
+    org_domain = forms.CharField(max_length=50, required=False)
+    def __init__(self, *args, **kwargs):
+        super(OrgEditForm, self).__init__(*args, **kwargs)
+        self.fields["org_type"].widget.attrs['class'] = "ChoiceField"
+
 class ProductCreationForm(forms.Form):
     product_name = forms.CharField(max_length=50)
     product_version = forms.CharField(max_length=50)
 
+class ProductEditForm(forms.Form):
+    product_name = forms.CharField(max_length=50, required=False)
+    product_version = forms.CharField(max_length=50, required=False)
 
 class EntitlementCreationForm(forms.Form):
     def __init__(self, *args, **kwargs):

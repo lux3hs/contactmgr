@@ -11,7 +11,9 @@ from .models import Contact, Organization, Product, Entitlement
 from .forms import (ContactCreationForm,
                     ContactEditForm,
                     OrgCreationForm,
+                    OrgEditForm,
                     ProductCreationForm,
+                    ProductEditForm,
                     EntitlementCreationForm,
                     EntitlementEditForm,
                     SearchChoiceForm,
@@ -151,7 +153,6 @@ def edit_entitlement_data(request, query_string):
     for product in product_data:
         product_list.append((product.product_name, product.product_name))
         
-    
     if request.method == 'POST':
         edit_entitlement_form = EntitlementEditForm(request.POST, product_list=product_list, org_list=org_list)
         if edit_entitlement_form.is_valid():
@@ -165,7 +166,11 @@ def edit_entitlement_data(request, query_string):
         edit_entitlement_form = EntitlementEditForm(org_list=org_list, product_list=product_list)
 
 
-    context = {'contact_data':contact_data, 'entitlement_selection':entitlement_selection, 'edit_entitlement_form':edit_entitlement_form, 'super_org':SUPER_ORG}
+    context = {'contact_data':contact_data, 
+               'entitlement_selection':entitlement_selection, 
+               'edit_entitlement_form':edit_entitlement_form, 
+               'super_org':SUPER_ORG}
+
     return render(request, "manage_contacts/edit-entitlement.html", context)
 
 @login_required
@@ -198,7 +203,6 @@ def delete_entitlement_selection(request, query_string):
         
     else:
         return get_entitlement_data(request)
-
 
 @login_required
 def add_contact(request):
@@ -246,7 +250,7 @@ def edit_contact_data(request, query_string):
 
     else:
         contact_selection = Contact.objects.filter(id=query_data[0]).get()
-        print(contact_selection)
+        # print(contact_selection)
 
     current_user_object = request.user
     user_id = current_user_object.id
@@ -348,10 +352,47 @@ def add_organization(request):
     else:
         org_form = OrgCreationForm()
 
-
     context = {'user_role':user_role, 'user_org':user_org, 'org_form':org_form}
     return render(request, "manage_contacts/add-organization.html", context)
     
+@login_required
+def edit_org_data(request, query_string):
+    """ Render add organization page"""
+    print("query:" + str(query_string))
+
+    query_data = json.loads(query_string)
+
+    if len(query_data) > 1:
+        messages.add_message(request, messages.INFO, 'Too many selected')
+        return HttpResponseRedirect(reverse('manage_contacts'))
+
+    else:
+        org_selection = Organization.objects.filter(id=query_data[0]).get()
+
+    current_user = request.user
+    user_id = current_user.id
+    user_data = Contact.objects.filter(user_id=user_id).get()
+    user_role = user_data.role
+    user_org = user_data.organization.org_name
+
+    if request.method == 'POST':
+        edit_org_form = OrgEditForm(request.POST)
+        if edit_org_form.is_valid():
+            
+            user_query = request.POST     
+            
+            success_message = edit_organization(user_query=user_query, org_selection=org_selection)            
+            
+            messages.add_message(request, messages.INFO, success_message)
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        edit_org_form = OrgEditForm()
+
+
+    context = {'user_role':user_role, 'user_org':user_org, 'edit_org_form':edit_org_form}
+    return render(request, "manage_contacts/edit-organization.html", context)
+
 @login_required
 def get_org_data(request):
     """ Get org data for populating tables """
@@ -398,6 +439,39 @@ def add_product(request):
 
     context = {'user_role':user_role, 'user_org':user_org, 'product_form':product_form}
     return render(request, "manage_contacts/add-product.html", context)
+
+@login_required
+def edit_product_data(request, query_string):
+    """ Render add product page """
+    query_data = json.loads(query_string)
+    if len(query_data) > 1:
+        messages.add_message(request, messages.INFO, 'Too many selected')
+        return HttpResponseRedirect(reverse('manage_contacts'))
+
+    else:
+        product_selection = Product.objects.filter(id=query_data[0]).get()
+
+    current_user = request.user
+    user_id = current_user.id
+    user_data = Contact.objects.filter(user_id=user_id).get()
+    user_role = user_data.role
+    user_org = user_data.organization.org_name
+
+    if request.method == 'POST':
+        edit_product_form = ProductEditForm(request.POST)
+        if edit_product_form.is_valid():
+            user_query = request.POST
+
+            success_message = edit_product(user_query=user_query, product_selection=product_selection)
+
+            messages.add_message(request, messages.INFO, success_message)
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        edit_product_form = ProductEditForm()
+
+    context = {'user_role':user_role, 'user_org':user_org, 'edit_product_form':edit_product_form}
+    return render(request, "manage_contacts/edit-product.html", context)
     
 @login_required
 def get_product_data(request):

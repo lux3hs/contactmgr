@@ -42,9 +42,9 @@ window.addEventListener('load', (event) => {
   if (orgTable) {
       loadTableData(url='get-org-data', tableID='org-table')
 
-      document.getElementById("delete-org-button").addEventListener("click", function() {
-        deleteTableData(url='delete-org-selection', tableID='org-table')
-      })
+      // document.getElementById("delete-org-button").addEventListener("click", function() {
+      //   deleteTableData(url='delete-org-selection', tableID='org-table')
+      // })
     
     }
 

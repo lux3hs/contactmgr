@@ -1,6 +1,6 @@
 <!-- templates/manage_contacts/add-product.html -->
 {% extends "base.html" %}
-{% block title %}Add Product{% endblock %}
+{% block title %}Edit Product{% endblock %}
 
 {% block head %}
 {% load static %}
@@ -24,18 +24,18 @@
 </ul>
 {% endif %} {% endcomment %}
 
-      <h2 class="center-text">Product Versions</h2>
+      <h3 class="center-text">Edit Product</h3>
 
 
   <form class="new-product-form" method="post">
       {% csrf_token %}
       <div>
-        {{ product_form.as_p }}
+        {{ edit_product_form.as_p }}
       </div>
-      <input class="button" type = "submit" value = "Create" name="newForm"/>
+      <input class="button" type = "submit" value = "Save" name="newForm"/>
   </form>
 
-  <form>
+  {% comment %} <form>
         <table id="product-table">
           <thead>
             <tr> 
@@ -43,13 +43,13 @@
             </tr>
           </thead>
         </table>
-        {% comment %} <p><input type="button" class="button" name="delete_product_button" id="delete-product-button" value="Delete"></p> {% endcomment %}
-    </form>
+        <p><input type="button" class="button" name="delete_product_button" id="delete-product-button" value="Delete"></p>
+    </form> {% endcomment %}
 
 
 <div>
   <p>
-  <a href="{% url 'manage_contacts' %}">Home</a>
+  <a href="{% url 'add_product' %}">Back</a>
   {% comment %} <a href="{% url 'homepage' %}">Home</a> {% endcomment %}
   <a href="{% url 'logout' %}">Logout</a>
   </p>

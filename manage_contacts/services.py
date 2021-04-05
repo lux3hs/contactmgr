@@ -98,25 +98,25 @@ def edit_contact(current_user, user_query, contact_object, contact_organization)
     contact_role = user_query.get('contact_role')
     contact_status = user_query.get('contact_status')
 
-    if contact_firstname is not None:
+    if len(contact_firstname) > 0:
         contact_object.user.first_name = contact_firstname
     
-    if contact_lastname is not None:
+    if len(contact_lastname) > 0:
         contact_object.user.last_name = contact_lastname
     
-    if contact_email is not None:
+    if len(contact_email) > 0:
         contact_object.user.email = contact_email
 
-    if contact_username is not None:
+    if len(contact_username) > 0:
         contact_object.user.username = contact_username
 
-    if contact_role is not None:
+    if len(contact_role) > 0:
         contact_object.role = contact_role
     
-    if contact_status is not None:
+    if len(contact_status) > 0:
         contact_object.status = contact_status
 
-    if contact_organization is not None:
+    if len(contact_organization) > 0:
         contact_object.organization = contact_organization
     
     contact_object.user.save()
@@ -171,6 +171,36 @@ def add_new_organization(user_query):
 
     return success_message
 
+def edit_organization(user_query, org_selection):
+    """ Add organization on user request """
+    org_type = user_query.get('org_type')
+    org_name = user_query.get('org_name')
+    org_domain = user_query.get('org_domain')
+    org_data = Organization.objects.all()
+    org_names = []
+    
+    for org in org_data:
+        org_names.append(org.org_name)
+
+    if org_name not in org_names:
+        if len(org_type) > 0:
+            org_selection.org_type = org_type
+
+        if len(org_name) > 0:
+            org_selection.org_name = org_name
+        
+        if len(org_domain) > 0:
+            org_selection.domain = org_domain
+
+        org_selection.save()
+
+        success_message = "Organization updated successfully"
+
+    else: 
+        success_message = "Organization exists"
+
+    return success_message
+
 
 def delete_org_data(current_user, org_selection):
     """ Delete org selection from database """
@@ -211,6 +241,32 @@ def add_new_product(user_query):
 
     else: 
         success_message = "Product exists"
+
+    return success_message
+
+
+def edit_product(user_query, product_selection):
+    """ Add new product on user request """
+    product_name = user_query.get('product_name')
+    product_version = user_query.get('product_version')
+    product_data = Product.objects.all()
+    product_names = []
+    for product in product_data:
+        product_names.append(product.product_name)
+
+    if product_name not in product_names:
+        if len(product_name) > 0:
+            product_selection.product_name = product_name
+
+        if len(product_version) > 0:
+            product_selection.product_version = product_version
+
+        product_selection.save()
+
+        success_message = "Product updated successfully"
+
+    else: 
+        success_message = "Product name exists"
 
     return success_message
 
@@ -301,21 +357,15 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     """ Add new entitlement on user selection """
     creator_email = contact_data.user.email
     creator_phone = contact_data.phone
-    
     product_choice = user_query.get('product_choice')
     org_choice = user_query.get('org_choice')
     product_object = Product.objects.filter(product_name=product_choice).get()
     org_object = Organization.objects.filter(org_name=org_choice).get()
-
     max_licenses = user_query.get('max_licenses')
     total_licenses = max_licenses
-
     host_ip = user_query.get('host_ip')
     product_grade = user_query.get("product_grade")
     product_stations = user_query.get("product_stations")
-
-
-
     allowed_ips = user_query.get('allowed_ips')
     re_seller = user_query.get('re_seller')
 
@@ -329,12 +379,12 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     creation_date = datetime.datetime.now().replace(microsecond=0)
     
     exp_date_string = user_query.get('expiration_date')
-    if exp_date_string:
+    if len(str(exp_date_string)) > 1:
         exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
         expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
 
     else:
-        expiration_date = None
+        expiration_date = ""
 
     entitlement_data = Entitlement.objects.all()
     entitlement_names = []
@@ -344,27 +394,50 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     # dup_check = org_object.org_name + '/' + product_object.product_name
     
     # if dup_check not in entitlement_names:
-    entitlement_object.creator_email = creator_email
-    entitlement_object.creator_phone = creator_phone
+    if creator_email is not None:
+        entitlement_object.creator_email = creator_email
+
+    if len(str(creator_phone)) > 0:
+        entitlement_object.creator_phone = creator_phone
+
+    # if len(product_object) > 0:
     entitlement_object.product = product_object
+
+    # if len(org_object) > 0:
     entitlement_object.organization = org_object
-    entitlement_object.max_licenses = max_licenses
-    entitlement_object.total_licenses = total_licenses
-    entitlement_object.host_ip = host_ip
-    entitlement_object.product_grade = product_grade
-    entitlement_object.product_stations = product_stations
-    entitlement_object.allowed_ips = allowed_ips
-    entitlement_object.re_seller = re_seller
+
+    if len(str(max_licenses)) > 0:
+        entitlement_object.max_licenses = max_licenses
+
+    if len(str(total_licenses)) > 0:
+        entitlement_object.total_licenses = total_licenses
+
+    if len(host_ip) > 0:
+        entitlement_object.host_ip = host_ip
+
+    if len(product_grade) > 0:
+        entitlement_object.product_grade = product_grade
+
+    if len(str(product_stations)) > 0:
+        entitlement_object.product_stations = product_stations
+
+    if len(str(allowed_ips)) > 0:
+        entitlement_object.allowed_ips = allowed_ips
+
+    if len(re_seller) > 0:
+        entitlement_object.re_seller = re_seller
+
+    # if len(is_permanent) > 0:
     entitlement_object.is_permanent = is_permanent
-    # entitlement_object.creation_date = creation_date
-    entitlement_object.expiration_date = expiration_date
+
+    if len(str(expiration_date)) > 0:
+        entitlement_object.expiration_date = expiration_date
 
     entitlement_object.save()
-
     success_message = "Entitlement successfully updated"
 
     # else: 
-        # success_message = "Entitlement exists"
+    #     success_message = "Entitlement exists"
 
     return success_message
 
@@ -404,10 +477,13 @@ def get_contact_header():
 
 
 def get_org_header():
-    org_header = {"check_box":"",
+    org_header = {"empty_column":"<pre>    </pre>",
+                #   "check_box":"",
                   "org_type":"Type",
                   "org_name":"Name",
                   "domain":"Domain",
+                  'edit_button':'',
+                  "delete_button":""
                 }
 
     return org_header
@@ -416,6 +492,7 @@ def get_product_header():
     product_header = {"empty_column":"<pre>    </pre>",
                       'product_name':'Product',
                       'product_version':'Version',
+                      'edit_button':'',
                       "delete_button":"",
                         }
 
@@ -451,7 +528,6 @@ def get_client_ent_header():
 
     }
     return client_ent_header
-
 
 
 #Create table data based on header keys and object data#

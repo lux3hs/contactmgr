@@ -1,5 +1,3 @@
-# import datetime
-# from datetime import timezone
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -16,6 +14,9 @@ class Organization(models.Model):
     org_name = models.CharField(max_length=50, unique=True)
     domain = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.org_name
+
     def get_table_dictionary(self):
         table_dict = {}
         table_dict["data_id"] = self.id
@@ -23,10 +24,31 @@ class Organization(models.Model):
         table_dict["org_type"] = self.org_type
         table_dict["org_name"] = self.org_name
         table_dict["domain"] = self.domain
+
+        table_dict["empty_column"] = self.get_widget_template('empty_column')
+        # table_dict["check_box"] = self.get_widget_template('check_box')
+        table_dict["edit_button"] = self.get_widget_template('edit_button')
+        table_dict["delete_button"] = self.get_widget_template('delete_button')
         return table_dict
 
-    def __str__(self):
-        return self.org_name
+    def get_widget_template(self, widget):
+        if widget is "hello":
+            greeting = "'hello world!'"
+            widget_function = '<input type="button" class="button" onclick="console.log(' + greeting + ')" value="' + str(self.id) + '"/>'
+
+        elif widget is "empty_column":
+            widget_function = "<pre>    </pre>"
+
+        elif widget is "edit_button":
+            query_string = [self.id]
+            name_link = "edit-org-data/" + str(query_string)
+            widget_function = '<p><a class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
+
+        elif widget is "delete_button":
+            delete_function = "deleteTableData(url='delete-org-selection', queryData=[" + str(self.id) + "], tableID='org-table')"
+            widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
+
+        return widget_function
 
 class Contact(models.Model):
     phone = models.IntegerField(null=True)
@@ -40,6 +62,27 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def get_table_dictionary(self):
+        table_dict = {}
+        table_dict["data_id"] = self.id
+        # table_dict["check_box"] = '<input type="checkbox" id="1" name="js-check-box" value="' + str(self.id) + '"  >'
+        table_dict["username"] = self.user.username
+        table_dict["first_name"] = self.user.first_name
+        table_dict["last_name"] = self.user.last_name
+        table_dict["email"] = self.user.email
+        table_dict["contact_id"] = self.id
+        table_dict["role"] = self.role
+        table_dict["status"] = self.status
+        table_dict["org_id"] = self.organization.id
+        table_dict["org_name"] = self.organization.org_name
+
+        table_dict["empty_column"] = self.get_widget_template('empty_column')
+        table_dict["check_box"] = self.get_widget_template('check_box')
+        table_dict["edit_button"] = self.get_widget_template('edit_button')
+        table_dict["delete_button"] = self.get_widget_template('delete_button')
+
+        return table_dict
 
     def get_widget_template(self, widget):
         if widget is "hello":
@@ -64,30 +107,6 @@ class Contact(models.Model):
 
         return widget_function
 
-    def get_table_dictionary(self):
-        table_dict = {}
-        table_dict["data_id"] = self.id
-        # table_dict["check_box"] = '<input type="checkbox" id="1" name="js-check-box" value="' + str(self.id) + '"  >'
-        table_dict["username"] = self.user.username
-        table_dict["first_name"] = self.user.first_name
-        table_dict["last_name"] = self.user.last_name
-        table_dict["email"] = self.user.email
-        table_dict["contact_id"] = self.id
-        table_dict["role"] = self.role
-        table_dict["status"] = self.status
-        table_dict["org_id"] = self.organization.id
-        table_dict["org_name"] = self.organization.org_name
-
-        table_dict["empty_column"] = self.get_widget_template('empty_column')
-        table_dict["check_box"] = self.get_widget_template('check_box')
-        table_dict["edit_button"] = self.get_widget_template('edit_button')
-        table_dict["delete_button"] = self.get_widget_template('delete_button')
-
-        return table_dict
-        
-
-
-
 @receiver(post_save, sender=User)
 def create_or_update_user_contact(sender, instance, created, **kwargs):
     if created:
@@ -102,16 +121,6 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name + " v" + self.product_version
 
-    def get_widget_template(self, widget):
-        if widget is "empty_column":
-            widget_function = "<pre>    </pre>"
-
-        elif widget is "delete_button":
-            delete_function = "deleteTableData(url='delete-product-selection', queryData=[" + str(self.id) + "], tableID='product-table')"
-            widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
-
-        return widget_function
-
     def get_table_dictionary(self):
         table_dict = {}
         table_dict["data_id"] = self.id
@@ -120,9 +129,24 @@ class Product(models.Model):
         table_dict["product_version"] = self.product_version
 
         table_dict["empty_column"] = self.get_widget_template("empty_column")
+        table_dict["edit_button"] = self.get_widget_template('edit_button')
         table_dict["delete_button"] = self.get_widget_template("delete_button")
         return table_dict
 
+    def get_widget_template(self, widget):
+        if widget is "empty_column":
+            widget_function = "<pre>    </pre>"
+
+        elif widget is "edit_button":
+            query_string = [self.id]
+            name_link = "edit-product-data/" + str(query_string)
+            widget_function = '<p><a class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
+
+        elif widget is "delete_button":
+            delete_function = "deleteTableData(url='delete-product-selection', queryData=[" + str(self.id) + "], tableID='product-table')"
+            widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
+
+        return widget_function
 
 
 class Entitlement(models.Model):
@@ -146,6 +170,25 @@ class Entitlement(models.Model):
 
     def get_entitlement_name(self):
         return self.organization.org_name + "/" + self.product.product_name
+
+    def get_table_dictionary(self):
+        table_dict = {}
+        table_dict["data_id"] = self.id
+        table_dict["product_name"] = self.product.product_name
+        table_dict["product_version"] = self.product.product_version
+        table_dict["org_name"] = self.organization.org_name
+        table_dict["max_licenses"] = self.max_licenses
+        table_dict["total_licenses"] = self.total_licenses
+        num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
+        table_dict["num_allocated"] = num_allocated
+
+        table_dict["empty_column"] = self.get_widget_template('empty_column')
+        table_dict["name_link"] = self.get_widget_template('name_link')
+        table_dict["check_box"] = self.get_widget_template('check_box')
+        table_dict["edit_button"] = self.get_widget_template('edit_button')
+        table_dict["delete_button"] = self.get_widget_template('delete_button')
+        table_dict["product_name_widget"] = self.get_widget_template('product_name_widget')    
+        return table_dict
 
     def get_widget_template(self, widget):
         if widget is "hello":
@@ -178,36 +221,8 @@ class Entitlement(models.Model):
                 product_string += "<option value = " + str(product.product_name) + ">" + str(product.product_name) + "</option>"
 
             widget_function = '<select name="product_selection">' + product_string + '</select>'
-
-            
-
+  
         return widget_function
-
-
-
-    def get_table_dictionary(self):
-        table_dict = {}
-        table_dict["data_id"] = self.id
-        # table_dict["empty_column"] = self.get_widget_template('empty_column')
-        # table_dict["check_box"] = self.get_widget_template('check_box')
-
-        table_dict["product_name"] = self.product.product_name
-        table_dict["product_version"] = self.product.product_version
-        table_dict["org_name"] = self.organization.org_name
-        table_dict["max_licenses"] = self.max_licenses
-        table_dict["total_licenses"] = self.total_licenses
-        num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
-        table_dict["num_allocated"] = num_allocated
-
-        table_dict["product_name_widget"] = self.get_widget_template('product_name_widget')
-        
-        table_dict["empty_column"] = self.get_widget_template('empty_column')
-        table_dict["name_link"] = self.get_widget_template('name_link')
-        table_dict["check_box"] = self.get_widget_template('check_box')
-        table_dict["edit_button"] = self.get_widget_template('edit_button')
-
-        table_dict["delete_button"] = self.get_widget_template('delete_button')
-        return table_dict
 
     def gen_license_image(self):
             new_image = License(

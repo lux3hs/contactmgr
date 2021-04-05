@@ -16,7 +16,7 @@
 
   {% if contact_data.role == "admin" %}
 
-      <h2 class="center-text">Add Contact</h2>
+      <h3 class="center-text">Add Contact</h3>
       <form id="new-contact-form" class="new-contact-form" method="post">
         {% csrf_token %}
         {{ contact_form.as_p }}
