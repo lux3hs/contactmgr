@@ -8,7 +8,7 @@ from manage_contacts.models import Product
 from .services import package_license_data, generate_license_key, read_key_file
 
 @login_required
-def download_license_package(request, product_choice, product_entitlements):
+def download_license_package(request, product_choice, product_entitlements, master_license_package=False):
     """ Download a product license if entitlements exist  """
     entitlement_product = Product.objects.filter(product_name=product_choice).get()
     product_id = entitlement_product.id
@@ -21,10 +21,33 @@ def download_license_package(request, product_choice, product_entitlements):
 
         if key_name is not None:
             key_text = read_key_file(key_name)
-            key_field = "Key=" + key_text
-            key_data = data_package['header_string'] + key_field
+            # key_field = "Key=" + key_text
+
+            if master_license_package:
+                m_key_name = generate_license_key(master_license_package)
+                if m_key_name is not None:
+
+                    # key_text = read_key_file(key_name)
+                    key_field = "Key0=" + key_text
+
+                    m_key_text = read_key_file(m_key_name)
+                    m_key_field = "MKey=" + m_key_text
+
+
+                    key_data = (master_license_package['master_header'] + "\r\n" +
+                               master_license_package['entitlement_string'] + "\r\n" +"\r\n" +
+                               m_key_field + "\r\n" + 
+                               key_field)
+
+
+            else:
+                # key_text = read_key_file(key_name)
+                key_field = "Key=" + key_text
+                key_data = data_package['header_string'] + key_field
 
             entitlement_data.gen_license_image()
+
+            
 
     else: 
         messages.add_message(request, messages.INFO, 'Not enough licenses')

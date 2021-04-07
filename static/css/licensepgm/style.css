@@ -287,6 +287,16 @@ footer a{
 
 }
 
+.master_license_form {
+    display: inline-block;
+    font-size: small;
+    text-align: right;
+    margin-left: 35vw;
+    padding-right:25px;
+    padding-left: 25px;
+
+}
+
 .user-info {
     /* display: inline-block; */
     /* margin-left: 35vw; */
@@ -366,6 +376,7 @@ table .button {
 
 
 
+
 /* #contact-table .button {
     margin-left: 220px;
     border:2px solid black; */
@@ -399,7 +410,6 @@ table .button {
 }
 
 
-
 .button-padding {
     margin: 25px;
     margin-left: 375px;
@@ -414,6 +424,8 @@ table .button {
     margin-left:10%;
     /* border:2px solid blue; */
 }
+
+
 
 
 

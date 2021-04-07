@@ -203,7 +203,7 @@ class Entitlement(models.Model):
             widget_function = "<p><a href=" + '"' + name_link + '"' + ">" + self.product.product_name + "</a></p>"
 
         elif widget is "check_box":
-            widget_function = '<input type="checkbox" name="js-check-box" value="' + str(self.id) + '"/>'
+            widget_function = '<input type="checkbox" name="product-check-box" value="' + str(self.id) + '"/>'
 
         elif widget is "edit_button":
             query_string = [self.id]

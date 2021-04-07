@@ -16,6 +16,7 @@ from .forms import (ContactCreationForm,
                     ProductEditForm,
                     EntitlementCreationForm,
                     EntitlementEditForm,
+                    MasterLicenseForm,
                     SearchChoiceForm,
                     ChoiceForm)
 
@@ -71,7 +72,7 @@ def admin_portal(request):
     for product in product_data:
         product_list.append((product.product_name, product.product_name))
         
-    if request.method == 'POST':
+    if request.POST.get("newForm"):
         entitlement_form = EntitlementCreationForm(request.POST, product_list=product_list, org_list=org_list)
         if entitlement_form.is_valid():
             user_query = request.POST
@@ -80,13 +81,72 @@ def admin_portal(request):
             return HttpResponseRedirect(request.path_info)
 
     else:
-        print("form invalid")
         entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
-    
+
+    if request.POST.get("save-master-license"):
+        user_query = request.POST
+        print(user_query)
+        entitlement_selection = user_query.getlist('product-check-box')
+
+        if len(entitlement_selection) > 1:
+            messages.add_message(request, messages.INFO, 'Too many selected')
+            return HttpResponseRedirect(reverse('manage_contacts'))
+
+        elif len(entitlement_selection) == 0:
+            messages.add_message(request, messages.INFO, 'No entitlements selected')
+            return HttpResponseRedirect(reverse('manage_contacts'))
+
+        else:
+            entitlement_id = entitlement_selection[0]
+
+        ml_ID = user_query.get('ml_ID')
+        ml_org_name = user_query.get('ml_org_name')
+        ml_org_host_IP = user_query.get('ml_org_host_IP')
+        ml_email = user_query.get('ml_email')
+        ml_phone = user_query.get('ml_phone')
+
+        entitlement_object = Entitlement.objects.filter(id=entitlement_id).get()
+        product_choice = entitlement_object.product.product_name
+        org_id = contact_data.organization.id
+        product_entitlements = Entitlement.objects.filter(organization=org_id)
+        master_header = ('Master License ID: ' + ml_ID + "\r\n" +
+                       'Organization Name: ' + ml_org_name + "\r\n" +
+                       'Organization Host/IP: ' + ml_org_host_IP + "\r\n" +
+                       'Email Address: ' + ml_email + "\r\n" +
+                       'Phone Number: ' + ml_phone + "\r\n")
+
+        entitlement_string = ("Product Name: " + str(entitlement_object.product.product_name) + ", " +
+                             "Host/Ip address: " + str(entitlement_object.host_ip) + ", " +
+                             "Version: " + str(entitlement_object.product.product_version) + ", " +
+                             "Num of stations: " + str(entitlement_object.product_stations) + ", " +
+                             "Permanent License, " +
+                             "Grade: " + str(entitlement_object.product_grade) + ", " +
+                             "User name: all, " +
+                             "Support ID: " + str(entitlement_object.id) + ", " +
+                             "Support Expiration Date: " + str(entitlement_object.expiration_date) + "\r\n")
+
+        master_key_string = 'masterip=' + str(ml_org_host_IP) + "&masterid=" + str(ml_ID)
+
+        key_name = "ml_" + entitlement_id
+
+        master_data = {'key_name':key_name, 
+                       'entitlement_string':entitlement_string, 
+                       'master_header': master_header, 
+                       'data_string':master_key_string}
+
+        return download_license_package(request, product_choice, product_entitlements, master_license_package=master_data)
+
+
+
+
+    else:
+        master_license_form = MasterLicenseForm()
+
     
     context = {'contact_data':contact_data,
                'entitlement_form':entitlement_form,
                'contact_search_form':contact_search_form,
+               'master_license_form':master_license_form,
             }
 
     return render(request, "manage_contacts/admin-portal.html", context)

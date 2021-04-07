@@ -499,10 +499,11 @@ def get_product_header():
     return product_header
 
 def get_entitlement_header():
-    entitlement_header = {"empty_column":"<pre>    </pre>",
+    entitlement_header = {"check_box":"",
+                          "empty_column":"<pre>    </pre>",
                         #   "product_name_widget":"Product",
                         #   "product_name":"Product",
-                        "name_link":"Product",
+                          "name_link":"Product",
                           "product_version":"Version",
                           "org_name":"Client",
                           "max_licenses":"Max",
@@ -510,7 +511,6 @@ def get_entitlement_header():
                           "num_allocated":"Num Allocated",
                           'edit_button':'',
                           "delete_button":"",
-                        #   "check_box":"",
 
     }
     return entitlement_header
@@ -538,13 +538,12 @@ def get_table_data(table_header, object_data):
     header_list = []
     for key in table_header.keys():
         header_list.append(table_header[key])
+        
     data['table_header'] = header_list
     if len(object_data) > 0:
         try:
             data_list = []
             for obj in object_data:
-                print("obj: " + str(obj))
-
                 object_dictionary = obj.get_table_dictionary()
                 temp_dict = {}
                 temp_dict["data_id"] = object_dictionary.get("data_id")

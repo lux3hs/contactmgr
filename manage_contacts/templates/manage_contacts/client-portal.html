@@ -33,8 +33,8 @@
 
     {% comment %} <h3 class="center-text">Licenses</h3> {% endcomment %}
     <form class="license-choice-form center-text" method="post">
-      <input class="button" name="save-license" type="submit" value="Save">
       {% csrf_token %}
+      <input class="button" name="save-license" type="submit" value="Save">
       {{ license_choice_form }}
     </form>
     

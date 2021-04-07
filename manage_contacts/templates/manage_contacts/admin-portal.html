@@ -43,14 +43,14 @@
     <input class="button" type = "submit" value = "Create License" name="newForm"/>
   </form>
 
-  <form method="post">
-      {% csrf_token %}
-      <table id="entitlement-table">
-      <p class="button-padding">
+    <p class="button-padding">
       <a class="button" href="{% url 'add_product' %}">Add Product</a>
       <a  class="button" href="{% url 'add_organization' %}">Add Org</a>
-     </p>
+    </p>
 
+    <form method="post">
+      {% csrf_token %}
+      <table id="entitlement-table">
         <thead>
           <tr> 
             <th></th>
@@ -58,7 +58,14 @@
         </thead>
       </table>
       {% comment %} <p><input type="button" class="button" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p> {% endcomment %}
-  </form>
+      <div class="master_license_form">
+      {{ master_license_form.as_p }}
+      </div>
+      <p class="button-padding"><input class="button" name="save-master-license" type="submit" value="Save Master License"></p>
+    </form>
+
+
+
 </div>
 
 
@@ -73,14 +80,17 @@
   
   <p class="button-padding"><a class="button" href="{% url 'add_contact' %}">Add Contact</a></p>
 
-  <table id="contact-table">
-    <thead>
-      <tr> 
-        <th></th>
-      </tr>
-    </thead>
-  </table>
-  {% comment %} <p><input type="button" class="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>   {% endcomment %}
+
+    <table id="contact-table">
+      <thead>
+        <tr> 
+          <th></th>
+        </tr>
+      </thead>
+    </table>
+    {% comment %} <p><input type="button" class="button" name="delete_contact_button" id="delete-contact-button" value="Delete"></p>   {% endcomment %}
+
+
 </div>
 
 </div>

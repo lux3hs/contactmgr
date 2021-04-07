@@ -143,6 +143,13 @@ class EntitlementEditForm(forms.Form):
         self.fields['is_permanent'] = forms.BooleanField(required=False)
 
 
+class MasterLicenseForm(forms.Form):
+    ml_ID = forms.IntegerField(max_value=9999)
+    ml_org_name = forms.CharField(max_length=50)
+    ml_org_host_IP = forms.CharField(max_length=50)
+    ml_email = forms.EmailField(max_length=50)
+    ml_phone = forms.IntegerField(max_value=99999999999)
+
 
 class SearchForm(forms.Form):
     """ Form for searching """
