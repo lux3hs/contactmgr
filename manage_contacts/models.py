@@ -154,16 +154,16 @@ class Entitlement(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     max_licenses = models.IntegerField(default=100)
     total_licenses = models.IntegerField(default=0)
-    creator_email = models.CharField("Created by ", max_length=50, null=True)
-    creator_phone = models.IntegerField(default=0, null=True)
-    re_seller = models.CharField(max_length=50, null=True)
-    host_ip = models.CharField(max_length=50, null=True)
-    is_permanent = models.BooleanField(default=None, null=True)
-    product_grade = models.CharField(max_length=50, default="standard", null=True)
-    product_stations = models.IntegerField(default=0, null=True)
-    allowed_ips = models.IntegerField(default=10, null=True)
-    creation_date = models.DateTimeField("Date created ", null=True)
-    expiration_date = models.DateTimeField("Expiration date ", null=True)
+    # creator_email = models.CharField("Created by ", max_length=50, null=True)
+    # creator_phone = models.IntegerField(default=0, null=True)
+    # re_seller = models.CharField(max_length=50, null=True)
+    # host_ip = models.CharField(max_length=50, null=True)
+    # is_permanent = models.BooleanField(default=None, null=True)
+    # product_grade = models.CharField(max_length=50, default="standard", null=True)
+    # product_stations = models.IntegerField(default=0, null=True)
+    # allowed_ips = models.IntegerField(default=10, null=True)
+    # creation_date = models.DateTimeField("Date created ", null=True)
+    # expiration_date = models.DateTimeField("Expiration date ", null=True)
 
     def __str__(self):
         return self.organization.org_name + "/" + self.product.product_name
@@ -225,25 +225,26 @@ class Entitlement(models.Model):
         return widget_function
 
     def gen_license_image(self):
-            new_image = License(
-                organization=str(self.organization),
-                product=str(self.product),
-                max_licenses=str(self.max_licenses),
-                total_licenses=str(self.total_licenses),
-                creator_email=str(self.creator_email),
-                creator_phone=str(self.creator_phone),
-                re_seller=str(self.re_seller),
-                host_ip=str(self.host_ip),
-                is_permanent=str(self.is_permanent),
-                product_grade=str(self.product_grade),
-                product_stations=str(self.product_stations),
-                allowed_ips=str(self.allowed_ips),
-                creation_date=str(self.creation_date),
-                expiration_date=str(self.expiration_date),
+            # new_image = License(
+            #     organization=str(self.organization),
+            #     product=str(self.product),
+            #     max_licenses=str(self.max_licenses),
+            #     total_licenses=str(self.total_licenses),
+            #     creator_email=str(self.creator_email),
+            #     creator_phone=str(self.creator_phone),
+            #     re_seller=str(self.re_seller),
+            #     host_ip=str(self.host_ip),
+            #     is_permanent=str(self.is_permanent),
+            #     product_grade=str(self.product_grade),
+            #     product_stations=str(self.product_stations),
+            #     allowed_ips=str(self.allowed_ips),
+            #     creation_date=str(self.creation_date),
+            #     expiration_date=str(self.expiration_date),
 
-            )
+            # )
 
-            new_image.save()
+            # new_image.save()
+        print("remove this")
 
     def get_license_header(self):
         """ Get header for displaying in license key """

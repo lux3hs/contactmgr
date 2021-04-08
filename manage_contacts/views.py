@@ -16,9 +16,11 @@ from .forms import (ContactCreationForm,
                     ProductEditForm,
                     EntitlementCreationForm,
                     EntitlementEditForm,
-                    MasterLicenseForm,
                     SearchChoiceForm,
                     ChoiceForm)
+
+from manage_licenses.forms import LicenseCreationForm
+from manage_licenses.services import package_master_data
 
 #Specify method imports
 from .services import *
@@ -33,8 +35,6 @@ def manage_contacts(request):
     current_user = request.user
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
-    # org_id = contact_data.organization.id
-    # contact_role = contact_data.role
 
     if contact_data.organization.id == SUPER_ORG_ID:
         return HttpResponseRedirect(reverse('admin_portal'))
@@ -50,6 +50,13 @@ def admin_portal(request):
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
 
+    org_id = contact_data.organization.id
+    product_entitlements = Entitlement.objects.filter(organization=org_id)
+    product_choices = []
+
+    for entitlement in product_entitlements:
+        product_choices.append((entitlement.product.product_name, entitlement.product.product_name))
+
     # if contact_data.organization.id != SUPER_ORG_ID:
     #     return HttpResponseRedirect(reverse('client_portal'))
 
@@ -62,91 +69,91 @@ def admin_portal(request):
 
     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
-    org_data = Organization.objects.all()
-    org_list = []
-    for organization in org_data:
-        org_list.append((organization.org_name, organization.org_name))
-
-    product_data = Product.objects.all()
-    product_list = []
-    for product in product_data:
-        product_list.append((product.product_name, product.product_name))
+    if request.POST.get("save-license"):
+        license_creation_form = LicenseCreationForm(request.POST)
         
-    if request.POST.get("newForm"):
-        entitlement_form = EntitlementCreationForm(request.POST, product_list=product_list, org_list=org_list)
-        if entitlement_form.is_valid():
+        if license_creation_form.is_valid():
             user_query = request.POST
-            success_message = add_new_entitlement(contact_data, user_query)
-            messages.add_message(request, messages.INFO, success_message)
-            return HttpResponseRedirect(request.path_info)
+            entitlement_selection = user_query.getlist('product-check-box')
+
+            if len(entitlement_selection) > 1:
+                messages.add_message(request, messages.INFO, 'Too many selected')
+                return HttpResponseRedirect(reverse('manage_contacts'))
+
+            elif len(entitlement_selection) == 0:
+                messages.add_message(request, messages.INFO, 'No entitlements selected')
+                return HttpResponseRedirect(reverse('manage_contacts'))
+
+            else:
+                entitlement_id = entitlement_selection[0]
+                entitlement_choice = Entitlement.objects.filter(id=entitlement_id).get()
+
+                master_license = user_query.get('master_license')
+                if master_license:
+
+
+
+
+                    # ml_ID = str(entitlement_id)
+                    # ml_org_name = str(entitlement_choice.organization.org_name)
+                    # ml_org_host_IP = str(user_query.get('host_ip'))
+                    # ml_email = str(contact_data.user.email)
+                    # ml_phone = str(contact_data.phone)
+
+                    # master_header = ('Master License ID: ' + ml_ID + "\r\n" +
+                    #             'Organization Name: ' + ml_org_name + "\r\n" +
+                    #             'Organization Host/IP: ' + ml_org_host_IP + "\r\n" +
+                    #             'Email Address: ' + ml_email + "\r\n" +
+                    #             'Phone Number: ' + ml_phone + "\r\n")
+
+                    # product_name = entitlement_choice.product.product_name
+                    # product_version = entitlement_choice.product.product_version
+
+                    # product_stations = str(user_query.get('product_stations'))
+                    # product_grade = str(user_query.get('product_grade'))
+                    # support_id = str(entitlement_choice.id)
+                    # expiration_date = str(user_query.get('expiration_date'))
+
+
+
+                    # entitlement_string = ("Product Name: " + product_name + ", " +
+                    #                     "Host/Ip address: " + ml_org_host_IP + ", " +
+                    #                     "Version: " + product_version + ", " +
+                    #                     "Num of stations: " + product_stations + ", " +
+                    #                     "Permanent License, " +
+                    #                     "Grade: " + product_grade + ", " +
+                    #                     "User name: all, " +
+                    #                     "Support ID: " + support_id + ", " +
+                    #                     "Support Expiration Date: " + expiration_date + "\r\n")
+
+                    # master_key_string = 'masterip=' + str(ml_org_host_IP) + "&masterid=" + str(ml_ID)
+
+                    # key_name = "ml_" + entitlement_id
+
+                    # master_data = {'key_name':key_name, 
+                    #             'entitlement_string':entitlement_string, 
+                    #             'master_header': master_header, 
+                    #             'data_string':master_key_string}
+                    
+                    
+
+
+
+                    master_license_package = package_master_data(user_query, contact_data, entitlement_choice)
+                
+                else:
+                    master_license_package = False
+            
+                                
+                return download_license_package(request, user_query, entitlement_choice, master_license_package=master_license_package)
 
     else:
-        entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
-
-    if request.POST.get("save-master-license"):
-        user_query = request.POST
-        print(user_query)
-        entitlement_selection = user_query.getlist('product-check-box')
-
-        if len(entitlement_selection) > 1:
-            messages.add_message(request, messages.INFO, 'Too many selected')
-            return HttpResponseRedirect(reverse('manage_contacts'))
-
-        elif len(entitlement_selection) == 0:
-            messages.add_message(request, messages.INFO, 'No entitlements selected')
-            return HttpResponseRedirect(reverse('manage_contacts'))
-
-        else:
-            entitlement_id = entitlement_selection[0]
-
-        ml_ID = user_query.get('ml_ID')
-        ml_org_name = user_query.get('ml_org_name')
-        ml_org_host_IP = user_query.get('ml_org_host_IP')
-        ml_email = user_query.get('ml_email')
-        ml_phone = user_query.get('ml_phone')
-
-        entitlement_object = Entitlement.objects.filter(id=entitlement_id).get()
-        product_choice = entitlement_object.product.product_name
-        org_id = contact_data.organization.id
-        product_entitlements = Entitlement.objects.filter(organization=org_id)
-        master_header = ('Master License ID: ' + ml_ID + "\r\n" +
-                       'Organization Name: ' + ml_org_name + "\r\n" +
-                       'Organization Host/IP: ' + ml_org_host_IP + "\r\n" +
-                       'Email Address: ' + ml_email + "\r\n" +
-                       'Phone Number: ' + ml_phone + "\r\n")
-
-        entitlement_string = ("Product Name: " + str(entitlement_object.product.product_name) + ", " +
-                             "Host/Ip address: " + str(entitlement_object.host_ip) + ", " +
-                             "Version: " + str(entitlement_object.product.product_version) + ", " +
-                             "Num of stations: " + str(entitlement_object.product_stations) + ", " +
-                             "Permanent License, " +
-                             "Grade: " + str(entitlement_object.product_grade) + ", " +
-                             "User name: all, " +
-                             "Support ID: " + str(entitlement_object.id) + ", " +
-                             "Support Expiration Date: " + str(entitlement_object.expiration_date) + "\r\n")
-
-        master_key_string = 'masterip=' + str(ml_org_host_IP) + "&masterid=" + str(ml_ID)
-
-        key_name = "ml_" + entitlement_id
-
-        master_data = {'key_name':key_name, 
-                       'entitlement_string':entitlement_string, 
-                       'master_header': master_header, 
-                       'data_string':master_key_string}
-
-        return download_license_package(request, product_choice, product_entitlements, master_license_package=master_data)
-
-
-
-
-    else:
-        master_license_form = MasterLicenseForm()
+        license_creation_form = LicenseCreationForm()
 
     
     context = {'contact_data':contact_data,
-               'entitlement_form':entitlement_form,
                'contact_search_form':contact_search_form,
-               'master_license_form':master_license_form,
+               "license_creation_form":license_creation_form,
             }
 
     return render(request, "manage_contacts/admin-portal.html", context)
@@ -175,18 +182,70 @@ def client_portal(request):
     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
     if request.POST.get("save-license"):
-        license_choice_form = ChoiceForm(request.POST, choice_list=product_choices)
+        # license_choice_form = ChoiceForm(request.POST, choice_list=product_choices)
+        license_creation_form = LicenseCreationForm(request.POST)
+
         
-        if license_choice_form.is_valid():
+        # if license_choice_form.is_valid():
+        if license_creation_form.is_valid():
             user_query = request.POST
-            product_choice = user_query.get('choice_field')
-            return download_license_package(request, product_choice, product_entitlements)
+            entitlement_selection = user_query.get('product-check-box')
+
+            if len(entitlement_selection) > 1:
+                messages.add_message(request, messages.INFO, 'Too many selected')
+                return HttpResponseRedirect(reverse('manage_contacts'))
+
+            elif len(entitlement_selection) == 0:
+                messages.add_message(request, messages.INFO, 'No entitlements selected')
+                return HttpResponseRedirect(reverse('manage_contacts'))
+
+            else:
+                entitlement_id = entitlement_selection[0]
+
+                entitlement_choice = Entitlement.objects.filter(id=entitlement_id).get()
+                return download_license_package(request, user_query, entitlement_choice)
 
     else:
-        license_choice_form = ChoiceForm(choice_list=product_choices)
+        # license_choice_form = ChoiceForm(choice_list=product_choices)
+        license_creation_form = LicenseCreationForm()
 
-    context = {'license_choice_form':license_choice_form, 'contact_data':contact_data, 'contact_search_form':contact_search_form}
+
+    context = {'license_creation_form':license_creation_form, 'contact_data':contact_data, 'contact_search_form':contact_search_form}
     return render(request, "manage_contacts/client-portal.html", context)
+
+
+@login_required
+def add_entitlement(request):
+    current_user = request.user
+    user_id = current_user.id
+    contact_data = Contact.objects.filter(user=user_id).get()
+
+    org_data = Organization.objects.all()
+    org_list = []
+    for organization in org_data:
+        org_list.append((organization.org_name, organization.org_name))
+
+    product_data = Product.objects.all()
+    product_list = []
+    for product in product_data:
+        product_list.append((product.product_name, product.product_name))
+        
+    if request.POST.get("newForm"):
+        entitlement_form = EntitlementCreationForm(request.POST, product_list=product_list, org_list=org_list)
+        if entitlement_form.is_valid():
+            user_query = request.POST
+            success_message = add_new_entitlement(contact_data, user_query)
+            messages.add_message(request, messages.INFO, success_message)
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        entitlement_form = EntitlementCreationForm(org_list=org_list, product_list=product_list)
+
+    context = {'entitlement_form':entitlement_form,
+
+            }
+
+    return render(request, "manage_contacts/add-entitlement.html", context)
 
 
 @login_required
@@ -310,12 +369,10 @@ def edit_contact_data(request, query_string):
 
     else:
         contact_selection = Contact.objects.filter(id=query_data[0]).get()
-        # print(contact_selection)
 
     current_user_object = request.user
     user_id = current_user_object.id
     current_contact = Contact.objects.filter(user_id=user_id).get()
-    # contact_data = Contact.objects.filter(user_id=user_id).get()
     org_objects = Organization.objects.all()
     
     choice_list = []

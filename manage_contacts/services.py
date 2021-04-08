@@ -286,8 +286,8 @@ def delete_product_data(product_selection):
 
 def add_new_entitlement(contact_data, user_query):
     """ Add new entitlement on user selection """
-    creator_email = contact_data.user.email
-    creator_phone = contact_data.phone
+    # creator_email = contact_data.user.email
+    # creator_phone = contact_data.phone
     
     product_choice = user_query.get('product_choice')
     org_choice = user_query.get('org_choice')
@@ -297,27 +297,27 @@ def add_new_entitlement(contact_data, user_query):
     max_licenses = user_query.get('max_licenses')
     total_licenses = max_licenses
 
-    host_ip = user_query.get('host_ip')
-    product_grade = user_query.get("product_grade")
-    product_stations = user_query.get("product_stations")
+    # host_ip = user_query.get('host_ip')
+    # product_grade = user_query.get("product_grade")
+    # product_stations = user_query.get("product_stations")
 
 
 
-    allowed_ips = user_query.get('allowed_ips')
-    re_seller = user_query.get('re_seller')
+    # allowed_ips = user_query.get('allowed_ips')
+    # re_seller = user_query.get('re_seller')
 
-    is_permanent = user_query.get('is_permanent')
-    if is_permanent:
-        is_permanent = True
+    # is_permanent = user_query.get('is_permanent')
+    # if is_permanent:
+    #     is_permanent = True
     
-    else:
-        is_permanent = False
+    # else:
+    #     is_permanent = False
 
-    creation_date = datetime.datetime.now().replace(microsecond=0)
+    # creation_date = datetime.datetime.now().replace(microsecond=0)
     
-    exp_date_string = user_query.get('expiration_date')
-    exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
-    expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
+    # exp_date_string = user_query.get('expiration_date')
+    # exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
+    # expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
 
     entitlement_data = Entitlement.objects.all()
     entitlement_names = []
@@ -331,16 +331,16 @@ def add_new_entitlement(contact_data, user_query):
                                     total_licenses=total_licenses,
                                     product=product_object,
                                     organization=org_object,
-                                    creator_email=creator_email,
-                                    creator_phone=creator_phone,
-                                    re_seller=re_seller,
-                                    host_ip=host_ip,
-                                    is_permanent=is_permanent,
-                                    product_grade=product_grade,
-                                    product_stations=product_stations,
-                                    allowed_ips=allowed_ips,
-                                    creation_date=creation_date,
-                                    expiration_date=expiration_date,
+                                    # creator_email=creator_email,
+                                    # creator_phone=creator_phone,
+                                    # re_seller=re_seller,
+                                    # host_ip=host_ip,
+                                    # is_permanent=is_permanent,
+                                    # product_grade=product_grade,
+                                    # product_stations=product_stations,
+                                    # allowed_ips=allowed_ips,
+                                    # creation_date=creation_date,
+                                    # expiration_date=expiration_date,
         )
 
         new_entitlement.save()
@@ -355,36 +355,36 @@ def add_new_entitlement(contact_data, user_query):
 
 def edit_entitlement(contact_data, entitlement_object, user_query):
     """ Add new entitlement on user selection """
-    creator_email = contact_data.user.email
-    creator_phone = contact_data.phone
+    # creator_email = contact_data.user.email
+    # creator_phone = contact_data.phone
     product_choice = user_query.get('product_choice')
     org_choice = user_query.get('org_choice')
     product_object = Product.objects.filter(product_name=product_choice).get()
     org_object = Organization.objects.filter(org_name=org_choice).get()
     max_licenses = user_query.get('max_licenses')
     total_licenses = max_licenses
-    host_ip = user_query.get('host_ip')
-    product_grade = user_query.get("product_grade")
-    product_stations = user_query.get("product_stations")
-    allowed_ips = user_query.get('allowed_ips')
-    re_seller = user_query.get('re_seller')
+    # host_ip = user_query.get('host_ip')
+    # product_grade = user_query.get("product_grade")
+    # product_stations = user_query.get("product_stations")
+    # allowed_ips = user_query.get('allowed_ips')
+    # re_seller = user_query.get('re_seller')
 
-    is_permanent = user_query.get('is_permanent')
-    if is_permanent:
-        is_permanent = True
+    # is_permanent = user_query.get('is_permanent')
+    # if is_permanent:
+    #     is_permanent = True
     
-    else:
-        is_permanent = False
+    # else:
+    #     is_permanent = False
 
-    creation_date = datetime.datetime.now().replace(microsecond=0)
+    # creation_date = datetime.datetime.now().replace(microsecond=0)
     
-    exp_date_string = user_query.get('expiration_date')
-    if len(str(exp_date_string)) > 1:
-        exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
-        expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
+    # exp_date_string = user_query.get('expiration_date')
+    # if len(str(exp_date_string)) > 1:
+    #     exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
+    #     expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
 
-    else:
-        expiration_date = ""
+    # else:
+    #     expiration_date = ""
 
     entitlement_data = Entitlement.objects.all()
     entitlement_names = []
@@ -394,11 +394,11 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     # dup_check = org_object.org_name + '/' + product_object.product_name
     
     # if dup_check not in entitlement_names:
-    if creator_email is not None:
-        entitlement_object.creator_email = creator_email
+    # if creator_email is not None:
+    #     entitlement_object.creator_email = creator_email
 
-    if len(str(creator_phone)) > 0:
-        entitlement_object.creator_phone = creator_phone
+    # if len(str(creator_phone)) > 0:
+    #     entitlement_object.creator_phone = creator_phone
 
     # if len(product_object) > 0:
     entitlement_object.product = product_object
@@ -412,26 +412,26 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     if len(str(total_licenses)) > 0:
         entitlement_object.total_licenses = total_licenses
 
-    if len(host_ip) > 0:
-        entitlement_object.host_ip = host_ip
+    # if len(host_ip) > 0:
+    #     entitlement_object.host_ip = host_ip
 
-    if len(product_grade) > 0:
-        entitlement_object.product_grade = product_grade
+    # if len(product_grade) > 0:
+    #     entitlement_object.product_grade = product_grade
 
-    if len(str(product_stations)) > 0:
-        entitlement_object.product_stations = product_stations
+    # if len(str(product_stations)) > 0:
+    #     entitlement_object.product_stations = product_stations
 
-    if len(str(allowed_ips)) > 0:
-        entitlement_object.allowed_ips = allowed_ips
+    # if len(str(allowed_ips)) > 0:
+    #     entitlement_object.allowed_ips = allowed_ips
 
-    if len(re_seller) > 0:
-        entitlement_object.re_seller = re_seller
+    # if len(re_seller) > 0:
+    #     entitlement_object.re_seller = re_seller
 
-    # if len(is_permanent) > 0:
-    entitlement_object.is_permanent = is_permanent
+    # # if len(is_permanent) > 0:
+    # entitlement_object.is_permanent = is_permanent
 
-    if len(str(expiration_date)) > 0:
-        entitlement_object.expiration_date = expiration_date
+    # if len(str(expiration_date)) > 0:
+    #     entitlement_object.expiration_date = expiration_date
 
     entitlement_object.save()
     success_message = "Entitlement successfully updated"

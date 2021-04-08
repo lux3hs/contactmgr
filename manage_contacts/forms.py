@@ -116,13 +116,13 @@ class EntitlementCreationForm(forms.Form):
         self.fields['product_choice'] = forms.ChoiceField(choices=self.product_list)
         self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
         self.fields['max_licenses'] = forms.IntegerField(max_value=1000)
-        self.fields['host_ip'] = forms.CharField(max_length=50)
-        self.fields["product_grade"] = forms.CharField(max_length=50)
-        self.fields["product_stations"] = forms.IntegerField(max_value=999999)
-        self.fields["allowed_ips"] = forms.IntegerField(max_value=999999)
-        self.fields['re_seller'] = forms.CharField(max_length=50)
-        self.fields['expiration_date'] = forms.DateTimeField()
-        self.fields['is_permanent'] = forms.BooleanField(required=False)
+        # self.fields['host_ip'] = forms.CharField(max_length=50)
+        # self.fields["product_grade"] = forms.CharField(max_length=50)
+        # self.fields["product_stations"] = forms.IntegerField(max_value=999999)
+        # self.fields["allowed_ips"] = forms.IntegerField(max_value=999999)
+        # self.fields['re_seller'] = forms.CharField(max_length=50)
+        # self.fields['expiration_date'] = forms.DateTimeField()
+        # self.fields['is_permanent'] = forms.BooleanField(required=False)
 
 class EntitlementEditForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -134,13 +134,13 @@ class EntitlementEditForm(forms.Form):
         self.fields['product_choice'] = forms.ChoiceField(choices=self.product_list, required=False)
         self.fields['product_choice'].widget.attrs['class'] = "ChoiceField"
         self.fields['max_licenses'] = forms.IntegerField(max_value=1000, required=False)
-        self.fields['host_ip'] = forms.CharField(max_length=50, required=False)
-        self.fields["product_grade"] = forms.CharField(max_length=50, required=False)
-        self.fields["product_stations"] = forms.IntegerField(max_value=999999, required=False)
-        self.fields["allowed_ips"] = forms.IntegerField(max_value=999999, required=False)
-        self.fields['re_seller'] = forms.CharField(max_length=50, required=False)
-        self.fields['expiration_date'] = forms.DateTimeField(required=False)
-        self.fields['is_permanent'] = forms.BooleanField(required=False)
+        # self.fields['host_ip'] = forms.CharField(max_length=50, required=False)
+        # self.fields["product_grade"] = forms.CharField(max_length=50, required=False)
+        # self.fields["product_stations"] = forms.IntegerField(max_value=999999, required=False)
+        # self.fields["allowed_ips"] = forms.IntegerField(max_value=999999, required=False)
+        # self.fields['re_seller'] = forms.CharField(max_length=50, required=False)
+        # self.fields['expiration_date'] = forms.DateTimeField(required=False)
+        # self.fields['is_permanent'] = forms.BooleanField(required=False)
 
 
 class MasterLicenseForm(forms.Form):

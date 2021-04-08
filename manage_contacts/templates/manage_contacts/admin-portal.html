@@ -37,20 +37,35 @@
 <div id="organizations-tab" class="js-tabcontent">
 
   {% comment %} <h3 class="center-text">Product Licenses</h3> {% endcomment %}
-  <form class="entitlement-creation-form" method="post">
+  {% comment %} <form class="entitlement-creation-form" method="post">
     {% csrf_token %}
     {{ entitlement_form.as_p }}
     <input class="button" type = "submit" value = "Create License" name="newForm"/>
-  </form>
+  </form> {% endcomment %}
 
     <p class="button-padding">
       <a class="button" href="{% url 'add_product' %}">Add Product</a>
       <a  class="button" href="{% url 'add_organization' %}">Add Org</a>
+      <a  class="button" href="{% url 'add_entitlement' %}">Add Entitlement</a>
+
     </p>
+
+    {% comment %} <form method="post">
+    {% csrf_token %}
+    {{ license_creation_form.as_p }}
+    </form> {% endcomment %}
 
     <form method="post">
       {% csrf_token %}
       <table id="entitlement-table">
+          <div class="license_creation_form">
+          {{ license_creation_form.as_p }}
+          </div>
+
+          {% comment %} <div class="master_license_form">
+          {{ master_license_form.as_p }}
+          </div> {% endcomment %}
+
         <thead>
           <tr> 
             <th></th>
@@ -58,10 +73,12 @@
         </thead>
       </table>
       {% comment %} <p><input type="button" class="button" name="delete_entitlement_button" id="delete-entitlement-button" value="Delete"></p> {% endcomment %}
-      <div class="master_license_form">
-      {{ master_license_form.as_p }}
-      </div>
-      <p class="button-padding"><input class="button" name="save-master-license" type="submit" value="Save Master License"></p>
+
+      <p class="button-padding">
+      <input class="button" type="submit" value="Save License" name="save-license"/>
+
+      {% comment %} <input class="button" name="save-master-license" type="submit" value="Save Master License"> {% endcomment %}
+      </p>
     </form>
 
 

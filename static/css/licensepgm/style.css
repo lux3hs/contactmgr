@@ -297,6 +297,16 @@ footer a{
 
 }
 
+.license_creation_form {
+    display: inline-block;
+    font-size: small;
+    text-align: right;
+    margin-left: 35vw;
+    padding-right:25px;
+    padding-left: 25px;
+
+}
+
 .user-info {
     /* display: inline-block; */
     /* margin-left: 35vw; */
