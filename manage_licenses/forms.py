@@ -37,7 +37,7 @@ class LicenseCreationForm(forms.Form):
         self.fields["product_grade"] = forms.ChoiceField(choices=GRADE_CHOICES)
         self.fields['host_ip'] = forms.CharField(max_length=50)
         self.fields["product_stations"] = forms.IntegerField(max_value=999999)
-        self.fields["allowed_ips"] = forms.IntegerField(max_value=999999)
+        self.fields["allowed_ips"] = forms.IntegerField(max_value=999999, required=False)
         self.fields['re_seller'] = forms.CharField(max_length=50)
         self.fields['expiration_date'] = forms.DateTimeField()
 
