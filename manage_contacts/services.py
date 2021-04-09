@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth.hashers import check_password
 
-from .models import Contact, Organization, Product, Entitlement
+from .models import Contact, Organization, Product
 
 
 def get_choice_list(model_header):
@@ -26,7 +26,7 @@ def get_superuser_id(super_username):
         super_user = User.objects.filter(username=super_username).get()
         contact_data = Contact.objects.filter(user=super_user.id).get()
 
-        super_id = contact_data.id 
+        super_id = contact_data.id
         return super_id
 
     except:
@@ -284,18 +284,18 @@ def delete_product_data(product_selection):
         return product_id
 
 
-def add_new_entitlement(contact_data, user_query):
-    """ Add new entitlement on user selection """
+# def add_new_entitlement(contact_data, user_query):
+    # """ Add new entitlement on user selection """
     # creator_email = contact_data.user.email
     # creator_phone = contact_data.phone
     
-    product_choice = user_query.get('product_choice')
-    org_choice = user_query.get('org_choice')
-    product_object = Product.objects.filter(product_name=product_choice).get()
-    org_object = Organization.objects.filter(org_name=org_choice).get()
+    # product_choice = user_query.get('product_choice')
+    # org_choice = user_query.get('org_choice')
+    # product_object = Product.objects.filter(product_name=product_choice).get()
+    # org_object = Organization.objects.filter(org_name=org_choice).get()
 
-    max_licenses = user_query.get('max_licenses')
-    total_licenses = max_licenses
+    # max_licenses = user_query.get('max_licenses')
+    # total_licenses = max_licenses
 
     # host_ip = user_query.get('host_ip')
     # product_grade = user_query.get("product_grade")
@@ -319,18 +319,18 @@ def add_new_entitlement(contact_data, user_query):
     # exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
     # expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
 
-    entitlement_data = Entitlement.objects.all()
-    entitlement_names = []
-    for entitlement in entitlement_data:
-        entitlement_names.append(entitlement.get_entitlement_name())
+    # entitlement_data = Entitlement.objects.all()
+    # entitlement_names = []
+    # for entitlement in entitlement_data:
+    #     entitlement_names.append(entitlement.get_entitlement_name())
 
-    dup_check = org_object.org_name + '/' + product_object.product_name
+    # dup_check = org_object.org_name + '/' + product_object.product_name
     
-    if dup_check not in entitlement_names:
-        new_entitlement = Entitlement(max_licenses=max_licenses,
-                                    total_licenses=total_licenses,
-                                    product=product_object,
-                                    organization=org_object,
+    # if dup_check not in entitlement_names:
+    #     new_entitlement = Entitlement(max_licenses=max_licenses,
+    #                                 total_licenses=total_licenses,
+    #                                 product=product_object,
+    #                                 organization=org_object,
                                     # creator_email=creator_email,
                                     # creator_phone=creator_phone,
                                     # re_seller=re_seller,
@@ -341,28 +341,28 @@ def add_new_entitlement(contact_data, user_query):
                                     # allowed_ips=allowed_ips,
                                     # creation_date=creation_date,
                                     # expiration_date=expiration_date,
-        )
+    #     )
 
-        new_entitlement.save()
+    #     new_entitlement.save()
 
-        success_message = "New entitlement created successfully"
+    #     success_message = "New entitlement created successfully"
 
-    else: 
-        success_message = "Entitlement exists"
+    # else: 
+    #     success_message = "Entitlement exists"
 
-    return success_message
+    # return success_message
 
 
-def edit_entitlement(contact_data, entitlement_object, user_query):
-    """ Add new entitlement on user selection """
+# def edit_entitlement(contact_data, entitlement_object, user_query):
+    # """ Add new entitlement on user selection """
     # creator_email = contact_data.user.email
     # creator_phone = contact_data.phone
-    product_choice = user_query.get('product_choice')
-    org_choice = user_query.get('org_choice')
-    product_object = Product.objects.filter(product_name=product_choice).get()
-    org_object = Organization.objects.filter(org_name=org_choice).get()
-    max_licenses = user_query.get('max_licenses')
-    total_licenses = max_licenses
+    # product_choice = user_query.get('product_choice')
+    # org_choice = user_query.get('org_choice')
+    # product_object = Product.objects.filter(product_name=product_choice).get()
+    # org_object = Organization.objects.filter(org_name=org_choice).get()
+    # max_licenses = user_query.get('max_licenses')
+    # total_licenses = max_licenses
     # host_ip = user_query.get('host_ip')
     # product_grade = user_query.get("product_grade")
     # product_stations = user_query.get("product_stations")
@@ -386,10 +386,10 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     # else:
     #     expiration_date = ""
 
-    entitlement_data = Entitlement.objects.all()
-    entitlement_names = []
-    for entitlement in entitlement_data:
-        entitlement_names.append(entitlement.get_entitlement_name())
+    # entitlement_data = Entitlement.objects.all()
+    # entitlement_names = []
+    # for entitlement in entitlement_data:
+    #     entitlement_names.append(entitlement.get_entitlement_name())
 
     # dup_check = org_object.org_name + '/' + product_object.product_name
     
@@ -401,16 +401,16 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     #     entitlement_object.creator_phone = creator_phone
 
     # if len(product_object) > 0:
-    entitlement_object.product = product_object
+    # entitlement_object.product = product_object
 
     # if len(org_object) > 0:
-    entitlement_object.organization = org_object
+    # entitlement_object.organization = org_object
 
-    if len(str(max_licenses)) > 0:
-        entitlement_object.max_licenses = max_licenses
+    # if len(str(max_licenses)) > 0:
+    #     entitlement_object.max_licenses = max_licenses
 
-    if len(str(total_licenses)) > 0:
-        entitlement_object.total_licenses = total_licenses
+    # if len(str(total_licenses)) > 0:
+    #     entitlement_object.total_licenses = total_licenses
 
     # if len(host_ip) > 0:
     #     entitlement_object.host_ip = host_ip
@@ -433,26 +433,26 @@ def edit_entitlement(contact_data, entitlement_object, user_query):
     # if len(str(expiration_date)) > 0:
     #     entitlement_object.expiration_date = expiration_date
 
-    entitlement_object.save()
-    success_message = "Entitlement successfully updated"
+    # entitlement_object.save()
+    # success_message = "Entitlement successfully updated"
 
     # else: 
     #     success_message = "Entitlement exists"
 
-    return success_message
+    # return success_message
 
 
-def delete_entitlement_data(entitlement_selection):
-    """ Delete entitlement selection from database """
-    try:
-        for ent_id in entitlement_selection:
-            ent_data = Entitlement.objects.filter(id=int(ent_id)).get()
-            ent_data.delete()
+# def delete_entitlement_data(entitlement_selection):
+#     """ Delete entitlement selection from database """
+#     try:
+#         for ent_id in entitlement_selection:
+#             ent_data = Entitlement.objects.filter(id=int(ent_id)).get()
+#             ent_data.delete()
         
-        return True
+#         return True
 
-    except:
-        return ent_id
+#     except:
+#         return ent_id
 
 
 ##JS Table Services##
@@ -498,36 +498,36 @@ def get_product_header():
 
     return product_header
 
-def get_entitlement_header():
-    entitlement_header = {"check_box":"",
-                          "empty_column":"<pre>    </pre>",
-                        #   "product_name_widget":"Product",
-                        #   "product_name":"Product",
-                          "name_link":"Product",
-                          "product_version":"Version",
-                          "org_name":"Client",
-                          "max_licenses":"Max",
-                          "total_licenses":"Total",
-                          "num_allocated":"Num Allocated",
-                          'edit_button':'',
-                          "delete_button":"",
+# def get_entitlement_header():
+#     entitlement_header = {"check_box":"",
+#                           "empty_column":"<pre>    </pre>",
+#                         #   "product_name_widget":"Product",
+#                         #   "product_name":"Product",
+#                           "name_link":"Product",
+#                           "product_version":"Version",
+#                           "org_name":"Client",
+#                           "max_licenses":"Max",
+#                           "total_licenses":"Total",
+#                           "num_allocated":"Num Allocated",
+#                           'edit_button':'',
+#                           "delete_button":"",
 
-    }
-    return entitlement_header
+#     }
+#     return entitlement_header
 
-def get_client_ent_header():
-    client_ent_header = {"empty_column":"<pre>    </pre>",
-                        #   "product_name_widget":"Product",
-                          "product_name":"Product",
-                          "product_version":"Version",
-                          "max_licenses":"Max",
-                          "total_licenses":"Total",
-                          "num_allocated":"Num Allocated",
-                        #   "delete_button":"",
-                        #   "check_box":"",
+# def get_client_ent_header():
+#     client_ent_header = {"empty_column":"<pre>    </pre>",
+#                         #   "product_name_widget":"Product",
+#                           "product_name":"Product",
+#                           "product_version":"Version",
+#                           "max_licenses":"Max",
+#                           "total_licenses":"Total",
+#                           "num_allocated":"Num Allocated",
+#                         #   "delete_button":"",
+#                         #   "check_box":"",
 
-    }
-    return client_ent_header
+#     }
+#     return client_ent_header
 
 
 #Create table data based on header keys and object data#

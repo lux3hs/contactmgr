@@ -95,6 +95,8 @@ function changePage(evt, pageName) {
         drow.insertCell(-1).innerHTML = dataValue;
       }
     }
+
+    console.log(table)
   }
   
 

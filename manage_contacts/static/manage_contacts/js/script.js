@@ -72,6 +72,19 @@ window.addEventListener('load', (event) => {
 
       // })
 
+    }
+
+
+
+    var licenseTable = document.getElementById("license-table")
+    if (licenseTable) {
+      loadTableData(url='get-license-data', tableID='license-table')
+
+    }
+
+    var clientLicenseTable = document.getElementById("client-license-table")
+    if (clientLicenseTable) {
+      loadTableData(url='get-client-license-data', tableID='client-license-table')
 
     }
 

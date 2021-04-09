@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from manage_licenses.models import License
+# from manage_licenses.models import License
 
 class Organization(models.Model):
     # org_id = id
@@ -117,6 +117,8 @@ def create_or_update_user_contact(sender, instance, created, **kwargs):
 class Product(models.Model):
     product_name = models.CharField(max_length=50, null=True)
     product_version = models.CharField(max_length=50, null=True)
+    GRADE_CHOICES = [('standard', 'standard'), ('enterprise', 'enterprise')]
+    product_grade = models.CharField(max_length=50, choices=GRADE_CHOICES, default="standard", null=True)
 
     def __str__(self):
         return self.product_name + " v" + self.product_version
@@ -149,11 +151,11 @@ class Product(models.Model):
         return widget_function
 
 
-class Entitlement(models.Model):
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    max_licenses = models.IntegerField(default=100)
-    total_licenses = models.IntegerField(default=0)
+# class Entitlement(models.Model):
+#     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+#     max_licenses = models.IntegerField(default=100)
+#     total_licenses = models.IntegerField(default=0)
     # creator_email = models.CharField("Created by ", max_length=50, null=True)
     # creator_phone = models.IntegerField(default=0, null=True)
     # re_seller = models.CharField(max_length=50, null=True)
@@ -165,66 +167,66 @@ class Entitlement(models.Model):
     # creation_date = models.DateTimeField("Date created ", null=True)
     # expiration_date = models.DateTimeField("Expiration date ", null=True)
 
-    def __str__(self):
-        return self.organization.org_name + "/" + self.product.product_name
+    # def __str__(self):
+    #     return self.organization.org_name + "/" + self.product.product_name
 
-    def get_entitlement_name(self):
-        return self.organization.org_name + "/" + self.product.product_name
+    # def get_entitlement_name(self):
+    #     return self.organization.org_name + "/" + self.product.product_name
 
-    def get_table_dictionary(self):
-        table_dict = {}
-        table_dict["data_id"] = self.id
-        table_dict["product_name"] = self.product.product_name
-        table_dict["product_version"] = self.product.product_version
-        table_dict["org_name"] = self.organization.org_name
-        table_dict["max_licenses"] = self.max_licenses
-        table_dict["total_licenses"] = self.total_licenses
-        num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
-        table_dict["num_allocated"] = num_allocated
+    # def get_table_dictionary(self):
+    #     table_dict = {}
+    #     table_dict["data_id"] = self.id
+    #     table_dict["product_name"] = self.product.product_name
+    #     table_dict["product_version"] = self.product.product_version
+    #     table_dict["org_name"] = self.organization.org_name
+    #     table_dict["max_licenses"] = self.max_licenses
+    #     table_dict["total_licenses"] = self.total_licenses
+    #     num_allocated = str(self.total_licenses) + " of " + str(self.max_licenses)
+    #     table_dict["num_allocated"] = num_allocated
 
-        table_dict["empty_column"] = self.get_widget_template('empty_column')
-        table_dict["name_link"] = self.get_widget_template('name_link')
-        table_dict["check_box"] = self.get_widget_template('check_box')
-        table_dict["edit_button"] = self.get_widget_template('edit_button')
-        table_dict["delete_button"] = self.get_widget_template('delete_button')
-        table_dict["product_name_widget"] = self.get_widget_template('product_name_widget')    
-        return table_dict
+    #     table_dict["empty_column"] = self.get_widget_template('empty_column')
+    #     table_dict["name_link"] = self.get_widget_template('name_link')
+    #     table_dict["check_box"] = self.get_widget_template('check_box')
+    #     table_dict["edit_button"] = self.get_widget_template('edit_button')
+    #     table_dict["delete_button"] = self.get_widget_template('delete_button')
+    #     table_dict["product_name_widget"] = self.get_widget_template('product_name_widget')    
+    #     return table_dict
 
-    def get_widget_template(self, widget):
-        if widget is "hello":
-            greeting = "'hello world!'"
-            widget_function = '<input type="button" class="button" onclick="console.log(' + greeting + ')" name="js-delete-button" value="' + str(self.id) + '"/>'
+    # def get_widget_template(self, widget):
+    #     if widget is "hello":
+    #         greeting = "'hello world!'"
+    #         widget_function = '<input type="button" class="button" onclick="console.log(' + greeting + ')" name="js-delete-button" value="' + str(self.id) + '"/>'
 
-        elif widget is "empty_column":
-            widget_function = "<pre>    </pre>"
+    #     elif widget is "empty_column":
+    #         widget_function = "<pre>    </pre>"
 
-        elif widget is "name_link":
-            name_link = "client-portal"
-            widget_function = "<p><a href=" + '"' + name_link + '"' + ">" + self.product.product_name + "</a></p>"
+    #     elif widget is "name_link":
+    #         name_link = "client-portal"
+    #         widget_function = "<p><a href=" + '"' + name_link + '"' + ">" + self.product.product_name + "</a></p>"
 
-        elif widget is "check_box":
-            widget_function = '<input type="checkbox" name="product-check-box" value="' + str(self.id) + '"/>'
+    #     elif widget is "check_box":
+    #         widget_function = '<input type="checkbox" name="product-check-box" value="' + str(self.id) + '"/>'
 
-        elif widget is "edit_button":
-            query_string = [self.id]
-            name_link = "edit-entitlement-data/" + str(query_string)
-            widget_function = '<p><a type="button" class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
+    #     elif widget is "edit_button":
+    #         query_string = [self.id]
+    #         name_link = "edit-entitlement-data/" + str(query_string)
+    #         widget_function = '<p><a type="button" class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
 
-        elif widget is "delete_button":
-            delete_function = "deleteTableData(url='delete-entitlement-selection', queryData=[" + str(self.id) + "], tableID='entitlement-table')"
-            widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
+    #     elif widget is "delete_button":
+    #         delete_function = "deleteTableData(url='delete-entitlement-selection', queryData=[" + str(self.id) + "], tableID='entitlement-table')"
+    #         widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
 
-        elif widget is "product_name_widget":
-            product_data = Product.objects.all()
-            product_string = ""
-            for product in product_data:
-                product_string += "<option value = " + str(product.product_name) + ">" + str(product.product_name) + "</option>"
+    #     elif widget is "product_name_widget":
+    #         product_data = Product.objects.all()
+    #         product_string = ""
+    #         for product in product_data:
+    #             product_string += "<option value = " + str(product.product_name) + ">" + str(product.product_name) + "</option>"
 
-            widget_function = '<select name="product_selection">' + product_string + '</select>'
+    #         widget_function = '<select name="product_selection">' + product_string + '</select>'
   
-        return widget_function
+    #     return widget_function
 
-    def gen_license_image(self):
+    # def gen_license_image(self):
             # new_image = License(
             #     organization=str(self.organization),
             #     product=str(self.product),
@@ -244,103 +246,103 @@ class Entitlement(models.Model):
             # )
 
             # new_image.save()
-        print("remove this")
+    #     print("remove this")
 
-    def get_license_header(self):
-        """ Get header for displaying in license key """
-        creation_date = self.creation_date.strftime("%m/%d/%Y %I:%M %p")
-        expiration_date = self.expiration_date.strftime("%m/%d%Y %I:%M %p")
-        package_data = {}
-        package_data["Product Name: "] = str(self.product.product_name)
-        package_data["Host/IP address: "] = str(self.host_ip)
-        package_data["Version: "] = str(self.product.product_version)
-        package_data["Num of stations: "] = str(self.product_stations)
-        package_data["Lease Start Date: "] = str(creation_date)
-        package_data["Lease End Date: "] = str(expiration_date)
-        package_data["Grade: "] = str(self.product_grade)
-        package_data["User name: "] = str(self.creator_email)
-        package_data["Support ID: "] = self.check_trial()
-        package_data["Support Expiration Date: "] = str(expiration_date)
-        return package_data
+    # def get_license_header(self):
+    #     """ Get header for displaying in license key """
+    #     creation_date = self.creation_date.strftime("%m/%d/%Y %I:%M %p")
+    #     expiration_date = self.expiration_date.strftime("%m/%d%Y %I:%M %p")
+    #     package_data = {}
+    #     package_data["Product Name: "] = str(self.product.product_name)
+    #     package_data["Host/IP address: "] = str(self.host_ip)
+    #     package_data["Version: "] = str(self.product.product_version)
+    #     package_data["Num of stations: "] = str(self.product_stations)
+    #     package_data["Lease Start Date: "] = str(creation_date)
+    #     package_data["Lease End Date: "] = str(expiration_date)
+    #     package_data["Grade: "] = str(self.product_grade)
+    #     package_data["User name: "] = str(self.creator_email)
+    #     package_data["Support ID: "] = self.check_trial()
+    #     package_data["Support Expiration Date: "] = str(expiration_date)
+    #     return package_data
 
-    def get_key_string(self):
-        organization = self.organization.org_name
+    # def get_key_string(self):
+    #     organization = self.organization.org_name
         
-        task = 0
-        log = 0
-        node = 0
-        system = 0
-        snmp = 0
+    #     task = 0
+    #     log = 0
+    #     node = 0
+    #     system = 0
+    #     snmp = 0
 
-        creation_date = self.creation_date
-        expiration_date = self.expiration_date
-        crt_date_utc = creation_date.timestamp()
-        exp_date_utc = expiration_date.timestamp()
+    #     creation_date = self.creation_date
+    #     expiration_date = self.expiration_date
+    #     crt_date_utc = creation_date.timestamp()
+    #     exp_date_utc = expiration_date.timestamp()
 
-        product_key = "organization=" + str(organization)
-        product_key += "&product=" + self.product.product_name
-        product_key += "&Ip address=" + str(self.host_ip)
-        product_key += "&Hostname=" + str(self.host_ip)
-        product_key += "&Version=" + str(self.product.product_version)
-        product_key += "&Num of stations=" + str(self.product_stations)
-        product_key += "&ips=" + str(self.allowed_ips)
-        product_key += "&License Start Date=" + str(crt_date_utc)
-        product_key += "&License End Date=" + str(exp_date_utc)
-        product_key += "&task=" + str(task)
-        product_key += "&log=" + str(log)
-        product_key += "&node=" + str(node)
-        product_key += "&system=" + str(system)
-        product_key += "&snmp=" + str(snmp)
-        product_key += "&grade=" + str(self.product_grade)
-        product_key += "&sid=" + str(self.id)
-        product_key += "&expdate=" + str(exp_date_utc)
-        product_key += "&username=all"
+    #     product_key = "organization=" + str(organization)
+    #     product_key += "&product=" + self.product.product_name
+    #     product_key += "&Ip address=" + str(self.host_ip)
+    #     product_key += "&Hostname=" + str(self.host_ip)
+    #     product_key += "&Version=" + str(self.product.product_version)
+    #     product_key += "&Num of stations=" + str(self.product_stations)
+    #     product_key += "&ips=" + str(self.allowed_ips)
+    #     product_key += "&License Start Date=" + str(crt_date_utc)
+    #     product_key += "&License End Date=" + str(exp_date_utc)
+    #     product_key += "&task=" + str(task)
+    #     product_key += "&log=" + str(log)
+    #     product_key += "&node=" + str(node)
+    #     product_key += "&system=" + str(system)
+    #     product_key += "&snmp=" + str(snmp)
+    #     product_key += "&grade=" + str(self.product_grade)
+    #     product_key += "&sid=" + str(self.id)
+    #     product_key += "&expdate=" + str(exp_date_utc)
+    #     product_key += "&username=all"
 
-        if (self.product.product_name is not "Backend" and
-            self.product.product_name is not "AppLoader" and
-            self.product.product_name is not "AppsWatch"):
-            product_key += "&end=true"
+    #     if (self.product.product_name is not "Backend" and
+    #         self.product.product_name is not "AppLoader" and
+    #         self.product.product_name is not "AppsWatch"):
+    #         product_key += "&end=true"
 
-        return product_key
+    #     return product_key
 
-    def check_trial(self):
-        if self.is_permanent is True:
-            return "TRIAL"
+    # def check_trial(self):
+    #     if self.is_permanent is True:
+    #         return "TRIAL"
 
-        else:
-            return self.id
+    #     else:
+    #         return self.id
 
-    def check_allocated_licenses(self):
-        used_licenses = self.max_licenses - self.total_licenses
-        if used_licenses < self.max_licenses:
-            return True
+    # def check_allocated_licenses(self):
+    #     used_licenses = self.max_licenses - self.total_licenses
+    #     if used_licenses < self.max_licenses:
+    #         return True
 
-        else:
-            return False
+    #     else:
+    #         return False
 
-    def subtract_license(self):
-        if self.total_licenses > 0:
-            self.total_licenses -= 1
-            self.save()
-            return True
+    # def subtract_license(self):
+    #     if self.total_licenses > 0:
+    #         self.total_licenses -= 1
+    #         self.save()
+    #         return True
 
-        elif self.total_licenses == 0:
-            return "no entitlements"
+    #     elif self.total_licenses == 0:
+    #         return "no entitlements"
 
-        else:
-            return "number out of range"
+    #     else:
+    #         return "number out of range"
 
-    def add_license(self):
-        if self.total_licenses < self.max_licenses:
-            self.total_licenses += 1
-            self.save()
+    # def add_license(self):
+    #     if self.total_licenses < self.max_licenses:
+    #         self.total_licenses += 1
+    #         self.save()
 
-            return True
+    #         return True
 
-        elif self.total_licenses == self.max_licenses:
-            return "entitlements at max"
+    #     elif self.total_licenses == self.max_licenses:
+    #         return "entitlements at max"
 
-        else: 
-            return "number out of range"
+    #     else: 
+    #         return "number out of range"
 
 

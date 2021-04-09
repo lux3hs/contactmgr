@@ -101,10 +101,14 @@ class OrgEditForm(forms.Form):
 class ProductCreationForm(forms.Form):
     product_name = forms.CharField(max_length=50)
     product_version = forms.CharField(max_length=50)
+    GRADE_CHOICES = [('standard', 'standard'), ('enterprise', 'enterprise')]
+    product_grade = forms.ChoiceField(choices=GRADE_CHOICES)
 
 class ProductEditForm(forms.Form):
     product_name = forms.CharField(max_length=50, required=False)
     product_version = forms.CharField(max_length=50, required=False)
+    GRADE_CHOICES = [('standard', 'standard'), ('enterprise', 'enterprise')]
+    product_grade = forms.ChoiceField(choices=GRADE_CHOICES)
 
 class EntitlementCreationForm(forms.Form):
     def __init__(self, *args, **kwargs):

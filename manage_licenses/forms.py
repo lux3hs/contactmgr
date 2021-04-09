@@ -27,19 +27,42 @@ from django import forms
 
 class LicenseCreationForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        # self.product_choices = kwargs.pop('product_choices')
+        self.product_choices = kwargs.pop('product_choices')
+        self.org_choices = kwargs.pop('org_choices')
         super(LicenseCreationForm, self).__init__(*args, **kwargs)
-        # self.fields['product_name'] = forms.ChoiceField(choices=self.product_choices)
-        # self.fields['product_name'].widget.attrs['class'] = "ChoiceField"
-        self.fields['is_permanent'] = forms.BooleanField(required=False)
-        self.fields['master_license'] = forms.BooleanField(required=False)
-        GRADE_CHOICES = [('standard', 'standard'), ('enterprise', 'enterprise')]
-        self.fields["product_grade"] = forms.ChoiceField(choices=GRADE_CHOICES)
+        self.fields['product_name'] = forms.ChoiceField(choices=self.product_choices)
+        self.fields['product_name'].widget.attrs['class'] = "ChoiceField"
+        self.fields['org_name'] = forms.ChoiceField(choices=self.org_choices)
+        self.fields['org_name'].widget.attrs['class'] = "ChoiceField"
+        self.fields['max_licenses'] = forms.IntegerField(max_value=1000)
+
+        # self.fields['master_license'] = forms.BooleanField(required=False)
+        # GRADE_CHOICES = [('standard', 'standard'), ('enterprise', 'enterprise')]
+        # self.fields["product_grade"] = forms.ChoiceField(choices=GRADE_CHOICES)
         self.fields['host_ip'] = forms.CharField(max_length=50)
         self.fields["product_stations"] = forms.IntegerField(max_value=999999)
         self.fields["allowed_ips"] = forms.IntegerField(max_value=999999, required=False)
         self.fields['re_seller'] = forms.CharField(max_length=50)
+        self.fields['is_permanent'] = forms.BooleanField(required=False)
         self.fields['expiration_date'] = forms.DateTimeField()
+
+
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     is_permanent = cleaned_data.get("is_permanent")
+
+    #     # expiration_date = cleaned_data.get("expiration_date")
+
+    #     if is_permanent:
+    #         pass
+
+    #     else:
+    #         self.fields['expiration_date'] = forms.DateTimeField(required=True)
+    #         cleaned_data = super().clean
+
+
+
+
 
 # class MasterLicenseForm(forms.Form):
 #     ml_ID = forms.IntegerField(max_value=9999)

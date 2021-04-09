@@ -7,6 +7,8 @@ from django.conf import settings
 
 from .models import License
 
+from manage_contacts.models import Product
+
 #Set base directory
 BASE_DIR = str(settings.BASE_DIR)
 
@@ -24,9 +26,9 @@ def package_license_data(license_data):
     return data_package
 
 
-def package_master_data(user_query, contact_data, entitlement_choice):
-    ml_ID = str(entitlement_choice.id)
-    ml_org_name = str(entitlement_choice.organization.org_name)
+def package_master_data(user_query, contact_data, license_data):
+    ml_ID = str(license_data.id)
+    ml_org_name = str(license_data.org_name)
     ml_org_host_IP = str(user_query.get('host_ip'))
     ml_email = str(contact_data.user.email)
     ml_phone = str(contact_data.phone)
@@ -37,12 +39,12 @@ def package_master_data(user_query, contact_data, entitlement_choice):
                 'Email Address: ' + ml_email + "\r\n" +
                 'Phone Number: ' + ml_phone + "\r\n")
 
-    product_name = entitlement_choice.product.product_name
-    product_version = entitlement_choice.product.product_version
+    product_name = license_data.product_name
+    product_version = license_data.product_version
 
     product_stations = str(user_query.get('product_stations'))
     product_grade = str(user_query.get('product_grade'))
-    support_id = str(entitlement_choice.id)
+    support_id = str(license_data.id)
     expiration_date = str(user_query.get('expiration_date'))
 
     entitlement_string = ("Product Name: " + product_name + ", " +
@@ -57,7 +59,7 @@ def package_master_data(user_query, contact_data, entitlement_choice):
 
     master_key_string = 'masterip=' + str(ml_org_host_IP) + "&masterid=" + str(ml_ID)
 
-    key_name = "ml_" + str(entitlement_choice.id)
+    key_name = "ml_" + str(license_data.id)
 
     master_data = {'key_name':key_name, 
                 'entitlement_string':entitlement_string, 
@@ -102,38 +104,37 @@ def read_key_file(key_name):
     return coded_key
 
 
-def add_new_license(contact_data, entitlement_data, user_query):
+def add_new_license(contact_data):
     creator_email = contact_data.user.email
     creator_phone = contact_data.phone
 
-    product_name = entitlement_data.product.product_name
-    product_version = entitlement_data.product.product_version
-    org_name = entitlement_data.organization.org_name
+    org_name = "automai"
+    product_name = "AppLoader"
 
-    host_ip = user_query.get('host_ip')
-    product_grade = user_query.get("product_grade")
-    product_stations = user_query.get("product_stations")
-    allowed_ips = user_query.get('allowed_ips')
-    re_seller = user_query.get('re_seller')
-
-    is_permanent = user_query.get('is_permanent')
-    if is_permanent:
-        is_permanent = True
+    product_data = Product.objects.filter(product_name=product_name).get()
+    product_version = product_data.product_version
+    product_grade = product_data.product_grade
     
-    else:
-        is_permanent = False
+    max_licenses = 100
+    total_licenses = 100
+    
+    re_seller = ""
+    host_ip = ""
+    is_permanent = False
+    product_stations = 1
+    allowed_ips = 0
 
     creation_date = datetime.datetime.now().replace(microsecond=0)
-    
-    exp_date_string = user_query.get('expiration_date')
-    exp_date_strp = datetime.datetime.strptime(exp_date_string, "%m/%d/%Y")
-    expiration_date = datetime.datetime.combine(exp_date_strp.date(), creation_date.time())
+    time_change = datetime.timedelta(weeks=2)
+    expiration_date = creation_date + time_change
 
     new_license = License(org_name=org_name,
                           product_name=product_name,
                           product_version=product_version,
                           creator_email=creator_email,
                           creator_phone=creator_phone,
+                          max_licenses=max_licenses,
+                          total_licenses=total_licenses,
                           re_seller=re_seller,
                           host_ip=host_ip,
                           is_permanent=is_permanent,
@@ -149,44 +150,92 @@ def add_new_license(contact_data, entitlement_data, user_query):
     return new_license
 
 
+def update_license_data (user_query):
+    license_id = user_query.get('license-radio-button')
+    print(license_id)
+    license_data = License.objects.filter(id=license_id).get()
+
+    id_string = str(license_id)
+
+    product_name = user_query.get('product_name' + id_string)
+    product_object = Product.objects.filter(product_name=product_name).get()
+    product_version = product_object.product_version
 
 
+    org_name = user_query.get('org_name' + id_string)
+    max_licenses = user_query.get('max_licenses' + id_string)
+    total_licenses = max_licenses
+    host_ip = user_query.get('host_ip' + id_string)
+    product_stations = user_query.get("product_stations" + id_string)
+    allowed_ips = user_query.get('allowed_ips' + id_string)
+    re_seller = user_query.get('re_seller' + id_string)
+    is_permanent = user_query.get('is_permanent' + id_string)
 
-# def delete_license_data(license_selection):
-#     """ Delete license selection from database """
-#     print(license_selection)
+    license_data.product_name = product_name
+    license_data.product_version = product_version
+    license_data.org_name = org_name
+    license_data.max_licenses = max_licenses
+    license_data.total_licenses = total_licenses
+    license_data.host_ip = host_ip
+    license_data.product_stations = product_stations
+    license_data.allowed_ips = allowed_ips
+    license_data.re_seller = re_seller
 
-#     for license_id in license_selection:
-#         try:
-#             license_data = License.objects.filter(id=license_id).get()
-#             entitlement_id = license_data.entitlement_id
-#             entitlement_data = Entitlement.objects.filter(id=entitlement_id).get()
+    if is_permanent:
+        license_data.is_permanent = True
 
-#             license_data.delete()
-#             entitlement_data.add_license()
+    else:
+        license_data.is_permanent = False
+
+    license_data.save()
+
+    return license_data
+
+
+def delete_license_data(license_selection):
+    """ Delete license selection from database """
+    for license_id in license_selection:
+        try:
+            license_data = License.objects.filter(id=license_id).get()
+            license_data.delete()
+
+            return True
         
-#         except:
-#             return license_id
+        except:
+            return license_id
 
-#     return True
-
-
+    
 ## JS Table Services ##
 
-# def get_license_header():
-#     """ Get license table header """
-#     license_header = {'id':'ID',
-#                     'product_name':'Product',
-#                     'version_number':'Version',
-#                     'org_name':'Org', 
-#                     'host_ip':'Host IP', 
-#                     'creator_email': 'Email', 
-#                     'is_permanent': 'Permanent',
-#                     'product_grade': 'Grade',
-#                     'product_stations': 'Stations',
-#                     'creation_date': 'Created',
-#                     'expiration_date': 'Expires',
-#                     }
+def get_license_table_header():
+    """ Get license table header """
+    license_header = {'radio_button': '',
+                      'empty_column':"<pre>    </pre>",
+                      'org_name_widget':'Org',
+                      'product_name_widget':'Product',
+                      'total_licenses_widget':'Total',
+                      'max_licenses_widget':'Max',
+                      'host_ip_widget':'Host IP',
+                      'product_stations_widget':'Stations',
+                      'is_permanent_widget':'Permanent',
+                      'expiration_date_widget':'Expires',
+                      'delete_button':''
+                    }
 
-#     return license_header
+    return license_header
+
+def get_client_license_table_header():
+    license_header = {'radio_button': '',
+                      'org_name':'Org',
+                      'product_name':'Product',
+                      'product_version':'Version',
+                      'num_allocated':'Allocated',
+                      'host_ip_widget':'Host IP',
+                      'is_permanent': 'Permanent',
+                      'product_stations': 'Stations',
+                      'creation_date': 'Created',
+                    }
+
+    return license_header
+
 

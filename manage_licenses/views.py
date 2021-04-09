@@ -1,27 +1,33 @@
 
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 
-from manage_contacts.models import Product, Contact, Entitlement
-from .services import package_license_data, generate_license_key, read_key_file, add_new_license
-# from manage_licenses.services import add_new_license
+from .models import License
+from .services import (package_license_data, 
+                      generate_license_key, 
+                      read_key_file, 
+                      add_new_license, 
+                      get_license_table_header,
+                      get_client_license_table_header,
+                      delete_license_data,
+                      )
+                      
+from manage_contacts.models import Contact, Organization
+from manage_contacts.services import get_table_data
+
+
 
 @login_required
-def download_license_package(request, user_query, entitlement_choice, master_license_package=False):
+def download_license_package(request, license_data, master_license_package=False):
     """ Download a product license if entitlements exist  """
-    current_user = request.user
-    user_id = current_user.id
-    contact_data = Contact.objects.filter(user=user_id).get()
 
-    entitlement_data = entitlement_choice
-    if entitlement_data.check_allocated_licenses():
-
-        new_license = add_new_license(contact_data, entitlement_data, user_query)
-        license_data = new_license
+    if license_data.check_allocated_licenses():
         
-        entitlement_data.subtract_license()
+        license_data.subtract_license()
         data_package = package_license_data(license_data)
         key_name = generate_license_key(data_package)
 
@@ -56,32 +62,43 @@ def download_license_package(request, user_query, entitlement_choice, master_lic
         return response
 
 
+@login_required
+def delete_license_selection(request, query_string):
+    """ Delete license data on user request """
+    license_selection = json.loads(query_string)
+    delete_check = delete_license_data(license_selection)
+    if delete_check: 
+        data = get_license_data(request)
+        return data
+
+    else:
+        response = HttpResponse("error", content_type="text/plain")
+        return response
 
 
-# @login_required
-# def delete_license_selection(request, query_string):
-#     """ Delete license data on user request """
-#     license_selection = json.loads(query_string)
-#     delete_check = delete_license_data(license_selection)
-#     if delete_check: 
-#         data = get_license_data(request)
-#         return data
+@login_required
+def get_license_data(request):
+    """ Provide table data for populating licenses """
+    license_data = License.objects.filter()
+    table_header = get_license_table_header()
+    table_data = get_table_data(table_header, license_data)
 
-#     else:
-#         response = HttpResponse("error", content_type="text/plain")
-#         return response
+    return JsonResponse(table_data)
 
+@login_required
+def get_client_license_data(request):
+    current_user = request.user
+    user_id = current_user.id
+    contact_data = Contact.objects.filter(user=user_id).get()
+    org_id = contact_data.organization.id
+    org_data = Organization.objects.filter(id=org_id).get()
+    org_name = org_data.org_name
 
-# @login_required
-# def get_license_data(request):
-#     """ Provide table data for populating licenses """
-#     current_user = request.user
-#     user_id = current_user.id
-#     contact_data = Contact.objects.filter(user=user_id).get()
-#     org_id = contact_data.organization.id
-#     license_data = License.objects.filter(org_id=org_id)
-#     table_header = get_license_header()
-#     table_data = get_table_data(table_header, license_data)
-#     return JsonResponse(table_data)
+    license_data = License.objects.filter(org_name=org_name)
+    table_header = get_client_license_table_header()
+    table_data = get_table_data(table_header, license_data)
+
+    return JsonResponse(table_data)
+
 
 
