@@ -206,6 +206,7 @@ class License(models.Model):
             return self.id
 
     def check_allocated_licenses(self):
+        print(self.max_licenses)
         used_licenses = self.max_licenses - self.total_licenses
         if used_licenses < self.max_licenses:
             return True

@@ -158,29 +158,40 @@ def update_license_data (user_query):
     id_string = str(license_id)
 
     product_name = user_query.get('product_name' + id_string)
-    product_object = Product.objects.filter(product_name=product_name).get()
-    product_version = product_object.product_version
-
+    print(user_query)
+    if product_name:
+        product_object = Product.objects.filter(product_name=product_name).get()
+        product_version = product_object.product_version
+        license_data.product_name = product_name
+        license_data.product_version = product_version
 
     org_name = user_query.get('org_name' + id_string)
+    if org_name:
+        license_data.org_name = org_name
+    
     max_licenses = user_query.get('max_licenses' + id_string)
-    total_licenses = max_licenses
+    if max_licenses:
+        license_data.max_licenses = int(max_licenses)
+        total_licenses = max_licenses
+        license_data.total_licenses = int(total_licenses)
+
     host_ip = user_query.get('host_ip' + id_string)
+    if host_ip:
+        license_data.host_ip = int(host_ip)
+
     product_stations = user_query.get("product_stations" + id_string)
+    if product_stations:
+        license_data.product_stations = product_stations
+    
     allowed_ips = user_query.get('allowed_ips' + id_string)
+    if allowed_ips:
+        license_data.allowed_ips = int(allowed_ips)
+
     re_seller = user_query.get('re_seller' + id_string)
+    if re_seller:
+        license_data.re_seller = re_seller
+
     is_permanent = user_query.get('is_permanent' + id_string)
-
-    license_data.product_name = product_name
-    license_data.product_version = product_version
-    license_data.org_name = org_name
-    license_data.max_licenses = max_licenses
-    license_data.total_licenses = total_licenses
-    license_data.host_ip = host_ip
-    license_data.product_stations = product_stations
-    license_data.allowed_ips = allowed_ips
-    license_data.re_seller = re_seller
-
     if is_permanent:
         license_data.is_permanent = True
 

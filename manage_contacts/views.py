@@ -99,20 +99,27 @@ def admin_portal(request):
 
 
     if request.POST.get("download-license"):
+        print("hello")
         user_query = request.POST
         license_id = user_query.get('license-radio-button')
-        master_license = user_query.get('master-license-selection')
 
-        license_data = License.objects.filter(id=license_id).get()
+        if license_id:
+            master_license = user_query.get('master-license-selection')
 
-        if master_license:
-            master_license_package = package_master_data(user_query, contact_data, license_data)
-        
+            # license_data = License.objects.filter(id=license_id).get()
+            license_data = update_license_data(user_query)
+
+            if master_license:
+                master_license_package = package_master_data(user_query, contact_data, license_data)
+            
+            else:
+                master_license_package = False
+                                
+            return download_license_package(request, license_data, master_license_package=master_license_package)
+
         else:
-            master_license_package = False
-                            
-        return download_license_package(request, license_data, master_license_package=master_license_package)
-
+            messages.add_message(request, messages.INFO, 'No license selected')
+            return HttpResponseRedirect(request.path_info)
     
     context = {'contact_data':contact_data,
                'contact_search_form':contact_search_form,
@@ -149,9 +156,16 @@ def client_portal(request):
         user_query = request.POST
 
         license_id = user_query.get('license-radio-button')
+        if license_id:
             
-        license_data = License.objects.filter(id=license_id).get()
-        return download_license_package(request, license_data)
+            # license_data = License.objects.filter(id=license_id).get()
+            license_data = update_license_data(user_query)
+
+            return download_license_package(request, license_data)
+
+        else:
+            messages.add_message(request, messages.INFO, 'No license selected')
+            return HttpResponseRedirect(request.path_info)
 
     context = {'contact_data':contact_data, 'contact_search_form':contact_search_form}
     return render(request, "manage_contacts/client-portal.html", context)
