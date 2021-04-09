@@ -31,22 +31,29 @@
 
   <div id="products-tab" class="js-tabcontent">
 
-    <form class="" method="post">
-      {% csrf_token %}
+  <div class="center-text">
+    <div class="table-form">
+      <form method="post">
+        {% csrf_token %}
 
-    
-    <table id="client-license-table">
+        <div class="table-container">
+          <table id="client-license-table">
+            <thead>
+              <tr> 
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
 
-      <thead>
-        <tr> 
-          <th></th>
-        </tr>
-      </thead>
-    </table>
-    <p class="button-padding">
-    <input class="button" name="download-license" type="submit" value="Download License">
-    </p>
-    </form>
+        <p>
+          <input class="button" name="download-license" type="submit" value="Download License">
+        </p>  
+      </form>
+
+    </div>
+
+  </div>
 
 
   </div>
@@ -54,20 +61,30 @@
 
 <div id="contacts-tab" class="js-tabcontent">
   
-  <form class="contact-search-form">
-    <input id="contact-search-button" type="button" class="button" value="Search"/>
-    {{ contact_search_form }}
-    <input id="clear-contact-search" type="button" class="button" value="Clear"/>
-  </form>
+  <div class="center-text">
 
-  <p class="button-padding"><a class="button" href="{% url 'add_contact' %}">Add Contact</a></p>
-  <table id="contact-table">
-    <thead>
-      <tr> 
-        <th></th>
-      </tr>
-    </thead>
-  </table>
+    <div class="table-form">
+      <form class="contact-search-form">
+        <input id="contact-search-button" type="button" class="button" value="Search"/>
+        {{ contact_search_form }}
+        <input id="clear-contact-search" type="button" class="button" value="Clear"/>
+      </form>
+
+      <p class="button-padding"><a class="button" href="{% url 'add_contact' %}">Add Contact</a></p>
+      <div class="table-container">
+      <table id="contact-table">
+        <thead>
+          <tr> 
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+      </div>
+
+    </div>
+
+
+  </div>
 
 </div>
 

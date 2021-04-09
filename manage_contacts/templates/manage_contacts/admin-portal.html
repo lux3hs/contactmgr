@@ -39,36 +39,36 @@
 <div id="licenses-tab" class="js-tabcontent">
 
 
-      <div class="table-container">
-            <p>
+      <p>
       <a class="button" href="{% url 'add_product' %}">Add Product</a>
       <a  class="button" href="{% url 'add_organization' %}">Add Org</a>
       </p>
 
-        <form class="inline-block" method="post">
+  <div class="center-text">
+    <div class="table-form">
+      <form method="post">
         {% csrf_token %}
         <input class="button" type="submit" value="+ Add License" name="add-license"/>
-        </form>
-        
+      </form>
 
       <form method="post">
         {% csrf_token %}
-       <table id="license-table">
-
-        <thead>
-          <tr> 
-            <th></th>
-          </tr>
-        </thead>
-       </table>
-      
-      <input class="button" type="submit" value="Update License" name="update-license"/>
-      <input class="button" name="download-license" type="submit" value="Download">
-      <input type="checkbox" id="master-license-button" name="master-license-selection" value="Master License">
-      <label for="master-license-button">Master License</label><br>
-
+        <div class="table-container">
+          <table id="license-table">
+            <thead>
+              <tr> 
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <p>
+          <input class="button" type="submit" value="Save" name="update-license"/>
+          <input class="button" name="download-license" type="submit" value="Download">
+        </p>
       </form>
     </div>
+  </div>
 
 </div>
 
@@ -76,21 +76,29 @@
 
 <div id="contacts-tab" class="js-tabcontent">
   
-  <form class="contact-search-form">
-    <input id="contact-search-button" type="button" class="button" value="Search"/>
-    {{ contact_search_form }}
-    <input id="clear-contact-search" type="button" class="button" value="Clear"/>
-  </form>
-  
-  <p class="button-padding"><a class="button" href="{% url 'add_contact' %}">Add Contact</a></p>
+  <div class="center-text">
+    <div class="table-form">
+      <form class="contact-search-form">
+        <input id="contact-search-button" type="button" class="button" value="Search"/>
+        {{ contact_search_form }}
+        <input id="clear-contact-search" type="button" class="button" value="Clear"/>
+      </form>
+      
+      <p><a class="button" href="{% url 'add_contact' %}">Add Contact</a></p>
 
-    <table id="contact-table">
-      <thead>
-        <tr> 
-          <th></th>
-        </tr>
-      </thead>
-    </table>
+      <div class="table-container">
+        <table id="contact-table">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 

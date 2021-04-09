@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from .forms import LicenseCreationForm
@@ -22,6 +24,8 @@ class License(models.Model):
     creation_date = models.DateTimeField("Date created ", null=True)
     expiration_date = models.DateTimeField("Expiration date ", null=True)
 
+    is_master = models.BooleanField(default=None, null=True)
+
     def __str__(self):
         return str(self.org_name) + "-" + str(self.product_name)
 
@@ -43,8 +47,8 @@ class License(models.Model):
         table_dict["product_grade"] = str(self.product_grade)
         table_dict["product_stations"] = str(self.product_stations)
         table_dict["allowed_ips"] = str(self.allowed_ips)
-        table_dict["creation_date"] = str(self.creation_date)
-        table_dict["expiration_date"] = str(self.expiration_date)
+        table_dict["creation_date"] = self.creation_date.strftime('%m/%d/%Y')
+        table_dict["expiration_date"] = self.expiration_date.strftime('%m/%d/%Y')
 
 
         table_dict["empty_column"] = self.get_widget_template('empty_column')
@@ -61,6 +65,9 @@ class License(models.Model):
         table_dict["is_permanent_widget"] = self.get_widget_template('is_permanent_widget')
         table_dict["product_stations_widget"] = self.get_widget_template('product_stations_widget')
         table_dict["expiration_date_widget"] = self.get_widget_template('expiration_date_widget')
+
+        table_dict["is_master_widget"] = self.get_widget_template('is_master_widget')
+
 
         return table_dict
 
@@ -132,11 +139,21 @@ class License(models.Model):
             else:
                 widget_function = '<input type="checkbox" name="is_permanent' + str(self.id) + '" value="' + str(self.is_permanent) + '" >'
 
+        elif widget is "is_master_widget":
+            if self.is_master:
+                widget_function = '<input type="checkbox" name="is_master' + str(self.id) + '" value="' + str(self.is_master) + '" checked>'
+
+            else:
+                widget_function = '<input type="checkbox" name="is_master' + str(self.id) + '" value="' + str(self.is_master) + '" >'
+
         elif widget is "product_stations_widget":
             widget_function = '<input type="number" name="product_stations' + str(self.id) + '" value="' + str(self.product_stations) + '">'
 
         elif widget is "expiration_date_widget":
-            widget_function = '<input type="datetime-local" name="expiration_date' + str(self.id) + '" value="' + str(self.expiration_date) + '">'
+            expiration_date = self.expiration_date.strftime("%Y-%m-%d")
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            print(current_date)
+            widget_function = '<input type="date" name="expiration_date' + str(self.id) + '" value="' + expiration_date + '" min="' + current_date + '">'
 
   
         return widget_function

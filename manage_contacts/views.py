@@ -104,10 +104,12 @@ def admin_portal(request):
         license_id = user_query.get('license-radio-button')
 
         if license_id:
-            master_license = user_query.get('master-license-selection')
+            # master_license = user_query.get('master-license-selection')
 
             # license_data = License.objects.filter(id=license_id).get()
             license_data = update_license_data(user_query)
+
+            master_license = license_data.is_master
 
             if master_license:
                 master_license_package = package_master_data(user_query, contact_data, license_data)
@@ -157,11 +159,21 @@ def client_portal(request):
 
         license_id = user_query.get('license-radio-button')
         if license_id:
-            
             # license_data = License.objects.filter(id=license_id).get()
-            license_data = update_license_data(user_query)
+            
+            license_data = update_license_data(user_query, is_client=True)
 
-            return download_license_package(request, license_data)
+
+            master_license = license_data.is_master
+
+            if master_license:
+                print("hello")
+                master_license_package = package_master_data(user_query, contact_data, license_data)
+            
+            else:
+                master_license_package = False
+                                
+            return download_license_package(request, license_data, master_license_package=master_license_package)
 
         else:
             messages.add_message(request, messages.INFO, 'No license selected')

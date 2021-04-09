@@ -350,12 +350,17 @@ table {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     background-color: gainsboro;
+    /* cellpadding: 15px; */
     
     text-align: left;
-    font-size:0.9em;
-    margin-left: auto;
-    margin-right: auto;
-    min-width:25%;
+    font-size:0.8em;
+    table-layout: fixed;
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* min-width:25%;
+    max-width: 25%; */
+    /* width: auto; */
+    /* overflow: scroll; */
     /* margin-top: 50px; */
 }
 
@@ -369,6 +374,10 @@ table tr:nth-child(0){
 
 table tr:nth-child(even) {
     background: ghostwhite;
+}
+
+table th, td{
+    padding: 5px;
 }
 
 table .button {
@@ -385,8 +394,31 @@ table .button {
 }
 
 .table-container {
+    /* display: inline-block; */
+    /* margin-left: 5%; */
+    /* margin-left:auto;
+    margin-right: auto; */
+    max-width: 95vw;
+    min-width: 55vw;
+    overflow: auto;
+}
+
+.table-form {
+    /* border: 2px solid red; */
     display: inline-block;
-    margin-left: 5%;
+    text-align: left;
+    /* max-width: 95%; */
+    
+    /* width:fit-content; */
+    /* min-width: 75vw; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    /* text-align: center; */
+    /* justify-content: center; */
+    /* display: inline-block; */
+    /* margin-left: 5vw; */
+    /* margin-right: auto; */
+    /* width: fit-content; */
 }
 
 
@@ -420,14 +452,6 @@ table .button {
     margin-left: 115px;
     /* display: inline-block;
     border:5px solid blue; */
-}
-
-
-.button-padding {
-    margin: 25px;
-    margin-left: 375px;
-    /* border:2px solid red; */
-
 }
 
 
@@ -470,4 +494,11 @@ table .button {
 
 .inline-block {
     display: inline-block;
+}
+
+.center-padding {
+    /* padding-left: auto; */
+    /* padding-right: auto; */
+    padding: 0 calc(50% - 75vw);
+
 }

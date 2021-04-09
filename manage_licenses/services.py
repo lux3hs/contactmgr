@@ -151,14 +151,21 @@ def add_new_license(contact_data):
     return new_license
 
 
-def update_license_data (user_query):
+def update_license_data (user_query, is_client=False):
     license_id = user_query.get('license-radio-button')
     license_data = License.objects.filter(id=license_id).get()
 
     id_string = str(license_id)
 
+    if is_client:
+        host_ip = user_query.get('host_ip' + id_string)
+        if host_ip:
+            license_data.host_ip = host_ip
+        license_data.save()
+
+        return license_data
+
     product_name = user_query.get('product_name' + id_string)
-    print(user_query)
     if product_name:
         product_object = Product.objects.filter(product_name=product_name).get()
         product_version = product_object.product_version
@@ -197,8 +204,26 @@ def update_license_data (user_query):
     if is_permanent:
         license_data.is_permanent = True
 
-    else:
+    elif is_permanent:
         license_data.is_permanent = False
+
+    is_master = user_query.get('is_master' + id_string)
+
+    if is_master:
+        license_data.is_master = True
+
+    else:
+        license_data.is_master = False
+
+    expiration_date = user_query.get('expiration_date' + id_string)
+    if expiration_date:
+        current_date = datetime.datetime.now().replace(microsecond=0)
+
+        date_time_obj = datetime.datetime.strptime(expiration_date, '%Y-%m-%d')
+
+        expiration_datetime = datetime.datetime.combine(date_time_obj.date(), current_date.time())
+        license_data.expiration_date = expiration_datetime
+
 
     license_data.save()
 
@@ -230,9 +255,11 @@ def get_license_table_header():
                       'max_licenses_widget':'Max',
                       'host_ip_widget':'Host IP',
                       'product_stations_widget':'Stations',
+                      'is_master_widget':'Master',
                       'is_permanent_widget':'Permanent',
                       'expiration_date_widget':'Expires',
-                      'delete_button':''
+                      'delete_button':'',
+
                     }
 
     return license_header
@@ -247,6 +274,7 @@ def get_client_license_table_header():
                       'is_permanent': 'Permanent',
                       'product_stations': 'Stations',
                       'creation_date': 'Created',
+                      'expiration_date': 'Expires',
                     }
 
     return license_header
