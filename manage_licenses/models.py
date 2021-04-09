@@ -96,12 +96,12 @@ class License(models.Model):
             org_string = ""
             for org in org_data:
                 if org.org_name == self.org_name:
-                    org_string += "<option value = " + str(org.org_name) + " selected>" + str(org.org_name) + "</option>"
+                    org_string += "<option value = " + str(org.id) + " selected>" + str(org.org_name) + "</option>"
 
                 else:
-                    org_string += "<option value = " + str(org.org_name) + ">" + str(org.org_name) + "</option>"
+                    org_string += "<option value = " + str(org.id) + ">" + str(org.org_name) + "</option>"
 
-            widget_function = '<select name="org_name' + str(self.id) + '">' + org_string + '</select>'
+            widget_function = '<select name="org_id' + str(self.id) + '">' + org_string + '</select>'
   
 
         elif widget is "product_name_widget":

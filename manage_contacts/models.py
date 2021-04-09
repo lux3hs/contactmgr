@@ -60,6 +60,8 @@ class Contact(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, null=True)
 
+    page_tab = models.CharField(max_length=50, null=True)
+
     def __str__(self):
         return self.user.username
 

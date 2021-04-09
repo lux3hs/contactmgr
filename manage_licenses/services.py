@@ -7,7 +7,7 @@ from django.conf import settings
 
 from .models import License
 
-from manage_contacts.models import Product
+from manage_contacts.models import Product, Organization
 
 #Set base directory
 BASE_DIR = str(settings.BASE_DIR)
@@ -29,7 +29,8 @@ def package_license_data(license_data):
 def package_master_data(user_query, contact_data, license_data):
     ml_ID = str(license_data.id)
     ml_org_name = str(license_data.org_name)
-    ml_org_host_IP = str(user_query.get('host_ip'))
+    print(user_query)
+    ml_org_host_IP = str(user_query.get('host_ip' + str(license_data.id))) 
     ml_email = str(contact_data.user.email)
     ml_phone = str(contact_data.phone)
 
@@ -152,7 +153,6 @@ def add_new_license(contact_data):
 
 def update_license_data (user_query):
     license_id = user_query.get('license-radio-button')
-    print(license_id)
     license_data = License.objects.filter(id=license_id).get()
 
     id_string = str(license_id)
@@ -165,8 +165,10 @@ def update_license_data (user_query):
         license_data.product_name = product_name
         license_data.product_version = product_version
 
-    org_name = user_query.get('org_name' + id_string)
-    if org_name:
+    org_id = user_query.get('org_id' + id_string)
+    if org_id:
+        org_data = Organization.objects.filter(id=org_id).get()
+        org_name = org_data.org_name
         license_data.org_name = org_name
     
     max_licenses = user_query.get('max_licenses' + id_string)
@@ -177,7 +179,7 @@ def update_license_data (user_query):
 
     host_ip = user_query.get('host_ip' + id_string)
     if host_ip:
-        license_data.host_ip = int(host_ip)
+        license_data.host_ip = host_ip
 
     product_stations = user_query.get("product_stations" + id_string)
     if product_stations:
