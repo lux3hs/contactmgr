@@ -35,10 +35,6 @@ class LicenseCreationForm(forms.Form):
         self.fields['org_name'] = forms.ChoiceField(choices=self.org_choices)
         self.fields['org_name'].widget.attrs['class'] = "ChoiceField"
         self.fields['max_licenses'] = forms.IntegerField(max_value=1000)
-
-        # self.fields['master_license'] = forms.BooleanField(required=False)
-        # GRADE_CHOICES = [('standard', 'standard'), ('enterprise', 'enterprise')]
-        # self.fields["product_grade"] = forms.ChoiceField(choices=GRADE_CHOICES)
         self.fields['host_ip'] = forms.CharField(max_length=50)
         self.fields["product_stations"] = forms.IntegerField(max_value=999999)
         self.fields["allowed_ips"] = forms.IntegerField(max_value=999999, required=False)
@@ -60,13 +56,3 @@ class LicenseCreationForm(forms.Form):
     #         self.fields['expiration_date'] = forms.DateTimeField(required=True)
     #         cleaned_data = super().clean
 
-
-
-
-
-# class MasterLicenseForm(forms.Form):
-#     ml_ID = forms.IntegerField(max_value=9999)
-#     ml_org_name = forms.CharField(max_length=50)
-#     ml_org_host_IP = forms.CharField(max_length=50)
-#     ml_email = forms.EmailField(max_length=50)
-#     ml_phone = forms.IntegerField(max_value=99999999999)

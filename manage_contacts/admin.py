@@ -9,4 +9,3 @@ class OrganizationAdmin(admin.ModelAdmin):
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Contact)
 admin.site.register(Product)
-# admin.site.register(Entitlement)

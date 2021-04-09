@@ -16,8 +16,8 @@ from .forms import (ContactCreationForm,
                     OrgEditForm,
                     ProductCreationForm,
                     ProductEditForm,
-                    EntitlementCreationForm,
-                    EntitlementEditForm,
+                    # EntitlementCreationForm,
+                    # EntitlementEditForm,
                     SearchChoiceForm,
                     ChoiceForm)
 
