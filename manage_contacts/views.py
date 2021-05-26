@@ -6,8 +6,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
-from manage_licenses.views import download_license_package
-from manage_licenses.models import License
+# from manage_licenses.views import download_license_package
+# from manage_licenses.models import License
 
 from .models import Contact, Organization, Product
 from .forms import (ContactCreationForm,
@@ -21,8 +21,8 @@ from .forms import (ContactCreationForm,
                     SearchChoiceForm,
                     ChoiceForm)
 
-from manage_licenses.forms import LicenseCreationForm
-from manage_licenses.services import package_master_data, add_new_license, update_license_data
+# from manage_licenses.forms import LicenseCreationForm
+# from manage_licenses.services import package_master_data, add_new_license, update_license_data
 
 #Specify method imports
 from .services import *
@@ -38,11 +38,11 @@ def manage_contacts(request):
     user_id = current_user.id
     contact_data = Contact.objects.filter(user=user_id).get()
 
-    if contact_data.organization.id == SUPER_ORG_ID:
+    if contact_data:
         return HttpResponseRedirect(reverse('admin_portal'))
 
-    else:
-        return HttpResponseRedirect(reverse('client_portal'))
+    # else:
+    #     return HttpResponseRedirect(reverse('client_portal'))
 
 
 @login_required
@@ -74,54 +74,54 @@ def admin_portal(request):
 
     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
-    if request.POST.get("add-license"):
-        user_query = request.POST
+    # if request.POST.get("add-license"):
+    #     user_query = request.POST
 
-        new_license = add_new_license(contact_data)
+    #     new_license = add_new_license(contact_data)
 
-        if new_license:
-            messages.add_message(request, messages.INFO, "License saved")
-            return HttpResponseRedirect(request.path_info)
+    #     if new_license:
+    #         messages.add_message(request, messages.INFO, "License saved")
+    #         return HttpResponseRedirect(request.path_info)
 
-    if request.POST.get("update-license"):
-        user_query = request.POST
-        license_id = user_query.get('license-radio-button')
+    # if request.POST.get("update-license"):
+    #     user_query = request.POST
+    #     license_id = user_query.get('license-radio-button')
 
-        if license_id:
-            update_license_data(user_query)
+    #     if license_id:
+    #         update_license_data(user_query)
 
-            messages.add_message(request, messages.INFO, 'License updated')
-            return HttpResponseRedirect(request.path_info)
+    #         messages.add_message(request, messages.INFO, 'License updated')
+    #         return HttpResponseRedirect(request.path_info)
 
-        else:
-            messages.add_message(request, messages.INFO, 'No license selected')
-            return HttpResponseRedirect(request.path_info)
+    #     else:
+    #         messages.add_message(request, messages.INFO, 'No license selected')
+    #         return HttpResponseRedirect(request.path_info)
 
 
-    if request.POST.get("download-license"):
-        print("hello")
-        user_query = request.POST
-        license_id = user_query.get('license-radio-button')
+    # if request.POST.get("download-license"):
+    #     print("hello")
+    #     user_query = request.POST
+    #     license_id = user_query.get('license-radio-button')
 
-        if license_id:
+    #     if license_id:
             # master_license = user_query.get('master-license-selection')
 
             # license_data = License.objects.filter(id=license_id).get()
-            license_data = update_license_data(user_query)
+        #     license_data = update_license_data(user_query)
 
-            master_license = license_data.is_master
+        #     master_license = license_data.is_master
 
-            if master_license:
-                master_license_package = package_master_data(user_query, contact_data, license_data)
+        #     if master_license:
+        #         master_license_package = package_master_data(user_query, contact_data, license_data)
             
-            else:
-                master_license_package = False
+        #     else:
+        #         master_license_package = False
                                 
-            return download_license_package(request, license_data, master_license_package=master_license_package)
+        #     return download_license_package(request, license_data, master_license_package=master_license_package)
 
-        else:
-            messages.add_message(request, messages.INFO, 'No license selected')
-            return HttpResponseRedirect(request.path_info)
+        # else:
+        #     messages.add_message(request, messages.INFO, 'No license selected')
+        #     return HttpResponseRedirect(request.path_info)
     
     context = {'contact_data':contact_data,
                'contact_search_form':contact_search_form,
@@ -130,57 +130,57 @@ def admin_portal(request):
     return render(request, "manage_contacts/admin-portal.html", context)
 
 
-@login_required
-def client_portal(request):
-    """ Render manage-licenses html page """
-    current_user = request.user
-    user_id = current_user.id
-    contact_data = Contact.objects.filter(user=user_id).get()
-    org_name = contact_data.organization.org_name
-    product_licenses = License.objects.filter(org_name=org_name)
-    product_choices = []
+# @login_required
+# def client_portal(request):
+#     """ Render manage-licenses html page """
+#     current_user = request.user
+#     user_id = current_user.id
+#     contact_data = Contact.objects.filter(user=user_id).get()
+#     org_name = contact_data.organization.org_name
+#     product_licenses = License.objects.filter(org_name=org_name)
+#     product_choices = []
 
-    for product in product_licenses:
-        product_choices.append((product.product_name, product.product_name))
+#     for product in product_licenses:
+#         product_choices.append((product.product_name, product.product_name))
     
-    contact_header = get_contact_header()
-    contact_choice_list = get_choice_list(contact_header)
+#     contact_header = get_contact_header()
+#     contact_choice_list = get_choice_list(contact_header)
 
-    except_list = ["empty_column", "check_box", "delete_button"]
-    for choice in contact_choice_list:
-        if choice in except_list:
-            contact_choice_list.remove(choice)
+#     except_list = ["empty_column", "check_box", "delete_button"]
+#     for choice in contact_choice_list:
+#         if choice in except_list:
+#             contact_choice_list.remove(choice)
 
-    contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
+#     contact_search_form = SearchChoiceForm(auto_id='contact_search_form_%s', choice_list=contact_choice_list)
 
-    if request.POST.get("download-license"):
+#     if request.POST.get("download-license"):
 
-        user_query = request.POST
+#         user_query = request.POST
 
-        license_id = user_query.get('license-radio-button')
-        if license_id:
-            # license_data = License.objects.filter(id=license_id).get()
+#         license_id = user_query.get('license-radio-button')
+#         if license_id:
+#             # license_data = License.objects.filter(id=license_id).get()
             
-            license_data = update_license_data(user_query, is_client=True)
+#             license_data = update_license_data(user_query, is_client=True)
 
 
-            master_license = license_data.is_master
+#             master_license = license_data.is_master
 
-            if master_license:
-                print("hello")
-                master_license_package = package_master_data(user_query, contact_data, license_data)
+#             if master_license:
+#                 print("hello")
+#                 master_license_package = package_master_data(user_query, contact_data, license_data)
             
-            else:
-                master_license_package = False
+#             else:
+#                 master_license_package = False
                                 
-            return download_license_package(request, license_data, master_license_package=master_license_package)
+#             return download_license_package(request, license_data, master_license_package=master_license_package)
 
-        else:
-            messages.add_message(request, messages.INFO, 'No license selected')
-            return HttpResponseRedirect(request.path_info)
+#         else:
+#             messages.add_message(request, messages.INFO, 'No license selected')
+#             return HttpResponseRedirect(request.path_info)
 
-    context = {'contact_data':contact_data, 'contact_search_form':contact_search_form}
-    return render(request, "manage_contacts/client-portal.html", context)
+#     context = {'contact_data':contact_data, 'contact_search_form':contact_search_form}
+#     return render(request, "manage_contacts/client-portal.html", context)
 
 
 @login_required

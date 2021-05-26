@@ -1,12 +1,12 @@
 from django.urls import path
 from . import views
 
-from manage_licenses.views import get_license_data, get_client_license_data, delete_license_selection
+# from manage_licenses.views import get_license_data, get_client_license_data, delete_license_selection
 
 urlpatterns = [
     path('', views.manage_contacts, name='manage_contacts'),
     path('admin-portal', views.admin_portal, name="admin_portal"),
-    path('client-portal', views.client_portal, name="client_portal"),
+    # path('client-portal', views.client_portal, name="client_portal"),
     path('add-contact', views.add_contact, name="add_contact"),
     path('add-organization', views.add_organization, name="add_organization"),
     path('add-product', views.add_product, name="add_product"),
@@ -20,8 +20,8 @@ urlpatterns = [
     path('delete-org-selection/<str:query_string>/', views.delete_org_selection, name='delete_org_selection'),
     path('delete-product-selection/<str:query_string>/', views.delete_product_selection, name='delete_product_selection'),
 
-    path('get-license-data', get_license_data, name='get_license_data'),
-    path('get-client-license-data', get_client_license_data, name='get_client_license_data'),
-    path('delete-license-selection/<str:query_string>/', delete_license_selection, name='delete_license_selection'),
+    # path('get-license-data', get_license_data, name='get_license_data'),
+    # path('get-client-license-data', get_client_license_data, name='get_client_license_data'),
+    # path('delete-license-selection/<str:query_string>/', delete_license_selection, name='delete_license_selection'),
 
 ]

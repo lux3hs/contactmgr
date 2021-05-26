@@ -16,7 +16,7 @@
 <div class="tab">
   <p>
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'account-tab')">Account</button>
-    <button class="js-tablinks" onclick="changePage(event, 'licenses-tab')">Licenses</button>
+    {% comment %} <button class="js-tablinks" onclick="changePage(event, 'licenses-tab')">Licenses</button> {% endcomment %}
     <button class="js-tablinks" onclick="changePage(event, 'contacts-tab')">Contacts</button>
   </p>
 </div>
@@ -36,7 +36,7 @@
 
   </div>
 
-<div id="licenses-tab" class="js-tabcontent">
+{% comment %} <div id="licenses-tab" class="js-tabcontent">
 
 
       <p>
@@ -70,7 +70,7 @@
     </div>
   </div>
 
-</div>
+</div> {% endcomment %}
 
 
 

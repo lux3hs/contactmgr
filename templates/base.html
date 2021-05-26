@@ -16,11 +16,9 @@
 
       <header>
       {% block header %} 
-        <img src="{% static 'images/licensepgm/automai.svg' %}" class="org-logo" alt="Generic logo"/>
+        <img src="{% static 'images/licensepgm/logo-generic.svg' %}" class="org-logo" alt="Generic logo"/>
                 
         <ul class="nav-row">
-          {% comment %} <li><a href="{% url 'client_portal' %}">Clients</a></li>
-          <li><a href="{% url 'admin_portal' %}">Admin</a></li> {% endcomment %}
           <li><a href="{% url 'manage_contacts' %}">Home</a></li>
           <li><a href="{% url 'logout' %}">Log Out</a></li>
         </ul>
@@ -77,13 +75,11 @@
      {% block footer %}
 
         <ul>
-          <li><a href="https://help.automai.com/">Knowledge base</a></li>
-          <li><a href="https://community.automai.com/">Community</a></li>
-          <li><a href="mailto: sales@automai.com">Email sales</a></li>
-          <li><a href="https://help.automai.com/s/contactsupport">Open a ticket</a></li>
+          <li><a href="">Knowledge base</a></li>
+          <li><a href="">Community</a></li>
+          <li><a href="">Email sales</a></li>
+          <li><a href="">Open a ticket</a></li>
         </ul>
-
-      {% comment %} <p> -    -    -  Open a ticket</p> {% endcomment %}
     {% endblock footer %}
     </footer>
 
