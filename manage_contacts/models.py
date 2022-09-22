@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# from manage_licenses.models import License
 
 class Organization(models.Model):
     # org_id = id

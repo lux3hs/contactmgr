@@ -16,7 +16,6 @@
 <div class="tab">
   <p>
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'account-tab')">Account</button>
-    {% comment %} <button class="js-tablinks" onclick="changePage(event, 'licenses-tab')">Licenses</button> {% endcomment %}
     <button class="js-tablinks" onclick="changePage(event, 'contacts-tab')">Contacts</button>
   </p>
 </div>
@@ -32,46 +31,7 @@
     <p><a href="{% url 'password_change' %}">Change Password</a></p>
     </div>
 
-    
-
   </div>
-
-{% comment %} <div id="licenses-tab" class="js-tabcontent">
-
-
-      <p>
-      <a class="button" href="{% url 'add_product' %}">Add Product</a>
-      <a  class="button" href="{% url 'add_organization' %}">Add Org</a>
-      </p>
-
-  <div class="center-text">
-    <div class="table-form">
-      <form method="post">
-        {% csrf_token %}
-        <input class="button" type="submit" value="+ Add License" name="add-license"/>
-      </form>
-
-      <form method="post">
-        {% csrf_token %}
-        <div class="table-container">
-          <table id="license-table">
-            <thead>
-              <tr> 
-                <th></th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-        <p>
-          <input class="button" type="submit" value="Save" name="update-license"/>
-          <input class="button" name="download-license" type="submit" value="Download">
-        </p>
-      </form>
-    </div>
-  </div>
-
-</div> {% endcomment %}
-
 
 
 <div id="contacts-tab" class="js-tabcontent">

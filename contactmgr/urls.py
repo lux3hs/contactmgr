@@ -1,4 +1,4 @@
-"""licensepgm URL Configuration
+"""contactmgr URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -15,16 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic.base import TemplateView
-
-from manage_contacts.views import manage_contacts
+#from django.views.generic.base import TemplateView
 
 urlpatterns = [
     # path('', TemplateView.as_view(template_name='base.html'), name='homepage'),
-    path('', manage_contacts, name='redirect'),
+    path('', include('manage_contacts.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('contacts/', include('manage_contacts.urls')),
-    # path('licenses/', include('manage_licenses.urls')),
 
 ]
