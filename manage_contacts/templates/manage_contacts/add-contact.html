@@ -10,7 +10,12 @@
 
 {% block infobox %}{% endblock infobox %}
 
-{% block header %}{% endblock header %}
+{% block header %}
+<ul class="nav-row" "border-full">
+  <li><a href="{% url 'manage_contacts' %}">Back</a></li>
+  <li><a class="" href="{% url 'logout' %}">Log Out</a></li>
+</ul>
+{% endblock header %}
 
 {% block main %}
 
@@ -35,13 +40,6 @@
     <p>Not authorized. ({{ contact_data.role }}) </p>
   {% endif %}
 
-<div>
-  <p>
-  <a href="{% url 'manage_contacts' %}">Back</a>
-  {% comment %} <a href="{% url 'homepage' %}">Home</a> {% endcomment %}
-  <a href="{% url 'logout' %}">Logout</a>
-  </p>
-</div>
 {% endblock main %}
 
 {% block footer %}{% endblock footer %}

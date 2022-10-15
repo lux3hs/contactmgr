@@ -9,9 +9,10 @@
 <script src="{% static "manage_contacts/js/script.js" %}"></script>
 {% endblock head %}
 
-{% block infobox %}{% endblock infobox %}
-{% block main %}
-
+{% block header %}
+<ul class="nav-row">
+  <li><a href="{% url 'logout' %}">Log Out</a></li>
+</ul>
 
 <div class="tab">
   <p>
@@ -19,20 +20,29 @@
     <button class="js-tablinks" onclick="changePage(event, 'contacts-tab')">Contacts</button>
   </p>
 </div>
+{% endblock header %}
+
+{% block infobox %}{% endblock infobox %}
+{% block main %}
+
+
+
 
   <div id="account-tab" class="js-tabcontent">
-    <div class="account-info">
-    <h2>My Account:</h2>
-    <p>Contact: {{ contact_data.user.username }}</p>
-    <p>Role: {{ contact_data.role }}</p>
-    <p>Company: {{ contact_data.organization }}</p>
-    <p>ID: {{ contact_data.user.id }}</p>
 
-    <p><a href="{% url 'password_change' %}">Change Password</a></p>
+    <div class="card">
+      {% comment %} <img src="{% static 'images/contactmgr/logo-generic.png' %}" alt="Avatar" style="width:100%;margin-left:auto;"> {% endcomment %}
+      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Fa User Circle Icon @clipartmax.com">
+      <div class="account-info">
+        <h4><b>{{ contact_data.user.username }}</b></h4>
+        <p>{{ contact_data.organization }} {{ contact_data.role }}</p> 
+        <p>id:{{ contact_data.user.id }}</p>
+        <a href="{% url 'password_change' %}">Change Password</a>
+
+      </div> 
     </div>
 
   </div>
-
 
 <div id="contacts-tab" class="js-tabcontent">
   
@@ -44,9 +54,9 @@
         <input id="clear-contact-search" type="button" class="button" value="Clear"/>
       </form>
       
-      <p><a class="button" href="{% url 'add_contact' %}">Add Contact</a></p>
+      <p><a href="{% url 'add_contact' %}">Add Contact</a></p>
 
-      <div class="table-container">
+      <div class="table-container card">
         <table id="contact-table">
           <thead>
             <tr> 
@@ -55,6 +65,7 @@
           </thead>
         </table>
       </div>
+      <p><input id="delete-contact-button" type="button" class="button" value="Delete"/></p>
 
     </div>
 

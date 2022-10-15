@@ -78,35 +78,32 @@ class Contact(models.Model):
         table_dict["org_id"] = self.organization.id
         table_dict["org_name"] = self.organization.org_name
 
-        table_dict["empty_column"] = self.get_widget_template('empty_column')
-        table_dict["check_box"] = self.get_widget_template('check_box')
-        table_dict["edit_button"] = self.get_widget_template('edit_button')
-        table_dict["delete_button"] = self.get_widget_template('delete_button')
+        table_dict["edit_button"] = '<p><a href=' + '"' + "edit-contact-data/" + str(self.id) + '"' + '>Edit</a></p>'
+
+        # table_dict["empty_column"] = self.get_widget_template('empty_column')
+        # table_dict["edit_button"] = self.get_widget_template('edit_button')
+        # table_dict["delete_button"] = self.get_widget_template('delete_button')
 
         return table_dict
 
-    def get_widget_template(self, widget):
-        if widget is "hello":
-            greeting = "'hello world!'"
-            widget_function = '<input type="button" class="button" onclick="console.log(' + greeting + ')" value="' + str(self.id) + '"/>'
+    # def get_widget_template(self, widget):
+    #     if widget is "hello":
+    #         greeting = "'hello world!'"
+    #         widget_function = '<input type="button" class="button" onclick="console.log(' + greeting + ')" value="' + str(self.id) + '"/>'
 
-        elif widget is "empty_column":
-            widget_function = "<pre>    </pre>"
+    #     elif widget is "empty_column":
+    #         widget_function = "<pre>    </pre>"
 
+    #     elif widget is "edit_button":
+    #         query_string = [self.id]
+    #         name_link = "edit-contact-data/" + str(query_string)
+    #         widget_function = '<p><a href=' + '"' + name_link + '"' + '>Edit</a></p>'
 
-        elif widget is "check_box":
-            widget_function = '<input type="checkbox" name="js-check-box" value="' + str(self.id) + '"/>'
+    #     elif widget is "delete_button":
+    #         delete_function = "deleteTableData(url='delete-contact-selection', queryData=[" + str(self.id) + "], tableID='contact-table')"
+    #         widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
 
-        elif widget is "edit_button":
-            query_string = [self.id]
-            name_link = "edit-contact-data/" + str(query_string)
-            widget_function = '<p><a class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
-
-        elif widget is "delete_button":
-            delete_function = "deleteTableData(url='delete-contact-selection', queryData=[" + str(self.id) + "], tableID='contact-table')"
-            widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
-
-        return widget_function
+    #     return widget_function
 
 @receiver(post_save, sender=User)
 def create_or_update_user_contact(sender, instance, created, **kwargs):

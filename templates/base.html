@@ -15,14 +15,8 @@
     <div class="foot-wrap">
 
       <header>
-      {% block header %} 
-        <img src="{% static 'images/contactmgr/logo-generic.png' %}" class="org-logo" alt="Generic logo"/>
-                
-        <ul class="nav-row">
-          <li><a href="{% url 'logout' %}">Log Out</a></li>
-        </ul>
-
-      {% endblock header %}  
+        <img src="{% static 'images/contactmgr/logo-generic.png' %}" class="org-logo" alt="Generic logo"/>        
+        {% block header %}{% endblock header %}  
       </header>
 
         {% block logincheck %}
@@ -53,7 +47,7 @@
 
         {% block main %}
 
-        <div class="info-border">
+        <div class="info-border" "border-full">
         
         </div>
 
@@ -74,8 +68,9 @@
      {% block footer %}
 
         <ul>
+          <li><a href="">Help</a></li>
           <li><a href="">About Us</a></li>
-
+          <li><a href="">Contact</a></li>
         </ul>
     {% endblock footer %}
     </footer>

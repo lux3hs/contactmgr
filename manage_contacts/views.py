@@ -53,7 +53,7 @@ def manage_contacts(request):
                'contact_search_form':contact_search_form,
             }
 
-    return render(request, "manage_contacts/admin-portal.html", context)
+    return render(request, "manage_contacts/manage-contacts.html", context)
 
 
 @login_required
@@ -96,12 +96,15 @@ def add_contact(request):
 def edit_contact_data(request, query_string):
     """ Edit contact fields """
     query_data = json.loads(query_string)
-    if len(query_data) > 1:
-        messages.add_message(request, messages.INFO, 'Too many selected')
-        return HttpResponseRedirect(reverse('manage_contacts'))
 
-    else:
-        contact_selection = Contact.objects.filter(id=query_data[0]).get()
+    # if len(query_data) > 1:
+    #     messages.add_message(request, messages.INFO, 'Too many selected')
+    #     return HttpResponseRedirect(reverse('manage_contacts'))
+
+    # else:
+    #   contact_selection = Contact.objects.filter(id=query_data[0]).get()
+
+    contact_selection = query_data
 
     current_user_object = request.user
     user_id = current_user_object.id

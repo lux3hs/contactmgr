@@ -6,6 +6,8 @@ from django.contrib.auth.hashers import check_password
 
 from .models import Contact, Organization, Product
 
+SUPER_USER = "superuser"
+
 
 def get_choice_list(model_header):
     """ Get list of choices from table dictionary """
@@ -288,9 +290,7 @@ def delete_product_data(product_selection):
 
 def get_contact_header():
     """ Get header data for populating tables """
-    contact_header = {"empty_column":"<pre>    </pre>",
-                    #   "check_box":"",
-                      'username':'User',
+    contact_header = {'username':'User',
                       'first_name':'First Name',
                       'last_name':'Last Name',
                       'email':'Email',
@@ -298,8 +298,6 @@ def get_contact_header():
                       'status':'Status',
                       'org_name':'Organization',
                       'edit_button':'',
-                       "delete_button":"",
-
                     }
 
     return contact_header
@@ -346,11 +344,13 @@ def get_table_data(table_header, object_data):
                 temp_dict = {}
                 temp_dict["data_id"] = object_dictionary.get("data_id")
 
-                for key in table_header.keys():
-                    if key in object_dictionary.keys():
-                        temp_dict[key] = object_dictionary.get(key)
+                if temp_dict["data_id"] != get_superuser_id(SUPER_USER):
 
-                data_list.append(temp_dict)
+                    for key in table_header.keys():
+                        if key in object_dictionary.keys():
+                            temp_dict[key] = object_dictionary.get(key)
+
+                    data_list.append(temp_dict)
 
             data['table_data'] = data_list
             data['success'] = True
