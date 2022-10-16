@@ -18,6 +18,8 @@
   <p>
     <button class="js-tablinks" id="js-default-open" onclick="changePage(event, 'account-tab')">Account</button>
     <button class="js-tablinks" onclick="changePage(event, 'contacts-tab')">Contacts</button>
+    <button class="js-tablinks" onclick="changePage(event, 'orgs-tab')">Organizations</button>
+    <button class="js-tablinks" onclick="changePage(event, 'products-tab')">Products</button>
   </p>
 </div>
 {% endblock header %}
@@ -26,9 +28,7 @@
 {% block main %}
 
 
-
-
-  <div id="account-tab" class="js-tabcontent">
+<div id="account-tab" class="js-tabcontent">
 
     <div class="card">
       {% comment %} <img src="{% static 'images/contactmgr/logo-generic.png' %}" alt="Avatar" style="width:100%;margin-left:auto;"> {% endcomment %}
@@ -42,19 +42,44 @@
       </div> 
     </div>
 
-  </div>
+</div>
+
 
 <div id="contacts-tab" class="js-tabcontent">
-  
   <div class="center-text">
     <div class="table-form">
-      <form class="contact-search-form">
+
+      <form class="contact-search-form search-form">
         <input id="contact-search-button" type="button" class="button" value="Search"/>
         {{ contact_search_form }}
         <input id="clear-contact-search" type="button" class="button" value="Clear"/>
       </form>
       
-      <p><a href="{% url 'add_contact' %}">Add Contact</a></p>
+      <button id="add-contact-button">Add Contact</button>
+      <div id="add-contact-modal" class="modal"> 
+        <div class="modal-content">
+          <span class="close-contact-form close">&times;</span>
+
+          {% if contact_data.role == "admin" %}
+          <h3 class="center-text">Add Contact</h3>
+          <form id="new-contact-form" class="new-contact-form form" method="post">
+            {% csrf_token %}
+            {{ contact_form.as_p }}
+            {% if contact_data.organization.org_name == super_org %}
+              <label>Organization:</label>
+              <select name="select_org">
+                {% for choice in org_choices %}
+                  <option value="{{ choice }}">{{ choice }}</option>
+                {% endfor %}
+              </select>
+              {% endif %}  
+            <p><input class="button" type = "submit" value = "Submit"/></p>
+          </form>  
+          {% else %}
+          <p>Not authorized. ({{ contact_data.role }}) </p>
+          {% endif %}
+        </div>
+      </div>
 
       <div class="table-container card">
         <table id="contact-table">
@@ -65,13 +90,107 @@
           </thead>
         </table>
       </div>
-      <p><input id="delete-contact-button" type="button" class="button" value="Delete"/></p>
+      <p><button id="delete-contact-button">Delete</button></p>
 
     </div>
-
   </div>
-
 </div>
 
+
+
+<div id="orgs-tab" class="js-tabcontent">
+  <div class="center-text">
+    <div class="table-form">
+
+      <form class="org-search-form search-form">
+        <input id="org-search-button" type="button" class="button" value="Search"/>
+        {{ org_search_form }}
+        <input id="clear-org-search" type="button" class="button" value="Clear"/>
+      </form>
+
+      <button id="add-org-button">Add Organization</button>
+      <div id="add-org-modal" class="modal"> 
+        <div class="modal-content">
+          <span class="close-org-form close">&times;</span>
+
+          <h2 class="center-text">Add organization</h2>
+          <form class="new-org-form form" method="post">
+            {% csrf_token %}
+            <div>
+              {{ org_form.as_p }}
+            </div>
+              <input class="button" type = "submit" value = "Create" name="newForm"/>
+          </form>
+
+        </div>
+      </div>
+
+
+      <div class="table-container card">
+        <table id="org-table">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <p><button id="delete-org-button">Delete</button></p>
+
+
+    </div>
+  </div>
 </div>
+
+
+
+<div id="products-tab" class="js-tabcontent">
+  <div class="center-text">
+    <div class="table-form">
+
+      <form class="product-search-form search-form">
+        <input id="product-search-button" type="button" class="button" value="Search"/>
+        {{ product_search_form }}
+        <input id="clear-product-search" type="button" class="button" value="Clear"/>
+      </form>
+
+
+      <button id="add-product-button">Add Product</button>
+      <div id="add-product-modal" class="modal"> 
+        <div class="modal-content">
+          <span class="close-product-form close">&times;</span>
+
+
+
+          <h2 class="center-text">Add Product</h2>
+          <form class="new-product-form form" method="post">
+            {% csrf_token %}
+            <div>
+              {{ product_form.as_p }}
+            </div>
+            <input class="button" type = "submit" value = "Create" name="newForm"/>
+        </form>
+
+        </div>
+      </div>
+
+
+      <div class="table-container card">
+        <table id="product-table">
+          <thead>
+            <tr> 
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <p><button id="delete-product-button">Delete</button></p>
+
+
+    </div>
+  </div>
+</div>
+
+
+
 {% endblock main %}

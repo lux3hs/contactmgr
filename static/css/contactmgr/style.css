@@ -257,15 +257,54 @@ footer a:hover{
 
 
 
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+  }
+
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
 /* Add to local contacts CSS directory */
 
-.contact-search-form {
+.search-form {
     /* border:2px solid black; */
     text-align: center;
     /* display: inline-block; */
 }
 
-.contact-search-form input {
+.search-form input {
     text-decoration: none;
     background-color: cornflowerblue;
     color: white;
@@ -274,12 +313,12 @@ footer a:hover{
 
 }
 
-.contact-search-form .CharField {
+.search-form .CharField {
     background-color: white;
     color: black;
 }
 
-.contact-search-form .ChoiceField {
+.search-form .ChoiceField {
     background-color: white;
     padding: 10px 20px;
     display: inline-block;
@@ -287,52 +326,20 @@ footer a:hover{
 
 
 
-
-
 .new-contact-form {
-    display: inline-block;
-    font-size: small;
     text-align: right;
-    margin-left: 35vw;
-    padding-right:25px;
-    padding-left: 25px;
+    margin-right: 30%;
 }
 
+
 .new-org-form {
-    display: inline-block;
-    font-size: small;
     text-align: right;
-    margin-left: 35vw;
-    padding-right:25px;
-    padding-left: 25px;
+    margin-right: 30%;
 }
 
 .new-product-form {
-    display: inline-block;
-    font-size: small;
     text-align: right;
-    margin-left: 35vw;
-    padding-right:25px;
-    padding-left: 25px;
-}
-
-
-.edit-contact-form {
-    display: inline-block;
-    font-size: small;
-    text-align: right;
-    margin-left: 35vw;
-    padding-right:25px;
-    padding-left: 25px;
-
-}
-
-
-.user-info {
-    /* display: inline-block; */
-    /* margin-left: 35vw; */
-    /* text-align: center; */
-    /* color: cornflowerblue; */
+    margin-right: 30%;
 }
 
 
@@ -424,11 +431,6 @@ table a:hover {
 }
 
 #delete-product-button {
-    margin-top: 25px;
-    margin-left: auto;
-}
-
-#delete-entitlement-button {
     margin-top: 25px;
     margin-left: auto;
 }

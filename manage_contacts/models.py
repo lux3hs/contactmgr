@@ -19,71 +19,16 @@ class Organization(models.Model):
     def get_table_dictionary(self):
         table_dict = {}
         table_dict["data_id"] = self.id
-        table_dict["check_box"] = '<input type="checkbox" id="1" name="js-check-box" value="' + str(self.id) + '"  >'
         table_dict["org_type"] = self.org_type
         table_dict["org_name"] = self.org_name
         table_dict["domain"] = self.domain
 
-        table_dict["empty_column"] = self.get_widget_template('empty_column')
-        # table_dict["check_box"] = self.get_widget_template('check_box')
-        table_dict["edit_button"] = self.get_widget_template('edit_button')
-        table_dict["delete_button"] = self.get_widget_template('delete_button')
-        return table_dict
-
-    def get_widget_template(self, widget):
-        if widget is "hello":
-            greeting = "'hello world!'"
-            widget_function = '<input type="button" class="button" onclick="console.log(' + greeting + ')" value="' + str(self.id) + '"/>'
-
-        elif widget is "empty_column":
-            widget_function = "<pre>    </pre>"
-
-        elif widget is "edit_button":
-            query_string = [self.id]
-            name_link = "edit-org-data/" + str(query_string)
-            widget_function = '<p><a class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
-
-        elif widget is "delete_button":
-            delete_function = "deleteTableData(url='delete-org-selection', queryData=[" + str(self.id) + "], tableID='org-table')"
-            widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
-
-        return widget_function
-
-class Contact(models.Model):
-    phone = models.IntegerField(null=True)
-    creation_date = models.DateTimeField("Date Created", null=True)
-    ROLE_CHOICES = [('admin', 'admin'), ('user', 'user')]
-    role = models.CharField(max_length=50, choices=ROLE_CHOICES, null=True)
-    STATUS_CHOICES = [('active', 'active'), ('removed', 'removed')]
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, null=True)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
-    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, null=True)
-
-    page_tab = models.CharField(max_length=50, null=True)
-
-    def __str__(self):
-        return self.user.username
-
-    def get_table_dictionary(self):
-        table_dict = {}
-        table_dict["data_id"] = self.id
         # table_dict["check_box"] = '<input type="checkbox" id="1" name="js-check-box" value="' + str(self.id) + '"  >'
-        table_dict["username"] = self.user.username
-        table_dict["first_name"] = self.user.first_name
-        table_dict["last_name"] = self.user.last_name
-        table_dict["email"] = self.user.email
-        table_dict["contact_id"] = self.id
-        table_dict["role"] = self.role
-        table_dict["status"] = self.status
-        table_dict["org_id"] = self.organization.id
-        table_dict["org_name"] = self.organization.org_name
-
-        table_dict["edit_button"] = '<p><a href=' + '"' + "edit-contact-data/" + str(self.id) + '"' + '>Edit</a></p>'
-
+        # table_dict["edit_button"] = '<p><a href=' + '"' + "edit-org-data/" + str(self.id) + '"' + '>Edit</a></p>'
         # table_dict["empty_column"] = self.get_widget_template('empty_column')
+        # table_dict["check_box"] = self.get_widget_template('check_box')
         # table_dict["edit_button"] = self.get_widget_template('edit_button')
         # table_dict["delete_button"] = self.get_widget_template('delete_button')
-
         return table_dict
 
     # def get_widget_template(self, widget):
@@ -96,14 +41,44 @@ class Contact(models.Model):
 
     #     elif widget is "edit_button":
     #         query_string = [self.id]
-    #         name_link = "edit-contact-data/" + str(query_string)
-    #         widget_function = '<p><a href=' + '"' + name_link + '"' + '>Edit</a></p>'
+    #         name_link = "edit-org-data/" + str(query_string)
+    #         widget_function = '<p><a class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
 
     #     elif widget is "delete_button":
-    #         delete_function = "deleteTableData(url='delete-contact-selection', queryData=[" + str(self.id) + "], tableID='contact-table')"
+    #         delete_function = "deleteTableData(url='delete-org-selection', queryData=[" + str(self.id) + "], tableID='org-table')"
     #         widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
 
-    #     return widget_function
+        # return widget_function
+
+class Contact(models.Model):
+    # phone = models.IntegerField(null=True)
+    creation_date = models.DateTimeField("Date Created", null=True)
+    ROLE_CHOICES = [('admin', 'admin'), ('user', 'user')]
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, null=True)
+    STATUS_CHOICES = [('active', 'active'), ('removed', 'removed')]
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, null=True)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, null=True)
+
+    # page_tab = models.CharField(max_length=50, null=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_table_dictionary(self):
+        table_dict = {}
+        table_dict["data_id"] = self.id
+        table_dict["username"] = self.user.username
+        table_dict["first_name"] = self.user.first_name
+        table_dict["last_name"] = self.user.last_name
+        table_dict["email"] = self.user.email
+        table_dict["contact_id"] = self.id
+        table_dict["role"] = self.role
+        table_dict["status"] = self.status
+        table_dict["org_id"] = self.organization.id
+        table_dict["org_name"] = self.organization.org_name
+
+        return table_dict
 
 @receiver(post_save, sender=User)
 def create_or_update_user_contact(sender, instance, created, **kwargs):
@@ -117,6 +92,8 @@ class Product(models.Model):
     product_version = models.CharField(max_length=50, null=True)
     GRADE_CHOICES = [('standard', 'standard'), ('enterprise', 'enterprise')]
     product_grade = models.CharField(max_length=50, choices=GRADE_CHOICES, default="standard", null=True)
+    product_org = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
+
 
     def __str__(self):
         return self.product_name + " v" + self.product_version
@@ -124,26 +101,9 @@ class Product(models.Model):
     def get_table_dictionary(self):
         table_dict = {}
         table_dict["data_id"] = self.id
-        table_dict["check_box"] = '<input type="checkbox" id="1" name="js-check-box" value="' + str(self.id) + '"  >'
         table_dict["product_name"] = self.product_name
         table_dict["product_version"] = self.product_version
+        table_dict["org_id"] = self.product_org.id
+        table_dict["org_name"] = self.product_org.org_name
 
-        table_dict["empty_column"] = self.get_widget_template("empty_column")
-        table_dict["edit_button"] = self.get_widget_template('edit_button')
-        table_dict["delete_button"] = self.get_widget_template("delete_button")
         return table_dict
-
-    def get_widget_template(self, widget):
-        if widget is "empty_column":
-            widget_function = "<pre>    </pre>"
-
-        elif widget is "edit_button":
-            query_string = [self.id]
-            name_link = "edit-product-data/" + str(query_string)
-            widget_function = '<p><a class="button" href=' + '"' + name_link + '"' + '>Edit</a></p>'
-
-        elif widget is "delete_button":
-            delete_function = "deleteTableData(url='delete-product-selection', queryData=[" + str(self.id) + "], tableID='product-table')"
-            widget_function = '<input type="button" class="button" onclick="' + delete_function + '" name="js-delete-button" value="Delete"/>'
-
-        return widget_function

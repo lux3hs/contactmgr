@@ -7,18 +7,8 @@ from django.contrib.auth.hashers import check_password
 from .models import Contact, Organization, Product
 
 SUPER_USER = "superuser"
+SUPER_ORGNAME = 'ContactMGR'
 
-
-def get_choice_list(model_header):
-    """ Get list of choices from table dictionary """
-    choice_list = []
-    except_list = ["empty_column", "check_box", "delete_button"]
-
-    for key in model_header:
-        if key not in except_list:
-            choice_list.append((key, model_header[key]))
-
-    return choice_list
 
 
 ##Basic service methods
@@ -73,58 +63,58 @@ def add_new_contact(user_query, contact_organization):
     new_contact.organization = contact_organization
     new_contact.save()
 
-    return new_contact
+    return True
 
-def edit_contact(current_user, user_query, contact_object, contact_organization):
-    current_password = current_user.user.password
+# def edit_contact(current_user, user_query, contact_object, contact_organization):
+#     current_password = current_user.user.password
     
-    password1 = user_query.get('password1')
-    password2 = user_query.get('password2')
-    if password1 is not None and password1 == password2:
+#     password1 = user_query.get('password1')
+#     password2 = user_query.get('password2')
+#     if password1 is not None and password1 == password2:
         
-        match_check = check_password(password1, current_password)
-        if match_check:
-            pass
+#         match_check = check_password(password1, current_password)
+#         if match_check:
+#             pass
 
-        else:
-            return "invalid password"
+#         else:
+#             return "invalid password"
 
-    else:
-        return "invalid password"
+#     else:
+#         return "invalid password"
 
-    contact_username = user_query.get('username')
+#     contact_username = user_query.get('username')
     
-    contact_firstname = user_query.get('contact_firstname')
-    contact_lastname = user_query.get('contact_lastname')
-    contact_email = user_query.get('contact_email')
-    contact_role = user_query.get('contact_role')
-    contact_status = user_query.get('contact_status')
+#     contact_firstname = user_query.get('contact_firstname')
+#     contact_lastname = user_query.get('contact_lastname')
+#     contact_email = user_query.get('contact_email')
+#     contact_role = user_query.get('contact_role')
+#     contact_status = user_query.get('contact_status')
 
-    if len(contact_firstname) > 0:
-        contact_object.user.first_name = contact_firstname
+#     if len(contact_firstname) > 0:
+#         contact_object.user.first_name = contact_firstname
     
-    if len(contact_lastname) > 0:
-        contact_object.user.last_name = contact_lastname
+#     if len(contact_lastname) > 0:
+#         contact_object.user.last_name = contact_lastname
     
-    if len(contact_email) > 0:
-        contact_object.user.email = contact_email
+#     if len(contact_email) > 0:
+#         contact_object.user.email = contact_email
 
-    if len(contact_username) > 0:
-        contact_object.user.username = contact_username
+#     if len(contact_username) > 0:
+#         contact_object.user.username = contact_username
 
-    if len(contact_role) > 0:
-        contact_object.role = contact_role
+#     if len(contact_role) > 0:
+#         contact_object.role = contact_role
     
-    if len(contact_status) > 0:
-        contact_object.status = contact_status
+#     if len(contact_status) > 0:
+#         contact_object.status = contact_status
 
-    if len(contact_organization) > 0:
-        contact_object.organization = contact_organization
+#     if len(contact_organization) > 0:
+#         contact_object.organization = contact_organization
     
-    contact_object.user.save()
-    contact_object.save()
+#     contact_object.user.save()
+#     contact_object.save()
 
-    return "contact updated successfully"
+#     return "contact updated successfully"
 
 
 def delete_contact_data(current_user, contact_selection):
@@ -166,49 +156,46 @@ def add_new_organization(user_query):
         new_org = Organization(org_type=org_type, org_name=org_name, domain=org_domain)
         new_org.save()
 
-        success_message = "New organization created successfully"
+        return True
 
     else: 
-        success_message = "Organization exists"
+        return "Organization exists"
 
-    return success_message
-
-def edit_organization(user_query, org_selection):
-    """ Add organization on user request """
-    org_type = user_query.get('org_type')
-    org_name = user_query.get('org_name')
-    org_domain = user_query.get('org_domain')
-    org_data = Organization.objects.all()
-    org_names = []
+# def edit_organization(user_query, org_selection):
+#     """ Add organization on user request """
+#     org_type = user_query.get('org_type')
+#     org_name = user_query.get('org_name')
+#     org_domain = user_query.get('org_domain')
+#     org_data = Organization.objects.all()
+#     org_names = []
     
-    for org in org_data:
-        org_names.append(org.org_name)
+#     for org in org_data:
+#         org_names.append(org.org_name)
 
-    if org_name not in org_names:
-        if len(org_type) > 0:
-            org_selection.org_type = org_type
+#     if org_name not in org_names:
+#         if len(org_type) > 0:
+#             org_selection.org_type = org_type
 
-        if len(org_name) > 0:
-            org_selection.org_name = org_name
+#         if len(org_name) > 0:
+#             org_selection.org_name = org_name
         
-        if len(org_domain) > 0:
-            org_selection.domain = org_domain
+#         if len(org_domain) > 0:
+#             org_selection.domain = org_domain
 
-        org_selection.save()
+#         org_selection.save()
 
-        success_message = "Organization updated successfully"
+#         success_message = "Organization updated successfully"
 
-    else: 
-        success_message = "Organization exists"
+#     else: 
+#         success_message = "Organization exists"
 
-    return success_message
+#     return success_message
 
 
 def delete_org_data(current_user, org_selection):
     """ Delete org selection from database """
     except_list = []
-    super_orgname = 'automai'
-    super_id = get_superorg_id(super_orgname)
+    super_id = get_superorg_id(SUPER_ORGNAME)
     except_list.append(super_id)
     except_list.append(current_user.contact.organization.id)
     try:
@@ -226,7 +213,7 @@ def delete_org_data(current_user, org_selection):
         return org_id
 
 
-def add_new_product(user_query):
+def add_new_product(user_query, user_org):
     """ Add new product on user request """
     product_name = user_query.get('product_name')
     product_version = user_query.get('product_version')
@@ -236,41 +223,39 @@ def add_new_product(user_query):
         product_names.append(product.product_name)
 
     if product_name not in product_names:
-        new_product = Product(product_name=product_name, product_version=product_version)
+        new_product = Product(product_name=product_name, product_version=product_version, product_org=user_org)
         new_product.save()
 
-        success_message = "New product created successfully"
+        return True
 
     else: 
-        success_message = "Product exists"
-
-    return success_message
+        return "Product exists"
 
 
-def edit_product(user_query, product_selection):
-    """ Add new product on user request """
-    product_name = user_query.get('product_name')
-    product_version = user_query.get('product_version')
-    product_data = Product.objects.all()
-    product_names = []
-    for product in product_data:
-        product_names.append(product.product_name)
+# def edit_product(user_query, product_selection):
+#     """ Add new product on user request """
+#     product_name = user_query.get('product_name')
+#     product_version = user_query.get('product_version')
+#     product_data = Product.objects.all()
+#     product_names = []
+#     for product in product_data:
+#         product_names.append(product.product_name)
 
-    if product_name not in product_names:
-        if len(product_name) > 0:
-            product_selection.product_name = product_name
+#     if product_name not in product_names:
+#         if len(product_name) > 0:
+#             product_selection.product_name = product_name
 
-        if len(product_version) > 0:
-            product_selection.product_version = product_version
+#         if len(product_version) > 0:
+#             product_selection.product_version = product_version
 
-        product_selection.save()
+#         product_selection.save()
 
-        success_message = "Product updated successfully"
+#         success_message = "Product updated successfully"
 
-    else: 
-        success_message = "Product name exists"
+#     else: 
+#         success_message = "Product name exists"
 
-    return success_message
+#     return success_message
 
 
 def delete_product_data(product_selection):
@@ -287,6 +272,16 @@ def delete_product_data(product_selection):
 
 
 ##JS Table Services##
+def get_choice_list(model_header):
+    """ Get list of choices from table dictionary """
+    choice_list = []
+    except_list = ["edit_button"]
+
+    for key in model_header:
+        if key not in except_list:
+            choice_list.append((key, model_header[key]))
+
+    return choice_list
 
 def get_contact_header():
     """ Get header data for populating tables """
@@ -297,31 +292,27 @@ def get_contact_header():
                       'role':'Role',
                       'status':'Status',
                       'org_name':'Organization',
-                      'edit_button':'',
+                    #   'edit_button':'',
+                    #   "empty_column":"<pre>    </pre>",
                     }
 
     return contact_header
 
 
 def get_org_header():
-    org_header = {"empty_column":"<pre>    </pre>",
-                #   "check_box":"",
-                  "org_type":"Type",
+    org_header = {"org_type":"Type",
                   "org_name":"Name",
                   "domain":"Domain",
-                  'edit_button':'',
-                  "delete_button":""
                 }
 
     return org_header
 
 def get_product_header():
-    product_header = {"empty_column":"<pre>    </pre>",
-                      'product_name':'Product',
+    product_header = {'product_name':'Product',
                       'product_version':'Version',
-                      'edit_button':'',
-                      "delete_button":"",
-                        }
+                      'org_name':'Organization'
+
+                    }
 
     return product_header
 

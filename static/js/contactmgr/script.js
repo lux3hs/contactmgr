@@ -22,6 +22,7 @@ function changePage(evt, pageName) {
   }
 
 
+
   // 
   // Table Functions 
                   // 
@@ -191,7 +192,7 @@ function changePage(evt, pageName) {
       console.log(nodeList[i].checked);
       checked = nodeList[i].checked;
       value = nodeList[i].value;
-            
+
       if (checked == true) {
         checkBoxValues.push(value)
       }
@@ -200,20 +201,43 @@ function changePage(evt, pageName) {
     return checkBoxValues
   }
 
-  // function getButtonValues(buttonName) {
-  //   var nodeList = document.getElementsByName(buttonName)
-  //   buttonValues = []
-  //   for (i = 0; i <	nodeList.length; i++) {
-  //     value = nodeList[i].value;
-     
-  //   }
-
-  //   return value
-
-  // }
 
 
-  // function hello() {
-  //   console.log("hello!")
-  //   nodeList = getButtonValues('delete-button')
-  // }
+
+
+
+var message_ele = document.getElementById("message-container");
+
+setTimeout(function() {
+  message_ele.style.display = "none";
+}, 3000);
+
+
+
+// Modal Template
+
+// // Get the modal
+// var modal = document.getElementById("myModal");
+
+// // Get the button that opens the modal
+// var btn = document.getElementById("myBtn");
+
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
+
+// // When the user clicks on the button, open the modal
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function() {
+//   modal.style.display = "none";
+// }
+
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// } 
